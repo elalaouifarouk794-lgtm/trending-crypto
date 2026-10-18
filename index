@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07111f">
+  <title>TrendAI Crypto | AI Market</title>
+  <style>
+    :root{--bg:#07111f;--panel:#101f32;--line:#263b52;--green:#38e8b2;--red:#ff657d;--text:#f4f7fb;--muted:#9aaacb;--blue:#75b7ff}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Tahoma,sans-serif;line-height:1.6}
+    a{color:var(--blue)}
+    .wrap{max-width:1150px;margin:auto;padding:0 16px}
+    header{padding:22px 0;background:#0b192b;border-bottom:1px solid var(--line)}
+    .top{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{font-size:30px}
+    h1{font-size:25px;margin:0;color:var(--green)}
+    header p,.muted,.small{color:var(--muted);margin:4px 0}
+    main{padding:24px 0 40px}
+    h2{margin:0 0 8px;font-size:25px}
+    h3{margin:0 0 10px}
+    .hero{display:grid;grid-template-columns:1.35fr .85fr;gap:16px;margin-bottom:18px}
+    .panel,.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;min-width:0}
+    .eyebrow{display:inline-block;color:var(--green);font-size:12px;font-weight:bold;letter-spacing:.4px;margin-bottom:8px}
+    .hero p{color:var(--muted)}
+    .pill{display:inline-block;border:1px solid #226e5a;background:#0c2a28;color:var(--green);padding:5px 10px;border-radius:999px;font-size:12px}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+    .stat{background:#0a1829;border:1px solid var(--line);border-radius:12px;padding:13px}
+    .stat span{display:block;color:var(--muted);font-size:12px}
+    .stat strong{font-size:21px}
+    .section-title{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin:24px 0 12px}
+    .controls{display:flex;gap:9px;flex-wrap:wrap}
+    input,select,button{font:inherit;border-radius:9px;border:1px solid var(--line);padding:11px 12px;background:#0a1829;color:var(--text)}
+    input::placeholder{color:#7789a8}
+    button{background:var(--green);color:#06231d;font-weight:bold;border:0;cursor:pointer}
+    button.secondary{background:#1b3048;color:var(--text);border:1px solid var(--line)}
+    button:disabled{opacity:.6;cursor:wait}
+    .tablebox{overflow-x:auto}
+    table{width:100%;border-collapse:collapse;min-width:560px}
+    th,td{text-align:right;padding:12px;border-bottom:1px solid var(--line);white-space:nowrap}
+    th{color:var(--muted);font-size:13px}
+    tr:last-child td{border-bottom:0}
+    .coin{display:flex;align-items:center;gap:9px}
+    .coin img{width:26px;height:26px;border-radius:50%}
+    .green{color:var(--green)}.red{color:var(--red)}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .analysis{color:var(--muted);min-height:60px}
+    .assistant input{width:100%;margin:8px 0}
+    .assistant button{margin-top:8px}
+    .answer{margin-top:12px;padding:12px;background:#0a1829;border:1px solid var(--line);border-radius:10px;min-height:52px;white-space:pre-wrap;overflow-wrap:anywhere}
+    .notice{padding:12px;border-radius:10px;background:#302918;color:#ffe5a0;border:1px solid #685a2d;font-size:13px;margin-top:12px}
+    .paper-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px}
+    .paper-row input{width:140px}
+    footer{border-top:1px solid var(--line);padding:22px 0;color:var(--muted);font-size:13px}
+    .status{font-size:12px;color:var(--muted)}
+    .error{color:var(--red)}
+    @media(max-width:760px){.hero,.grid2{grid-template-columns:1fr}.stats{grid-template-columns:repeat(3,1fr)}.panel,.card{padding:15px}.stat{padding:9px}.stat strong{font-size:17px}}
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap top">
+    <div class="brand"><div class="logo">📈</div><div><h1>TrendAI Crypto</h1><p>AI Market Insights · Education & Paper Trading</p></div></div>
+    <div class="controls">
+      <button class="secondary" id="refreshBtn" type="button">تحديث السوق ↻</button>
+      <span class="pill">● Paper trading only</span>
+    </div>
+  </div>
+</header>
+<main class="wrap">
+  <section class="hero">
+    <div class="panel">
+      <span class="eyebrow">CRYPTO MARKET INTELLIGENCE</span>
+      <h2>فهم السوق بذكاء، بلا وعود بالأرباح.</h2>
+      <p>تابع أسعار العملات الرقمية، افهم التغيّرات، وسول TrendAI على المفاهيم والأخبار. المعلومات تعليمية فقط وليست نصيحة استثمارية.</p>
+      <span class="pill">معلومات السوق قد تتأخر أو لا تتوفر مؤقتاً</span>
+      <div class="stats">
+        <div class="stat"><span>العملات المعروضة</span><strong id="coinCount">—</strong></div>
+        <div class="stat"><span>أعلى تغيّر 24س</span><strong id="topMover">—</strong></div>
+        <div class="stat"><span>آخر تحديث</span><strong id="lastUpdated">—</strong></div>
+      </div>
+    </div>
+    <div class="panel">
+      <h3>🧭 كيف تستعمل الموقع؟</h3>
+      <p class="muted">1. شوف بيانات السوق المتاحة.</p>
+      <p class="muted">2. اختار عملة لفهم بياناتها.</p>
+      <p class="muted">3. سول المساعد الذكي على المفاهيم والمخاطر.</p>
+      <p class="muted">4. جرّب محفظة افتراضية للتعلّم، بلا أموال حقيقية.</p>
+      <div class="notice">تنبيه: لا تدخل كلمات سر أو مفاتيح محافظ. هذا الموقع لا ينفذ عمليات شراء أو بيع حقيقية.</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title">
+      <div><h2>🌐 سوق العملات</h2><p class="small">بيانات عامة من CoinGecko إذا كان مصدر البيانات متاحاً.</p></div>
+      <div class="controls">
+        <input id="searchCoin" placeholder="بحث عن عملة..." aria-label="بحث عن عملة">
+        <select id="sortCoin" aria-label="ترتيب العملات"><option value="market_cap">حسب القيمة السوقية</option><option value="up">الأكثر ارتفاعاً</option><option value="down">الأكثر انخفاضاً</option></select>
+      </div>
+    </div>
+    <div class="panel tablebox">
+      <table>
+        <thead><tr><th>العملة</th><th>السعر (USD)</th><th>تغيّر 24س</th><th>القيمة السوقية</th></tr></thead>
+        <tbody id="coins"><tr><td colspan="4">جاري تحميل بيانات السوق...</td></tr></tbody>
+      </table>
+      <p id="marketStatus" class="small" role="status">جاري الاتصال بمصدر البيانات...</p>
+    </div>
+  </section>
+
+  <section class="grid2">
+    <div class="panel">
+      <h3>📊 فهم تغيّر السوق</h3>
+      <p class="analysis" id="marketAnalysis">حمّل بيانات السوق لعرض ملخص تعليمي. تغيّر السعر السابق لا يضمن اتجاه المستقبل.</p>
+      <button class="secondary" id="explainMarketBtn" type="button">فسّر لي بيانات السوق</button>
+    </div>
+    <div class="panel assistant">
+      <h3>🤖 TrendAI AI Assistant</h3>
+      <p class="small">مساعد تعليمي لشرح العملات الرقمية والمخاطر ومفاهيم السوق.</p>
+      <form id="aiForm">
+        <input id="aiQuestion" type="text" maxlength="1000" placeholder="مثلاً: What is Bitcoin?" autocomplete="off" required>
+        <button id="askAI" type="submit">حلّل السؤال</button>
+      </form>
+      <div id="aiAnswer" class="answer" role="status" aria-live="polite">كتب سؤال واضغط على حلّل السؤال.</div>
+      <p class="small">إذا لم يتم إعداد Worker و Gemini API، سيظهر تنبيه واضح. لا توجد توقعات مضمونة.</p>
+    </div>
+  </section>
+
+  <section class="grid2" style="margin-top:16px">
+    <div class="panel">
+      <h3>🧪 محفظة افتراضية (Paper Trading)</h3>
+      <p class="small">تجربة تعليمية داخل المتصفح فقط. لا تستخدم أموالاً حقيقية ولا تتصل بمحفظة رقمية.</p>
+      <div class="paper-row"><label for="paperCash">رصيد افتراضي USDT</label><input id="paperCash" type="number" min="0" step="1" value="1000"></div>
+      <div class="paper-row"><label for="paperCoin">العملة</label><select id="paperCoin"><option value="bitcoin">Bitcoin</option><option value="ethereum">Ethereum</option><option value="solana">Solana</option></select></div>
+      <div class="paper-row"><label for="paperAmount">كمية افتراضية</label><input id="paperAmount" type="number" min="0" step="0.0001" value="0.01"><button id="simulateBtn" type="button">محاكاة شراء</button></div>
+      <p id="paperResult" class="answer">المحاكاة لا تنفّذ أي صفقة حقيقية.</p>
+    </div>
+    <div class="panel">
+      <h3>🔐 الحسابات والخصوصية</h3>
+      <p class="muted">هذه النسخة لا تحفظ كلمات مرور ولا توفر تسجيل دخول حقيقياً. لا تدخل معلومات شخصية أو مفاتيح API داخل الموقع.</p>
+      <p class="muted">لإضافة حسابات آمنة لاحقاً، تحتاج خدمة مصادقة وقاعدة بيانات مع قواعد صلاحيات مناسبة.</p>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap">© 2026 TrendAI Crypto · Educational information only · Paper trading only</div></footer>
+
+<script>
+"use strict";
+const API_BASE = "https://trendai-helper.elalaouifarouk794.workers.dev";
+const MARKET_API = "https://late-waterfall-8241.elalaouifarouk794.workers.dev/api/market";
+const state = { coins: [], updated: null };
+const $ = (id) => document.getElementById(id);
+function money(n) {
+  if (typeof n !== "number" || !Number.isFinite(n)) return "—";
+  return new Intl.NumberFormat("en-US", {style:"currency",currency:"USD",maximumFractionDigits:n<1?6:2}).format(n);
+}
+function compact(n) {
+  if (typeof n !== "number" || !Number.isFinite(n)) return "—";
+  return new Intl.NumberFormat("en-US",{notation:"compact",maximumFractionDigits:2}).format(n);
+}
+function esc(s) {
+  return String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function renderCoins() {
+  const q = $("searchCoin").value.trim().toLowerCase();
+  const sort = $("sortCoin").value;
+  let list = state.coins.filter(c => (c.name+" "+c.symbol).toLowerCase().includes(q));
+  if (sort === "up") list.sort((a,b)=>(b.price_change_percentage_24h||0)-(a.price_change_percentage_24h||0));
+  else if (sort === "down") list.sort((a,b)=>(a.price_change_percentage_24h||0)-(b.price_change_percentage_24h||0));
+  else list.sort((a,b)=>(b.market_cap||0)-(a.market_cap||0));
+  $("coins").innerHTML = list.length ? list.map(c => {
+    const change = Number(c.price_change_percentage_24h);
+    const cls = change >= 0 ? "green" : "red";
+    return `<tr><td><div class="coin">${c.image?`<img src="${esc(c.image)}" alt="" loading="lazy" onerror="this.style.display='none'">`:""}<span><b>${esc(c.name)}</b><br><span class="small">${esc(String(c.symbol||"").toUpperCase())}</span></span></div></td><td>${money(Number(c.current_price))}</td><td class="${cls}">${Number.isFinite(change)?(change>0?"+":"")+change.toFixed(2)+"%":"—"}</td><td>${compact(Number(c.market_cap))}</td></tr>`;
+  }).join("") : `<tr><td colspan="4">ما لقينا حتى عملة بهاد الاسم.</td></tr>`;
+}
+async function loadMarket() {
+  $("refreshBtn").disabled = true;
+  $("marketStatus").textContent = "جاري تحميل بيانات السوق...";
+  try {
+    const response = await fetch(MARKET_API, {headers:{"Accept":"application/json"}});
+    if (!response.ok) throw new Error("Market API HTTP " + response.status);
+    const data = await response.json();
+    const coins = Array.isArray(data) ? data : (Array.isArray(data.coins) ? data.coins : data.data);
+    if (!Array.isArray(coins)) throw new Error("Unexpected market data");
+    state.coins = coins;
+    state.updated = new Date();
+    $("coinCount").textContent = String(coins.length);
+    const mover = [...coins].filter(c=>Number.isFinite(Number(c.price_change_percentage_24h))).sort((a,b)=>Math.abs(Number(b.price_change_percentage_24h))-Math.abs(Number(a.price_change_percentage_24h)))[0];
+    $("topMover").textContent = mover ? `${String(mover.symbol).toUpperCase()} ${Number(mover.price_change_percentage_24h)>0?"+":""}${Number(mover.price_change_percentage_24h).toFixed(2)}%` : "—";
+    $("lastUpdated").textContent = state.updated.toLocaleTimeString();
+    $("marketStatus").textContent = "تم تحميل البيانات. آخر تحديث: " + state.updated.toLocaleString();
+    $("marketAnalysis").textContent = coins.length ? `تم تحميل ${coins.length} عملة. استعمل تغيّر 24 ساعة كبيانات تاريخية قصيرة المدى فقط؛ لا يمكنه ضمان ما سيحدث لاحقاً.` : "المصدر لم يرجع بيانات حالياً.";
+    renderCoins();
+  } catch (e) {
+    $("marketStatus").innerHTML = '<span class="error">تعذر تحميل السوق. جرّب لاحقاً أو تحقق من Worker / مصدر البيانات.</span>';
+    $("coins").innerHTML = '<tr><td colspan="4">بيانات السوق غير متاحة حالياً.</td></tr>';
+    $("marketAnalysis").textContent = "تعذر جلب البيانات. هذا لا يعني أن السوق متوقف؛ قد يكون المصدر حجب الطلب أو انتهت حصته.";
+    console.error("Market load error:", e);
+  } finally {
+    $("refreshBtn").disabled = false;
+  }
+}
+async function askAI(question) {
+  const answerBox = $("aiAnswer");
+  const button = $("askAI");
+  button.disabled = true;
+  answerBox.textContent = "TrendAI كيوجد الجواب...";
+  try {
+    const response = await fetch(`${API_BASE}/api/ask`, {
+      method:"POST",
+      headers:{"Content-Type":"application/json","Accept":"application/json"},
+      body:JSON.stringify({question})
+    });
+    let data;
+    try { data = await response.json(); } catch { throw new Error("Worker رجّع جواباً غير مفهوم."); }
+    if (!response.ok) throw new Error(data.error || `HTTP ${response.status}`);
+    if (!data.answer) throw new Error("ما توصلناش بجواب من Gemini.");
+    answerBox.textContent = data.answer;
+  } catch (e) {
+    console.error("AI request error:", e);
+    answerBox.textContent = "ما قدرناش نتاصلو بالـ AI. تحقق من نشر Worker و Gemini API، ثم افتح Cloudflare Logs. التفاصيل: " + e.message;
+  } finally {
+    button.disabled = false;
+  }
+}
+$("aiForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const q = $("aiQuestion").value.trim();
+  if (!q) { $("aiAnswer").textContent = "كتب السؤال ديالك أولاً."; return; }
+  askAI(q);
+});
+$("refreshBtn").addEventListener("click", loadMarket);
+$("searchCoin").addEventListener("input", renderCoins);
+$("sortCoin").addEventListener("change", renderCoins);
+$("explainMarketBtn").addEventListener("click", () => {
+  const count = state.coins.length;
+  $("marketAnalysis").textContent = count
+    ? `حالياً عندنا ${count} عملة فالقائمة. تغيّر 24 ساعة كيبين الحركة الماضية فقط؛ قارن الأخبار والسيولة والمخاطر، وما تعتمدش على رقم واحد لاتخاذ قرار.`
+    : "بيانات السوق مازال ما تحمّلاتش. جرّب زر تحديث السوق.";
+});
+$("simulateBtn").addEventListener("click", () => {
+  const cash = Number($("paperCash").value);
+  const amount = Number($("paperAmount").value);
+  const id = $("paperCoin").value;
+  const coin = state.coins.find(c => c.id === id) || state.coins.find(c => String(c.symbol).toLowerCase() === ({bitcoin:"btc",ethereum:"eth",solana:"sol"}[id]));
+  if (!Number.isFinite(cash) || cash < 0 || !Number.isFinite(amount) || amount <= 0) {
+    $("paperResult").textContent = "دخل رصيد وكمية افتراضية صحيحة.";
+    return;
+  }
+  if (!coin || !Number.isFinite(Number(coin.current_price))) {
+    $("paperResult").textContent = "السعر غير متوفر حالياً. حدّث بيانات السوق أولاً.";
+    return;
+  }
+  const cost = amount * Number(coin.current_price);
+  $("paperResult").textContent = cost <= cash
+    ? `محاكاة فقط: ${amount} ${String(coin.symbol).toUpperCase()} × ${money(Number(coin.current_price))} = ${money(cost)}. الرصيد الافتراضي المتبقي سيكون ${money(cash-cost)}. لم يتم تنفيذ أي عملية حقيقية.`
+    : `الرصيد الافتراضي غير كافٍ: الكلفة النظرية ${money(cost)} مقابل رصيد ${money(cash)}. لم يتم تنفيذ أي عملية حقيقية.`;
+});
+loadMarket();
+</script>
+</body>
+</html>
