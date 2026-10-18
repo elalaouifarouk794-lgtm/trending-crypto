@@ -259,5 +259,72 @@ $("simulateBtn").addEventListener("click", () => {
 });
 loadMarket();
 </script>
+<section class="panel" style="max-width:450px;margin:20px auto;text-align:center">
+  <h2>🔐 TrendAI Account</h2>
+  <input id="authEmail" type="email" placeholder="Email"
+    style="width:100%;padding:12px;margin:6px 0">
+  <input id="authPassword" type="password" placeholder="Password"
+    style="width:100%;padding:12px;margin:6px 0">
+  <button id="signUpBtn">Sign up</button>
+  <button id="signInBtn">Sign in</button>
+  <p id="authMessage">Create an account or sign in.</p>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "https://nswpkhipvghnovwbeuis.supabase.co";
+const SUPABASE_KEY = "sb_publishable_eh_8fnPtYZb8XE8hjVgxlg_wv8eYPW4";
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+const emailInput = document.getElementById("authEmail");
+const passwordInput = document.getElementById("authPassword");
+const message = document.getElementById("authMessage");
+
+document.getElementById("signUpBtn").addEventListener("click", async () => {
+  const email = emailInput.value.trim();
+  const password = passwordInput.value;
+
+  if (!email || !password) {
+    message.textContent = "دخل الإيميل وكلمة السر أولاً.";
+    return;
+  }
+
+  message.textContent = "كنسجلو الحساب...";
+
+  const { error } = await supabaseClient.auth.signUp({
+    email,
+    password
+  });
+
+  message.textContent = error
+    ? "خطأ: " + error.message
+    : "تفقد الإيميل ديالك باش تأكد الحساب.";
+});
+
+document.getElementById("signInBtn").addEventListener("click", async () => {
+  const email = emailInput.value.trim();
+  const password = passwordInput.value;
+
+  if (!email || !password) {
+    message.textContent = "دخل الإيميل وكلمة السر أولاً.";
+    return;
+  }
+
+  message.textContent = "كندخلو للحساب...";
+
+  const { data, error } = await supabaseClient.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  message.textContent = error
+    ? "خطأ: " + error.message
+    : "مرحبا بك! تسجل الدخول بنجاح.";
+});
+</script>
 </body>
 </html>
