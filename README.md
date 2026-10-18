@@ -1,0 +1,1 @@
+TrendAI Crypto
