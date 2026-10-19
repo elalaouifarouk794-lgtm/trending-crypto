@@ -296,7 +296,7 @@
 <body>
 
     <div class="top-banner">
-        ✨ BUY CRYPTO WITH REAL MONEY VIA CARD OR WALLET ⚡
+        ✨ POWERED BY GOOGLE GEMINI AI & WEB3 WALLETS ⚡
     </div>
 
     <div class="bg-grid"></div>
@@ -328,18 +328,18 @@
         <section class="hero">
             <div class="badge-ping">
                 <div class="ping-dot"></div>
-                <span data-i18n="badge_text">منصة تحليل العملات والذكاء الاصطناعي</span>
+                <span data-i18n="badge_text">مدعوم بالذكاء الاصطناعي الحقيقي Google Gemini</span>
             </div>
             
             <h1 class="falling-container">
                 <span class="fall-word" style="--i:1;">تداول</span>
                 <span class="fall-word" style="--i:2;">حقيقي</span>
-                <span class="fall-word" style="--i:3;">ذكي</span>
-                <span class="fall-word" style="--i:4;">وشراء</span>
-                <span class="fall-word" style="--i:5;">فوري</span>
+                <span class="fall-word" style="--i:3;">بذكاء</span>
+                <span class="fall-word" style="--i:4;">Gemini</span>
+                <span class="fall-word" style="--i:5;">الخارق</span>
             </h1>
 
-            <p data-i18n="hero_desc">استكشف أسواق العملات الرقمية بلحظتها، اشترِ العملات بالبطاقة البنكية الحقيقية، واربط محفظتك.</p>
+            <p data-i18n="hero_desc">استكشف أسواق العملات الرقمية وحلل الاتجاهات بدقة عالية بفضل مساعد Google Gemini الذكي.</p>
 
             <div id="realWalletCard" class="card" style="display:none; margin-bottom:20px; text-align:center; border-color:var(--gold);">
                 <h3 style="color:var(--gold); margin-bottom:8px;">💳 المحفظة الحقيقية المتصلة</h3>
@@ -382,11 +382,11 @@
 
         <section class="grid">
             <div class="card">
-                <h3 style="color: var(--gold); margin-bottom: 10px;" data-i18n="ai_title">🤖 مساعد الذكاء الاصطناعي</h3>
-                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 14px;" data-i18n="ai_desc">اكتب سؤالك لتحليل اتجاه العملات الرقمية.</p>
-                <textarea id="aiQuery" rows="3" placeholder="مثال: ما هو اتجاه سعر البيتكوين؟"></textarea>
-                <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="analyzeMarket()" data-i18n="btn_analyze">تحليل السؤال</button>
-                <div id="aiResult" style="margin-top:12px; font-size:14px; color:var(--gold); display:none;"></div>
+                <h3 style="color: var(--gold); margin-bottom: 10px;" data-i18n="ai_title">🤖 مساعد Google Gemini AI</h3>
+                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 14px;" data-i18n="ai_desc">اسأل مساعد Gemini لتحليل السوق والعملات.</p>
+                <textarea id="aiQuery" rows="3" placeholder="مثال: هل وقت مناسب لشراء البيتكوين الآن؟"></textarea>
+                <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="askGeminiAI()" data-i18n="btn_analyze">سؤال Gemini AI ⚡</button>
+                <div id="aiResult" style="margin-top:12px; font-size:14px; color:var(--gold); display:none; background: rgba(0,0,0,0.5); padding: 12px; border-radius: 8px; border: 1px solid var(--border);"></div>
             </div>
 
             <div class="card">
@@ -458,15 +458,15 @@
                 signup_btn: "حساب جديد",
                 signin_title: "تسجيل الدخول",
                 signup_title: "إنشاء حساب جديد",
-                badge_text: "منصة تحليل العملات والذكاء الاصطناعي",
-                hero_desc: "استكشف أسواق العملات الرقمية بلحظتها، اشترِ العملات بالبطاقة البنكية الحقيقية، واربط محفظتك.",
+                badge_text: "مدعوم بالذكاء الاصطناعي الحقيقي Google Gemini",
+                hero_desc: "استكشف أسواق العملات الرقمية وحلل الاتجاهات بدقة عالية بفضل مساعد Google Gemini الذكي.",
                 market_title: "📈 أسعار السوق المباشرة",
                 th_coin: "العملة",
                 th_price: "السعر الحالي",
                 th_change: "تغير 24h",
-                ai_title: "🤖 مساعد الذكاء الاصطناعي",
-                ai_desc: "اكتب سؤالك لتحليل اتجاه العملات الرقمية.",
-                btn_analyze: "تحليل السؤال",
+                ai_title: "🤖 مساعد Google Gemini AI",
+                ai_desc: "اسأل مساعد Gemini لتحليل السوق والعملات.",
+                btn_analyze: "سؤال Gemini AI ⚡",
                 port_title: "🧪 المحفظة الافتراضية",
                 port_desc: "رصيد تجريبي USDT للتداول بدون مخاطر.",
                 lbl_balance: "الرصيد المتاح:",
@@ -485,15 +485,15 @@
                 signup_btn: "Sign Up",
                 signin_title: "Sign In to Account",
                 signup_title: "Create New Account",
-                badge_text: "Next-Gen Crypto AI & Analysis Platform",
-                hero_desc: "Explore live crypto markets, buy crypto with real bank cards, and connect your wallet.",
+                badge_text: "Powered by Real Google Gemini AI",
+                hero_desc: "Explore live crypto markets and analyze trends accurately with your smart Gemini assistant.",
                 market_title: "📈 Live Market Prices",
                 th_coin: "Coin",
                 th_price: "Price",
                 th_change: "24h Change",
-                ai_title: "🤖 AI Assistant",
-                ai_desc: "Type your query for instant crypto market analysis.",
-                btn_analyze: "Analyze Query",
+                ai_title: "🤖 Google Gemini AI Assistant",
+                ai_desc: "Ask Gemini assistant for instant market analysis.",
+                btn_analyze: "Ask Gemini AI ⚡",
                 port_title: "🧪 Virtual Portfolio",
                 port_desc: "Simulate trading risk-free with USDT balance.",
                 lbl_balance: "Available Balance:",
@@ -512,15 +512,15 @@
                 signup_btn: "S'inscrire",
                 signin_title: "Connexion au Compte",
                 signup_title: "Créer un Compte",
-                badge_text: "Plateforme Crypto IA & Analyse",
-                hero_desc: "Explorez les marchés, achetez des cryptos par carte bancaire et connectez votre portefeuille.",
+                badge_text: "Propulsé par la vraie IA Google Gemini",
+                hero_desc: "Explorez les marchés et analysez les tendances avec votre assistant intelligent Gemini.",
                 market_title: "📈 Prix du Marché en Direct",
                 th_coin: "Pièce",
                 th_price: "Prix",
                 th_change: "Var 24h",
-                ai_title: "🤖 Assistant IA",
-                ai_desc: "Posez votre question pour une analyse instantanée.",
-                btn_analyze: "Analyser",
+                ai_title: "🤖 Assistant Google Gemini AI",
+                ai_desc: "Demandez à Gemini d'analyser le marché instantanément.",
+                btn_analyze: "Demander à Gemini ⚡",
                 port_title: "🧪 Portefeuille Virtuel",
                 port_desc: "Simulez le trading sans risque avec un solde USDT.",
                 lbl_balance: "Solde Disponible:",
@@ -581,7 +581,7 @@
             }
         }
 
-        /* --- Web3 & WalletConnect Config --- */
+        /* --- Web3 & WalletConnect Config (Project ID Integrated) --- */
         let web3Modal;
         let provider;
         let signer;
@@ -592,7 +592,7 @@
                 walletconnect: {
                     package: window.WalletConnectProvider.default,
                     options: {
-                        projectId: "be891044ac4fe1358554a06f9e5b8bba", // استبدل هذه الكتابة بـ Project ID الخاص بك
+                        projectId: "be891044ac4fe1358554a06f9e5b8bba", 
                         rpc: { 1: "https://cloudflare-eth.com" }
                     }
                 }
@@ -627,6 +627,44 @@
             }
         }
 
+        /* --- Google Gemini AI Integration (API Key Integrated) --- */
+        async function askGeminiAI() {
+            const query = document.getElementById('aiQuery').value;
+            const resDiv = document.getElementById('aiResult');
+            
+            if (!query) {
+                alert("يرجى كتابة سؤال أولاً!");
+                return;
+            }
+
+            resDiv.style.display = 'block';
+            resDiv.innerHTML = "⏳ جاري تحليل السوق بواسطة Google Gemini AI...";
+
+            const GEMINI_API_KEY = "AQ.Ab8RN6IZvfcbW4T-miKoD271MlbhXzfkcS_h0yMmvrHXmj4tHw"; 
+
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{ text: `أنت مساعد ذكاء اصطناعي خبير في العملات الرقمية وتحليل الأسواق. أجب باختصار واحترافية على هذا السؤال: ${query}` }]
+                        }]
+                    })
+                });
+
+                const data = await response.json();
+                if (data.candidates && data.candidates[0].content.parts[0].text) {
+                    resDiv.innerHTML = `<strong>Gemini AI:</strong><br>${data.candidates[0].content.parts[0].text}`;
+                } else {
+                    resDiv.innerHTML = "❌ حدث خطأ أثناء الاتصال بخدمة Gemini AI.";
+                }
+            } catch (error) {
+                console.error("Gemini Error:", error);
+                resDiv.innerHTML = "❌ تعذر الاتصال بـ Gemini API.";
+            }
+        }
+
         function proceedToCheckout() {
             if (!userConnectedAddress) {
                 alert("يرجى ربط محفظتك أولاً لتلقي العملات المشراة!");
@@ -642,13 +680,6 @@
 
         function executeTrade() {
             alert('تم تنفيذ الصفقة التجريبية بنجاح!');
-        }
-
-        function analyzeMarket() {
-            const query = document.getElementById('aiQuery').value;
-            const res = document.getElementById('aiResult');
-            res.style.display = 'block';
-            res.innerText = query ? `تحليل الذكاء الاصطناعي لـ "${query}": الاتجاه صاعد (Bullish) مع دعم قوي.` : 'يرجى كتابة سؤال أولاً.';
         }
 
         window.addEventListener('load', () => {
