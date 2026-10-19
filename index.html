@@ -6,14 +6,19 @@
   <meta name="theme-color" content="#07111f">
   <title>TrendAI Crypto | AI Market</title>
   <style>
-    :root{--bg:#07111f;--panel:#101f32;--line:#263b52;--green:#38e8b2;--red:#ff657d;--text:#f4f7fb;--muted:#9aaacb;--blue:#75b7ff}
+    :root{--bg:#070707;--panel:#11100c;--line:#5c4617;--green:#f7bd35;--red:#ff657d;--text:#f8f7f3;--muted:#c3bda9;--blue:#f7bd35}
     *{box-sizing:border-box}
-    
-body{margin:0;background:#090604 url("https://images.unsplash.com/photo-1640340434855-6084b1f4901c?auto=format&fit=crop&w=1920&q=85") center center / cover fixed no-repeat;color:var(--text);font-family:Arial,Tahoma,sans-serif;line-height:1.6}
-
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Tahoma,sans-serif;line-height:1.6}
     a{color:var(--blue)}
     .wrap{max-width:1150px;margin:auto;padding:0 16px}
-    header{padding:22px 0;background:#0b192b;border-bottom:1px solid var(--line)}
+    header{padding:18px 0;background:#050505;border-bottom:1px solid #7a5a13;box-shadow:0 6px 30px #000}
+    .hero-art{display:block;width:100%;height:auto;border:1px solid #8a6518;border-radius:18px;margin:0 0 22px;box-shadow:0 12px 40px #000}
+    .gold-credit{color:#f7bd35;font-weight:bold}
+    .panel,.card{box-shadow:0 8px 28px #0008}
+    .pill{border-color:#8a6518;background:#211806;color:#ffd15a}
+    button{background:linear-gradient(135deg,#ffe18a,#d99a13);color:#171006}
+    input,select,button{border-color:#59451b}
+    .stat,.answer{background:#0a0906;border-color:#4e3b16}
     .top{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
     .brand{display:flex;align-items:center;gap:12px}
     .logo{font-size:30px}
@@ -71,6 +76,7 @@ body{margin:0;background:#090604 url("https://images.unsplash.com/photo-16403404
   </div>
 </header>
 <main class="wrap">
+  <img class="hero-art" src="trendai-crypto-hero.png" alt="TrendAI Crypto — واجهة سوداء وذهبية من تصميم Farouk El Alaoui">
   <section class="hero">
     <div class="panel">
       <span class="eyebrow">CRYPTO MARKET INTELLIGENCE</span>
@@ -144,7 +150,7 @@ body{margin:0;background:#090604 url("https://images.unsplash.com/photo-16403404
     </div>
   </section>
 </main>
-<footer><div class="wrap">© 2026 TrendAI Crypto · Educational information only · Paper trading only</div></footer>
+<footer><div class="wrap">© 2026 TrendAI Crypto · Educational information only · Paper trading only<div class="gold-credit" style="margin-top:8px">Created by Farouk El Alaoui 🇲🇦</div></div></footer>
 
 <script>
 "use strict";
@@ -260,73 +266,6 @@ $("simulateBtn").addEventListener("click", () => {
     : `الرصيد الافتراضي غير كافٍ: الكلفة النظرية ${money(cost)} مقابل رصيد ${money(cash)}. لم يتم تنفيذ أي عملية حقيقية.`;
 });
 loadMarket();
-</script>
-<section class="panel" style="max-width:450px;margin:20px auto;text-align:center">
-  <h2>🔐 TrendAI Account</h2>
-  <input id="authEmail" type="email" placeholder="Email"
-    style="width:100%;padding:12px;margin:6px 0">
-  <input id="authPassword" type="password" placeholder="Password"
-    style="width:100%;padding:12px;margin:6px 0">
-  <button id="signUpBtn">Sign up</button>
-  <button id="signInBtn">Sign in</button>
-  <p id="authMessage">Create an account or sign in.</p>
-</section>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-const SUPABASE_URL = "https://nswpkhipvghnovwbeuis.supabase.co";
-const SUPABASE_KEY = "sb_publishable_eh_8fnPtYZb8XE8hjVgxlg_wv8eYPW4";
-
-const supabaseClient = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
-
-const emailInput = document.getElementById("authEmail");
-const passwordInput = document.getElementById("authPassword");
-const message = document.getElementById("authMessage");
-
-document.getElementById("signUpBtn").addEventListener("click", async () => {
-  const email = emailInput.value.trim();
-  const password = passwordInput.value;
-
-  if (!email || !password) {
-    message.textContent = "دخل الإيميل وكلمة السر أولاً.";
-    return;
-  }
-
-  message.textContent = "كنسجلو الحساب...";
-
-  const { error } = await supabaseClient.auth.signUp({
-    email,
-    password
-  });
-
-  message.textContent = error
-    ? "خطأ: " + error.message
-    : "تفقد الإيميل ديالك باش تأكد الحساب.";
-});
-
-document.getElementById("signInBtn").addEventListener("click", async () => {
-  const email = emailInput.value.trim();
-  const password = passwordInput.value;
-
-  if (!email || !password) {
-    message.textContent = "دخل الإيميل وكلمة السر أولاً.";
-    return;
-  }
-
-  message.textContent = "كندخلو للحساب...";
-
-  const { data, error } = await supabaseClient.auth.signInWithPassword({
-    email,
-    password
-  });
-
-  message.textContent = error
-    ? "خطأ: " + error.message
-    : "مرحبا بك! تسجل الدخول بنجاح.";
-});
 </script>
 </body>
 </html>
