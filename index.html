@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TrendAI Crypto | Next-Gen Web3 Platform</title>
+    <title>TrendAI Crypto | Next-Gen Web3 & AI Platform</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Web3 & WalletConnect Libraries -->
+    <!-- Web3 & WalletConnect Libraries for ALL Wallets -->
     <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/web3modal@1.9.12/dist/index.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@walletconnect/web3-provider@1.8.0/dist/umd/index.min.js"></script>
@@ -42,6 +42,43 @@
             line-height: 1.6;
         }
 
+        /* Falling Letters / Words Animation (GetPing Style) */
+        .falling-container {
+            display: inline-flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .fall-word {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(-50px) rotate(-5deg);
+            animation: fallIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            animation-delay: calc(var(--i) * 0.15s);
+            background: linear-gradient(180deg, #ffffff 30%, #a39e93 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 44px;
+            font-weight: 800;
+        }
+
+        @keyframes fallIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-60px) rotate(-10deg) scale(0.9);
+            }
+            70% {
+                opacity: 1;
+                transform: translateY(8deg) rotate(2deg) scale(1.02);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg) scale(1);
+            }
+        }
+
         .top-banner {
             background: linear-gradient(90deg, rgba(247, 189, 53, 0.15), rgba(247, 189, 53, 0.3), rgba(247, 189, 53, 0.15));
             border-bottom: 1px solid var(--border);
@@ -51,6 +88,9 @@
             font-size: 13px;
             font-weight: 700;
             letter-spacing: 1px;
+            position: relative;
+            z-index: 101;
+            box-shadow: 0 4px 20px rgba(247, 189, 53, 0.2);
         }
 
         .bg-grid {
@@ -67,7 +107,13 @@
 
         .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
-        header { position: sticky; top: 16px; z-index: 100; margin-bottom: 40px; margin-top: 12px; }
+        header {
+            position: sticky;
+            top: 16px;
+            z-index: 100;
+            margin-bottom: 40px;
+            margin-top: 12px;
+        }
 
         .nav-inner {
             background: rgba(14, 13, 10, 0.7);
@@ -75,15 +121,29 @@
             border: 1px solid var(--border);
             border-radius: 99px;
             padding: 12px 24px;
-            display: flex; justify-content: space-between; align-items: center; gap: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            font-size: 20px;
+            color: var(--text-main);
         }
 
         .brand span {
             background: linear-gradient(135deg, #fff, var(--gold));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-weight: 800; font-size: 20px;
         }
+
+        .nav-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 
         .btn {
             background: var(--surface-card);
@@ -91,78 +151,429 @@
             border: 1px solid var(--border);
             padding: 10px 20px;
             border-radius: 99px;
-            font-size: 14px; font-weight: 600; cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
             transition: var(--transition);
-            display: inline-flex; align-items: center; gap: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
         }
 
-        .btn:hover { border-color: var(--border-hover); transform: translateY(-2px); box-shadow: 0 8px 20px var(--gold-glow); }
-        .btn-primary { background: linear-gradient(135deg, #ffe18a, #d99a13); color: #070707; border: none; }
-
-        .falling-container { display: flex; gap: 8px; justify-content: center; margin-bottom: 16px; }
-        .fall-word {
-            opacity: 0; transform: translateY(-50px);
-            animation: fallIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-            animation-delay: calc(var(--i) * 0.15s);
-            font-size: 42px; font-weight: 800;
-            background: linear-gradient(180deg, #ffffff 30%, #a39e93 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        .btn:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--gold-glow);
         }
-        @keyframes fallIn { 100% { opacity: 1; transform: translateY(0); } }
 
-        .hero { text-align: center; padding: 40px 0; }
-        .card { background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin: 40px 0; }
+        .btn-primary {
+            background: linear-gradient(135deg, #ffe18a, #d99a13);
+            color: #070707;
+            border: none;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .badge-ping {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(247, 189, 53, 0.08);
+            border: 1px solid var(--border);
+            padding: 6px 16px;
+            border-radius: 99px;
+            font-size: 13px;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .ping-dot {
+            width: 8px; height: 8px;
+            background: var(--gold);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--gold);
+            animation: pulsePing 2s infinite;
+        }
+
+        @keyframes pulsePing {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(247, 189, 53, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(247, 189, 53, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(247, 189, 53, 0); }
+        }
+
+        .hero p {
+            font-size: 16px;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .dashboard-container {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            animation: floatCard 6s ease-in-out infinite;
+            margin-top: 30px;
+            text-align: right;
+        }
+        html[dir="ltr"] .dashboard-container { text-align: left; }
+
+        @keyframes floatCard {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin: 40px 0;
+            text-align: right;
+        }
+        html[dir="ltr"] .grid { text-align: left; }
+
+        .card {
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            transition: var(--transition);
+        }
+
+        .card:hover { border-color: var(--border-hover); }
+
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        th, td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        th { color: var(--text-muted); }
+        .up { color: var(--green); font-weight: 700; }
+        .down { color: var(--red); font-weight: 700; }
+
+        input, select, textarea {
+            width: 100%;
+            background: #080705;
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 12px;
+            border-radius: var(--radius-md);
+            margin-bottom: 12px;
+            font-family: inherit;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            width: 100%;
+            max-width: 400px;
+            padding: 24px;
+            border-radius: var(--radius-lg);
+            position: relative;
+        }
+        .close-btn {
+            position: absolute;
+            top: 16px; left: 16px;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-weight: bold;
+        }
+        html[dir="ltr"] .close-btn { left: auto; right: 16px; }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+            font-size: 13px;
+        }
     </style>
 </head>
 <body>
 
-    <div class="top-banner">✨ REAL WEB3 WALLET INTEGRATION CONNECT & TRADE ⚡</div>
+    <div class="top-banner">
+        ✨ FREE TRADING DEMO & REAL WEB3 WALLET INTEGRATION ⚡
+    </div>
+
     <div class="bg-grid"></div>
 
     <header class="wrap">
         <div class="nav-inner">
-            <div class="brand">✨ <span>TrendAI Crypto</span></div>
-            <div>
-                <button id="connectWalletBtn" class="btn btn-primary" onclick="connectAllWallets()">
-                    🔗 <span id="walletText">ربط جميع المحافظ (Connect Wallet)</span>
-                </button>
+            <div class="brand">
+                ✨ <span>TrendAI Crypto</span>
+            </div>
+            <div class="nav-actions">
+                <select id="langSelect" class="btn" onchange="changeLanguage(this.value)" style="padding: 6px 12px;">
+                    <option value="ar">العربية (AR)</option>
+                    <option value="en">English (EN)</option>
+                    <option value="fr">Français (FR)</option>
+                </select>
+                
+                <button id="walletBtn" class="btn btn-primary" onclick="connectAllWallets()">🔗 <span data-i18n="connect_wallet" id="walletText">ربط جميع المحافظ</span></button>
+
+                <div id="authNav" style="display:inline-flex; gap:8px;">
+                    <button class="btn" onclick="openModal('signInModal')" data-i18n="signin_btn">دخول</button>
+                    <button class="btn btn-primary" onclick="openModal('signUpModal')" data-i18n="signup_btn">حساب جديد</button>
+                </div>
             </div>
         </div>
     </header>
 
     <main class="wrap">
+
         <section class="hero">
+            <div class="badge-ping">
+                <div class="ping-dot"></div>
+                <span data-i18n="badge_text">منصة تحليل العملات والذكاء الاصطناعي</span>
+            </div>
+            
+            <!-- Falling Animation Title -->
             <h1 class="falling-container">
-                <span class="fall-word" style="--i:1;">منصة</span>
-                <span class="fall-word" style="--i:2;">التداول</span>
-                <span class="fall-word" style="--i:3;">الحقيقي</span>
+                <span class="fall-word" style="--i:1;">تداول</span>
+                <span class="fall-word" style="--i:2;">إفتراضي</span>
+                <span class="fall-word" style="--i:3;">ذكي</span>
+                <span class="fall-word" style="--i:4;">وتحليل</span>
+                <span class="fall-word" style="--i:5;">متطور</span>
             </h1>
-            <p style="color: var(--text-muted);">اربط محفظتك الرقمية الآن للوصول إلى الرصيد الحقيقي والشراء المباشر.</p>
+
+            <p data-i18n="hero_desc">استكشف أسواق العملات الرقمية بلحظتها، تداول بدون مخاطرة، واربط محفظتك الرقمية بكل سهولة.</p>
+
+            <div id="realWalletCard" class="card" style="display:none; margin-bottom:20px; text-align:center; border-color:var(--gold);">
+                <h3 style="color:var(--gold); margin-bottom:8px;">💳 المحفظة الحقيقية المتصلة</h3>
+                <p id="realWalletDetails" style="font-size:14px; color:var(--text-main);"></p>
+            </div>
+
+            <div class="dashboard-container">
+                <h3 style="font-size: 18px; color: var(--gold); margin-bottom: 14px;" data-i18n="market_title">📈 أسعار السوق المباشرة</h3>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th data-i18n="th_coin">العملة</th>
+                                <th data-i18n="th_price">السعر الحالي</th>
+                                <th data-i18n="th_change">تغير 24h</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Bitcoin (BTC)</strong></td>
+                                <td>$82,257.75</td>
+                                <td class="up">+3.42%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ethereum (ETH)</strong></td>
+                                <td>$3,120.50</td>
+                                <td class="up">+1.85%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Solana (SOL)</strong></td>
+                                <td>$188.30</td>
+                                <td class="up">+5.12%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ripple (XRP)</strong></td>
+                                <td>$0.58</td>
+                                <td class="down">-0.45%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </section>
 
         <section class="grid">
             <div class="card">
-                <h3 style="color: var(--gold); margin-bottom: 12px;">💳 حالة المحفظة المتصلة</h3>
-                <p style="font-size: 14px; color: var(--text-muted);" id="walletStatus">لم يتم ربط أي محفظة بعد.</p>
-                <br>
-                <button class="btn" style="width:100%; justify-content:center;" onclick="sendTransaction()">🚀 إرسال معاملة تجريبية / شراء</button>
+                <h3 style="color: var(--gold); margin-bottom: 10px;" data-i18n="ai_title">🤖 مساعد الذكاء الاصطناعي</h3>
+                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 14px;" data-i18n="ai_desc">اكتب سؤالك لتحليل اتجاه العملات الرقمية.</p>
+                <textarea id="aiQuery" rows="3" placeholder="مثال: ما هو اتجاه سعر البيتكوين؟"></textarea>
+                <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="analyzeMarket()" data-i18n="btn_analyze">تحليل السؤال</button>
+                <div id="aiResult" style="margin-top:12px; font-size:14px; color:var(--gold); display:none;"></div>
+            </div>
+
+            <div class="card">
+                <h3 style="color: var(--gold); margin-bottom: 10px;" data-i18n="port_title">🧪 المحفظة الافتراضية</h3>
+                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 14px;" data-i18n="port_desc">رصيد تجريبي USDT للتداول بدون مخاطر.</p>
+                <label style="font-size:12px; color:var(--text-muted);" data-i18n="lbl_balance">الرصيد المتاح:</label>
+                <input type="text" value="1000 USDT" readonly>
+                <button class="btn" style="width: 100%; justify-content: center; background: rgba(34, 197, 94, 0.15); color: var(--green); border-color: var(--green);" onclick="executeTrade()" data-i18n="btn_buy">تنفيذ صفقة تجريبية</button>
             </div>
         </section>
+
     </main>
 
+    <div id="signInModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('signInModal')">✕</span>
+            <h3 style="color: var(--gold); margin-bottom: 16px;" data-i18n="signin_title">تسجيل الدخول</h3>
+            <form onsubmit="handleAuth(event, 'signInEmail')">
+                <input type="email" id="signInEmail" placeholder="البريد الإلكتروني" required>
+                <input type="password" placeholder="كلمة السر" required>
+                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;" data-i18n="signin_btn">دخول</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="signUpModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('signUpModal')">✕</span>
+            <h3 style="color: var(--gold); margin-bottom: 16px;" data-i18n="signup_title">إنشاء حساب جديد</h3>
+            <form onsubmit="handleAuth(event, 'signUpName')">
+                <input type="text" id="signUpName" placeholder="الاسم الكامل" required>
+                <input type="email" placeholder="البريد الإلكتروني" required>
+                <input type="password" placeholder="كلمة السر" required>
+                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;" data-i18n="signup_btn">تسجيل</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        © 2026 TrendAI Crypto • <span data-i18n="footer_text">جميع الحقوق محفوظة</span>
+    </footer>
+
     <script>
+        const translations = {
+            ar: {
+                connect_wallet: "ربط جميع المحافظ",
+                signin_btn: "دخول",
+                signup_btn: "حساب جديد",
+                signin_title: "تسجيل الدخول",
+                signup_title: "إنشاء حساب جديد",
+                badge_text: "منصة تحليل العملات والذكاء الاصطناعي",
+                hero_desc: "استكشف أسواق العملات الرقمية بلحظتها، تداول بدون مخاطرة، واربط محفظتك الرقمية بكل سهولة.",
+                market_title: "📈 أسعار السوق المباشرة",
+                th_coin: "العملة",
+                th_price: "السعر الحالي",
+                th_change: "تغير 24h",
+                ai_title: "🤖 مساعد الذكاء الاصطناعي",
+                ai_desc: "اكتب سؤالك لتحليل اتجاه العملات الرقمية.",
+                btn_analyze: "تحليل السؤال",
+                port_title: "🧪 المحفظة الافتراضية",
+                port_desc: "رصيد تجريبي USDT للتداول بدون مخاطر.",
+                lbl_balance: "الرصيد المتاح:",
+                btn_buy: "تنفيذ صفقة تجريبية",
+                footer_text: "جميع الحقوق محفوظة",
+                welcome: "مرحباً",
+                logout: "خروج"
+            },
+            en: {
+                connect_wallet: "Connect All Wallets",
+                signin_btn: "Sign In",
+                signup_btn: "Sign Up",
+                signin_title: "Sign In to Account",
+                signup_title: "Create New Account",
+                badge_text: "Next-Gen Crypto AI & Analysis Platform",
+                hero_desc: "Explore live crypto markets, trade risk-free, and seamlessly connect your Web3 wallet.",
+                market_title: "📈 Live Market Prices",
+                th_coin: "Coin",
+                th_price: "Price",
+                th_change: "24h Change",
+                ai_title: "🤖 AI Assistant",
+                ai_desc: "Type your query for instant crypto market analysis.",
+                btn_analyze: "Analyze Query",
+                port_title: "🧪 Virtual Portfolio",
+                port_desc: "Simulate trading risk-free with USDT balance.",
+                lbl_balance: "Available Balance:",
+                btn_buy: "Execute Demo Trade",
+                footer_text: "All rights reserved",
+                welcome: "Welcome",
+                logout: "Logout"
+            },
+            fr: {
+                connect_wallet: "Connecter Portefeuilles",
+                signin_btn: "Connexion",
+                signup_btn: "S'inscrire",
+                signin_title: "Connexion au Compte",
+                signup_title: "Créer un Compte",
+                badge_text: "Plateforme Crypto IA & Analyse",
+                hero_desc: "Explorez les marchés crypto en direct, tradez sans risque et connectez votre portefeuille.",
+                market_title: "📈 Prix du Marché en Direct",
+                th_coin: "Pièce",
+                th_price: "Prix",
+                th_change: "Var 24h",
+                ai_title: "🤖 Assistant IA",
+                ai_desc: "Posez votre question pour une analyse instantanée.",
+                btn_analyze: "Analyser",
+                port_title: "🧪 Portefeuille Virtuel",
+                port_desc: "Simulez le trading sans risque avec un solde USDT.",
+                lbl_balance: "Solde Disponible:",
+                btn_buy: "Exécuter Trade Démo",
+                footer_text: "Tous droits réservés",
+                welcome: "Bienvenue",
+                logout: "Déconnexion"
+            }
+        };
+
+        let currentLang = localStorage.getItem('app_lang') || 'ar';
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('app_lang', lang);
+            document.documentElement.lang = lang;
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    el.innerText = translations[lang][key];
+                }
+            });
+            checkSession();
+        }
+
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+        function handleAuth(e, inputId) {
+            e.preventDefault();
+            const val = document.getElementById(inputId).value;
+            const name = val.includes('@') ? val.split('@')[0] : val;
+            localStorage.setItem('user', JSON.stringify({ name }));
+            closeModal('signInModal');
+            closeModal('signUpModal');
+            checkSession();
+        }
+
+        function logout() {
+            localStorage.removeItem('user');
+            checkSession();
+        }
+
+        function checkSession() {
+            const user = JSON.parse(localStorage.getItem('user'));
+            const authNav = document.getElementById('authNav');
+            const t = translations[currentLang];
+            if (user) {
+                authNav.innerHTML = `<span style="color:var(--gold); font-size:14px; font-weight:600;">${t.welcome}, ${user.name}!</span> <button class="btn" style="padding:6px 14px;" onclick="logout()">${t.logout}</button>`;
+            } else {
+                authNav.innerHTML = `<button class="btn" onclick="openModal('signInModal')">${t.signin_btn}</button> <button class="btn btn-primary" onclick="openModal('signUpModal')">${t.signup_btn}</button>`;
+            }
+        }
+
+        /* --- Web3 & All Wallet Connection Logic --- */
         let web3Modal;
         let provider;
         let signer;
 
-        // Initialize Web3Modal with multi-wallet providers
         function initWeb3() {
             const providerOptions = {
                 walletconnect: {
                     package: window.WalletConnectProvider.default,
                     options: {
-                        rpc: { 1: "https://cloudflare-eth.com" } // Ethereum Mainnet
+                        rpc: { 1: "https://cloudflare-eth.com" }
                     }
                 }
             };
@@ -185,25 +596,33 @@
                 const ethBalance = ethers.utils.formatEther(balance);
 
                 document.getElementById('walletText').innerText = userAddress.substring(0, 6) + '...' + userAddress.substring(userAddress.length - 4);
-                document.getElementById('walletStatus').innerHTML = `
-                    ✅ <strong>المحفظة متصلة بنجاح!</strong><br>
-                    <strong>العنوان:</strong> ${userAddress}<br>
-                    <strong>الرصيد الحقيقي:</strong> ${parseFloat(ethBalance).toFixed(4)} ETH
+                
+                document.getElementById('realWalletCard').style.display = 'block';
+                document.getElementById('realWalletDetails').innerHTML = `
+                    <strong>العنوان (Address):</strong> ${userAddress}<br>
+                    <strong>الرصيد الحقيقي (Real Balance):</strong> ${parseFloat(ethBalance).toFixed(4)} ETH
                 `;
             } catch (error) {
                 console.error("Error connecting wallet:", error);
             }
         }
 
-        async function sendTransaction() {
-            if (!signer) {
-                alert("يرجى ربط المحفظة أولاً!");
-                return;
-            }
-            alert("طلب الدفع/الشراء جاهز للتنفيذ عبر المحفظة المتصلة!");
+        function executeTrade() {
+            alert('تم تنفيذ الصفقة التجريبية بنجاح!');
         }
 
-        window.addEventListener('load', initWeb3);
+        function analyzeMarket() {
+            const query = document.getElementById('aiQuery').value;
+            const res = document.getElementById('aiResult');
+            res.style.display = 'block';
+            res.innerText = query ? `تحليل الذكاء الاصطناعي لـ "${query}": الاتجاه صاعد (Bullish) مع دعم قوي.` : 'يرجى كتابة سؤال أولاً.';
+        }
+
+        window.addEventListener('load', () => {
+            initWeb3();
+            document.getElementById('langSelect').value = currentLang;
+            changeLanguage(currentLang);
+        });
     </script>
 </body>
 </html>
