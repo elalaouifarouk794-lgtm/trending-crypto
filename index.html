@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TrendAI Crypto | AI Market & Translation</title>
+    <title>TrendAI Crypto | Live Market & Trading Log</title>
     <style>
         :root {
             --bg: #070707;
             --panel: #11100c;
             --line: #5c4617;
-            --green: #f7bd35;
-            --red: #ff657d;
+            --green: #22c55e;
+            --red: #ef4444;
+            --gold: #f7bd35;
             --text: #f8f7f3;
             --muted: #c3bda9;
-            --blue: #f7bd35;
             --card-bg: #181611;
             --input-bg: #0d0c09;
         }
@@ -25,7 +25,7 @@
             font-family: Arial, Tahoma, sans-serif;
             line-height: 1.6;
         }
-        a { color: var(--blue); text-decoration: none; }
+        a { color: var(--gold); text-decoration: none; }
         .wrap { max-width: 1150px; margin: auto; padding: 0 16px; }
         header {
             padding: 18px 0;
@@ -42,7 +42,7 @@
         }
         .brand { display: flex; align-items: center; gap: 12px; }
         .logo { font-size: 30px; }
-        h1 { font-size: 25px; margin: 0; color: var(--green); }
+        h1 { font-size: 25px; margin: 0; color: var(--gold); }
         .nav-actions { display: flex; align-items: center; gap: 12px; }
         .lang-select {
             background: #211806;
@@ -67,7 +67,7 @@
             padding: 20px;
             box-shadow: 0 8px 28px #000;
         }
-        h2 { margin: 0 0 14px 0; font-size: 22px; color: var(--green); }
+        h2 { margin: 0 0 14px 0; font-size: 20px; color: var(--gold); }
         p { color: var(--muted); margin: 0 0 14px 0; }
         input, select, button, textarea {
             font-family: inherit;
@@ -108,7 +108,7 @@
             font-size: 12px;
             margin-bottom: 10px;
         }
-        .stat, .answer {
+        .answer {
             background: #0a0906;
             border: 1px solid #4e3b16;
             padding: 14px;
@@ -116,6 +116,26 @@
             margin-top: 10px;
             font-size: 14px;
         }
+        
+        /* Tables for Market Data and Logs */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        th, td {
+            padding: 10px 12px;
+            text-align: right;
+            border-bottom: 1px solid #2d230d;
+        }
+        html[dir="ltr"] th, html[dir="ltr"] td {
+            text-align: left;
+        }
+        th { color: var(--gold); background: #0c0a07; }
+        .up { color: var(--green); font-weight: bold; }
+        .down { color: var(--red); font-weight: bold; }
+
         footer {
             text-align: center;
             padding: 20px;
@@ -123,7 +143,8 @@
             color: var(--muted);
             font-size: 13px;
         }
-        /* Auth Modal */
+
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -180,6 +201,51 @@
     </header>
 
     <main class="wrap">
+        
+        <!-- Live Market Section -->
+        <div class="panel" style="margin-bottom: 24px;">
+            <span class="pill" data-i18n="market_pill">📈 أسعار السوق المباشرة</span>
+            <h2 data-i18n="market_title">حالة السوق الآن</h2>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-i18n="th_coin">العملة</th>
+                            <th data-i18n="th_price">السعر الحالي</th>
+                            <th data-i18n="th_change">تغير 24h</th>
+                            <th data-i18n="th_volume">حجم التداول</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Bitcoin (BTC)</strong></td>
+                            <td>$82,257.75</td>
+                            <td class="up">+3.42%</td>
+                            <td>$34.2B</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ethereum (ETH)</strong></td>
+                            <td>$3,120.50</td>
+                            <td class="up">+1.85%</td>
+                            <td>$18.5B</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Solana (SOL)</strong></td>
+                            <td>$185.20</td>
+                            <td class="down">-0.92%</td>
+                            <td>$5.1B</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Binance Coin (BNB)</strong></td>
+                            <td>$615.40</td>
+                            <td class="up">+2.10%</td>
+                            <td>$2.8B</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
         <div class="grid">
             <!-- AI Section -->
             <div class="panel">
@@ -214,14 +280,37 @@
                 <input type="number" id="tradeAmount" value="0.01" step="0.001">
 
                 <button style="width:100%;" onclick="simulateBuy()" data-i18n="btn_buy">محاكاة الشراء</button>
-                <div id="tradeLog" class="stat" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- Trading History Log -->
+        <div class="panel" style="margin-bottom: 24px;">
+            <span class="pill" data-i18n="log_pill">📜 سجل التداول</span>
+            <h2 data-i18n="log_title">سجل الصفحات والعمليات</h2>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-i18n="th_date">الوقت</th>
+                            <th data-i18n="th_type">العملية</th>
+                            <th data-i18n="th_asset">العملة</th>
+                            <th data-i18n="th_qty">الكمية</th>
+                            <th data-i18n="th_total">التكلفة الإجمالية</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tradeLogTable">
+                        <tr>
+                            <td colspan="5" style="text-align:center; color:var(--muted);" data-i18n="no_trades">لا توجد عمليات تداول حتى الآن. قم بالشراء للتسجيل!</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
         <!-- Privacy & Info -->
         <div class="card">
             <h2 data-i18n="privacy_title">🔒 الحسابات والخصوصية</h2>
-            <p data-i18n="privacy_desc">هذه النسخة تحفظ بيانات الحسابات والمحفظة داخل متصفحك المحلي (localStorage) لأغراض تجريبية وتتعليمية فقط.</p>
+            <p data-i18n="privacy_desc">هذه النسخة تحفظ بيانات الحسابات والمحفظة داخل متصفحك المحلي (localStorage) لأغراض تجريبية وتعليمية فقط.</p>
         </div>
     </main>
 
@@ -264,6 +353,12 @@
                 signup_btn: "إنشاء حساب",
                 signin_title: "تسجيل الدخول",
                 signup_title: "إنشاء حساب جديد",
+                market_pill: "📈 أسعار السوق المباشرة",
+                market_title: "حالة السوق الآن",
+                th_coin: "العملة",
+                th_price: "السعر الحالي",
+                th_change: "تغير 24h",
+                th_volume: "حجم التداول",
                 ai_pill: "🤖 مساعد الذكاء الاصطناعي",
                 ai_title: "تحليل السوق الذكي",
                 ai_desc: "اكتب سؤالك حول العملات الرقمية للحصول على تحليل فوري.",
@@ -276,6 +371,14 @@
                 lbl_coin: "اختر العملة:",
                 lbl_amount: "الكمية:",
                 btn_buy: "محاكاة الشراء",
+                log_pill: "📜 سجل التداول",
+                log_title: "سجل الصفحات والعمليات",
+                th_date: "الوقت",
+                th_type: "العملية",
+                th_asset: "العملة",
+                th_qty: "الكمية",
+                th_total: "التكلفة الإجمالية",
+                no_trades: "لا توجد عمليات تداول حتى الآن. قم بالشراء للتسجيل!",
                 privacy_title: "🔒 الحسابات والخصوصية",
                 privacy_desc: "هذه النسخة تحفظ بيانات الحسابات والمحفظة داخل متصفحك المحلي لأغراض تجريبية وتعليمية فقط.",
                 footer_text: "جميع الحقوق محفوظة",
@@ -288,6 +391,12 @@
                 signup_btn: "Sign Up",
                 signin_title: "Sign In to Your Account",
                 signup_title: "Create New Account",
+                market_pill: "📈 Live Market Prices",
+                market_title: "Current Market Status",
+                th_coin: "Coin",
+                th_price: "Price",
+                th_change: "24h Change",
+                th_volume: "24h Volume",
                 ai_pill: "🤖 AI Assistant",
                 ai_title: "Smart Market Analysis",
                 ai_desc: "Type your crypto question to get instant AI analysis.",
@@ -300,6 +409,14 @@
                 lbl_coin: "Select Coin:",
                 lbl_amount: "Amount:",
                 btn_buy: "Simulate Buy",
+                log_pill: "📜 Trading History",
+                log_title: "Transactions & Trade Log",
+                th_date: "Time",
+                th_type: "Type",
+                th_asset: "Asset",
+                th_qty: "Amount",
+                th_total: "Total Cost",
+                no_trades: "No trade history yet. Execute a simulated buy!",
                 privacy_title: "🔒 Accounts & Privacy",
                 privacy_desc: "This version persists account data & portfolio locally in your browser for educational purposes.",
                 footer_text: "All rights reserved",
@@ -312,6 +429,12 @@
                 signup_btn: "S'inscrire",
                 signin_title: "Connexion à votre compte",
                 signup_title: "Créer un nouveau compte",
+                market_pill: "📈 Prix du Marché en Direct",
+                market_title: "État Actuel du Marché",
+                th_coin: "Pièce",
+                th_price: "Prix",
+                th_change: "Var 24h",
+                th_volume: "Volume 24h",
                 ai_pill: "🤖 Assistant IA",
                 ai_title: "Analyse Intelligente du Marché",
                 ai_desc: "Posez votre question sur les cryptos pour une analyse instantanée.",
@@ -324,6 +447,14 @@
                 lbl_coin: "Sélectionner une pièce :",
                 lbl_amount: "Quantité :",
                 btn_buy: "Simuler l'achat",
+                log_pill: "📜 Historique",
+                log_title: "Journal des Transactions",
+                th_date: "Heure",
+                th_type: "Type",
+                th_asset: "Actif",
+                th_qty: "Quantité",
+                th_total: "Coût Total",
+                no_trades: "Aucun historique pour l'instant. Effectuez un achat simulé!",
                 privacy_title: "🔒 Comptes et Confidentialité",
                 privacy_desc: "Cette version sauvegarde vos données localement sur votre navigateur à des fins éducatives.",
                 footer_text: "Tous droits réservés",
@@ -333,6 +464,7 @@
         };
 
         let currentLang = localStorage.getItem('app_lang') || 'ar';
+        let tradeLogs = [];
 
         function changeLanguage(lang) {
             currentLang = lang;
@@ -348,6 +480,7 @@
             });
 
             checkUserSession();
+            renderLogs();
         }
 
         function openModal(id) { document.getElementById(id).classList.add('active'); }
@@ -401,7 +534,7 @@
         function explainData() {
             const res = document.getElementById('aiResult');
             res.style.display = 'block';
-            res.innerHTML = `<strong>📊 ${translations[currentLang].btn_explain}:</strong><br>الأسواق تظهر استقراراً عند مستويات دعم قوية.`;
+            res.innerHTML = `<strong>📊 ${translations[currentLang].btn_explain}:</strong><br>الأسوق تظهر استقراراً عند مستويات دعم قوية.`;
         }
 
         function simulateBuy() {
@@ -411,16 +544,35 @@
             const prices = { BTC: 82257.75, ETH: 3120.50, SOL: 185.20 };
             const cost = amount * prices[coin];
 
-            const log = document.getElementById('tradeLog');
-            log.style.display = 'block';
-
             if (cost > balance) {
-                log.innerHTML = `<span style="color:var(--red)">الرصيد غير كافٍ! التكلفة: $${cost.toFixed(2)}</span>`;
-            } else {
-                balance -= cost;
-                document.getElementById('usdtBalance').value = balance.toFixed(2);
-                log.innerHTML = `<span style="color:var(--green)">تمت العملية! تم شراء ${amount} من ${coin} بتكلفة $${cost.toFixed(2)}</span>`;
+                alert(currentLang === 'ar' ? 'الرصيد غير كافٍ!' : 'Insufficient balance!');
+                return;
             }
+
+            balance -= cost;
+            document.getElementById('usdtBalance').value = balance.toFixed(2);
+
+            const timeStr = new Date().toLocaleTimeString();
+            tradeLogs.unshift({ time: timeStr, type: 'BUY', coin: coin, qty: amount, total: cost.toFixed(2) });
+            renderLogs();
+        }
+
+        function renderLogs() {
+            const tbody = document.getElementById('tradeLogTable');
+            if (tradeLogs.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--muted);">${translations[currentLang].no_trades}</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = tradeLogs.map(log => `
+                <tr>
+                    <td>${log.time}</td>
+                    <td><span class="up">${log.type}</span></td>
+                    <td><strong>${log.coin}</strong></td>
+                    <td>${log.qty}</td>
+                    <td>$${log.total}</td>
+                </tr>
+            `).join('');
         }
 
         // Initialize language
