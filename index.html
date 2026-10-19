@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TrendAI Crypto | Next-Gen Web3 & AI Platform</title>
     
+    <!-- PWA Settings -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#050505">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="TrendAI">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/6001/6001368.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -451,6 +459,13 @@
     </footer>
 
     <script>
+        // PWA Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(err => console.log('SW reg error:', err));
+            });
+        }
+
         const translations = {
             ar: {
                 connect_wallet: "ربط جميع المحافظ",
@@ -640,7 +655,6 @@
             resDiv.style.display = 'block';
             resDiv.innerHTML = "⏳ جاري تحليل السوق بواسطة Google Gemini AI...";
 
-            // أضف المفتاح الحقيقي من aistudio.google.com الذي يبدأ بـ AIzaSy
             const GEMINI_API_KEY = "ضع_المفتاح_الحقيقي_هنا"; 
 
             if (GEMINI_API_KEY === "ضع_المفتاح_الحقيقي_هنا" || !GEMINI_API_KEY.startsWith("AIzaSy")) {
