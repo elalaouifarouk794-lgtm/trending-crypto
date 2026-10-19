@@ -65,18 +65,9 @@
         }
 
         @keyframes fallIn {
-            0% {
-                opacity: 0;
-                transform: translateY(-60px) rotate(-10deg) scale(0.9);
-            }
-            70% {
-                opacity: 1;
-                transform: translateY(8deg) rotate(2deg) scale(1.02);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) rotate(0deg) scale(1);
-            }
+            0% { opacity: 0; transform: translateY(-60px) rotate(-10deg) scale(0.9); }
+            70% { opacity: 1; transform: translateY(8deg) rotate(2deg) scale(1.02); }
+            100% { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }
         }
 
         .top-banner {
@@ -280,7 +271,7 @@
             background: var(--surface);
             border: 1px solid var(--border);
             width: 100%;
-            max-width: 400px;
+            max-width: 450px;
             padding: 24px;
             border-radius: var(--radius-lg);
             position: relative;
@@ -306,7 +297,7 @@
 <body>
 
     <div class="top-banner">
-        ✨ FREE TRADING DEMO & REAL WEB3 WALLET INTEGRATION ⚡
+        ✨ BUY CRYPTO WITH REAL MONEY VIA CARD OR WALLET ⚡
     </div>
 
     <div class="bg-grid"></div>
@@ -344,17 +335,19 @@
             <!-- Falling Animation Title -->
             <h1 class="falling-container">
                 <span class="fall-word" style="--i:1;">تداول</span>
-                <span class="fall-word" style="--i:2;">إفتراضي</span>
+                <span class="fall-word" style="--i:2;">حقيقي</span>
                 <span class="fall-word" style="--i:3;">ذكي</span>
-                <span class="fall-word" style="--i:4;">وتحليل</span>
-                <span class="fall-word" style="--i:5;">متطور</span>
+                <span class="fall-word" style="--i:4;">وشراء</span>
+                <span class="fall-word" style="--i:5;">فوري</span>
             </h1>
 
-            <p data-i18n="hero_desc">استكشف أسواق العملات الرقمية بلحظتها، تداول بدون مخاطرة، واربط محفظتك الرقمية بكل سهولة.</p>
+            <p data-i18n="hero_desc">استكشف أسواق العملات الرقمية بلحظتها، اشترِ العملات بالبطاقة البنكية الحقيقية، واربط محفظتك.</p>
 
+            <!-- Real Wallet Info Card -->
             <div id="realWalletCard" class="card" style="display:none; margin-bottom:20px; text-align:center; border-color:var(--gold);">
                 <h3 style="color:var(--gold); margin-bottom:8px;">💳 المحفظة الحقيقية المتصلة</h3>
-                <p id="realWalletDetails" style="font-size:14px; color:var(--text-main);"></p>
+                <p id="realWalletDetails" style="font-size:14px; color:var(--text-main); margin-bottom: 12px;"></p>
+                <button class="btn btn-primary" onclick="openModal('buyCryptoModal')" data-i18n="btn_buy_real">💳 شراء العملات بالفلوس الحقيقية</button>
             </div>
 
             <div class="dashboard-container">
@@ -384,11 +377,6 @@
                                 <td>$188.30</td>
                                 <td class="up">+5.12%</td>
                             </tr>
-                            <tr>
-                                <td><strong>Ripple (XRP)</strong></td>
-                                <td>$0.58</td>
-                                <td class="down">-0.45%</td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -415,6 +403,29 @@
 
     </main>
 
+    <!-- Buy Crypto with Real Money Modal -->
+    <div id="buyCryptoModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('buyCryptoModal')">✕</span>
+            <h3 style="color: var(--gold); margin-bottom: 16px;" data-i18n="modal_buy_title">💳 شراء العملات بالفلوس الحقيقية</h3>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;" data-i18n="modal_buy_desc">اختر المبلغ والعملة لإتمام الشراء عبر بوابة الدفع الآمنة:</p>
+            
+            <label style="font-size:12px; color:var(--text-muted);">المبلغ بـ (USD):</label>
+            <input type="number" id=" fiatAmount" value="100" min="10">
+
+            <label style="font-size:12px; color:var(--text-muted);">اختر العملة المراد شراؤها:</label>
+            <select id="cryptoSelect">
+                <option value="ETH">Ethereum (ETH)</option>
+                <option value="BTC">Bitcoin (BTC)</option>
+                <option value="USDT">Tether (USDT)</option>
+                <option value="SOL">Solana (SOL)</option>
+            </select>
+
+            <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;" onclick="proceedToCheckout()" data-i18n="btn_proceed_pay">متابعة الدفع بالبطاقة البنكية ⚡</button>
+        </div>
+    </div>
+
+    <!-- Sign In Modal -->
     <div id="signInModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('signInModal')">✕</span>
@@ -427,6 +438,7 @@
         </div>
     </div>
 
+    <!-- Sign Up Modal -->
     <div id="signUpModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('signUpModal')">✕</span>
@@ -453,7 +465,7 @@
                 signin_title: "تسجيل الدخول",
                 signup_title: "إنشاء حساب جديد",
                 badge_text: "منصة تحليل العملات والذكاء الاصطناعي",
-                hero_desc: "استكشف أسواق العملات الرقمية بلحظتها، تداول بدون مخاطرة، واربط محفظتك الرقمية بكل سهولة.",
+                hero_desc: "استكشف أسواق العملات الرقمية بلحظتها، اشترِ العملات بالبطاقة البنكية الحقيقية، واربط محفظتك.",
                 market_title: "📈 أسعار السوق المباشرة",
                 th_coin: "العملة",
                 th_price: "السعر الحالي",
@@ -465,6 +477,10 @@
                 port_desc: "رصيد تجريبي USDT للتداول بدون مخاطر.",
                 lbl_balance: "الرصيد المتاح:",
                 btn_buy: "تنفيذ صفقة تجريبية",
+                btn_buy_real: "💳 شراء العملات بالفلوس الحقيقية",
+                modal_buy_title: "💳 شراء العملات بالفلوس الحقيقية",
+                modal_buy_desc: "اختر المبلغ والعملة لإتمام الشراء عبر بوابة الدفع الآمنة:",
+                btn_proceed_pay: "متابعة الدفع بالبطاقة البنكية ⚡",
                 footer_text: "جميع الحقوق محفوظة",
                 welcome: "مرحباً",
                 logout: "خروج"
@@ -476,7 +492,7 @@
                 signin_title: "Sign In to Account",
                 signup_title: "Create New Account",
                 badge_text: "Next-Gen Crypto AI & Analysis Platform",
-                hero_desc: "Explore live crypto markets, trade risk-free, and seamlessly connect your Web3 wallet.",
+                hero_desc: "Explore live crypto markets, buy crypto with real bank cards, and connect your wallet.",
                 market_title: "📈 Live Market Prices",
                 th_coin: "Coin",
                 th_price: "Price",
@@ -488,6 +504,10 @@
                 port_desc: "Simulate trading risk-free with USDT balance.",
                 lbl_balance: "Available Balance:",
                 btn_buy: "Execute Demo Trade",
+                btn_buy_real: "💳 Buy Crypto with Real Money",
+                modal_buy_title: "💳 Buy Crypto with Real Money",
+                modal_buy_desc: "Select amount and crypto to complete purchase via secure gateway:",
+                btn_proceed_pay: "Proceed to Card Checkout ⚡",
                 footer_text: "All rights reserved",
                 welcome: "Welcome",
                 logout: "Logout"
@@ -499,7 +519,7 @@
                 signin_title: "Connexion au Compte",
                 signup_title: "Créer un Compte",
                 badge_text: "Plateforme Crypto IA & Analyse",
-                hero_desc: "Explorez les marchés crypto en direct, tradez sans risque et connectez votre portefeuille.",
+                hero_desc: "Explorez les marchés, achetez des cryptos par carte bancaire et connectez votre portefeuille.",
                 market_title: "📈 Prix du Marché en Direct",
                 th_coin: "Pièce",
                 th_price: "Prix",
@@ -511,6 +531,10 @@
                 port_desc: "Simulez le trading sans risque avec un solde USDT.",
                 lbl_balance: "Solde Disponible:",
                 btn_buy: "Exécuter Trade Démo",
+                btn_buy_real: "💳 Acheter Crypto (Argent Réel)",
+                modal_buy_title: "💳 Acheter Crypto (Argent Réel)",
+                modal_buy_desc: "Sélectionnez le montant et la crypto via la passerelle sécurisée:",
+                btn_proceed_pay: "Procéder au Paiement par Carte ⚡",
                 footer_text: "Tous droits réservés",
                 welcome: "Bienvenue",
                 logout: "Déconnexion"
@@ -567,6 +591,7 @@
         let web3Modal;
         let provider;
         let signer;
+        let userConnectedAddress = "";
 
         function initWeb3() {
             const providerOptions = {
@@ -591,20 +616,34 @@
                 provider = new ethers.providers.Web3Provider(instance);
                 signer = provider.getSigner();
 
-                const userAddress = await signer.getAddress();
-                const balance = await provider.getBalance(userAddress);
+                userConnectedAddress = await signer.getAddress();
+                const balance = await provider.getBalance(userConnectedAddress);
                 const ethBalance = ethers.utils.formatEther(balance);
 
-                document.getElementById('walletText').innerText = userAddress.substring(0, 6) + '...' + userAddress.substring(userAddress.length - 4);
+                document.getElementById('walletText').innerText = userConnectedAddress.substring(0, 6) + '...' + userConnectedAddress.substring(userConnectedAddress.length - 4);
                 
                 document.getElementById('realWalletCard').style.display = 'block';
                 document.getElementById('realWalletDetails').innerHTML = `
-                    <strong>العنوان (Address):</strong> ${userAddress}<br>
-                    <strong>الرصيد الحقيقي (Real Balance):</strong> ${parseFloat(ethBalance).toFixed(4)} ETH
+                    <strong>العنوان:</strong> ${userConnectedAddress}<br>
+                    <strong>الرصيد الحقيقي:</strong> ${parseFloat(ethBalance).toFixed(4)} ETH
                 `;
             } catch (error) {
                 console.error("Error connecting wallet:", error);
             }
+        }
+
+        function proceedToCheckout() {
+            if (!userConnectedAddress) {
+                alert("يرجى ربط محفظتك أولاً لتلقي العملات المشراة!");
+                closeModal('buyCryptoModal');
+                return;
+            }
+            const amount = document.getElementById('fiatAmount').value;
+            const crypto = document.getElementById('cryptoSelect').value;
+            
+            // Redirect to MoonPay or simulated real payment checkout
+            alert(`جاري توجيهك لبوابة الدفع الآمنة لشراء ${crypto} بقيمة $${amount} وتحويلها إلى محفظتك: ${userConnectedAddress}`);
+            closeModal('buyCryptoModal');
         }
 
         function executeTrade() {
