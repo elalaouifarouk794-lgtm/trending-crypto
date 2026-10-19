@@ -37,6 +37,33 @@
             line-height: 1.6;
         }
 
+        /* Top Dropdown Banner Animation */
+        .top-banner {
+            background: linear-gradient(90deg, rgba(247, 189, 53, 0.15), rgba(247, 189, 53, 0.3), rgba(247, 189, 53, 0.15));
+            border-bottom: 1px solid var(--border);
+            color: var(--gold);
+            text-align: center;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 101;
+            animation: dropDownText 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            box-shadow: 0 4px 20px rgba(247, 189, 53, 0.2);
+        }
+
+        @keyframes dropDownText {
+            0% {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
         .bg-grid {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -56,6 +83,7 @@
             top: 16px;
             z-index: 100;
             margin-bottom: 40px;
+            margin-top: 12px;
         }
 
         .nav-inner {
@@ -257,6 +285,11 @@
     </style>
 </head>
 <body>
+
+    <!-- Animated Dropdown Top Banner -->
+    <div class="top-banner">
+        ✨ FREE TRADING DEMO • START TRADING WITHOUT RISK ⚡
+    </div>
 
     <div class="bg-grid"></div>
 
