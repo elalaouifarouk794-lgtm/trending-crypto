@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TrendAI Crypto | Live Market & Trading Log</title>
+    <title>TrendAI Crypto | Live Market, Wallet & Trading Log</title>
     <style>
         :root {
             --bg: #070707;
@@ -43,7 +43,7 @@
         .brand { display: flex; align-items: center; gap: 12px; }
         .logo { font-size: 30px; }
         h1 { font-size: 25px; margin: 0; color: var(--gold); }
-        .nav-actions { display: flex; align-items: center; gap: 12px; }
+        .nav-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
         .lang-select {
             background: #211806;
             color: #ffd15a;
@@ -97,6 +97,11 @@
             background: #211806;
             color: #ffd15a;
             border: 1px solid #8a6518;
+        }
+        button.wallet-btn {
+            background: #2d1e04;
+            color: #f7bd35;
+            border: 1px solid #f7bd35;
         }
         .pill {
             display: inline-block;
@@ -192,7 +197,10 @@
                     <option value="en">English (EN)</option>
                     <option value="fr">Français (FR)</option>
                 </select>
-                <div id="authNav">
+                
+                <button id="walletBtn" class="wallet-btn" onclick="connectWallet()" data-i18n="connect_wallet">🦊 ربط المحفظة</button>
+
+                <div id="authNav" style="display:inline-flex; gap:8px;">
                     <button class="secondary" onclick="openModal('signInModal')" data-i18n="signin_btn">تسجيل الدخول</button>
                     <button onclick="openModal('signUpModal')" data-i18n="signup_btn">إنشاء حساب</button>
                 </div>
@@ -202,6 +210,19 @@
 
     <main class="wrap">
         
+        <!-- Web3 Wallet Banner -->
+        <div id="walletInfoBox" class="panel" style="display:none; margin-bottom: 24px; border-color: var(--gold);">
+            <span class="pill" data-i18n="wallet_connected_pill">🌐 المحفظة المتصلة</span>
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                <div>
+                    <strong data-i18n="wallet_address">عنوان المحفظة:</strong> <span id="walletAddressDisplay" style="color:var(--gold);"></span>
+                </div>
+                <div>
+                    <strong data-i18n="wallet_balance">الرصيد:</strong> <span id="walletBalanceDisplay" style="color:var(--green);"></span>
+                </div>
+            </div>
+        </div>
+
         <!-- Live Market Section -->
         <div class="panel" style="margin-bottom: 24px;">
             <span class="pill" data-i18n="market_pill">📈 أسعار السوق المباشرة</span>
@@ -349,6 +370,10 @@
         const translations = {
             ar: {
                 subtitle: "منصة التحليل والتداول الافتراضي الذكية",
+                connect_wallet: "🦊 ربط المحفظة",
+                wallet_connected_pill: "🌐 المحفظة المتصلة",
+                wallet_address: "عنوان المحفظة:",
+                wallet_balance: "الرصيد:",
                 signin_btn: "تسجيل الدخول",
                 signup_btn: "إنشاء حساب",
                 signin_title: "تسجيل الدخول",
@@ -387,6 +412,10 @@
             },
             en: {
                 subtitle: "Smart AI Crypto Analysis & Paper Trading Platform",
+                connect_wallet: "🦊 Connect Wallet",
+                wallet_connected_pill: "🌐 Connected Wallet",
+                wallet_address: "Wallet Address:",
+                wallet_balance: "Balance:",
                 signin_btn: "Sign In",
                 signup_btn: "Sign Up",
                 signin_title: "Sign In to Your Account",
@@ -425,6 +454,10 @@
             },
             fr: {
                 subtitle: "Plateforme d'analyse crypto IA et de trading virtuel",
+                connect_wallet: "🦊 Connecter Portefeuille",
+                wallet_connected_pill: "🌐 Portefeuille Connecté",
+                wallet_address: "Adresse du Portefeuille:",
+                wallet_balance: "Solde:",
                 signin_btn: "Se Connecter",
                 signup_btn: "S'inscrire",
                 signin_title: "Connexion à votre compte",
@@ -483,6 +516,34 @@
             renderLogs();
         }
 
+        /* Web3 Connect Wallet Functionality */
+        async function connectWallet() {
+            if (window.ethereum) {
+                try {
+                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    const account = accounts[0];
+                    const shortAcc = account.substring(0, 6) + '...' + account.substring(account.length - 4);
+                    
+                    document.getElementById('walletBtn').innerText = '✅ ' + shortAcc;
+                    document.getElementById('walletAddressDisplay').innerText = account;
+                    document.getElementById('walletInfoBox').style.display = 'block';
+
+                    // Get ETH Balance
+                    const balanceHex = await window.ethereum.request({
+                        method: 'eth_getBalance',
+                        params: [account, 'latest']
+                    });
+                    const balanceEth = (parseInt(balanceHex, 16) / 1e18).toFixed(4);
+                    document.getElementById('walletBalanceDisplay').innerText = balanceEth + ' ETH';
+
+                } catch (error) {
+                    alert('خطأ فـ الربط: ' + error.message);
+                }
+            } else {
+                alert(currentLang === 'ar' ? 'لم يتم العثور على محفظة MetaMask! يرجى تثبيتها فـ متصفحك.' : 'MetaMask wallet not detected! Please install MetaMask extension.');
+            }
+        }
+
         function openModal(id) { document.getElementById(id).classList.add('active'); }
         function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
@@ -534,7 +595,7 @@
         function explainData() {
             const res = document.getElementById('aiResult');
             res.style.display = 'block';
-            res.innerHTML = `<strong>📊 ${translations[currentLang].btn_explain}:</strong><br>الأسوق تظهر استقراراً عند مستويات دعم قوية.`;
+            res.innerHTML = `<strong>📊 ${translations[currentLang].btn_explain}:</strong><br>الأسواق تظهر استقراراً عند مستويات دعم قوية.`;
         }
 
         function simulateBuy() {
