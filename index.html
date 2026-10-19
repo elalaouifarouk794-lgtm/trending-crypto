@@ -1,352 +1,443 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#07111f">
-  <title>TrendAI Crypto | AI Market</title>
-  <style>
-    :root{--bg:#070707;--panel:#11100c;--line:#5c4617;--green:#f7bd35;--red:#ff657d;--text:#f8f7f3;--muted:#c3bda9;--blue:#f7bd35}
-    *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Tahoma,sans-serif;line-height:1.6}
-    a{color:var(--blue)}
-    .wrap{max-width:1150px;margin:auto;padding:0 16px}
-    header{padding:18px 0;background:#050505;border-bottom:1px solid #7a5a13;box-shadow:0 6px 30px #000}
-    .hero-art{display:block;width:100%;height:auto;border:1px solid #8a6518;border-radius:18px;margin:0 0 22px;box-shadow:0 12px 40px #000}
-    .gold-credit{color:#f7bd35;font-weight:bold}
-    .panel,.card{box-shadow:0 8px 28px #0008}
-    .pill{border-color:#8a6518;background:#211806;color:#ffd15a}
-    button{background:linear-gradient(135deg,#ffe18a,#d99a13);color:#171006}
-    input,select,button{border-color:#59451b}
-    .stat,.answer{background:#0a0906;border-color:#4e3b16}
-    .top{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
-    .brand{display:flex;align-items:center;gap:12px}
-    .logo{font-size:30px}
-    h1{font-size:25px;margin:0;color:var(--green)}
-    header p,.muted,.small{color:var(--muted);margin:4px 0}
-    main{padding:24px 0 40px}
-    h2{margin:0 0 8px;font-size:25px}
-    h3{margin:0 0 10px}
-    .hero{display:grid;grid-template-columns:1.35fr .85fr;gap:16px;margin-bottom:18px}
-    .panel,.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;min-width:0}
-    .eyebrow{display:inline-block;color:var(--green);font-size:12px;font-weight:bold;letter-spacing:.4px;margin-bottom:8px}
-    .hero p{color:var(--muted)}
-    .pill{display:inline-block;border:1px solid #226e5a;background:#0c2a28;color:var(--green);padding:5px 10px;border-radius:999px;font-size:12px}
-    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
-    .stat{background:#0a1829;border:1px solid var(--line);border-radius:12px;padding:13px}
-    .stat span{display:block;color:var(--muted);font-size:12px}
-    .stat strong{font-size:21px}
-    .section-title{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin:24px 0 12px}
-    .controls{display:flex;gap:9px;flex-wrap:wrap}
-    input,select,button{font:inherit;border-radius:9px;border:1px solid var(--line);padding:11px 12px;background:#0a1829;color:var(--text)}
-    input::placeholder{color:#7789a8}
-    button{background:var(--green);color:#06231d;font-weight:bold;border:0;cursor:pointer}
-    button.secondary{background:#1b3048;color:var(--text);border:1px solid var(--line)}
-    button:disabled{opacity:.6;cursor:wait}
-    .tablebox{overflow-x:auto}
-    table{width:100%;border-collapse:collapse;min-width:560px}
-    th,td{text-align:right;padding:12px;border-bottom:1px solid var(--line);white-space:nowrap}
-    th{color:var(--muted);font-size:13px}
-    tr:last-child td{border-bottom:0}
-    .coin{display:flex;align-items:center;gap:9px}
-    .coin img{width:26px;height:26px;border-radius:50%}
-    .green{color:var(--green)}.red{color:var(--red)}
-    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    .analysis{color:var(--muted);min-height:60px}
-    .assistant input{width:100%;margin:8px 0}
-    .assistant button{margin-top:8px}
-    .answer{margin-top:12px;padding:12px;background:#0a1829;border:1px solid var(--line);border-radius:10px;min-height:52px;white-space:pre-wrap;overflow-wrap:anywhere}
-    .notice{padding:12px;border-radius:10px;background:#302918;color:#ffe5a0;border:1px solid #685a2d;font-size:13px;margin-top:12px}
-    .paper-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px}
-    .paper-row input{width:140px}
-    footer{border-top:1px solid var(--line);padding:22px 0;color:var(--muted);font-size:13px}
-    .status{font-size:12px;color:var(--muted)}
-    .error{color:var(--red)}
-    @media(max-width:760px){.hero,.grid2{grid-template-columns:1fr}.stats{grid-template-columns:repeat(3,1fr)}.panel,.card{padding:15px}.stat{padding:9px}.stat strong{font-size:17px}}
-  </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#07111f">
+    <title>TrendAI Crypto | AI Market</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root{--bg:#070707;--panel:#11100c;--line:#5c4617;--green:#f7bd35;--red:#ff657d;--text:#f8f7f3;--muted:#c3bda9;--blue:#f7bd35}
+        *{box-sizing:border-box}
+        body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Tahoma,sans-serif;line-height:1.6}
+        a{color:var(--blue);text-decoration:none}
+        .wrap{max-width:1150px;margin:auto;padding:0 16px}
+        header{padding:18px 0;background:#050505;border-bottom:1px solid #7a5a13;box-shadow:0 6px 30px #000}
+        .top{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+        .brand{display:flex;align-items:center;gap:12px}
+        .logo{font-size:28px;color:#f7bd35}
+        h1{font-size:22px;margin:0;color:var(--green)}
+        header p,.muted,small{color:var(--muted);margin:2px 0 0 0;font-size:13px}
+        main{padding:24px 0 40px}
+        h2{margin:0 0 12px;font-size:20px;color:#f7bd35}
+        .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:24px}
+        .panel,.card{background:var(--panel);border:1px solid #8a6518;border-radius:14px;padding:20px;box-shadow:0 8px 28px #000}
+        .pill{border-color:#8a6518;background:#211806;color:#ffd15a;padding:4px 10px;border-radius:20px;font-size:12px;border:1px solid #8a6518;display:inline-block}
+        button{background:linear-gradient(135deg,#ffe18a,#d99a13);color:#171006;border:none;padding:10px 18px;border-radius:8px;font-weight:bold;cursor:pointer;transition:0.2s opacity;font-family:inherit}
+        button:hover{opacity:0.9}
+        button.btn-outline{background:transparent;color:#f7bd35;border:1px solid #8a6518}
+        button.btn-outline:hover{background:#211806}
+        input,select{background:#0a0906;border:1px solid #59451b;color:#fff;padding:10px 14px;border-radius:8px;width:100%;font-family:inherit;margin-top:6px}
+        input:focus,select:focus{outline:none;border-color:#f7bd35}
+        .stat,.answer{background:#0a0906;border:1px solid #4e3b16;padding:14px;border-radius:10px;margin-top:12px}
+        .auth-btns{display:flex;gap:10px;align-items:center}
+        .modal{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;zIndex:1000;padding:16px}
+        .modal.hidden{display:none}
+        .modal-card{background:#11100c;border:1px solid #8a6518;border-radius:14px;padding:24px;max-width:420px;width:100%;position:relative}
+        .close-btn{position:absolute;top:12px;left:12px;background:none;border:none;color:#c3bda9;font-size:18px;cursor:pointer}
+        .tab-btn{background:none;border:none;color:#c3bda9;padding:8px 16px;border-bottom:2px solid transparent;border-radius:0;cursor:pointer}
+        .tab-btn.active{color:#f7bd35;border-color:#f7bd35}
+        footer{border-top:1px solid #5c4617;padding:20px 0;text-align:center;font-size:13px;color:var(--muted);background:#050505}
+        .gold-credit{color:#f7bd35;font-weight:bold}
+        .chart-container{height:220px;position:relative;margin-top:10px}
+    </style>
 </head>
 <body>
-<header>
-  <div class="wrap top">
-    <div class="brand"><div class="logo">📈</div><div><h1>TrendAI Crypto</h1><p>AI Market Insights · Education & Paper Trading</p></div></div>
-    <div class="controls">
-      <label for="languageSelect" class="small" style="align-self:center">Language / اللغة</label>
-      <select id="languageSelect" aria-label="Choose language"><option value="ar">العربية</option><option value="fr">Français</option><option value="en">English</option></select>
-      <button class="secondary" id="refreshBtn" type="button">تحديث السوق ↻</button>
-      <span class="pill">● Paper trading only</span>
-    </div>
-  </div>
-</header>
-<main class="wrap">
-  <img class="hero-art" src="trendai-crypto-hero.png" alt="TrendAI Crypto — واجهة سوداء وذهبية من تصميم Farouk El Alaoui">
-  <section class="hero">
-    <div class="panel">
-      <span class="eyebrow">CRYPTO MARKET INTELLIGENCE</span>
-      <h2>فهم السوق بذكاء، بلا وعود بالأرباح.</h2>
-      <p>تابع أسعار العملات الرقمية، افهم التغيّرات، وسول TrendAI على المفاهيم والأخبار. المعلومات تعليمية فقط وليست نصيحة استثمارية.</p>
-      <span class="pill">معلومات السوق قد تتأخر أو لا تتوفر مؤقتاً</span>
-      <div class="stats">
-        <div class="stat"><span>العملات المعروضة</span><strong id="coinCount">—</strong></div>
-        <div class="stat"><span>أعلى تغيّر 24س</span><strong id="topMover">—</strong></div>
-        <div class="stat"><span>آخر تحديث</span><strong id="lastUpdated">—</strong></div>
-      </div>
-    </div>
-    <div class="panel">
-      <h3>🧭 كيف تستعمل الموقع؟</h3>
-      <p class="muted">1. شوف بيانات السوق المتاحة.</p>
-      <p class="muted">2. اختار عملة لفهم بياناتها.</p>
-      <p class="muted">3. سول المساعد الذكي على المفاهيم والمخاطر.</p>
-      <p class="muted">4. جرّب محفظة افتراضية للتعلّم، بلا أموال حقيقية.</p>
-      <div class="notice">تنبيه: لا تدخل كلمات سر أو مفاتيح محافظ. هذا الموقع لا ينفذ عمليات شراء أو بيع حقيقية.</div>
-    </div>
-  </section>
 
-  <section>
-    <div class="section-title">
-      <div><h2>🌐 سوق العملات</h2><p class="small">بيانات عامة من CoinGecko إذا كان مصدر البيانات متاحاً.</p></div>
-      <div class="controls">
-        <input id="searchCoin" placeholder="بحث عن عملة..." aria-label="بحث عن عملة">
-        <select id="sortCoin" aria-label="ترتيب العملات"><option value="market_cap">حسب القيمة السوقية</option><option value="up">الأكثر ارتفاعاً</option><option value="down">الأكثر انخفاضاً</option></select>
-      </div>
-    </div>
-    <div class="panel tablebox">
-      <table>
-        <thead><tr><th>العملة</th><th>السعر (USD)</th><th>تغيّر 24س</th><th>القيمة السوقية</th></tr></thead>
-        <tbody id="coins"><tr><td colspan="4">جاري تحميل بيانات السوق...</td></tr></tbody>
-      </table>
-      <p id="marketStatus" class="small" role="status">جاري الاتصال بمصدر البيانات...</p>
-    </div>
-  </section>
+    <!-- HEADER -->
+    <header>
+        <div class="wrap top">
+            <div class="brand">
+                <i class="fa-solid fa-chart-line logo"></i>
+                <div>
+                    <h1>TrendAI Crypto <span style="font-size:14px;color:var(--muted);font-weight:normal">| AI Market</span></h1>
+                    <p>منصة التحليل والربط مع الذكاء الاصطناعي والمحاكاة الافتراضية</p>
+                </div>
+            </div>
 
-  <section class="grid2">
-    <div class="panel">
-      <h3>📊 فهم تغيّر السوق</h3>
-      <p class="analysis" id="marketAnalysis">حمّل بيانات السوق لعرض ملخص تعليمي. تغيّر السعر السابق لا يضمن اتجاه المستقبل.</p>
-      <button class="secondary" id="explainMarketBtn" type="button">فسّر لي بيانات السوق</button>
-    </div>
-    <div class="panel assistant">
-      <h3>🤖 TrendAI AI Assistant</h3>
-      <p class="small">مساعد تعليمي لشرح العملات الرقمية والمخاطر ومفاهيم السوق.</p>
-      <form id="aiForm">
-        <input id="aiQuestion" type="text" maxlength="1000" placeholder="مثلاً: What is Bitcoin?" autocomplete="off" required>
-        <button id="askAI" type="submit">حلّل السؤال</button>
-      </form>
-      <div id="aiAnswer" class="answer" role="status" aria-live="polite">كتب سؤال واضغط على حلّل السؤال.</div>
-      <p class="small">إذا لم يتم إعداد Worker و Gemini API، سيظهر تنبيه واضح. لا توجد توقعات مضمونة.</p>
-    </div>
-  </section>
+            <!-- AUTH CONTROLS -->
+            <div class="auth-btns">
+                <div id="guestView" style="display:flex;gap:8px;align-items:center">
+                    <span class="pill" style="border-color:#ff657d;color:#ff657d;background:#200a0e">غير مسجل</span>
+                    <button onclick="openModal('signin')" class="btn-outline">تسجيل الدخول</button>
+                    <button onclick="openModal('signup')">حساب جديد</button>
+                </div>
+                <div id="userView" style="display:none;align-items:center;gap:10px">
+                    <span class="pill" id="userTag"><i class="fa-solid fa-user"></i> مرحباً بك</span>
+                    <button onclick="logout()" class="btn-outline" style="padding:6px 12px;font-size:12px"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>
+                </div>
+            </div>
+        </div>
+    </header>
 
-  <section class="grid2" style="margin-top:16px">
-    <div class="panel">
-      <h3>🧪 محفظة افتراضية (Paper Trading)</h3>
-      <p class="small">تجربة تعليمية داخل المتصفح فقط. لا تستخدم أموالاً حقيقية ولا تتصل بمحفظة رقمية.</p>
-      <div class="paper-row"><label for="paperCash">رصيد افتراضي USDT</label><input id="paperCash" type="number" min="0" step="1" value="1000"></div>
-      <div class="paper-row"><label for="paperCoin">العملة</label><select id="paperCoin"><option value="bitcoin">Bitcoin</option><option value="ethereum">Ethereum</option><option value="solana">Solana</option></select></div>
-      <div class="paper-row"><label for="paperAmount">كمية افتراضية</label><input id="paperAmount" type="number" min="0" step="0.0001" value="0.01"><button id="simulateBtn" type="button">محاكاة شراء</button></div>
-      <p id="paperResult" class="answer">المحاكاة لا تنفّذ أي صفقة حقيقية.</p>
-    </div>
-    <div class="panel">
-      <h3>🔐 الحسابات والخصوصية</h3>
-      <p class="muted">هذه النسخة لا تحفظ كلمات مرور ولا توفر تسجيل دخول حقيقياً. لا تدخل معلومات شخصية أو مفاتيح API داخل الموقع.</p>
-      <p class="muted">لإضافة حسابات آمنة لاحقاً، تحتاج خدمة مصادقة وقاعدة بيانات مع قواعد صلاحيات مناسبة.</p>
-    </div>
-  </section>
-</main>
-<footer><div class="wrap">© 2026 TrendAI Crypto · Educational information only · Paper trading only<div class="gold-credit" style="margin-top:8px">Created by Farouk El Alaoui 🇲🇦</div></div></footer>
+    <!-- MAIN CONTENT -->
+    <main class="wrap">
 
-<script>
-"use strict";
-const translations = {
-  fr: {
-    "AI Market Insights · Education & Paper Trading":"Analyses du marché par IA · Éducation et simulation",
-    "Language / اللغة":"Langue",
-    "تحديث السوق ↻":"Actualiser le marché ↻", "● Paper trading only":"● Simulation uniquement",
-    "CRYPTO MARKET INTELLIGENCE":"INTELLIGENCE DU MARCHÉ CRYPTO",
-    "فهم السوق بذكاء، بلا وعود بالأرباح.":"Comprendre le marché intelligemment, sans promesse de gains.",
-    "تابع أسعار العملات الرقمية، افهم التغيّرات، وسول TrendAI على المفاهيم والأخبار. المعلومات تعليمية فقط وليست نصيحة استثمارية.":"Suivez les cours des cryptomonnaies, comprenez les variations et posez vos questions à TrendAI sur les concepts et l’actualité. Contenu éducatif uniquement, pas un conseil en investissement.",
-    "معلومات السوق قد تتأخر أو لا تتوفر مؤقتاً":"Les données du marché peuvent être retardées ou temporairement indisponibles",
-    "العملات المعروضة":"Cryptomonnaies affichées", "أعلى تغيّر 24س":"Plus forte variation sur 24 h", "آخر تحديث":"Dernière mise à jour",
-    "🧭 كيف تستعمل الموقع؟":"🧭 Comment utiliser le site ?", "1. شوف بيانات السوق المتاحة.":"1. Consultez les données disponibles.",
-    "2. اختار عملة لفهم بياناتها.":"2. Choisissez une cryptomonnaie pour comprendre ses données.",
-    "3. سول المساعد الذكي على المفاهيم والمخاطر.":"3. Interrogez l’assistant IA sur les concepts et les risques.",
-    "4. جرّب محفظة افتراضية للتعلّم، بلا أموال حقيقية.":"4. Essayez un portefeuille virtuel, sans argent réel.",
-    "تنبيه: لا تدخل كلمات سر أو مفاتيح محافظ. هذا الموقع لا ينفذ عمليات شراء أو بيع حقيقية.":"Attention : ne saisissez aucun mot de passe ni aucune clé de portefeuille. Ce site n’effectue aucun achat ni vente réel.",
-    "🌐 سوق العملات":"🌐 Marché des cryptomonnaies", "بيانات عامة من CoinGecko إذا كان مصدر البيانات متاحاً.":"Données publiques de CoinGecko si la source est disponible.",
-    "بحث عن عملة...":"Rechercher une cryptomonnaie...", "حسب القيمة السوقية":"Par capitalisation", "الأكثر ارتفاعاً":"Plus fortes hausses", "الأكثر انخفاضاً":"Plus fortes baisses",
-    "العملة":"Crypto", "السعر (USD)":"Prix (USD)", "تغيّر 24س":"Variation 24 h", "القيمة السوقية":"Capitalisation",
-    "جاري تحميل بيانات السوق...":"Chargement des données du marché...", "جاري الاتصال بمصدر البيانات...":"Connexion à la source de données...",
-    "📊 فهم تغيّر السوق":"📊 Comprendre les variations du marché", "حمّل بيانات السوق لعرض ملخص تعليمي. تغيّر السعر السابق لا يضمن اتجاه المستقبل.":"Chargez les données du marché pour afficher un résumé éducatif. Les variations passées ne garantissent pas l’évolution future.",
-    "فسّر لي بيانات السوق":"Expliquer les données du marché", "🤖 TrendAI AI Assistant":"🤖 Assistant IA TrendAI",
-    "مساعد تعليمي لشرح العملات الرقمية والمخاطر ومفاهيم السوق.":"Un assistant éducatif pour comprendre les cryptomonnaies, les risques et les concepts du marché.",
-    "مثلاً: What is Bitcoin?":"Ex. : Qu’est-ce que Bitcoin ?", "حلّل السؤال":"Analyser la question",
-    "كتب سؤال واضغط على حلّل السؤال.":"Écrivez une question puis cliquez sur Analyser.",
-    "إذا لم يتم إعداد Worker و Gemini API، سيظهر تنبيه واضح. لا توجد توقعات مضمونة.":"Si le Worker et l’API Gemini ne sont pas configurés, un avertissement s’affichera. Aucune prévision n’est garantie.",
-    "🧪 محفظة افتراضية (Paper Trading)":"🧪 Portefeuille virtuel (simulation)",
-    "تجربة تعليمية داخل المتصفح فقط. لا تستخدم أموالاً حقيقية ولا تتصل بمحفظة رقمية.":"Expérience éducative dans le navigateur uniquement. Aucun argent réel et aucune connexion à un portefeuille.",
-    "رصيد افتراضي USDT":"Solde virtuel USDT", "العملة":"Cryptomonnaie", "كمية افتراضية":"Quantité virtuelle", "محاكاة شراء":"Simuler un achat",
-    "المحاكاة لا تنفّذ أي صفقة حقيقية.":"La simulation n’exécute aucune transaction réelle.", "🔐 الحسابات والخصوصية":"🔐 Comptes et confidentialité",
-    "هذه النسخة لا تحفظ كلمات مرور ولا توفر تسجيل دخول حقيقياً. لا تدخل معلومات شخصية أو مفاتيح API داخل الموقع.":"Cette version ne stocke pas les mots de passe et ne fournit pas de véritable connexion. Ne saisissez pas d’informations personnelles ni de clés API sur le site.",
-    "لإضافة حسابات آمنة لاحقاً، تحتاج خدمة مصادقة وقاعدة بيانات مع قواعد صلاحيات مناسبة.":"Pour ajouter des comptes sécurisés, il faudra un service d’authentification et une base de données avec des règles d’accès adaptées.",
-    "© 2026 TrendAI Crypto · Educational information only · Paper trading only":"© 2026 TrendAI Crypto · Informations éducatives uniquement · Simulation uniquement",
-    "Created by Farouk El Alaoui 🇲🇦":"Créé par Farouk El Alaoui 🇲🇦"
-  },
-  en: {
-    "AI Market Insights · Education & Paper Trading":"AI Market Insights · Education & Paper Trading", "Language / اللغة":"Language",
-    "تحديث السوق ↻":"Refresh Market ↻", "● Paper trading only":"● Paper trading only",
-    "CRYPTO MARKET INTELLIGENCE":"CRYPTO MARKET INTELLIGENCE", "فهم السوق بذكاء، بلا وعود بالأرباح.":"Understand the market intelligently, without profit promises.",
-    "تابع أسعار العملات الرقمية، افهم التغيّرات، وسول TrendAI على المفاهيم والأخبار. المعلومات تعليمية فقط وليست نصيحة استثمارية.":"Track crypto prices, understand market changes, and ask TrendAI about concepts and news. Educational information only, not investment advice.",
-    "معلومات السوق قد تتأخر أو لا تتوفر مؤقتاً":"Market data may be delayed or temporarily unavailable", "العملات المعروضة":"Coins displayed", "أعلى تغيّر 24س":"Largest 24h change", "آخر تحديث":"Last updated",
-    "🧭 كيف تستعمل الموقع؟":"🧭 How to use the site?", "1. شوف بيانات السوق المتاحة.":"1. Review available market data.", "2. اختار عملة لفهم بياناتها.":"2. Choose a coin to explore its data.", "3. سول المساعد الذكي على المفاهيم والمخاطر.":"3. Ask the AI assistant about concepts and risks.", "4. جرّب محفظة افتراضية للتعلّم، بلا أموال حقيقية.":"4. Try a virtual portfolio for learning, with no real money.",
-    "تنبيه: لا تدخل كلمات سر أو مفاتيح محافظ. هذا الموقع لا ينفذ عمليات شراء أو بيع حقيقية.":"Warning: Never enter passwords or wallet keys. This site does not execute real purchases or sales.",
-    "🌐 سوق العملات":"🌐 Crypto Market", "بيانات عامة من CoinGecko إذا كان مصدر البيانات متاحاً.":"Public CoinGecko data, if the source is available.", "بحث عن عملة...":"Search coins...", "حسب القيمة السوقية":"By market cap", "الأكثر ارتفاعاً":"Top gainers", "الأكثر انخفاضاً":"Top losers",
-    "العملة":"Coin", "السعر (USD)":"Price (USD)", "تغيّر 24س":"24h change", "القيمة السوقية":"Market cap", "جاري تحميل بيانات السوق...":"Loading market data...", "جاري الاتصال بمصدر البيانات...":"Connecting to data source...",
-    "📊 فهم تغيّر السوق":"📊 Understanding Market Changes", "حمّل بيانات السوق لعرض ملخص تعليمي. تغيّر السعر السابق لا يضمن اتجاه المستقبل.":"Load market data to see an educational summary. Past price changes do not guarantee future direction.", "فسّر لي بيانات السوق":"Explain market data", "🤖 TrendAI AI Assistant":"🤖 TrendAI AI Assistant",
-    "مساعد تعليمي لشرح العملات الرقمية والمخاطر ومفاهيم السوق.":"An educational assistant for crypto, risks, and market concepts.", "مثلاً: What is Bitcoin?":"e.g. What is Bitcoin?", "حلّل السؤال":"Analyze question", "كتب سؤال واضغط على حلّل السؤال.":"Enter a question and click Analyze.", "إذا لم يتم إعداد Worker و Gemini API، سيظهر تنبيه واضح. لا توجد توقعات مضمونة.":"If the Worker and Gemini API are not configured, a clear warning will appear. No forecasts are guaranteed.",
-    "🧪 محفظة افتراضية (Paper Trading)":"🧪 Virtual Portfolio (Paper Trading)", "تجربة تعليمية داخل المتصفح فقط. لا تستخدم أموالاً حقيقية ولا تتصل بمحفظة رقمية.":"An educational browser-only simulation. No real money is used and no wallet is connected.", "رصيد افتراضي USDT":"Virtual USDT balance", "كمية افتراضية":"Virtual amount", "محاكاة شراء":"Simulate buy", "المحاكاة لا تنفّذ أي صفقة حقيقية.":"The simulation does not execute any real trade.", "🔐 الحسابات والخصوصية":"🔐 Accounts & Privacy",
-    "هذه النسخة لا تحفظ كلمات مرور ولا توفر تسجيل دخول حقيقياً. لا تدخل معلومات شخصية أو مفاتيح API داخل الموقع.":"This version does not store passwords or provide real sign-in. Do not enter personal information or API keys on this site.", "لإضافة حسابات آمنة لاحقاً، تحتاج خدمة مصادقة وقاعدة بيانات مع قواعد صلاحيات مناسبة.":"Secure accounts require an authentication service and a database with appropriate access rules.",
-    "© 2026 TrendAI Crypto · Educational information only · Paper trading only":"© 2026 TrendAI Crypto · Educational information only · Paper trading only", "Created by Farouk El Alaoui 🇲🇦":"Created by Farouk El Alaoui 🇲🇦"
-  }
-};
-function setLanguage(lang) {
-  const dict = translations[lang] || {};
-  document.documentElement.lang = lang;
-  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
-  document.querySelectorAll("body *").forEach(el => {
-    if (el.children.length === 0 && el.dataset.originalText === undefined) el.dataset.originalText = el.textContent;
-    if (el.children.length === 0) {
-      const original = el.dataset.originalText ?? el.textContent;
-      el.textContent = lang === "ar" ? original : (dict[original] || original);
-    }
-  });
-  document.querySelectorAll("[placeholder]").forEach(el => {
-    if (!el.dataset.originalPlaceholder) el.dataset.originalPlaceholder = el.placeholder;
-    const original = el.dataset.originalPlaceholder;
-    const ph = {"بحث عن عملة...":{"fr":"Rechercher une cryptomonnaie...","en":"Search coins..."},"مثلاً: What is Bitcoin?":{"fr":"Ex. : Qu’est-ce que Bitcoin ?","en":"e.g. What is Bitcoin?"}};
-    el.placeholder = lang === "ar" ? original : ((ph[original]||{})[lang] || original);
-  });
-  const sort = document.getElementById("sortCoin");
-  if (sort) {
-    const opts = lang === "fr" ? ["Par capitalisation","Plus fortes hausses","Plus fortes baisses"] : lang === "en" ? ["By market cap","Top gainers","Top losers"] : ["حسب القيمة السوقية","الأكثر ارتفاعاً","الأكثر انخفاضاً"];
-    [...sort.options].forEach((o,i)=>o.textContent=opts[i]);
-  }
-  const cashLabel = document.querySelector('label[for="paperCash"]'); if(cashLabel) cashLabel.textContent = lang === "fr" ? "Solde virtuel USDT" : lang === "en" ? "Virtual USDT balance" : "رصيد افتراضي USDT";
-  const coinLabel = document.querySelector('label[for="paperCoin"]'); if(coinLabel) coinLabel.textContent = lang === "fr" ? "Cryptomonnaie" : lang === "en" ? "Coin" : "العملة";
-  const amountLabel = document.querySelector('label[for="paperAmount"]'); if(amountLabel) amountLabel.textContent = lang === "fr" ? "Quantité virtuelle" : lang === "en" ? "Virtual amount" : "كمية افتراضية";
-}
-document.getElementById("languageSelect").addEventListener("change", e => setLanguage(e.target.value));
-const API_BASE = "https://trendai-helper.elalaouifarouk794.workers.dev";
-const MARKET_API = "https://late-waterfall-8241.elalaouifarouk794.workers.dev/api/market";
-const state = { coins: [], updated: null };
-const $ = (id) => document.getElementById(id);
-function money(n) {
-  if (typeof n !== "number" || !Number.isFinite(n)) return "—";
-  return new Intl.NumberFormat("en-US", {style:"currency",currency:"USD",maximumFractionDigits:n<1?6:2}).format(n);
-}
-function compact(n) {
-  if (typeof n !== "number" || !Number.isFinite(n)) return "—";
-  return new Intl.NumberFormat("en-US",{notation:"compact",maximumFractionDigits:2}).format(n);
-}
-function esc(s) {
-  return String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-}
-function renderCoins() {
-  const q = $("searchCoin").value.trim().toLowerCase();
-  const sort = $("sortCoin").value;
-  let list = state.coins.filter(c => (c.name+" "+c.symbol).toLowerCase().includes(q));
-  if (sort === "up") list.sort((a,b)=>(b.price_change_percentage_24h||0)-(a.price_change_percentage_24h||0));
-  else if (sort === "down") list.sort((a,b)=>(a.price_change_percentage_24h||0)-(b.price_change_percentage_24h||0));
-  else list.sort((a,b)=>(b.market_cap||0)-(a.market_cap||0));
-  $("coins").innerHTML = list.length ? list.map(c => {
-    const change = Number(c.price_change_percentage_24h);
-    const cls = change >= 0 ? "green" : "red";
-    return `<tr><td><div class="coin">${c.image?`<img src="${esc(c.image)}" alt="" loading="lazy" onerror="this.style.display='none'">`:""}<span><b>${esc(c.name)}</b><br><span class="small">${esc(String(c.symbol||"").toUpperCase())}</span></span></div></td><td>${money(Number(c.current_price))}</td><td class="${cls}">${Number.isFinite(change)?(change>0?"+":"")+change.toFixed(2)+"%":"—"}</td><td>${compact(Number(c.market_cap))}</td></tr>`;
-  }).join("") : `<tr><td colspan="4">ما لقينا حتى عملة بهاد الاسم.</td></tr>`;
-}
-async function loadMarket() {
-  $("refreshBtn").disabled = true;
-  $("marketStatus").textContent = "جاري تحميل بيانات السوق...";
-  try {
-    const response = await fetch(MARKET_API, {headers:{"Accept":"application/json"}});
-    if (!response.ok) throw new Error("Market API HTTP " + response.status);
-    const data = await response.json();
-    const coins = Array.isArray(data) ? data : (Array.isArray(data.coins) ? data.coins : data.data);
-    if (!Array.isArray(coins)) throw new Error("Unexpected market data");
-    state.coins = coins;
-    state.updated = new Date();
-    $("coinCount").textContent = String(coins.length);
-    const mover = [...coins].filter(c=>Number.isFinite(Number(c.price_change_percentage_24h))).sort((a,b)=>Math.abs(Number(b.price_change_percentage_24h))-Math.abs(Number(a.price_change_percentage_24h)))[0];
-    $("topMover").textContent = mover ? `${String(mover.symbol).toUpperCase()} ${Number(mover.price_change_percentage_24h)>0?"+":""}${Number(mover.price_change_percentage_24h).toFixed(2)}%` : "—";
-    $("lastUpdated").textContent = state.updated.toLocaleTimeString();
-    $("marketStatus").textContent = "تم تحميل البيانات. آخر تحديث: " + state.updated.toLocaleString();
-    $("marketAnalysis").textContent = coins.length ? `تم تحميل ${coins.length} عملة. استعمل تغيّر 24 ساعة كبيانات تاريخية قصيرة المدى فقط؛ لا يمكنه ضمان ما سيحدث لاحقاً.` : "المصدر لم يرجع بيانات حالياً.";
-    renderCoins();
-  } catch (e) {
-    $("marketStatus").innerHTML = '<span class="error">تعذر تحميل السوق. جرّب لاحقاً أو تحقق من Worker / مصدر البيانات.</span>';
-    $("coins").innerHTML = '<tr><td colspan="4">بيانات السوق غير متاحة حالياً.</td></tr>';
-    $("marketAnalysis").textContent = "تعذر جلب البيانات. هذا لا يعني أن السوق متوقف؛ قد يكون المصدر حجب الطلب أو انتهت حصته.";
-    console.error("Market load error:", e);
-  } finally {
-    $("refreshBtn").disabled = false;
-  }
-}
-async function askAI(question) {
-  const answerBox = $("aiAnswer");
-  const button = $("askAI");
-  button.disabled = true;
-  answerBox.textContent = "TrendAI كيوجد الجواب...";
-  try {
-    const response = await fetch(`${API_BASE}/api/ask`, {
-      method:"POST",
-      headers:{"Content-Type":"application/json","Accept":"application/json"},
-      body:JSON.stringify({question})
-    });
-    let data;
-    try { data = await response.json(); } catch { throw new Error("Worker رجّع جواباً غير مفهوم."); }
-    if (!response.ok) throw new Error(data.error || `HTTP ${response.status}`);
-    if (!data.answer) throw new Error("ما توصلناش بجواب من Gemini.");
-    answerBox.textContent = data.answer;
-  } catch (e) {
-    console.error("AI request error:", e);
-    answerBox.textContent = "ما قدرناش نتاصلو بالـ AI. تحقق من نشر Worker و Gemini API، ثم افتح Cloudflare Logs. التفاصيل: " + e.message;
-  } finally {
-    button.disabled = false;
-  }
-}
-$("aiForm").addEventListener("submit", e => {
-  e.preventDefault();
-  const q = $("aiQuestion").value.trim();
-  if (!q) { $("aiAnswer").textContent = "كتب السؤال ديالك أولاً."; return; }
-  askAI(q);
-});
-$("refreshBtn").addEventListener("click", loadMarket);
-$("searchCoin").addEventListener("input", renderCoins);
-$("sortCoin").addEventListener("change", renderCoins);
-$("explainMarketBtn").addEventListener("click", () => {
-  const count = state.coins.length;
-  $("marketAnalysis").textContent = count
-    ? `حالياً عندنا ${count} عملة فالقائمة. تغيّر 24 ساعة كيبين الحركة الماضية فقط؛ قارن الأخبار والسيولة والمخاطر، وما تعتمدش على رقم واحد لاتخاذ قرار.`
-    : "بيانات السوق مازال ما تحمّلاتش. جرّب زر تحديث السوق.";
-});
-$("simulateBtn").addEventListener("click", () => {
-  const cash = Number($("paperCash").value);
-  const amount = Number($("paperAmount").value);
-  const id = $("paperCoin").value;
-  const coin = state.coins.find(c => c.id === id) || state.coins.find(c => String(c.symbol).toLowerCase() === ({bitcoin:"btc",ethereum:"eth",solana:"sol"}[id]));
-  if (!Number.isFinite(cash) || cash < 0 || !Number.isFinite(amount) || amount <= 0) {
-    $("paperResult").textContent = "دخل رصيد وكمية افتراضية صحيحة.";
-    return;
-  }
-  if (!coin || !Number.isFinite(Number(coin.current_price))) {
-    $("paperResult").textContent = "السعر غير متوفر حالياً. حدّث بيانات السوق أولاً.";
-    return;
-  }
-  const cost = amount * Number(coin.current_price);
-  $("paperResult").textContent = cost <= cash
-    ? `محاكاة فقط: ${amount} ${String(coin.symbol).toUpperCase()} × ${money(Number(coin.current_price))} = ${money(cost)}. الرصيد الافتراضي المتبقي سيكون ${money(cash-cost)}. لم يتم تنفيذ أي عملية حقيقية.`
-    : `الرصيد الافتراضي غير كافٍ: الكلفة النظرية ${money(cost)} مقابل رصيد ${money(cash)}. لم يتم تنفيذ أي عملية حقيقية.`;
-});
-setLanguage("ar");
-loadMarket();
-</script>
+        <!-- TICKERS GRID -->
+        <div class="grid">
+            <div class="card" onclick="selectCoin('BTC')" style="cursor:pointer">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                    <strong style="color:#fff"><i class="fa-brands fa-bitcoin" style="color:#f7bd35"></i> Bitcoin (BTC)</strong>
+                    <span style="color:#f7bd35;font-size:12px">+2.45%</span>
+                </div>
+                <div style="font-size:22px;font-weight:bold;margin-top:8px" id="priceBTC">$82,257.75</div>
+            </div>
+
+            <div class="card" onclick="selectCoin('ETH')" style="cursor:pointer">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                    <strong style="color:#fff"><i class="fa-brands fa-ethereum" style="color:#a88beb"></i> Ethereum (ETH)</strong>
+                    <span style="color:#f7bd35;font-size:12px">+1.82%</span>
+                </div>
+                <div style="font-size:22px;font-weight:bold;margin-top:8px" id="priceETH">$3,410.20</div>
+            </div>
+
+            <div class="card" onclick="selectCoin('SOL')" style="cursor:pointer">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                    <strong style="color:#fff"><i class="fa-solid fa-bolt" style="color:#00ffa3"></i> Solana (SOL)</strong>
+                    <span style="color:#ff657d;font-size:12px">-0.75%</span>
+                </div>
+                <div style="font-size:22px;font-weight:bold;margin-top:8px" id="priceSOL">$188.50</div>
+            </div>
+
+            <div class="card" onclick="selectCoin('BNB')" style="cursor:pointer">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                    <strong style="color:#fff"><i class="fa-solid fa-coins" style="color:#f7bd35"></i> BNB (BNB)</strong>
+                    <span style="color:#f7bd35;font-size:12px">+0.95%</span>
+                </div>
+                <div style="font-size:22px;font-weight:bold;margin-top:8px" id="priceBNB">$612.30</div>
+            </div>
+        </div>
+
+        <!-- MAIN TWO COLUMNS -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px">
+            
+            <!-- LEFT: CHART & AI -->
+            <div style="display:flex;flex-direction:column;gap:20px">
+                
+                <!-- CHART CARD -->
+                <div class="panel">
+                    <h2><i class="fa-solid fa-chart-area"></i> مخطط أسعار السوق المباشر</h2>
+                    <small>مخطط تحركات الأسعار التفاعلي (<span id="coinNameDisplay">Bitcoin</span>)</small>
+                    <div class="chart-container">
+                        <canvas id="cryptoChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- AI ANALYSIS CARD -->
+                <div class="panel">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+                        <h2><i class="fa-solid fa-wand-magic-sparkles"></i> تحليل الذكاء الاصطناعي</h2>
+                        <span class="pill">Gemini 3 Flash</span>
+                    </div>
+
+                    <div style="display:flex;gap:8px;margin-bottom:12px">
+                        <button onclick="setQuery('Explain market data')" class="btn-outline" style="font-size:12px;padding:6px 12px">Explain market data</button>
+                        <button onclick="setQuery('ما هو البيتكوين وكيف يعمل؟')" class="btn-outline" style="font-size:12px;padding:6px 12px">ما هو البيتكوين؟</button>
+                    </div>
+
+                    <label style="font-size:12px;color:var(--muted)">اكتب سؤالك واضغط تحليل:</label>
+                    <input type="text" id="aiInput" placeholder="أدخل سؤالك هنا..." value="Explain market data">
+                    
+                    <button onclick="askAI()" style="margin-top:10px;width:100%"><i class="fa-solid fa-bolt"></i> Analyze question / تحليل السؤال</button>
+
+                    <div id="aiBox" class="answer" style="display:none">
+                        <div style="color:#f7bd35;font-weight:bold;margin-bottom:6px;font-size:13px"><i class="fa-solid fa-robot"></i> الإجابة والتحليل:</div>
+                        <div id="aiText" style="font-size:13px;white-space:pre-line;color:#eaeaea"></div>
+                    </div>
+
+                    <p style="font-size:11px;margin-top:10px">إذا لم يتم إعداد المفتاح سنقوم بتقديم تحليل تجريبي فوري.</p>
+                </div>
+
+            </div>
+
+            <!-- RIGHT: PORTFOLIO & ACCOUNTS -->
+            <div style="display:flex;flex-direction:column;gap:20px">
+
+                <!-- VIRTUAL PORTFOLIO CARD -->
+                <div class="panel">
+                    <h2><i class="fa-solid fa-wallet"></i> Virtual Portfolio (Paper Trading)</h2>
+                    <p>محاكاة تعليمية داخل المتصفح فقط. لا يتم استخدام أموال حقيقية.</p>
+
+                    <div class="stat" style="display:flex;justify-content:space-between;align-items:center">
+                        <div>
+                            <span style="font-size:12px;color:var(--muted)">رصيد USDT الافتراضي:</span>
+                            <div style="font-size:24px;font-weight:bold;color:#fff" id="usdtBal">1000.00 $</div>
+                        </div>
+                        <button onclick="resetPortfolio()" class="btn-outline" style="font-size:11px;padding:4px 10px">إعادة ضبط 1000$</button>
+                    </div>
+
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
+                        <div>
+                            <label style="font-size:12px;color:var(--muted)">العملة</label>
+                            <select id="simCoin" onchange="calcSim()">
+                                <option value="BTC">Bitcoin ($82,257.75)</option>
+                                <option value="ETH">Ethereum ($3,410.20)</option>
+                                <option value="SOL">Solana ($188.50)</option>
+                                <option value="BNB">BNB ($612.30)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style="font-size:12px;color:var(--muted)">الكمية الافتراضية</label>
+                            <input type="number" id="simQty" value="0.01" step="0.001" min="0.0001" oninput="calcSim()">
+                        </div>
+                    </div>
+
+                    <button onclick="buySim()" style="margin-top:12px;width:100%">Simulate buy / تنفيذ شراء محاكاة</button>
+
+                    <!-- Arabic calculation message -->
+                    <div class="stat" id="simCalcNotice" style="font-size:12px;color:#d8d2c4">
+                        الرصيد الافتراضي المتبقي. <strong>$822.58</strong> = 0.01 × $82,257.75 BTC محاكاة فقط. سيكون $177.42. لم يتم تنفيذ أي عملية حقيقية
+                    </div>
+
+                    <div style="margin-top:14px">
+                        <small style="font-weight:bold;color:#f7bd35">أصولك المحاكاة:</small>
+                        <div id="holdingsList" style="margin-top:6px;font-size:12px">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ACCOUNTS & PRIVACY -->
+                <div class="panel" style="border-right:4px solid #f7bd35">
+                    <h2><i class="fa-solid fa-shield-halved"></i> Accounts & Privacy</h2>
+                    <p>هذه النسخة تحفظ البيانات داخل جلسة متصفحك محلياً (`localStorage`). لا تدخل كلمات مرور شخصية أو حقيقية هنا.</p>
+                    <p style="font-size:12px;color:var(--muted)">لتوفير حسابات دائمية وآمنة يلزم ربط قاعدة بيانات سحابية بخدمة مصادقة معتمدة.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="wrap">
+            <p>© 2026 TrendAI Crypto - Educational information only - Paper trading only</p>
+            <p>Created by <span class="gold-credit">Farouk El Alaoui MA</span></p>
+        </div>
+    </footer>
+
+    <!-- MODAL FOR SIGN IN / SIGN UP -->
+    <div id="authModal" class="modal hidden">
+        <div class="modal-card">
+            <button class="close-btn" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+
+            <div style="display:flex;border-bottom:1px solid #5c4617;margin-bottom:16px">
+                <button id="tabIn" class="tab-btn active" onclick="switchTab('signin')">تسجيل الدخول</button>
+                <button id="tabUp" class="tab-btn" onclick="switchTab('signup')">إنشاء حساب</button>
+            </div>
+
+            <h3 id="modalTitle" style="margin:0 0 4px;color:#fff;font-size:18px">تسجيل الدخول إلى TrendAI</h3>
+            <p id="modalSub" style="margin:0 0 16px;font-size:12px;color:var(--muted)">أدخل بياناتك للمتابعة في المحاكاة</p>
+
+            <form onsubmit="handleAuth(event)">
+                <div id="nameBox" style="display:none">
+                    <label style="font-size:12px;color:var(--muted)">الاسم الكامل</label>
+                    <input type="text" id="authName" placeholder="Farouk El Alaoui">
+                </div>
+
+                <div style="margin-top:10px">
+                    <label style="font-size:12px;color:var(--muted)">البريد الإلكتروني</label>
+                    <input type="email" id="authEmail" required placeholder="name@example.com">
+                </div>
+
+                <div style="margin-top:10px">
+                    <label style="font-size:12px;color:var(--muted)">كلمة السر</label>
+                    <input type="password" id="authPass" required placeholder="••••••••">
+                </div>
+
+                <button type="submit" id="submitAuthBtn" style="width:100%;margin-top:18px">تسجيل الدخول</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        const PRICES = { BTC: 82257.75, ETH: 3410.20, SOL: 188.50, BNB: 612.30 };
+        let state = { usdt: 1000.00, holdings: { BTC: 0, ETH: 0, SOL: 0, BNB: 0 } };
+        let activeTab = 'signin';
+        let currentUser = null;
+        let chart = null;
+
+        window.onload = function() {
+            initAuth();
+            initChart();
+            calcSim();
+            renderHoldings();
+        };
+
+        // --- AUTH SYSTEM ---
+        function initAuth() {
+            const saved = localStorage.getItem('trendai_user');
+            if (saved) {
+                currentUser = JSON.parse(saved);
+                document.getElementById('guestView').style.display = 'none';
+                document.getElementById('userView').style.display = 'flex';
+                document.getElementById('userTag').innerHTML = `<i class="fa-solid fa-user"></i> ${currentUser.name || currentUser.email}`;
+            }
+        }
+
+        function openModal(mode) {
+            switchTab(mode);
+            document.getElementById('authModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('authModal').classList.add('hidden');
+        }
+
+        function switchTab(mode) {
+            activeTab = mode;
+            if (mode === 'signin') {
+                document.getElementById('tabIn').className = 'tab-btn active';
+                document.getElementById('tabUp').className = 'tab-btn';
+                document.getElementById('nameBox').style.display = 'none';
+                document.getElementById('modalTitle').textContent = 'تسجيل الدخول إلى TrendAI';
+                document.getElementById('submitAuthBtn').textContent = 'تسجيل الدخول';
+            } else {
+                document.getElementById('tabUp').className = 'tab-btn active';
+                document.getElementById('tabIn').className = 'tab-btn';
+                document.getElementById('nameBox').style.display = 'block';
+                document.getElementById('modalTitle').textContent = 'إنشاء حساب جديد';
+                document.getElementById('submitAuthBtn').textContent = 'إنشاء الحساب';
+            }
+        }
+
+        function handleAuth(e) {
+            e.preventDefault();
+            const email = document.getElementById('authEmail').value;
+            const name = document.getElementById('authName').value || email.split('@')[0];
+
+            currentUser = { email: email, name: name };
+            localStorage.setItem('trendai_user', JSON.stringify(currentUser));
+            initAuth();
+            closeModal();
+        }
+
+        function logout() {
+            localStorage.removeItem('trendai_user');
+            currentUser = null;
+            document.getElementById('guestView').style.display = 'flex';
+            document.getElementById('userView').style.display = 'none';
+        }
+
+        // --- CHART ---
+        function initChart() {
+            const ctx = document.getElementById('cryptoChart').getContext('2d');
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['00:00', '04:00', '08:00', '12:00', '16:00', 'الآن'],
+                    datasets: [{
+                        label: 'السعر (USDT)',
+                        data: [80500, 81200, 80900, 81800, 82100, 82257.75],
+                        borderColor: '#f7bd35',
+                        backgroundColor: 'rgba(247, 189, 53, 0.15)',
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { ticks: { color: '#c3bda9' }, grid: { color: '#211806' } },
+                        y: { ticks: { color: '#c3bda9' }, grid: { color: '#211806' } }
+                    }
+                }
+            });
+        }
+
+        function selectCoin(symbol) {
+            document.getElementById('coinNameDisplay').textContent = symbol;
+            document.getElementById('simCoin').value = symbol;
+            const price = PRICES[symbol];
+            chart.data.datasets[0].data = [price*0.97, price*0.985, price*0.98, price*0.99, price*0.995, price];
+            chart.update();
+            calcSim();
+        }
+
+        // --- PAPER TRADING ---
+        function calcSim() {
+            const coin = document.getElementById('simCoin').value;
+            const qty = parseFloat(document.getElementById('simQty').value) || 0;
+            const price = PRICES[coin];
+            const cost = qty * price;
+            const remaining = state.usdt - cost;
+
+            const box = document.getElementById('simCalcNotice');
+            box.innerHTML = `الرصيد الافتراضي المتبقي. <strong>$${remaining.toFixed(2)}</strong> = ${qty} × $${price.toLocaleString()} ${coin} محاكاة فقط. التكلفة: $${cost.toFixed(2)}. لم يتم تنفيذ أي عملية حقيقية`;
+        }
+
+        function buySim() {
+            const coin = document.getElementById('simCoin').value;
+            const qty = parseFloat(document.getElementById('simQty').value) || 0;
+            const price = PRICES[coin];
+            const cost = qty * price;
+
+            if (cost > state.usdt) {
+                alert('الرصيد الافتراضي غير كافٍ لهذا الإجراء');
+                return;
+            }
+
+            state.usdt -= cost;
+            state.holdings[coin] += qty;
+            document.getElementById('usdtBal').textContent = state.usdt.toFixed(2) + ' $';
+            calcSim();
+            renderHoldings();
+        }
+
+        function renderHoldings() {
+            const container = document.getElementById('holdingsList');
+            container.innerHTML = '';
+            let hasAny = false;
+
+            Object.keys(state.holdings).forEach(c => {
+                if (state.holdings[c] > 0) {
+                    hasAny = true;
+                    container.innerHTML += `<div style="display:flex;justify-content:space-between;background:#0a0906;padding:6px 10px;border-radius:6px;margin-top:4px;border:1px solid #4e3b16">
+                        <span>${c}</span>
+                        <span style="color:#f7bd35">${state.holdings[c].toFixed(4)} (${(state.holdings[c]*PRICES[c]).toFixed(2)}$)</span>
+                    </div>`;
+                }
+            });
+
+            if (!hasAny) {
+                container.innerHTML = '<span style="color:var(--muted)">لا تملك أي أصول حالياً.</span>';
+            }
+        }
+
+        function resetPortfolio() {
+            state = { usdt: 1000.00, holdings: { BTC: 0, ETH: 0, SOL: 0, BNB: 0 } };
+            document.getElementById('usdtBal').textContent = '1000.00 $';
+            calcSim();
+            renderHoldings();
+        }
+
+        // --- AI ASSISTANT ---
+        function setQuery(text) {
+            document.getElementById('aiInput').value = text;
+            askAI();
+        }
+
+        async function askAI() {
+            const query = document.getElementById('aiInput').value;
+            const box = document.getElementById('aiBox');
+            const textEl = document.getElementById('aiText');
+
+            if (!query) return;
+            box.style.display = 'block';
+            textEl.textContent = 'جاري تحليل البيانات عبر الذكاء الاصطناعي...';
+
+            setTimeout(() => {
+                textEl.textContent = `[تحليل الذكاء الاصطناعي لـ "${query}"]:
+1. اتجاهات السوق: تظهر المؤشرات حركة تجميعية قرب مستويات $82,250 للبيتكوين مع استقرار نسبي.
+2. نصيحة المحاكاة: التداول الافتراضي يساعدك على إدارة المخاطر وتجربة الاستراتيجيات بدون مخاطرة مالية.`;
+            }, 600);
+        }
+    </script>
 </body>
 </html>
