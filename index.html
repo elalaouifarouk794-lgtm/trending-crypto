@@ -37,7 +37,43 @@
             line-height: 1.6;
         }
 
-        /* Top Dropdown Banner Animation */
+        /* Falling Letters / Words Animation (GetPing Style) */
+        .falling-container {
+            display: inline-flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .fall-word {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(-50px) rotate(-5deg);
+            animation: fallIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            animation-delay: calc(var(--i) * 0.15s);
+            background: linear-gradient(180deg, #ffffff 30%, #a39e93 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 44px;
+            font-weight: 800;
+        }
+
+        @keyframes fallIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-60px) rotate(-10deg) scale(0.9);
+            }
+            70% {
+                opacity: 1;
+                transform: translateY(8deg) rotate(2deg) scale(1.02);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg) scale(1);
+            }
+        }
+
         .top-banner {
             background: linear-gradient(90deg, rgba(247, 189, 53, 0.15), rgba(247, 189, 53, 0.3), rgba(247, 189, 53, 0.15));
             border-bottom: 1px solid var(--border);
@@ -49,19 +85,7 @@
             letter-spacing: 1px;
             position: relative;
             z-index: 101;
-            animation: dropDownText 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             box-shadow: 0 4px 20px rgba(247, 189, 53, 0.2);
-        }
-
-        @keyframes dropDownText {
-            0% {
-                transform: translateY(-100%);
-                opacity: 0;
-            }
-            100% {
-                transform: translateY(0);
-                opacity: 1;
-            }
         }
 
         .bg-grid {
@@ -176,15 +200,6 @@
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(247, 189, 53, 0); }
         }
 
-        .hero h1 {
-            font-size: 44px;
-            font-weight: 800;
-            margin-bottom: 16px;
-            background: linear-gradient(180deg, #ffffff 30%, #a39e93 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
         .hero p {
             font-size: 16px;
             color: var(--text-muted);
@@ -245,7 +260,6 @@
             font-family: inherit;
         }
 
-        /* Modal Popup */
         .modal {
             display: none;
             position: fixed;
@@ -286,7 +300,6 @@
 </head>
 <body>
 
-    <!-- Animated Dropdown Top Banner -->
     <div class="top-banner">
         ✨ FREE TRADING DEMO • START TRADING WITHOUT RISK ⚡
     </div>
@@ -322,7 +335,16 @@
                 <div class="ping-dot"></div>
                 <span data-i18n="badge_text">منصة تحليل العملات والذكاء الاصطناعي</span>
             </div>
-            <h1 data-i18n="hero_title">تداول افتراضي ذكي وتحليل متطور</h1>
+            
+            <!-- Falling Animation Title -->
+            <h1 class="falling-container">
+                <span class="fall-word" style="--i:1;">تداول</span>
+                <span class="fall-word" style="--i:2;">إفتراضي</span>
+                <span class="fall-word" style="--i:3;">ذكي</span>
+                <span class="fall-word" style="--i:4;">وتحليل</span>
+                <span class="fall-word" style="--i:5;">متطور</span>
+            </h1>
+
             <p data-i18n="hero_desc">استكشف أسواق العملات الرقمية بلحظتها، تداول بدون مخاطرة، واربط محفظتك الرقمية بكل سهولة.</p>
 
             <div class="dashboard-container">
@@ -373,7 +395,6 @@
 
     </main>
 
-    <!-- Sign In Modal -->
     <div id="signInModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('signInModal')">✕</span>
@@ -386,7 +407,6 @@
         </div>
     </div>
 
-    <!-- Sign Up Modal -->
     <div id="signUpModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('signUpModal')">✕</span>
@@ -413,7 +433,6 @@
                 signin_title: "تسجيل الدخول",
                 signup_title: "إنشاء حساب جديد",
                 badge_text: "منصة تحليل العملات والذكاء الاصطناعي",
-                hero_title: "تداول افتراضي ذكي وتحليل متطور",
                 hero_desc: "استكشف أسواق العملات الرقمية بلحظتها، تداول بدون مخاطرة، واربط محفظتك الرقمية بكل سهولة.",
                 market_title: "📈 أسعار السوق المباشرة",
                 th_coin: "العملة",
@@ -437,7 +456,6 @@
                 signin_title: "Sign In to Account",
                 signup_title: "Create New Account",
                 badge_text: "Next-Gen Crypto AI & Analysis Platform",
-                hero_title: "Smart Paper Trading & Advanced AI",
                 hero_desc: "Explore live crypto markets, trade risk-free, and seamlessly connect your Web3 wallet.",
                 market_title: "📈 Live Market Prices",
                 th_coin: "Coin",
@@ -461,7 +479,6 @@
                 signin_title: "Connexion au Compte",
                 signup_title: "Créer un Compte",
                 badge_text: "Plateforme Crypto IA & Analyse",
-                hero_title: "Trading Virtuel & IA Avancée",
                 hero_desc: "Explorez les marchés crypto en direct, tradez sans risque et connectez votre portefeuille.",
                 market_title: "📈 Prix du Marché en Direct",
                 th_coin: "Pièce",
@@ -522,7 +539,7 @@
             if (user) {
                 authNav.innerHTML = `<span style="color:var(--gold); font-size:14px; font-weight:600;">${t.welcome}, ${user.name}!</span> <button class="btn" style="padding:6px 14px;" onclick="logout()">${t.logout}</button>`;
             } else {
-                authNav.innerHTML = `<button class="btn" onclick="openModal('signInModal')">${t.signin_btn}</button> <button class="btn btn-primary" onclick="openModal('signUpModal')">${t.signup_btn}</button>`;
+                authNav.innerHTML = `<button class="btn" onclick="openModal('signInModal')">${t.signin_dir || t.signin_btn}</button> <button class="btn btn-primary" onclick="openModal('signUpModal')">${t.signup_btn}</button>`;
             }
         }
 
