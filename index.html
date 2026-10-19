@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Web3 & WalletConnect Libraries for ALL Wallets -->
+    <!-- Web3 & WalletConnect v2 Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/web3modal@1.9.12/dist/index.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@walletconnect/web3-provider@1.8.0/dist/umd/index.min.js"></script>
@@ -42,7 +42,6 @@
             line-height: 1.6;
         }
 
-        /* Falling Letters / Words Animation (GetPing Style) */
         .falling-container {
             display: inline-flex;
             gap: 8px;
@@ -332,7 +331,6 @@
                 <span data-i18n="badge_text">منصة تحليل العملات والذكاء الاصطناعي</span>
             </div>
             
-            <!-- Falling Animation Title -->
             <h1 class="falling-container">
                 <span class="fall-word" style="--i:1;">تداول</span>
                 <span class="fall-word" style="--i:2;">حقيقي</span>
@@ -343,7 +341,6 @@
 
             <p data-i18n="hero_desc">استكشف أسواق العملات الرقمية بلحظتها، اشترِ العملات بالبطاقة البنكية الحقيقية، واربط محفظتك.</p>
 
-            <!-- Real Wallet Info Card -->
             <div id="realWalletCard" class="card" style="display:none; margin-bottom:20px; text-align:center; border-color:var(--gold);">
                 <h3 style="color:var(--gold); margin-bottom:8px;">💳 المحفظة الحقيقية المتصلة</h3>
                 <p id="realWalletDetails" style="font-size:14px; color:var(--text-main); margin-bottom: 12px;"></p>
@@ -403,7 +400,6 @@
 
     </main>
 
-    <!-- Buy Crypto with Real Money Modal -->
     <div id="buyCryptoModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('buyCryptoModal')">✕</span>
@@ -411,7 +407,7 @@
             <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;" data-i18n="modal_buy_desc">اختر المبلغ والعملة لإتمام الشراء عبر بوابة الدفع الآمنة:</p>
             
             <label style="font-size:12px; color:var(--text-muted);">المبلغ بـ (USD):</label>
-            <input type="number" id=" fiatAmount" value="100" min="10">
+            <input type="number" id="fiatAmount" value="100" min="10">
 
             <label style="font-size:12px; color:var(--text-muted);">اختر العملة المراد شراؤها:</label>
             <select id="cryptoSelect">
@@ -425,7 +421,6 @@
         </div>
     </div>
 
-    <!-- Sign In Modal -->
     <div id="signInModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('signInModal')">✕</span>
@@ -438,7 +433,6 @@
         </div>
     </div>
 
-    <!-- Sign Up Modal -->
     <div id="signUpModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('signUpModal')">✕</span>
@@ -587,7 +581,7 @@
             }
         }
 
-        /* --- Web3 & All Wallet Connection Logic --- */
+        /* --- Web3 & WalletConnect Config --- */
         let web3Modal;
         let provider;
         let signer;
@@ -598,6 +592,7 @@
                 walletconnect: {
                     package: window.WalletConnectProvider.default,
                     options: {
+                        projectId: "be891044ac4fe1358554a06f9e5b8bba", // استبدل هذه الكتابة بـ Project ID الخاص بك
                         rpc: { 1: "https://cloudflare-eth.com" }
                     }
                 }
@@ -641,7 +636,6 @@
             const amount = document.getElementById('fiatAmount').value;
             const crypto = document.getElementById('cryptoSelect').value;
             
-            // Redirect to MoonPay or simulated real payment checkout
             alert(`جاري توجيهك لبوابة الدفع الآمنة لشراء ${crypto} بقيمة $${amount} وتحويلها إلى محفظتك: ${userConnectedAddress}`);
             closeModal('buyCryptoModal');
         }
