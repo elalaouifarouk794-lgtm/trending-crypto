@@ -304,7 +304,7 @@
 <body>
 
     <div class="top-banner">
-        ✨ POWERED BY GOOGLE GEMINI AI & WEB3 WALLETS ⚡
+        ✨ REAL-TIME CRYPTO MARKET DATA & GEMINI AI ⚡
     </div>
 
     <div class="bg-grid"></div>
@@ -336,18 +336,18 @@
         <section class="hero">
             <div class="badge-ping">
                 <div class="ping-dot"></div>
-                <span data-i18n="badge_text">مدعوم بالذكاء الاصطناعي الحقيقي Google Gemini</span>
+                <span data-i18n="badge_text">أسعار حقيقية مباشرة من السوق العالمي</span>
             </div>
             
             <h1 class="falling-container">
-                <span class="fall-word" style="--i:1;">تداول</span>
-                <span class="fall-word" style="--i:2;">حقيقي</span>
-                <span class="fall-word" style="--i:3;">بذكاء</span>
-                <span class="fall-word" style="--i:4;">Gemini</span>
-                <span class="fall-word" style="--i:5;">الخارق</span>
+                <span class="fall-word" style="--i:1;">أسعار</span>
+                <span class="fall-word" style="--i:2;">حقيقية</span>
+                <span class="fall-word" style="--i:3;">مباشرة</span>
+                <span class="fall-word" style="--i:4;">من</span>
+                <span class="fall-word" style="--i:5;">السوق</span>
             </h1>
 
-            <p data-i18n="hero_desc">استكشف أسواق العملات الرقمية وحلل الاتجاهات بدقة عالية بفضل مساعد Google Gemini الذكي.</p>
+            <p data-i18n="hero_desc">تتبع أسعار العملات الرقمية الحقيقية لحظة بلحظة، وحلل السوق بدقة عبر ذكاء Gemini.</p>
 
             <div id="realWalletCard" class="card" style="display:none; margin-bottom:20px; text-align:center; border-color:var(--gold);">
                 <h3 style="color:var(--gold); margin-bottom:8px;">💳 المحفظة الحقيقية المتصلة</h3>
@@ -356,31 +356,19 @@
             </div>
 
             <div class="dashboard-container">
-                <h3 style="font-size: 18px; color: var(--gold); margin-bottom: 14px;" data-i18n="market_title">📈 أسعار السوق المباشرة</h3>
+                <h3 style="font-size: 18px; color: var(--gold); margin-bottom: 14px;" data-i18n="market_title">📈 أسعار السوق الحية والمباشرة</h3>
                 <div style="overflow-x: auto;">
                     <table>
                         <thead>
                             <tr>
                                 <th data-i18n="th_coin">العملة</th>
-                                <th data-i18n="th_price">السعر الحالي</th>
+                                <th data-i18n="th_price">السعر الحالي (USD)</th>
                                 <th data-i18n="th_change">تغير 24h</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="cryptoTableBody">
                             <tr>
-                                <td><strong>Bitcoin (BTC)</strong></td>
-                                <td>$82,257.75</td>
-                                <td class="up">+3.42%</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Ethereum (ETH)</strong></td>
-                                <td>$3,120.50</td>
-                                <td class="up">+1.85%</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Solana (SOL)</strong></td>
-                                <td>$188.30</td>
-                                <td class="up">+5.12%</td>
+                                <td colspan="3" style="text-align: center; color: var(--text-muted);">جاري تحميل الأسعار الحقيقية من السوق...</td>
                             </tr>
                         </tbody>
                     </table>
@@ -392,7 +380,7 @@
             <div class="card">
                 <h3 style="color: var(--gold); margin-bottom: 10px;" data-i18n="ai_title">🤖 مساعد Google Gemini AI</h3>
                 <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 14px;" data-i18n="ai_desc">اسأل مساعد Gemini لتحليل السوق والعملات.</p>
-                <textarea id="aiQuery" rows="3" placeholder="مثال: هل وقت مناسب لشراء البيتكوين الآن؟"></textarea>
+                <textarea id="aiQuery" rows="3" placeholder="مثال: ما هو تحليل أسعار البيتكوين اليوم؟"></textarea>
                 <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="askGeminiAI()" data-i18n="btn_analyze">سؤال Gemini AI ⚡</button>
                 <div id="aiResult" style="margin-top:12px; font-size:14px; color:var(--gold); display:none; background: rgba(0,0,0,0.5); padding: 12px; border-radius: 8px; border: 1px solid var(--border);"></div>
             </div>
@@ -462,7 +450,7 @@
         // PWA Service Worker Registration
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js').catch(err => console.log('SW reg error:', err));
+                navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW reg error:', err));
             });
         }
 
@@ -473,11 +461,11 @@
                 signup_btn: "حساب جديد",
                 signin_title: "تسجيل الدخول",
                 signup_title: "إنشاء حساب جديد",
-                badge_text: "مدعوم بالذكاء الاصطناعي الحقيقي Google Gemini",
-                hero_desc: "استكشف أسواق العملات الرقمية وحلل الاتجاهات بدقة عالية بفضل مساعد Google Gemini الذكي.",
-                market_title: "📈 أسعار السوق المباشرة",
+                badge_text: "أسعار حقيقية مباشرة من السوق العالمي",
+                hero_desc: "تتبع أسعار العملات الرقمية الحقيقية لحظة بلحظة، وحلل السوق بدقة عبر ذكاء Gemini.",
+                market_title: "📈 أسعار السوق الحية والمباشرة",
                 th_coin: "العملة",
-                th_price: "السعر الحالي",
+                th_price: "السعر الحالي (USD)",
                 th_change: "تغير 24h",
                 ai_title: "🤖 مساعد Google Gemini AI",
                 ai_desc: "اسأل مساعد Gemini لتحليل السوق والعملات.",
@@ -500,11 +488,11 @@
                 signup_btn: "Sign Up",
                 signin_title: "Sign In to Account",
                 signup_title: "Create New Account",
-                badge_text: "Powered by Real Google Gemini AI",
-                hero_desc: "Explore live crypto markets and analyze trends accurately with your smart Gemini assistant.",
+                badge_text: "Real-time Crypto Market Data",
+                hero_desc: "Track live crypto prices second by second and analyze markets with Gemini AI.",
                 market_title: "📈 Live Market Prices",
                 th_coin: "Coin",
-                th_price: "Price",
+                th_price: "Price (USD)",
                 th_change: "24h Change",
                 ai_title: "🤖 Google Gemini AI Assistant",
                 ai_desc: "Ask Gemini assistant for instant market analysis.",
@@ -527,11 +515,11 @@
                 signup_btn: "S'inscrire",
                 signin_title: "Connexion au Compte",
                 signup_title: "Créer un Compte",
-                badge_text: "Propulsé par la vraie IA Google Gemini",
-                hero_desc: "Explorez les marchés et analysez les tendances avec votre assistant intelligent Gemini.",
+                badge_text: "Données de marché en direct",
+                hero_desc: "Suivez les prix des cryptos en temps réel et analysez le marché avec l'IA Gemini.",
                 market_title: "📈 Prix du Marché en Direct",
                 th_coin: "Pièce",
-                th_price: "Prix",
+                th_price: "Prix (USD)",
                 th_change: "Var 24h",
                 ai_title: "🤖 Assistant Google Gemini AI",
                 ai_desc: "Demandez à Gemini d'analyser le marché instantanément.",
@@ -596,7 +584,42 @@
             }
         }
 
-        /* --- Web3 & WalletConnect Config (Project ID Integrated) --- */
+        /* --- Fetch Real Crypto Prices from CoinGecko API --- */
+        async function fetchRealCryptoPrices() {
+            try {
+                const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,tether&vs_currencies=usd&include_24hr_change=true');
+                const data = await response.json();
+                
+                const tableBody = document.getElementById('cryptoTableBody');
+                tableBody.innerHTML = `
+                    <tr>
+                        <td><strong>Bitcoin (BTC)</strong></td>
+                        <td>$${data.bitcoin.usd.toLocaleString()}</td>
+                        <td class="${data.bitcoin.usd_24h_change >= 0 ? 'up' : 'down'}">${data.bitcoin.usd_24h_change.toFixed(2)}%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ethereum (ETH)</strong></td>
+                        <td>$${data.ethereum.usd.toLocaleString()}</td>
+                        <td class="${data.ethereum.usd_24h_change >= 0 ? 'up' : 'down'}">${data.ethereum.usd_24h_change.toFixed(2)}%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Solana (SOL)</strong></td>
+                        <td>$${data.solana.usd.toLocaleString()}</td>
+                        <td class="${data.solana.usd_24h_change >= 0 ? 'up' : 'down'}">${data.solana.usd_24h_change.toFixed(2)}%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tether (USDT)</strong></td>
+                        <td>$${data.tether.usd.toLocaleString()}</td>
+                        <td class="${data.tether.usd_24h_change >= 0 ? 'up' : 'down'}">${data.tether.usd_24h_change.toFixed(2)}%</td>
+                    </tr>
+                `;
+            } catch (error) {
+                console.error("Error fetching crypto prices:", error);
+                document.getElementById('cryptoTableBody').innerHTML = `<tr><td colspan="3" style="text-align: center; color: var(--red);">تعذر تحميل الأسعار المباشرة. يرجى إعادة المحاولة لاحقاً.</td></tr>`;
+            }
+        }
+
+        /* --- Web3 & WalletConnect Config --- */
         let web3Modal;
         let provider;
         let signer;
@@ -655,15 +678,15 @@
             resDiv.style.display = 'block';
             resDiv.innerHTML = "⏳ جاري تحليل السوق بواسطة Google Gemini AI...";
 
-            const GEMINI_API_KEY = "AQ.Ab8RN6IZvfcbW4T-miKoD271MlbhXzfkcS_h0yMmvrHXmj4tHwا"; 
+            const GEMINI_API_KEY = "ضع_المفتاح_الحقيقي_هنا"; 
 
             if (GEMINI_API_KEY === "ضع_المفتاح_الحقيقي_هنا" || !GEMINI_API_KEY.startsWith("AIzaSy")) {
-                resDiv.innerHTML = "⚠️ يرجي كتابة مفتاح Gemini API صحيح يبدأ بـ AIzaSy فـ السطر 331 من الكود.";
+                resDiv.innerHTML = "⚠️ يرجي كتابة مفتاح Gemini API صحيح يبدأ بـ AIzaSy فـ السطر المقابل من الكود.";
                 return;
             }
 
             try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -677,7 +700,7 @@
                 if (data.candidates && data.candidates[0] && data.candidates[0].content.parts[0].text) {
                     resDiv.innerHTML = `<strong>Gemini AI:</strong><br>${data.candidates[0].content.parts[0].text}`;
                 } else {
-                    resDiv.innerHTML = "❌ حدث خطأ أثناء الاتصال بخدمة Gemini AI. يرجى التأكد من المفتاح.";
+                    resDiv.innerHTML = "❌ حدث خطأ أثناء الاتصال بخدمة Gemini AI.";
                 }
             } catch (error) {
                 console.error("Gemini Error:", error);
@@ -704,6 +727,8 @@
 
         window.addEventListener('load', () => {
             initWeb3();
+            fetchRealCryptoPrices();
+            setInterval(fetchRealCryptoPrices, 30000); // تحديث الأسعار كل 30 ثانية أوتوماتيكياً
             document.getElementById('langSelect').value = currentLang;
             changeLanguage(currentLang);
         });
