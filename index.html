@@ -70,6 +70,8 @@
   <div class="wrap top">
     <div class="brand"><div class="logo">📈</div><div><h1>TrendAI Crypto</h1><p>AI Market Insights · Education & Paper Trading</p></div></div>
     <div class="controls">
+      <label for="languageSelect" class="small" style="align-self:center">Language / اللغة</label>
+      <select id="languageSelect" aria-label="Choose language"><option value="ar">العربية</option><option value="fr">Français</option><option value="en">English</option></select>
       <button class="secondary" id="refreshBtn" type="button">تحديث السوق ↻</button>
       <span class="pill">● Paper trading only</span>
     </div>
@@ -154,6 +156,84 @@
 
 <script>
 "use strict";
+const translations = {
+  fr: {
+    "AI Market Insights · Education & Paper Trading":"Analyses du marché par IA · Éducation et simulation",
+    "Language / اللغة":"Langue",
+    "تحديث السوق ↻":"Actualiser le marché ↻", "● Paper trading only":"● Simulation uniquement",
+    "CRYPTO MARKET INTELLIGENCE":"INTELLIGENCE DU MARCHÉ CRYPTO",
+    "فهم السوق بذكاء، بلا وعود بالأرباح.":"Comprendre le marché intelligemment, sans promesse de gains.",
+    "تابع أسعار العملات الرقمية، افهم التغيّرات، وسول TrendAI على المفاهيم والأخبار. المعلومات تعليمية فقط وليست نصيحة استثمارية.":"Suivez les cours des cryptomonnaies, comprenez les variations et posez vos questions à TrendAI sur les concepts et l’actualité. Contenu éducatif uniquement, pas un conseil en investissement.",
+    "معلومات السوق قد تتأخر أو لا تتوفر مؤقتاً":"Les données du marché peuvent être retardées ou temporairement indisponibles",
+    "العملات المعروضة":"Cryptomonnaies affichées", "أعلى تغيّر 24س":"Plus forte variation sur 24 h", "آخر تحديث":"Dernière mise à jour",
+    "🧭 كيف تستعمل الموقع؟":"🧭 Comment utiliser le site ?", "1. شوف بيانات السوق المتاحة.":"1. Consultez les données disponibles.",
+    "2. اختار عملة لفهم بياناتها.":"2. Choisissez une cryptomonnaie pour comprendre ses données.",
+    "3. سول المساعد الذكي على المفاهيم والمخاطر.":"3. Interrogez l’assistant IA sur les concepts et les risques.",
+    "4. جرّب محفظة افتراضية للتعلّم، بلا أموال حقيقية.":"4. Essayez un portefeuille virtuel, sans argent réel.",
+    "تنبيه: لا تدخل كلمات سر أو مفاتيح محافظ. هذا الموقع لا ينفذ عمليات شراء أو بيع حقيقية.":"Attention : ne saisissez aucun mot de passe ni aucune clé de portefeuille. Ce site n’effectue aucun achat ni vente réel.",
+    "🌐 سوق العملات":"🌐 Marché des cryptomonnaies", "بيانات عامة من CoinGecko إذا كان مصدر البيانات متاحاً.":"Données publiques de CoinGecko si la source est disponible.",
+    "بحث عن عملة...":"Rechercher une cryptomonnaie...", "حسب القيمة السوقية":"Par capitalisation", "الأكثر ارتفاعاً":"Plus fortes hausses", "الأكثر انخفاضاً":"Plus fortes baisses",
+    "العملة":"Crypto", "السعر (USD)":"Prix (USD)", "تغيّر 24س":"Variation 24 h", "القيمة السوقية":"Capitalisation",
+    "جاري تحميل بيانات السوق...":"Chargement des données du marché...", "جاري الاتصال بمصدر البيانات...":"Connexion à la source de données...",
+    "📊 فهم تغيّر السوق":"📊 Comprendre les variations du marché", "حمّل بيانات السوق لعرض ملخص تعليمي. تغيّر السعر السابق لا يضمن اتجاه المستقبل.":"Chargez les données du marché pour afficher un résumé éducatif. Les variations passées ne garantissent pas l’évolution future.",
+    "فسّر لي بيانات السوق":"Expliquer les données du marché", "🤖 TrendAI AI Assistant":"🤖 Assistant IA TrendAI",
+    "مساعد تعليمي لشرح العملات الرقمية والمخاطر ومفاهيم السوق.":"Un assistant éducatif pour comprendre les cryptomonnaies, les risques et les concepts du marché.",
+    "مثلاً: What is Bitcoin?":"Ex. : Qu’est-ce que Bitcoin ?", "حلّل السؤال":"Analyser la question",
+    "كتب سؤال واضغط على حلّل السؤال.":"Écrivez une question puis cliquez sur Analyser.",
+    "إذا لم يتم إعداد Worker و Gemini API، سيظهر تنبيه واضح. لا توجد توقعات مضمونة.":"Si le Worker et l’API Gemini ne sont pas configurés, un avertissement s’affichera. Aucune prévision n’est garantie.",
+    "🧪 محفظة افتراضية (Paper Trading)":"🧪 Portefeuille virtuel (simulation)",
+    "تجربة تعليمية داخل المتصفح فقط. لا تستخدم أموالاً حقيقية ولا تتصل بمحفظة رقمية.":"Expérience éducative dans le navigateur uniquement. Aucun argent réel et aucune connexion à un portefeuille.",
+    "رصيد افتراضي USDT":"Solde virtuel USDT", "العملة":"Cryptomonnaie", "كمية افتراضية":"Quantité virtuelle", "محاكاة شراء":"Simuler un achat",
+    "المحاكاة لا تنفّذ أي صفقة حقيقية.":"La simulation n’exécute aucune transaction réelle.", "🔐 الحسابات والخصوصية":"🔐 Comptes et confidentialité",
+    "هذه النسخة لا تحفظ كلمات مرور ولا توفر تسجيل دخول حقيقياً. لا تدخل معلومات شخصية أو مفاتيح API داخل الموقع.":"Cette version ne stocke pas les mots de passe et ne fournit pas de véritable connexion. Ne saisissez pas d’informations personnelles ni de clés API sur le site.",
+    "لإضافة حسابات آمنة لاحقاً، تحتاج خدمة مصادقة وقاعدة بيانات مع قواعد صلاحيات مناسبة.":"Pour ajouter des comptes sécurisés, il faudra un service d’authentification et une base de données avec des règles d’accès adaptées.",
+    "© 2026 TrendAI Crypto · Educational information only · Paper trading only":"© 2026 TrendAI Crypto · Informations éducatives uniquement · Simulation uniquement",
+    "Created by Farouk El Alaoui 🇲🇦":"Créé par Farouk El Alaoui 🇲🇦"
+  },
+  en: {
+    "AI Market Insights · Education & Paper Trading":"AI Market Insights · Education & Paper Trading", "Language / اللغة":"Language",
+    "تحديث السوق ↻":"Refresh Market ↻", "● Paper trading only":"● Paper trading only",
+    "CRYPTO MARKET INTELLIGENCE":"CRYPTO MARKET INTELLIGENCE", "فهم السوق بذكاء، بلا وعود بالأرباح.":"Understand the market intelligently, without profit promises.",
+    "تابع أسعار العملات الرقمية، افهم التغيّرات، وسول TrendAI على المفاهيم والأخبار. المعلومات تعليمية فقط وليست نصيحة استثمارية.":"Track crypto prices, understand market changes, and ask TrendAI about concepts and news. Educational information only, not investment advice.",
+    "معلومات السوق قد تتأخر أو لا تتوفر مؤقتاً":"Market data may be delayed or temporarily unavailable", "العملات المعروضة":"Coins displayed", "أعلى تغيّر 24س":"Largest 24h change", "آخر تحديث":"Last updated",
+    "🧭 كيف تستعمل الموقع؟":"🧭 How to use the site?", "1. شوف بيانات السوق المتاحة.":"1. Review available market data.", "2. اختار عملة لفهم بياناتها.":"2. Choose a coin to explore its data.", "3. سول المساعد الذكي على المفاهيم والمخاطر.":"3. Ask the AI assistant about concepts and risks.", "4. جرّب محفظة افتراضية للتعلّم، بلا أموال حقيقية.":"4. Try a virtual portfolio for learning, with no real money.",
+    "تنبيه: لا تدخل كلمات سر أو مفاتيح محافظ. هذا الموقع لا ينفذ عمليات شراء أو بيع حقيقية.":"Warning: Never enter passwords or wallet keys. This site does not execute real purchases or sales.",
+    "🌐 سوق العملات":"🌐 Crypto Market", "بيانات عامة من CoinGecko إذا كان مصدر البيانات متاحاً.":"Public CoinGecko data, if the source is available.", "بحث عن عملة...":"Search coins...", "حسب القيمة السوقية":"By market cap", "الأكثر ارتفاعاً":"Top gainers", "الأكثر انخفاضاً":"Top losers",
+    "العملة":"Coin", "السعر (USD)":"Price (USD)", "تغيّر 24س":"24h change", "القيمة السوقية":"Market cap", "جاري تحميل بيانات السوق...":"Loading market data...", "جاري الاتصال بمصدر البيانات...":"Connecting to data source...",
+    "📊 فهم تغيّر السوق":"📊 Understanding Market Changes", "حمّل بيانات السوق لعرض ملخص تعليمي. تغيّر السعر السابق لا يضمن اتجاه المستقبل.":"Load market data to see an educational summary. Past price changes do not guarantee future direction.", "فسّر لي بيانات السوق":"Explain market data", "🤖 TrendAI AI Assistant":"🤖 TrendAI AI Assistant",
+    "مساعد تعليمي لشرح العملات الرقمية والمخاطر ومفاهيم السوق.":"An educational assistant for crypto, risks, and market concepts.", "مثلاً: What is Bitcoin?":"e.g. What is Bitcoin?", "حلّل السؤال":"Analyze question", "كتب سؤال واضغط على حلّل السؤال.":"Enter a question and click Analyze.", "إذا لم يتم إعداد Worker و Gemini API، سيظهر تنبيه واضح. لا توجد توقعات مضمونة.":"If the Worker and Gemini API are not configured, a clear warning will appear. No forecasts are guaranteed.",
+    "🧪 محفظة افتراضية (Paper Trading)":"🧪 Virtual Portfolio (Paper Trading)", "تجربة تعليمية داخل المتصفح فقط. لا تستخدم أموالاً حقيقية ولا تتصل بمحفظة رقمية.":"An educational browser-only simulation. No real money is used and no wallet is connected.", "رصيد افتراضي USDT":"Virtual USDT balance", "كمية افتراضية":"Virtual amount", "محاكاة شراء":"Simulate buy", "المحاكاة لا تنفّذ أي صفقة حقيقية.":"The simulation does not execute any real trade.", "🔐 الحسابات والخصوصية":"🔐 Accounts & Privacy",
+    "هذه النسخة لا تحفظ كلمات مرور ولا توفر تسجيل دخول حقيقياً. لا تدخل معلومات شخصية أو مفاتيح API داخل الموقع.":"This version does not store passwords or provide real sign-in. Do not enter personal information or API keys on this site.", "لإضافة حسابات آمنة لاحقاً، تحتاج خدمة مصادقة وقاعدة بيانات مع قواعد صلاحيات مناسبة.":"Secure accounts require an authentication service and a database with appropriate access rules.",
+    "© 2026 TrendAI Crypto · Educational information only · Paper trading only":"© 2026 TrendAI Crypto · Educational information only · Paper trading only", "Created by Farouk El Alaoui 🇲🇦":"Created by Farouk El Alaoui 🇲🇦"
+  }
+};
+function setLanguage(lang) {
+  const dict = translations[lang] || {};
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+  document.querySelectorAll("body *").forEach(el => {
+    if (el.children.length === 0 && el.dataset.originalText === undefined) el.dataset.originalText = el.textContent;
+    if (el.children.length === 0) {
+      const original = el.dataset.originalText ?? el.textContent;
+      el.textContent = lang === "ar" ? original : (dict[original] || original);
+    }
+  });
+  document.querySelectorAll("[placeholder]").forEach(el => {
+    if (!el.dataset.originalPlaceholder) el.dataset.originalPlaceholder = el.placeholder;
+    const original = el.dataset.originalPlaceholder;
+    const ph = {"بحث عن عملة...":{"fr":"Rechercher une cryptomonnaie...","en":"Search coins..."},"مثلاً: What is Bitcoin?":{"fr":"Ex. : Qu’est-ce que Bitcoin ?","en":"e.g. What is Bitcoin?"}};
+    el.placeholder = lang === "ar" ? original : ((ph[original]||{})[lang] || original);
+  });
+  const sort = document.getElementById("sortCoin");
+  if (sort) {
+    const opts = lang === "fr" ? ["Par capitalisation","Plus fortes hausses","Plus fortes baisses"] : lang === "en" ? ["By market cap","Top gainers","Top losers"] : ["حسب القيمة السوقية","الأكثر ارتفاعاً","الأكثر انخفاضاً"];
+    [...sort.options].forEach((o,i)=>o.textContent=opts[i]);
+  }
+  const cashLabel = document.querySelector('label[for="paperCash"]'); if(cashLabel) cashLabel.textContent = lang === "fr" ? "Solde virtuel USDT" : lang === "en" ? "Virtual USDT balance" : "رصيد افتراضي USDT";
+  const coinLabel = document.querySelector('label[for="paperCoin"]'); if(coinLabel) coinLabel.textContent = lang === "fr" ? "Cryptomonnaie" : lang === "en" ? "Coin" : "العملة";
+  const amountLabel = document.querySelector('label[for="paperAmount"]'); if(amountLabel) amountLabel.textContent = lang === "fr" ? "Quantité virtuelle" : lang === "en" ? "Virtual amount" : "كمية افتراضية";
+}
+document.getElementById("languageSelect").addEventListener("change", e => setLanguage(e.target.value));
 const API_BASE = "https://trendai-helper.elalaouifarouk794.workers.dev";
 const MARKET_API = "https://late-waterfall-8241.elalaouifarouk794.workers.dev/api/market";
 const state = { coins: [], updated: null };
@@ -265,6 +345,7 @@ $("simulateBtn").addEventListener("click", () => {
     ? `محاكاة فقط: ${amount} ${String(coin.symbol).toUpperCase()} × ${money(Number(coin.current_price))} = ${money(cost)}. الرصيد الافتراضي المتبقي سيكون ${money(cash-cost)}. لم يتم تنفيذ أي عملية حقيقية.`
     : `الرصيد الافتراضي غير كافٍ: الكلفة النظرية ${money(cost)} مقابل رصيد ${money(cash)}. لم يتم تنفيذ أي عملية حقيقية.`;
 });
+setLanguage("ar");
 loadMarket();
 </script>
 </body>
