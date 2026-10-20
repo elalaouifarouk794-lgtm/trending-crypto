@@ -422,7 +422,6 @@
             </div>
 
             <div class="getping-nav-group">
-                <!-- Direct Buy Button Added -->
                 <button class="btn btn-buy" onclick="openModal('buyCryptoModal'); playClickSound();">💳 Buy Crypto</button>
                 <button id="walletBtn" class="btn btn-primary" onclick="connectAllWallets(); playClickSound();">🔗 <span id="walletText">Connect Wallet</span></button>
             </div>
@@ -863,8 +862,7 @@
 
         function proceedToCheckout() {
             const crypto = document.getElementById('cryptoSelect').value;
-            const walletParam = userConnectedAddress ? `&walletAddress=${userConnectedAddress}` : '';
-            const payUrl = `https://global.transak.com/?apiKey=cb9f196a-49bf-4786-a2dc-d603e62f5255&cryptoCurrencyCode=${crypto}${walletParam}`;
+            const payUrl = `https://www.moonpay.com/buy/${crypto.toLowerCase()}`;
             window.open(payUrl, '_blank');
             closeModal('buyCryptoModal');
         }
