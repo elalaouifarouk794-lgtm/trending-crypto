@@ -7,7 +7,7 @@
     
     <!-- PWA Settings -->
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#050505">
+    <meta name="theme-color" content="#030303">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="TrendAI">
@@ -15,7 +15,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Web3 & WalletConnect v2 Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
@@ -24,20 +24,20 @@
 
     <style>
         :root {
-            --bg: #050505;
-            --surface: #0e0d0a;
-            --surface-card: #14120e;
-            --border: rgba(247, 189, 53, 0.15);
-            --border-hover: rgba(247, 189, 53, 0.4);
+            --bg: #030303;
+            --surface: #0a0a0c;
+            --surface-card: #111115;
+            --border: rgba(247, 189, 53, 0.12);
+            --border-hover: rgba(247, 189, 53, 0.35);
             --gold: #f7bd35;
-            --gold-glow: rgba(247, 189, 53, 0.25);
-            --text-main: #f8f7f3;
-            --text-muted: #a39e93;
-            --green: #22c55e;
+            --gold-glow: rgba(247, 189, 53, 0.2);
+            --text-main: #ffffff;
+            --text-muted: #8e8d9a;
+            --green: #10b981;
             --red: #ef4444;
-            --radius-lg: 20px;
-            --radius-md: 12px;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --radius-lg: 24px;
+            --radius-md: 14px;
+            --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -50,12 +50,26 @@
             line-height: 1.6;
         }
 
+        /* GetPing Style Background Glows */
+        .bg-grid {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(247, 189, 53, 0.08), transparent 50%),
+                radial-gradient(circle at 80% 60%, rgba(247, 189, 53, 0.04), transparent 40%),
+                linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 50px 50px, 50px 50px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
         .falling-container {
             display: inline-flex;
-            gap: 8px;
+            gap: 10px;
             flex-wrap: wrap;
             justify-content: center;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
 
         .fall-word {
@@ -63,22 +77,23 @@
             opacity: 0;
             transform: translateY(-50px) rotate(-5deg);
             animation: fallIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-            animation-delay: calc(var(--i) * 0.15s);
-            background: linear-gradient(180deg, #ffffff 30%, #a39e93 100%);
+            animation-delay: calc(var(--i) * 0.12s);
+            background: linear-gradient(180deg, #ffffff 40%, #8e8d9a 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-size: 44px;
+            font-size: 48px;
             font-weight: 800;
+            letter-spacing: -1px;
         }
 
         @keyframes fallIn {
             0% { opacity: 0; transform: translateY(-60px) rotate(-10deg) scale(0.9); }
-            70% { opacity: 1; transform: translateY(8deg) rotate(2deg) scale(1.02); }
+            70% { opacity: 1; transform: translateY(6px) rotate(2deg) scale(1.02); }
             100% { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }
         }
 
         .top-banner {
-            background: linear-gradient(90deg, rgba(247, 189, 53, 0.15), rgba(247, 189, 53, 0.3), rgba(247, 189, 53, 0.15));
+            background: rgba(247, 189, 53, 0.05);
             border-bottom: 1px solid var(--border);
             color: var(--gold);
             text-align: center;
@@ -88,22 +103,10 @@
             letter-spacing: 1px;
             position: relative;
             z-index: 101;
-            box-shadow: 0 4px 20px rgba(247, 189, 53, 0.2);
+            backdrop-filter: blur(10px);
         }
 
-        .bg-grid {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background-image: 
-                radial-gradient(circle at 50% -10%, rgba(247, 189, 53, 0.12), transparent 60%),
-                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-            background-size: 100% 100%, 40px 40px, 40px 40px;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        .wrap { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
 
         header {
             position: sticky;
@@ -114,16 +117,17 @@
         }
 
         .nav-inner {
-            background: rgba(14, 13, 10, 0.7);
-            backdrop-filter: blur(16px);
+            background: rgba(10, 10, 12, 0.75);
+            backdrop-filter: blur(20px);
             border: 1px solid var(--border);
             border-radius: 99px;
-            padding: 12px 24px;
+            padding: 10px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .brand {
@@ -162,38 +166,39 @@
         .btn:hover {
             border-color: var(--border-hover);
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px var(--gold-glow);
+            box-shadow: 0 8px 25px var(--gold-glow);
         }
 
         .btn-primary {
             background: linear-gradient(135deg, #ffe18a, #d99a13);
-            color: #070707;
+            color: #000000;
+            font-weight: 700;
             border: none;
         }
 
         .hero {
             text-align: center;
-            padding: 40px 0;
+            padding: 40px 0 20px;
         }
 
         .badge-ping {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: rgba(247, 189, 53, 0.08);
+            background: rgba(247, 189, 53, 0.06);
             border: 1px solid var(--border);
-            padding: 6px 16px;
+            padding: 6px 18px;
             border-radius: 99px;
             font-size: 13px;
             color: var(--gold);
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         .ping-dot {
             width: 8px; height: 8px;
             background: var(--gold);
             border-radius: 50%;
-            box-shadow: 0 0 10px var(--gold);
+            box-shadow: 0 0 12px var(--gold);
             animation: pulsePing 2s infinite;
         }
 
@@ -214,18 +219,12 @@
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: var(--radius-lg);
-            padding: 24px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
-            animation: floatCard 6s ease-in-out infinite;
+            padding: 28px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.9);
             margin-top: 30px;
             text-align: right;
         }
         html[dir="ltr"] .dashboard-container { text-align: left; }
-
-        @keyframes floatCard {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
-        }
 
         .grid {
             display: grid;
@@ -246,18 +245,43 @@
 
         .card:hover { border-color: var(--border-hover); }
 
-        table { width: 100%; border-collapse: collapse; font-size: 14px; }
-        th, td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        th { color: var(--text-muted); }
+        /* Custom Table Styling for 24 Cryptos */
+        .table-wrapper {
+            max-height: 520px;
+            overflow-y: auto;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .table-wrapper::-webkit-scrollbar {
+            width: 6px;
+        }
+        .table-wrapper::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 99px;
+        }
+
+        table { width: 100%; border-collapse: collapse; font-size: 14px; text-align: inherit; }
+        th {
+            position: sticky;
+            top: 0;
+            background: #0f0f13;
+            color: var(--text-muted);
+            padding: 14px 16px;
+            z-index: 2;
+            font-weight: 600;
+        }
+        td { padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.03); }
+        tr:hover td { background: rgba(255,255,255,0.02); }
         .up { color: var(--green); font-weight: 700; }
         .down { color: var(--red); font-weight: 700; }
 
         input, select, textarea {
             width: 100%;
-            background: #080705;
+            background: #070709;
             border: 1px solid var(--border);
             color: var(--text-main);
-            padding: 12px;
+            padding: 12px 16px;
             border-radius: var(--radius-md);
             margin-bottom: 12px;
             font-family: inherit;
@@ -267,8 +291,8 @@
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(8px);
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(10px);
             justify-content: center;
             align-items: center;
             z-index: 1000;
@@ -279,9 +303,10 @@
             border: 1px solid var(--border);
             width: 100%;
             max-width: 450px;
-            padding: 24px;
+            padding: 28px;
             border-radius: var(--radius-lg);
             position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
         }
         .close-btn {
             position: absolute;
@@ -304,7 +329,7 @@
 <body>
 
     <div class="top-banner">
-        ✨ REAL-TIME CRYPTO MARKET DATA & GEMINI AI ⚡
+        ✨ 24 REAL-TIME CRYPTO MARKETS & GOOGLE GEMINI AI ⚡
     </div>
 
     <div class="bg-grid"></div>
@@ -336,18 +361,18 @@
         <section class="hero">
             <div class="badge-ping">
                 <div class="ping-dot"></div>
-                <span data-i18n="badge_text">أسعار حقيقية مباشرة من السوق العالمي</span>
+                <span data-i18n="badge_text">24 عملة رقمية مع التحديث المباشر من السوق العالمية</span>
             </div>
             
             <h1 class="falling-container">
-                <span class="fall-word" style="--i:1;">أسعار</span>
-                <span class="fall-word" style="--i:2;">حقيقية</span>
-                <span class="fall-word" style="--i:3;">مباشرة</span>
-                <span class="fall-word" style="--i:4;">من</span>
-                <span class="fall-word" style="--i:5;">السوق</span>
+                <span class="fall-word" style="--i:1;">تداول</span>
+                <span class="fall-word" style="--i:2;">حقيقي</span>
+                <span class="fall-word" style="--i:3;">مباشر</span>
+                <span class="fall-word" style="--i:4;">بذكاء</span>
+                <span class="fall-word" style="--i:5;">Gemini</span>
             </h1>
 
-            <p data-i18n="hero_desc">تتبع أسعار العملات الرقمية الحقيقية لحظة بلحظة، وحلل السوق بدقة عبر ذكاء Gemini.</p>
+            <p data-i18n="hero_desc">تتبع أفضل 24 عملة رقمية في العالم بدقة لحظية، وحلل اتجاه الأسواق عبر الذكاء الاصطناعي.</p>
 
             <div id="realWalletCard" class="card" style="display:none; margin-bottom:20px; text-align:center; border-color:var(--gold);">
                 <h3 style="color:var(--gold); margin-bottom:8px;">💳 المحفظة الحقيقية المتصلة</h3>
@@ -356,8 +381,8 @@
             </div>
 
             <div class="dashboard-container">
-                <h3 style="font-size: 18px; color: var(--gold); margin-bottom: 14px;" data-i18n="market_title">📈 أسعار السوق الحية والمباشرة</h3>
-                <div style="overflow-x: auto;">
+                <h3 style="font-size: 18px; color: var(--gold); margin-bottom: 16px;" data-i18n="market_title">📈 أسعار أفضل 24 عملة رقمية (مباشر)</h3>
+                <div class="table-wrapper">
                     <table>
                         <thead>
                             <tr>
@@ -368,7 +393,7 @@
                         </thead>
                         <tbody id="cryptoTableBody">
                             <tr>
-                                <td colspan="3" style="text-align: center; color: var(--text-muted);">جاري تحميل الأسعار الحقيقية من السوق...</td>
+                                <td colspan="3" style="text-align: center; color: var(--text-muted); padding: 30px;">جاري الاتصال بالسوق العالمي وتحميل 24 عملة...</td>
                             </tr>
                         </tbody>
                     </table>
@@ -390,7 +415,7 @@
                 <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 14px;" data-i18n="port_desc">رصيد تجريبي USDT للتداول بدون مخاطر.</p>
                 <label style="font-size:12px; color:var(--text-muted);" data-i18n="lbl_balance">الرصيد المتاح:</label>
                 <input type="text" value="1000 USDT" readonly>
-                <button class="btn" style="width: 100%; justify-content: center; background: rgba(34, 197, 94, 0.15); color: var(--green); border-color: var(--green);" onclick="executeTrade()" data-i18n="btn_buy">تنفيذ صفقة تجريبية</button>
+                <button class="btn" style="width: 100%; justify-content: center; background: rgba(16, 185, 129, 0.15); color: var(--green); border-color: var(--green);" onclick="executeTrade()" data-i18n="btn_buy">تنفيذ صفقة تجريبية</button>
             </div>
         </section>
 
@@ -411,6 +436,26 @@
                 <option value="BTC">Bitcoin (BTC)</option>
                 <option value="USDT">Tether (USDT)</option>
                 <option value="SOL">Solana (SOL)</option>
+                <option value="BNB">Binance Coin (BNB)</option>
+                <option value="XRP">Ripple (XRP)</option>
+                <option value="ADA">Cardano (ADA)</option>
+                <option value="DOGE">Dogecoin (DOGE)</option>
+                <option value="AVAX">Avalanche (AVAX)</option>
+                <option value="DOT">Polkadot (DOT)</option>
+                <option value="LINK">Chainlink (LINK)</option>
+                <option value="MATIC">Polygon (MATIC)</option>
+                <option value="SHIB">Shiba Inu (SHIB)</option>
+                <option value="LTC">Litecoin (LTC)</option>
+                <option value="NEAR">NEAR Protocol (NEAR)</option>
+                <option value="UNI">Uniswap (UNI)</option>
+                <option value="ATOM">Cosmos (ATOM)</option>
+                <option value="XMR">Monero (XMR)</option>
+                <option value="XLM">Stellar (XLM)</option>
+                <option value="ETC">Ethereum Classic (ETC)</option>
+                <option value="BCH">Bitcoin Cash (BCH)</option>
+                <option value="APT">Aptos (APT)</option>
+                <option value="FIL">Filecoin (FIL)</option>
+                <option value="HBAR">Hedera (HBAR)</option>
             </select>
 
             <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;" onclick="proceedToCheckout()" data-i18n="btn_proceed_pay">متابعة الدفع بالبطاقة البنكية ⚡</button>
@@ -461,9 +506,9 @@
                 signup_btn: "حساب جديد",
                 signin_title: "تسجيل الدخول",
                 signup_title: "إنشاء حساب جديد",
-                badge_text: "أسعار حقيقية مباشرة من السوق العالمي",
-                hero_desc: "تتبع أسعار العملات الرقمية الحقيقية لحظة بلحظة، وحلل السوق بدقة عبر ذكاء Gemini.",
-                market_title: "📈 أسعار السوق الحية والمباشرة",
+                badge_text: "24 عملة رقمية مع التحديث المباشر من السوق العالمية",
+                hero_desc: "تتبع أفضل 24 عملة رقمية في العالم بدقة لحظية، وحلل اتجاه الأسواق عبر الذكاء الاصطناعي.",
+                market_title: "📈 أسعار أفضل 24 عملة رقمية (مباشر)",
                 th_coin: "العملة",
                 th_price: "السعر الحالي (USD)",
                 th_change: "تغير 24h",
@@ -488,9 +533,9 @@
                 signup_btn: "Sign Up",
                 signin_title: "Sign In to Account",
                 signup_title: "Create New Account",
-                badge_text: "Real-time Crypto Market Data",
-                hero_desc: "Track live crypto prices second by second and analyze markets with Gemini AI.",
-                market_title: "📈 Live Market Prices",
+                badge_text: "Top 24 Cryptos Live Market Data",
+                hero_desc: "Track top 24 crypto prices second by second and analyze markets with Gemini AI.",
+                market_title: "📈 Top 24 Live Crypto Prices",
                 th_coin: "Coin",
                 th_price: "Price (USD)",
                 th_change: "24h Change",
@@ -515,9 +560,9 @@
                 signup_btn: "S'inscrire",
                 signin_title: "Connexion au Compte",
                 signup_title: "Créer un Compte",
-                badge_text: "Données de marché en direct",
-                hero_desc: "Suivez les prix des cryptos en temps réel et analysez le marché avec l'IA Gemini.",
-                market_title: "📈 Prix du Marché en Direct",
+                badge_text: "Top 24 Cryptos en Direct",
+                hero_desc: "Suivez le cours des 24 principales cryptos en temps réel et analysez le marché avec l'IA Gemini.",
+                market_title: "📈 Top 24 Prix Crypto en Direct",
                 th_coin: "Pièce",
                 th_price: "Prix (USD)",
                 th_change: "Var 24h",
@@ -584,38 +629,63 @@
             }
         }
 
-        /* --- Fetch Real Crypto Prices from CoinGecko API --- */
+        /* --- Fetch 24 Real Crypto Prices from CoinGecko API --- */
+        const crypto24List = [
+            { id: 'bitcoin', name: 'Bitcoin (BTC)' },
+            { id: 'ethereum', name: 'Ethereum (ETH)' },
+            { id: 'solana', name: 'Solana (SOL)' },
+            { id: 'binancecoin', name: 'Binance Coin (BNB)' },
+            { id: 'ripple', name: 'Ripple (XRP)' },
+            { id: 'cardano', name: 'Cardano (ADA)' },
+            { id: 'dogecoin', name: 'Dogecoin (DOGE)' },
+            { id: 'avalanche-2', name: 'Avalanche (AVAX)' },
+            { id: 'polkadot', name: 'Polkadot (DOT)' },
+            { id: 'chainlink', name: 'Chainlink (LINK)' },
+            { id: 'matic-network', name: 'Polygon (MATIC)' },
+            { id: 'shiba-inu', name: 'Shiba Inu (SHIB)' },
+            { id: 'litecoin', name: 'Litecoin (LTC)' },
+            { id: 'near', name: 'NEAR Protocol (NEAR)' },
+            { id: 'uniswap', name: 'Uniswap (UNI)' },
+            { id: 'cosmos', name: 'Cosmos (ATOM)' },
+            { id: 'monero', name: 'Monero (XMR)' },
+            { id: 'stellar', name: 'Stellar (XLM)' },
+            { id: 'ethereum-classic', name: 'Ethereum Classic (ETC)' },
+            { id: 'bitcoin-cash', name: 'Bitcoin Cash (BCH)' },
+            { id: 'aptos', name: 'Aptos (APT)' },
+            { id: 'filecoin', name: 'Filecoin (FIL)' },
+            { id: 'hedera-hashgraph', name: 'Hedera (HBAR)' },
+            { id: 'tether', name: 'Tether (USDT)' }
+        ];
+
         async function fetchRealCryptoPrices() {
             try {
-                const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,tether&vs_currencies=usd&include_24hr_change=true');
+                const idsParam = crypto24List.map(c => c.id).join(',');
+                const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${idsParam}&vs_currencies=usd&include_24hr_change=true`);
                 const data = await response.json();
                 
                 const tableBody = document.getElementById('cryptoTableBody');
-                tableBody.innerHTML = `
-                    <tr>
-                        <td><strong>Bitcoin (BTC)</strong></td>
-                        <td>$${data.bitcoin.usd.toLocaleString()}</td>
-                        <td class="${data.bitcoin.usd_24h_change >= 0 ? 'up' : 'down'}">${data.bitcoin.usd_24h_change.toFixed(2)}%</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Ethereum (ETH)</strong></td>
-                        <td>$${data.ethereum.usd.toLocaleString()}</td>
-                        <td class="${data.ethereum.usd_24h_change >= 0 ? 'up' : 'down'}">${data.ethereum.usd_24h_change.toFixed(2)}%</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Solana (SOL)</strong></td>
-                        <td>$${data.solana.usd.toLocaleString()}</td>
-                        <td class="${data.solana.usd_24h_change >= 0 ? 'up' : 'down'}">${data.solana.usd_24h_change.toFixed(2)}%</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Tether (USDT)</strong></td>
-                        <td>$${data.tether.usd.toLocaleString()}</td>
-                        <td class="${data.tether.usd_24h_change >= 0 ? 'up' : 'down'}">${data.tether.usd_24h_change.toFixed(2)}%</td>
-                    </tr>
-                `;
+                let rowsHtml = '';
+
+                crypto24List.forEach(coin => {
+                    const coinData = data[coin.id];
+                    if (coinData) {
+                        const price = coinData.usd < 1 ? coinData.usd.toFixed(4) : coinData.usd.toLocaleString();
+                        const change = coinData.usd_24h_change ? coinData.usd_24h_change.toFixed(2) : '0.00';
+                        const isUp = coinData.usd_24h_change >= 0;
+
+                        rowsHtml += `
+                            <tr>
+                                <td><strong>${coin.name}</strong></td>
+                                <td>$${price}</td>
+                                <td class="${isUp ? 'up' : 'down'}">${isUp ? '+' : ''}${change}%</td>
+                            </tr>
+                        `;
+                    }
+                });
+
+                tableBody.innerHTML = rowsHtml;
             } catch (error) {
                 console.error("Error fetching crypto prices:", error);
-                document.getElementById('cryptoTableBody').innerHTML = `<tr><td colspan="3" style="text-align: center; color: var(--red);">تعذر تحميل الأسعار المباشرة. يرجى إعادة المحاولة لاحقاً.</td></tr>`;
             }
         }
 
@@ -678,7 +748,7 @@
             resDiv.style.display = 'block';
             resDiv.innerHTML = "⏳ جاري تحليل السوق بواسطة Google Gemini AI...";
 
-            const GEMINI_API_KEY = "AQ.Ab8RN6Lil9aFZRAbz4y4nAQD4ooY2SABwdqHxxY0tkrYb9VlTQ"; 
+            const GEMINI_API_KEY = "ضع_المفتاح_الحقيقي_هنا"; 
 
             if (GEMINI_API_KEY === "ضع_المفتاح_الحقيقي_هنا" || !GEMINI_API_KEY.startsWith("AIzaSy")) {
                 resDiv.innerHTML = "⚠️ يرجي كتابة مفتاح Gemini API صحيح يبدأ بـ AIzaSy فـ السطر المقابل من الكود.";
@@ -728,7 +798,7 @@
         window.addEventListener('load', () => {
             initWeb3();
             fetchRealCryptoPrices();
-            setInterval(fetchRealCryptoPrices, 30000); // تحديث الأسعار كل 30 ثانية أوتوماتيكياً
+            setInterval(fetchRealCryptoPrices, 30000); // تحديث الأسعار أوتوماتيكياً كل 30 ثانية
             document.getElementById('langSelect').value = currentLang;
             changeLanguage(currentLang);
         });
