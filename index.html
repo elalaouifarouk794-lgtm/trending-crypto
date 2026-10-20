@@ -51,19 +51,144 @@
             line-height: 1.6;
         }
 
-        /* Glassmorphism & Glowing Background */
+        /* Glassmorphism Background */
         .bg-grid {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
             background-image: 
-                radial-gradient(circle at 50% -10%, rgba(139, 92, 246, 0.18), transparent 60%),
-                radial-gradient(circle at 85% 65%, rgba(99, 102, 241, 0.12), transparent 50%),
-                radial-gradient(circle at 15% 85%, rgba(168, 85, 247, 0.1), transparent 50%),
+                radial-gradient(circle at 50% -10%, rgba(139, 92, 246, 0.25), transparent 60%),
+                radial-gradient(circle at 85% 65%, rgba(99, 102, 241, 0.15), transparent 50%),
                 linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
                 linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-            background-size: 100% 100%, 100% 100%, 100% 100%, 50px 50px, 50px 50px;
+            background-size: 100% 100%, 100% 100%, 50px 50px, 50px 50px;
             pointer-events: none;
             z-index: -1;
+        }
+
+        .top-banner {
+            background: rgba(139, 92, 246, 0.08);
+            border-bottom: 1px solid var(--border);
+            color: #d8b4fe;
+            text-align: center;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 101;
+            backdrop-filter: blur(12px);
+        }
+
+        .wrap { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+        /* Exact GetPing Glass Nav Bar */
+        header {
+            position: sticky;
+            top: 16px;
+            z-index: 100;
+            margin-bottom: 40px;
+            margin-top: 12px;
+        }
+
+        .nav-inner {
+            background: rgba(20, 15, 50, 0.5);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--border);
+            border-radius: 99px;
+            padding: 8px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .getping-nav-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .getping-nav-item {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 99px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+        }
+
+        .getping-nav-item:hover, .getping-nav-item.active {
+            background: rgba(139, 92, 246, 0.25);
+            border-color: var(--border-hover);
+            color: #ffffff;
+            box-shadow: 0 0 15px var(--glow-purple);
+        }
+
+        .getping-icon-btn {
+            padding: 8px 12px;
+            border-radius: 99px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 13px;
+            transition: var(--transition);
+        }
+
+        .getping-icon-btn:hover {
+            background: rgba(139, 92, 246, 0.25);
+            border-color: var(--border-hover);
+        }
+
+        .ca-pill {
+            background: rgba(10, 8, 26, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 99px;
+            padding: 6px 14px;
+            font-size: 12px;
+            font-family: monospace;
+            color: #c084fc;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .ca-pill:hover {
+            border-color: var(--purple-neon);
+            box-shadow: 0 0 12px var(--glow-purple);
+        }
+
+        .btn {
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            padding: 8px 18px;
+            border-radius: 99px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            color: #ffffff;
+            font-weight: 700;
+            border: none;
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
         }
 
         .falling-container {
@@ -94,104 +219,7 @@
             100% { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }
         }
 
-        .top-banner {
-            background: rgba(139, 92, 246, 0.08);
-            border-bottom: 1px solid var(--border);
-            color: #d8b4fe;
-            text-align: center;
-            padding: 8px 16px;
-            font-size: 13px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            position: relative;
-            z-index: 101;
-            backdrop-filter: blur(12px);
-        }
-
-        .wrap { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
-
-        header {
-            position: sticky;
-            top: 16px;
-            z-index: 100;
-            margin-bottom: 40px;
-            margin-top: 12px;
-        }
-
-        /* Glass Nav Bar */
-        .nav-inner {
-            background: rgba(15, 12, 41, 0.65);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--border);
-            border-radius: 99px;
-            padding: 10px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 800;
-            font-size: 20px;
-            color: var(--text-main);
-        }
-
-        .brand span {
-            background: linear-gradient(135deg, #ffffff, var(--purple-neon));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .nav-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-
-        .btn {
-            background: rgba(255, 255, 255, 0.04);
-            color: var(--text-main);
-            border: 1px solid var(--border);
-            padding: 10px 22px;
-            border-radius: 99px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            backdrop-filter: blur(10px);
-        }
-
-        .btn:hover {
-            border-color: var(--border-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px var(--glow-purple);
-            background: rgba(139, 92, 246, 0.15);
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #8b5cf6, #6366f1);
-            color: #ffffff;
-            font-weight: 700;
-            border: none;
-            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
-        }
-
-        .btn-primary:hover {
-            box-shadow: 0 8px 30px rgba(139, 92, 246, 0.6);
-            transform: translateY(-2px);
-        }
-
-        .hero {
-            text-align: center;
-            padding: 40px 0 20px;
-        }
+        .hero { text-align: center; padding: 30px 0 20px; }
 
         .badge-ping {
             display: inline-flex;
@@ -204,7 +232,6 @@
             font-size: 13px;
             color: #c084fc;
             margin-bottom: 24px;
-            backdrop-filter: blur(10px);
         }
 
         .ping-dot {
@@ -228,15 +255,13 @@
             margin: 0 auto 30px;
         }
 
-        /* Glass Container Cards */
         .dashboard-container {
             background: var(--surface);
             backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
             border: 1px solid var(--border);
             border-radius: var(--radius-lg);
             padding: 28px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
             margin-top: 30px;
             text-align: left;
         }
@@ -252,20 +277,14 @@
         .card {
             background: var(--surface-card);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--border);
             border-radius: var(--radius-lg);
             padding: 24px;
             transition: var(--transition);
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
         }
 
-        .card:hover { 
-            border-color: var(--border-hover); 
-            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        }
+        .card:hover { border-color: var(--border-hover); }
 
-        /* Glass Table Styling for 24 Cryptos */
         .table-wrapper {
             max-height: 520px;
             overflow-y: auto;
@@ -274,18 +293,9 @@
             background: rgba(10, 8, 28, 0.4);
         }
 
-        .table-wrapper::-webkit-scrollbar {
-            width: 6px;
-        }
-        .table-wrapper::-webkit-scrollbar-thumb {
-            background: var(--border);
-            border-radius: 99px;
-        }
-
         table { width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; }
         th {
-            position: sticky;
-            top: 0;
+            position: sticky; top: 0;
             background: #0d0a22;
             color: var(--text-muted);
             padding: 14px 16px;
@@ -294,7 +304,6 @@
             border-bottom: 1px solid var(--border);
         }
         td { padding: 14px 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
-        tr:hover td { background: rgba(139, 92, 246, 0.05); }
         .up { color: var(--green); font-weight: 700; }
         .down { color: var(--red); font-weight: 700; }
 
@@ -309,48 +318,31 @@
             font-family: inherit;
         }
 
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--purple-neon);
-            box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
-        }
-
-        /* Glass Modal */
         .modal {
-            display: none;
-            position: fixed;
+            display: none; position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(5, 7, 22, 0.85);
             backdrop-filter: blur(16px);
-            justify-content: center;
-            align-items: center;
+            justify-content: center; align-items: center;
             z-index: 1000;
         }
         .modal.active { display: flex; }
         .modal-content {
             background: rgba(15, 12, 41, 0.9);
             border: 1px solid var(--border);
-            width: 100%;
-            max-width: 450px;
+            width: 100%; max-width: 450px;
             padding: 28px;
             border-radius: var(--radius-lg);
             position: relative;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.8), 0 0 40px rgba(139, 92, 246, 0.2);
         }
         .close-btn {
-            position: absolute;
-            top: 16px; right: 16px;
-            cursor: pointer;
-            color: var(--text-muted);
-            font-weight: bold;
+            position: absolute; top: 16px; right: 16px;
+            cursor: pointer; color: var(--text-muted); font-weight: bold;
         }
 
         footer {
-            text-align: center;
-            padding: 40px 0;
-            color: var(--text-muted);
-            border-top: 1px solid var(--border);
-            font-size: 13px;
+            text-align: center; padding: 40px 0;
+            color: var(--text-muted); border-top: 1px solid var(--border); font-size: 13px;
         }
     </style>
 </head>
@@ -364,21 +356,34 @@
 
     <header class="wrap">
         <div class="nav-inner">
-            <div class="brand">
-                ✨ <span>TrendAI Crypto</span>
+            <!-- GetPing Exact Navigation Pills -->
+            <div class="getping-nav-group">
+                <a href="#home" class="getping-nav-item active">Home</a>
+                <a href="#features" class="getping-nav-item">Features</a>
+                <a href="#protocol" class="getping-nav-item">Protocol</a>
+                <a href="#app" class="getping-nav-item">App</a>
+                <a href="#download" class="getping-nav-item">Download</a>
             </div>
-            <div class="nav-actions">
-                <button id="walletBtn" class="btn btn-primary" onclick="connectAllWallets()">🔗 <span id="walletText">Connect Wallet</span></button>
 
-                <div id="authNav" style="display:inline-flex; gap:8px;">
-                    <button class="btn" onclick="openModal('signInModal')">Sign In</button>
-                    <button class="btn btn-primary" onclick="openModal('signUpModal')">Sign Up</button>
+            <!-- Social Icons & Contract Address -->
+            <div class="getping-nav-group">
+                <a href="https://t.me" target="_blank" class="getping-icon-btn" title="Telegram">✈️</a>
+                <a href="https://x.com" target="_blank" class="getping-icon-btn" title="X (Twitter)">𝕏</a>
+                <a href="https://github.com" target="_blank" class="getping-icon-btn" title="GitHub">🐙</a>
+                
+                <div class="ca-pill" onclick="copyCA()" title="Click to copy Contract Address">
+                    <span>CA:</span> <span>0xFEb3...76Ba26</span> 📋
                 </div>
+            </div>
+
+            <!-- Wallet & Auth -->
+            <div class="getping-nav-group">
+                <button id="walletBtn" class="btn btn-primary" onclick="connectAllWallets()">🔗 <span id="walletText">Connect Wallet</span></button>
             </div>
         </div>
     </header>
 
-    <main class="wrap">
+    <main class="wrap" id="home">
 
         <section class="hero">
             <div class="badge-ping">
@@ -402,7 +407,7 @@
                 <button class="btn btn-primary" onclick="openModal('buyCryptoModal')">💳 Buy Crypto with Credit Card</button>
             </div>
 
-            <div class="dashboard-container">
+            <div class="dashboard-container" id="app">
                 <h3 style="font-size: 18px; color: #c084fc; margin-bottom: 16px;">📈 Live Market Prices (Top 24 Cryptos)</h3>
                 <div class="table-wrapper">
                     <table>
@@ -423,7 +428,7 @@
             </div>
         </section>
 
-        <section class="grid">
+        <section class="grid" id="features">
             <div class="card">
                 <h3 style="color: #c084fc; margin-bottom: 10px;">🤖 Google Gemini AI Assistant</h3>
                 <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 14px;">Ask Gemini AI for instant market predictions and technical analysis.</p>
@@ -432,7 +437,7 @@
                 <div id="aiResult" style="margin-top:12px; font-size:14px; color:#c084fc; display:none; background: rgba(10, 8, 26, 0.8); padding: 12px; border-radius: 8px; border: 1px solid var(--border);"></div>
             </div>
 
-            <div class="card">
+            <div class="card" id="protocol">
                 <h3 style="color: #c084fc; margin-bottom: 10px;">🧪 Virtual Portfolio</h3>
                 <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 14px;">Simulate trades risk-free using virtual USDT balance.</p>
                 <label style="font-size:12px; color:var(--text-muted);">Available Balance:</label>
@@ -458,54 +463,9 @@
                 <option value="BTC">Bitcoin (BTC)</option>
                 <option value="USDT">Tether (USDT)</option>
                 <option value="SOL">Solana (SOL)</option>
-                <option value="BNB">Binance Coin (BNB)</option>
-                <option value="XRP">Ripple (XRP)</option>
-                <option value="ADA">Cardano (ADA)</option>
-                <option value="DOGE">Dogecoin (DOGE)</option>
-                <option value="AVAX">Avalanche (AVAX)</option>
-                <option value="DOT">Polkadot (DOT)</option>
-                <option value="LINK">Chainlink (LINK)</option>
-                <option value="MATIC">Polygon (MATIC)</option>
-                <option value="SHIB">Shiba Inu (SHIB)</option>
-                <option value="LTC">Litecoin (LTC)</option>
-                <option value="NEAR">NEAR Protocol (NEAR)</option>
-                <option value="UNI">Uniswap (UNI)</option>
-                <option value="ATOM">Cosmos (ATOM)</option>
-                <option value="XMR">Monero (XMR)</option>
-                <option value="XLM">Stellar (XLM)</option>
-                <option value="ETC">Ethereum Classic (ETC)</option>
-                <option value="BCH">Bitcoin Cash (BCH)</option>
-                <option value="APT">Aptos (APT)</option>
-                <option value="FIL">Filecoin (FIL)</option>
-                <option value="HBAR">Hedera (HBAR)</option>
             </select>
 
             <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;" onclick="proceedToCheckout()">Proceed to Checkout ⚡</button>
-        </div>
-    </div>
-
-    <div id="signInModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('signInModal')">✕</span>
-            <h3 style="color: #c084fc; margin-bottom: 16px;">Sign In to Account</h3>
-            <form onsubmit="handleAuth(event, 'signInEmail')">
-                <input type="email" id="signInEmail" placeholder="Email Address" required>
-                <input type="password" placeholder="Password" required>
-                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Sign In</button>
-            </form>
-        </div>
-    </div>
-
-    <div id="signUpModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('signUpModal')">✕</span>
-            <h3 style="color: #c084fc; margin-bottom: 16px;">Create New Account</h3>
-            <form onsubmit="handleAuth(event, 'signUpName')">
-                <input type="text" id="signUpName" placeholder="Full Name" required>
-                <input type="email" placeholder="Email Address" required>
-                <input type="password" placeholder="Password" required>
-                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Register Account</button>
-            </form>
         </div>
     </div>
 
@@ -514,6 +474,12 @@
     </footer>
 
     <script>
+        function copyCA() {
+            const ca = "0xFEb390e5b613670490Se2G35bFc3e5150d76Ba26";
+            navigator.clipboard.writeText(ca);
+            alert("Contract Address Copied: " + ca);
+        }
+
         // PWA Service Worker Registration
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
@@ -523,31 +489,6 @@
 
         function openModal(id) { document.getElementById(id).classList.add('active'); }
         function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-
-        function handleAuth(e, inputId) {
-            e.preventDefault();
-            const val = document.getElementById(inputId).value;
-            const name = val.includes('@') ? val.split('@')[0] : val;
-            localStorage.setItem('user', JSON.stringify({ name }));
-            closeModal('signInModal');
-            closeModal('signUpModal');
-            checkSession();
-        }
-
-        function logout() {
-            localStorage.removeItem('user');
-            checkSession();
-        }
-
-        function checkSession() {
-            const user = JSON.parse(localStorage.getItem('user'));
-            const authNav = document.getElementById('authNav');
-            if (user) {
-                authNav.innerHTML = `<span style="color:#c084fc; font-size:14px; font-weight:600;">Welcome, ${user.name}!</span> <button class="btn" style="padding:6px 14px;" onclick="logout()">Logout</button>`;
-            } else {
-                authNav.innerHTML = `<button class="btn" onclick="openModal('signInModal')">Sign In</button> <button class="btn btn-primary" onclick="openModal('signUpModal')">Sign Up</button>`;
-            }
-        }
 
         /* --- Fetch 24 Real Crypto Prices from CoinGecko API --- */
         const crypto24List = [
@@ -719,7 +660,6 @@
             initWeb3();
             fetchRealCryptoPrices();
             setInterval(fetchRealCryptoPrices, 30000);
-            checkSession();
         });
     </script>
 </body>
