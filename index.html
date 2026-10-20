@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TrendAI Crypto | Pro Max Launchpad & Next-Gen Platform</title>
+    <title>TrendAI Crypto | Pro Max Launchpad & Admin Dashboard</title>
     
     <!-- PWA Settings -->
     <link rel="manifest" href="manifest.json">
@@ -370,10 +370,12 @@
         .modal-content {
             background: var(--surface-card);
             border: 1px solid var(--border);
-            width: 100%; max-width: 500px;
+            width: 100%; max-width: 550px;
             padding: 28px;
             border-radius: var(--radius-lg);
             position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
         }
         .close-btn {
             position: absolute; top: 16px; right: 16px;
@@ -427,8 +429,7 @@
             <span class="ticker-item">⚡ ETH/USD: $3,120 (+1.8%)</span>
             <span class="ticker-item">🔥 SOL/USD: $188.3 (+5.1%)</span>
             <span class="ticker-item">💎 TrendAI Launchpad: Live Now (Round 1)</span>
-            <span class="ticker-item">💳 Buy Crypto with Credit Card Active</span>
-            <span class="ticker-item">🤖 Gemini AI: Market Sentiment Bullish</span>
+            <span class="ticker-item">💬 Community Comments Section Active</span>
         </div>
     </div>
 
@@ -439,9 +440,9 @@
             <div class="getping-nav-group">
                 <a href="#home" class="getping-nav-item active" onclick="playClickSound()">Home</a>
                 <a href="#launchpad" class="getping-nav-item" onclick="playClickSound()">🚀 Launchpad</a>
+                <a href="#comments" class="getping-nav-item" onclick="playClickSound()">💬 Community</a>
                 <a href="#chart" class="getping-nav-item" onclick="playClickSound()">Chart</a>
                 <a href="#tools" class="getping-nav-item" onclick="playClickSound()">Tools</a>
-                <a href="#app" class="getping-nav-item" onclick="playClickSound()">Market</a>
             </div>
 
             <div class="getping-nav-group">
@@ -485,7 +486,7 @@
         <section class="hero">
             <div class="badge-ping">
                 <div class="ping-dot"></div>
-                <span>TrendAI Launchpad • Presale Round 1 • Staking & AI Signals</span>
+                <span>TrendAI Launchpad • Community Feedback • Admin Dashboard</span>
             </div>
             
             <h1 class="falling-container">
@@ -496,7 +497,7 @@
                 <span class="fall-word" style="--i:5;">Trading</span>
             </h1>
 
-            <p>Participate in official token launchpad presales, buy real crypto instantly with credit card, track live portfolio performance, and audit smart contracts.</p>
+            <p>Participate in token presales, share your feedback with the community, and manage full administrative control securely.</p>
 
             <div style="margin-bottom: 24px; text-align: center;">
                 <button class="btn btn-buy" style="font-size: 16px; padding: 12px 28px;" onclick="openModal('buyCryptoModal'); playClickSound();">💳 Buy Crypto Instantly with Card / Apple Pay</button>
@@ -507,7 +508,7 @@
                 <p id="realWalletDetails" style="font-size:14px; color:var(--text-main); margin-bottom: 12px;"></p>
             </div>
 
-            <!-- TOKEN LAUNCHPAD SECTION (أحدث إضافة) -->
+            <!-- TOKEN LAUNCHPAD SECTION -->
             <div class="dashboard-container" id="launchpad" style="border-color: var(--purple-neon);">
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:16px;">
                     <div>
@@ -524,7 +525,6 @@
                         <span>Soft Cap / Hard Cap Raised: <strong>$745,200 / $1,000,000</strong></span>
                         <span style="color:var(--green); font-weight:700;">74.5% Sold</span>
                     </div>
-                    <!-- Progress Bar -->
                     <div style="width:100%; height:12px; background:rgba(255,255,255,0.05); border-radius:99px; overflow:hidden; border:1px solid var(--border);">
                         <div style="width:74.5%; height:100%; background:linear-gradient(90deg, #8b5cf6, #10b981); border-radius:99px;"></div>
                     </div>
@@ -540,6 +540,23 @@
                         <div style="font-size:13px; color:var(--text-muted); margin-bottom:8px;">Listing Exchange Date:</div>
                         <div style="font-size:18px; font-weight:800; color:var(--purple-neon); margin-bottom:12px;">May 15, 2026 ⏳</div>
                         <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="participatePresale(); playClickSound();">🚀 Buy Presale Allocation</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COMMUNITY COMMENTS SECTION (قسم التعليقات الجديد) -->
+            <div class="dashboard-container" id="comments">
+                <h3 style="font-size: 18px; color: var(--purple-neon); margin-bottom: 8px;">💬 Community Feedback &amp; Comments</h3>
+                <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Leave your feedback or review about TrendAI platform:</p>
+                
+                <div class="grid" style="margin:0 0 20px 0;">
+                    <div class="card" style="background: rgba(10,8,26,0.2);">
+                        <input type="text" id="commentName" placeholder="Your Name or Handle">
+                        <textarea id="commentText" rows="3" placeholder="Write your comment here..."></textarea>
+                        <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="postComment(); playClickSound();">Post Comment ✍️</button>
+                    </div>
+                    <div class="card" style="background: rgba(10,8,26,0.2); max-height:250px; overflow-y:auto;" id="commentsListContainer">
+                        <div style="font-size:13px; color:var(--text-muted); padding:10px;">Loading community feedback...</div>
                     </div>
                 </div>
             </div>
@@ -760,29 +777,50 @@
         </div>
     </div>
 
-    <!-- ADMIN PANEL MODAL (محمي بكلمة سر خاصة بك) -->
+    <!-- ADMIN PANEL DASHBOARD MODAL (لوحة تحكم الأدمن الشاملة والمطورة) -->
     <div id="adminModal" class="modal">
         <div class="modal-content" style="border-color: var(--purple-neon);">
             <span class="close-btn" onclick="closeModal('adminModal'); playClickSound();">✕</span>
-            <h3 style="color: var(--purple-neon); margin-bottom: 12px;">⚙️ Admin Control Panel</h3>
+            <h3 style="color: var(--purple-neon); margin-bottom: 12px;">⚙️ Admin Control Dashboard</h3>
+            
             <div id="adminLoginArea">
-                <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">Enter Admin Password to manage site settings:</p>
+                <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">Enter Admin Password to access full site management:</p>
                 <input type="password" id="adminPassInput" placeholder="Enter Admin Password">
                 <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="verifyAdmin(); playClickSound();">Login as Admin 🔓</button>
             </div>
+
             <div id="adminDashboardArea" style="display:none;">
-                <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid var(--green); padding: 10px; border-radius: 8px; color: var(--green); font-size: 13px; margin-bottom: 12px; text-align: center;">
-                    ✅ Authenticated as Site Owner / Admin
+                <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid var(--green); padding: 10px; border-radius: 8px; color: var(--green); font-size: 13px; margin-bottom: 16px; text-align: center;">
+                    ✅ Authenticated as Site Owner / Admin Pro Max
                 </div>
+
+                <!-- Admin Stats Overview -->
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:16px;">
+                    <div style="background:rgba(10,8,26,0.3); padding:12px; border-radius:10px; border:1px solid var(--border); text-align:center;">
+                        <div style="font-size:11px; color:var(--text-muted);">TOTAL VISITORS</div>
+                        <div style="font-size:16px; font-weight:800; color:var(--purple-neon);">14,820</div>
+                    </div>
+                    <div style="background:rgba(10,8,26,0.3); padding:12px; border-radius:10px; border:1px solid var(--border); text-align:center;">
+                        <div style="font-size:11px; color:var(--text-muted);">PRESALE RAISED</div>
+                        <div style="font-size:16px; font-weight:800; color:var(--green);">$745,200</div>
+                    </div>
+                </div>
+
                 <label style="font-size:12px; color:var(--text-muted);">Admin Treasury Wallet Address:</label>
                 <input type="text" id="adminWalletSetting" value="0xFEb390e5b613670490Se2G35bFc3e5150d76Ba26">
-                <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 5px;" onclick="saveAdminSettings(); playClickSound();">Save Admin Settings 💾</button>
+                
+                <label style="font-size:12px; color:var(--text-muted); margin-top:8px;">Manage Community Comments:</label>
+                <div id="adminCommentsList" style="background:rgba(10,8,26,0.4); max-height:150px; overflow-y:auto; padding:10px; border-radius:10px; border:1px solid var(--border); margin-bottom:12px; font-size:12px;">
+                    No comments to manage.
+                </div>
+
+                <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="saveAdminSettings(); playClickSound();">Save Admin Settings 💾</button>
             </div>
         </div>
     </div>
 
     <footer>
-        © 2026 TrendAI Crypto • Launchpad Pro Max Edition • All rights reserved
+        © 2026 TrendAI Crypto • Pro Max Community &amp; Admin Edition • All rights reserved
     </footer>
 
     <script>
@@ -824,6 +862,66 @@
 
         function openModal(id) { document.getElementById(id).classList.add('active'); }
         function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+        // Community Comments Logic
+        let commentsData = [
+            { name: "Farouk (Founder)", text: "Welcome to TrendAI Crypto Pro Max! The future of Web3 AI." },
+            { name: "CryptoWhale", text: "Amazing platform layout and super fast live prices!" }
+        ];
+
+        function renderComments() {
+            const listEl = document.getElementById('commentsListContainer');
+            const adminListEl = document.getElementById('adminCommentsList');
+            
+            if(commentsData.length === 0) {
+                listEl.innerHTML = `<div style="font-size:13px; color:var(--text-muted); padding:10px;">No comments yet. Be the first to comment!</div>`;
+                if(adminListEl) adminListEl.innerHTML = "No comments available.";
+                return;
+            }
+
+            let html = '';
+            let adminHtml = '';
+            commentsData.forEach((c, index) => {
+                html += `
+                    <div style="background:rgba(139,92,246,0.1); border:1px solid var(--border); padding:10px; border-radius:8px; margin-bottom:8px;">
+                        <strong style="color:var(--purple-neon);">${c.name}</strong>
+                        <p style="font-size:12px; color:var(--text-main); margin-top:2px;">${c.text}</p>
+                    </div>
+                `;
+                adminHtml += `
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:4px;">
+                        <span><strong>${c.name}:</strong> ${c.text}</span>
+                        <button class="btn" style="padding:2px 8px; font-size:11px; color:var(--red); border-color:var(--red);" onclick="deleteComment(${index})">Delete</button>
+                    </div>
+                `;
+            });
+            listEl.innerHTML = html;
+            if(adminListEl) adminListEl.innerHTML = adminHtml;
+        }
+
+        function postComment() {
+            const nameInput = document.getElementById('commentName');
+            const textInput = document.getElementById('commentText');
+            const name = nameInput.value.trim() || "Anonymous";
+            const text = textInput.value.trim();
+
+            if(!text) {
+                alert("Please write a comment before posting!");
+                return;
+            }
+
+            commentsData.unshift({ name, text });
+            textInput.value = '';
+            nameInput.value = '';
+            renderComments();
+            alert("✅ Comment posted successfully!");
+        }
+
+        function deleteComment(index) {
+            commentsData.splice(index, 1);
+            renderComments();
+            alert("🗑️ Comment deleted by Admin.");
+        }
 
         // Launchpad Presale Calculator Logic
         function calculatePresaleTokens() {
@@ -916,6 +1014,7 @@
             if (pass === "admin123") {
                 document.getElementById('adminLoginArea').style.display = 'none';
                 document.getElementById('adminDashboardArea').style.display = 'block';
+                renderComments();
             } else {
                 alert("❌ Incorrect Admin Password!");
             }
@@ -923,7 +1022,7 @@
 
         function saveAdminSettings() {
             const newWallet = document.getElementById('adminWalletSetting').value;
-            alert("✅ Admin Settings Saved Successfully! Treasury Wallet: " + newWallet);
+            alert("✅ Admin Settings & Treasury Wallet Saved Successfully: " + newWallet);
             closeModal('adminModal');
         }
 
@@ -1137,6 +1236,7 @@
             calculateCryptoConversion();
             calculateStaking();
             calculatePresaleTokens();
+            renderComments();
             setInterval(fetchRealCryptoPrices, 30000);
         });
     </script>
