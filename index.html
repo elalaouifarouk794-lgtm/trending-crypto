@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TrendAI Crypto | Pro Max Next-Gen Web3 & AI Platform</title>
+    <title>TrendAI Crypto | Pro Max Launchpad & Next-Gen Platform</title>
     
     <!-- PWA Settings -->
     <link rel="manifest" href="manifest.json">
@@ -426,10 +426,9 @@
             <span class="ticker-item">🚀 BTC/USD: $82,250 (+3.4%)</span>
             <span class="ticker-item">⚡ ETH/USD: $3,120 (+1.8%)</span>
             <span class="ticker-item">🔥 SOL/USD: $188.3 (+5.1%)</span>
-            <span class="ticker-item">💎 BNB/USD: $590.1 (+0.8%)</span>
+            <span class="ticker-item">💎 TrendAI Launchpad: Live Now (Round 1)</span>
             <span class="ticker-item">💳 Buy Crypto with Credit Card Active</span>
             <span class="ticker-item">🤖 Gemini AI: Market Sentiment Bullish</span>
-            <span class="ticker-item">🐋 Whale Alert: 12,000 ETH transferred to Binance</span>
         </div>
     </div>
 
@@ -439,9 +438,9 @@
         <div class="nav-inner">
             <div class="getping-nav-group">
                 <a href="#home" class="getping-nav-item active" onclick="playClickSound()">Home</a>
+                <a href="#launchpad" class="getping-nav-item" onclick="playClickSound()">🚀 Launchpad</a>
                 <a href="#chart" class="getping-nav-item" onclick="playClickSound()">Chart</a>
                 <a href="#tools" class="getping-nav-item" onclick="playClickSound()">Tools</a>
-                <a href="#protools" class="getping-nav-item" onclick="playClickSound()">Pro Max</a>
                 <a href="#app" class="getping-nav-item" onclick="playClickSound()">Market</a>
             </div>
 
@@ -486,7 +485,7 @@
         <section class="hero">
             <div class="badge-ping">
                 <div class="ping-dot"></div>
-                <span>Pro Max Web3 • AI Signals • Staking • Portfolio Tracker</span>
+                <span>TrendAI Launchpad • Presale Round 1 • Staking & AI Signals</span>
             </div>
             
             <h1 class="falling-container">
@@ -497,7 +496,7 @@
                 <span class="fall-word" style="--i:5;">Trading</span>
             </h1>
 
-            <p>Buy real crypto instantly with credit card, track live portfolio performance, audit contracts, and leverage AI trading algorithms.</p>
+            <p>Participate in official token launchpad presales, buy real crypto instantly with credit card, track live portfolio performance, and audit smart contracts.</p>
 
             <div style="margin-bottom: 24px; text-align: center;">
                 <button class="btn btn-buy" style="font-size: 16px; padding: 12px 28px;" onclick="openModal('buyCryptoModal'); playClickSound();">💳 Buy Crypto Instantly with Card / Apple Pay</button>
@@ -506,6 +505,43 @@
             <div id="realWalletCard" class="card" style="display:none; margin-bottom:20px; text-align:center; border-color:var(--purple-neon);">
                 <h3 style="color:var(--purple-neon); margin-bottom:8px;">💳 Connected Web3 Wallet</h3>
                 <p id="realWalletDetails" style="font-size:14px; color:var(--text-main); margin-bottom: 12px;"></p>
+            </div>
+
+            <!-- TOKEN LAUNCHPAD SECTION (أحدث إضافة) -->
+            <div class="dashboard-container" id="launchpad" style="border-color: var(--purple-neon);">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:16px;">
+                    <div>
+                        <h3 style="font-size: 20px; color: var(--purple-neon);">🚀 TrendAI Token Launchpad (Presale Stage 1)</h3>
+                        <p style="font-size: 13px; color: var(--text-muted);">Secure your allocation of $TAI tokens before public exchange listing.</p>
+                    </div>
+                    <div style="background: rgba(139, 92, 246, 0.15); border: 1px solid var(--border); padding: 8px 16px; border-radius: 99px; font-size: 13px; font-weight: 700; color: var(--purple-neon);">
+                        🔥 Price: 1 $TAI = $0.05 USD
+                    </div>
+                </div>
+
+                <div style="background: rgba(10, 8, 26, 0.4); padding: 20px; border-radius: var(--radius-md); border: 1px solid var(--border); margin-bottom: 20px;">
+                    <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:8px; color:var(--text-muted);">
+                        <span>Soft Cap / Hard Cap Raised: <strong>$745,200 / $1,000,000</strong></span>
+                        <span style="color:var(--green); font-weight:700;">74.5% Sold</span>
+                    </div>
+                    <!-- Progress Bar -->
+                    <div style="width:100%; height:12px; background:rgba(255,255,255,0.05); border-radius:99px; overflow:hidden; border:1px solid var(--border);">
+                        <div style="width:74.5%; height:100%; background:linear-gradient(90deg, #8b5cf6, #10b981); border-radius:99px;"></div>
+                    </div>
+                </div>
+
+                <div class="grid" style="margin: 0 0 10px 0;">
+                    <div class="card" style="background: rgba(10,8,26,0.2);">
+                        <label style="font-size:12px; color:var(--text-muted);">Amount in USDT / ETH to Invest:</label>
+                        <input type="number" id="presaleInputUsd" value="250" oninput="calculatePresaleTokens()">
+                        <div style="font-size:13px; margin-top:8px;">You will receive: <strong id="presaleOutputTokens" style="color:var(--green);">5,000 $TAI</strong></div>
+                    </div>
+                    <div class="card" style="background: rgba(10,8,26,0.2); display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+                        <div style="font-size:13px; color:var(--text-muted); margin-bottom:8px;">Listing Exchange Date:</div>
+                        <div style="font-size:18px; font-weight:800; color:var(--purple-neon); margin-bottom:12px;">May 15, 2026 ⏳</div>
+                        <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="participatePresale(); playClickSound();">🚀 Buy Presale Allocation</button>
+                    </div>
+                </div>
             </div>
 
             <!-- TradingView Chart -->
@@ -746,7 +782,7 @@
     </div>
 
     <footer>
-        © 2026 TrendAI Crypto • Pro Max Edition • All rights reserved
+        © 2026 TrendAI Crypto • Launchpad Pro Max Edition • All rights reserved
     </footer>
 
     <script>
@@ -789,6 +825,24 @@
         function openModal(id) { document.getElementById(id).classList.add('active'); }
         function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
+        // Launchpad Presale Calculator Logic
+        function calculatePresaleTokens() {
+            const usd = parseFloat(document.getElementById('presaleInputUsd').value) || 0;
+            const tokenPrice = 0.05;
+            const totalTokens = (usd / tokenPrice).toLocaleString();
+            document.getElementById('presaleOutputTokens').innerText = `${totalTokens} $TAI`;
+        }
+
+        function participatePresale() {
+            const usd = document.getElementById('presaleInputUsd').value;
+            if(!userConnectedAddress) {
+                alert("⚠️ Please connect your Web3 Wallet first to participate in the launchpad presale!");
+                connectAllWallets();
+                return;
+            }
+            alert(`🚀 Presale Order Initialized! You are purchasing allocation worth $${usd} USD. Please approve the transaction in your wallet.`);
+        }
+
         // AI Chatbot Widget Logic
         function toggleChatBox() {
             const box = document.getElementById('chatBoxContainer');
@@ -809,6 +863,8 @@
                 let reply = "I am tracking the markets. TrendAI sentiment is strongly bullish right now!";
                 if(text.toLowerCase().includes('btc') || text.toLowerCase().includes('bitcoin')) {
                     reply = "Bitcoin (BTC) is currently holding strong above $82,000 with high institutional accumulation.";
+                } else if(text.toLowerCase().includes('launchpad') || text.toLowerCase().includes('presale')) {
+                    reply = "Our TrendAI token launchpad stage 1 is live! 1 $TAI = $0.05 USD.";
                 } else if(text.toLowerCase().includes('buy')) {
                     reply = "You can buy crypto instantly using credit card or Apple Pay via our 'Buy Crypto' gateway!";
                 }
@@ -1080,6 +1136,7 @@
             fetchFearAndGreed();
             calculateCryptoConversion();
             calculateStaking();
+            calculatePresaleTokens();
             setInterval(fetchRealCryptoPrices, 30000);
         });
     </script>
