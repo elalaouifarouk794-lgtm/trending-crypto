@@ -362,7 +362,7 @@
         .modal-content {
             background: var(--surface-card);
             border: 1px solid var(--border);
-            width: 100%; max-width: 450px;
+            width: 100%; max-width: 500px;
             padding: 28px;
             border-radius: var(--radius-lg);
             position: relative;
@@ -387,7 +387,7 @@
             <span class="ticker-item">⚡ ETH/USD: $3,120 (+1.8%)</span>
             <span class="ticker-item">🔥 SOL/USD: $188.3 (+5.1%)</span>
             <span class="ticker-item">💎 BNB/USD: $590.1 (+0.8%)</span>
-            <span class="ticker-item">🛡️ Smart Audit Shield: Active</span>
+            <span class="ticker-item">💳 Buy Crypto with Credit Card Active</span>
             <span class="ticker-item">🤖 Gemini AI: Market Sentiment Bullish</span>
         </div>
     </div>
@@ -442,7 +442,7 @@
         <section class="hero">
             <div class="badge-ping">
                 <div class="ping-dot"></div>
-                <span>Top 24 Cryptos, Smart Audit &amp; TradingView Charts</span>
+                <span>Top 24 Cryptos, Fiat Buy &amp; TradingView Charts</span>
             </div>
             
             <h1 class="falling-container">
@@ -453,12 +453,12 @@
                 <span class="fall-word" style="--i:5;">Trading</span>
             </h1>
 
-            <p>Track live crypto prices, audit smart contracts against scams, calculate profits, and receive automated Gemini AI signals.</p>
+            <p>Buy real crypto instantly with credit card, track live prices, audit contracts, and generate Gemini AI signals.</p>
 
             <div id="realWalletCard" class="card" style="display:none; margin-bottom:20px; text-align:center; border-color:var(--purple-neon);">
                 <h3 style="color:var(--purple-neon); margin-bottom:8px;">💳 Connected Web3 Wallet</h3>
                 <p id="realWalletDetails" style="font-size:14px; color:var(--text-main); margin-bottom: 12px;"></p>
-                <button class="btn btn-primary" onclick="openModal('buyCryptoModal'); playClickSound();">💳 Buy Crypto with Credit Card</button>
+                <button class="btn btn-primary" onclick="openModal('buyCryptoModal'); playClickSound();">💳 Buy Crypto with Credit Card / Apple Pay</button>
             </div>
 
             <!-- TradingView Chart -->
@@ -587,16 +587,14 @@
 
     </main>
 
+    <!-- REAL FIAT BUY MODAL (MoonPay / Transak Widget Integration) -->
     <div id="buyCryptoModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('buyCryptoModal'); playClickSound();">✕</span>
-            <h3 style="color: var(--purple-neon); margin-bottom: 16px;">💳 Purchase Crypto with Card</h3>
-            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Select amount and asset to proceed to secure fiat payment gateway:</p>
+            <h3 style="color: var(--purple-neon); margin-bottom: 12px;">💳 Instant Fiat to Crypto Purchase</h3>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Buy real crypto directly to your Web3 wallet using Card, Apple Pay or Bank Transfer:</p>
             
-            <label style="font-size:12px; color:var(--text-muted);">Amount in USD:</label>
-            <input type="number" id="fiatAmount" value="100" min="10">
-
-            <label style="font-size:12px; color:var(--text-muted);">Select Crypto Asset:</label>
+            <label style="font-size:12px; color:var(--text-muted);">Select Currency &amp; Asset:</label>
             <select id="cryptoSelect">
                 <option value="ETH">Ethereum (ETH)</option>
                 <option value="BTC">Bitcoin (BTC)</option>
@@ -604,7 +602,9 @@
                 <option value="SOL">Solana (SOL)</option>
             </select>
 
-            <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;" onclick="proceedToCheckout(); playClickSound();">Proceed to Checkout ⚡</button>
+            <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;" onclick="proceedToCheckout(); playClickSound();">
+                💳 Launch Secure Payment Gateway ⚡
+            </button>
         </div>
     </div>
 
@@ -652,7 +652,6 @@
         function openModal(id) { document.getElementById(id).classList.add('active'); }
         function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
-        /* AI Smart Contract Audit Function */
         function runSmartAudit() {
             const addr = document.getElementById('auditAddress').value;
             const res = document.getElementById('auditResultBox');
@@ -813,7 +812,6 @@
             });
         }
 
-        /* Improved Wallet Connection Logic for Web3 & MetaMask */
         async function connectAllWallets() {
             try {
                 if (window.ethereum) {
@@ -850,16 +848,18 @@
             `;
         }
 
+        /* REAL FIAT BUY GATEWAY LAUNCH (MoonPay / Transak Integration) */
         function proceedToCheckout() {
             if (!userConnectedAddress) {
-                alert("Please connect your Web3 wallet first to receive purchased tokens!");
+                alert("Please connect your Web3 wallet first!");
                 closeModal('buyCryptoModal');
                 return;
             }
-            const amount = document.getElementById('fiatAmount').value;
             const crypto = document.getElementById('cryptoSelect').value;
             
-            alert(`Redirecting to secure gateway to purchase $${amount} worth of ${crypto} to wallet: ${userConnectedAddress}`);
+            // Redirects to Transak / MoonPay real fiat payment gateway
+            const payUrl = `https://global.transak.com/?apiKey=cb9f196a-49bf-4786-a2dc-d603e62f5255&cryptoCurrencyCode=${crypto}&walletAddress=${userConnectedAddress}`;
+            window.open(payUrl, '_blank');
             closeModal('buyCryptoModal');
         }
 
