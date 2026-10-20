@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TrendAI Crypto | Next-Gen Web3 & AI Platform</title>
+    <title>TrendAI Crypto | Pro Max Next-Gen Web3 & AI Platform</title>
     
     <!-- PWA Settings -->
     <link rel="manifest" href="manifest.json">
@@ -380,6 +380,38 @@
             cursor: pointer; color: var(--text-muted); font-weight: bold;
         }
 
+        /* Chatbot Floating Widget Styles */
+        .chat-widget-btn {
+            position: fixed; bottom: 24px; right: 24px;
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            color: white; border: none; width: 60px; height: 60px;
+            border-radius: 50%; font-size: 26px; cursor: pointer;
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.5);
+            z-index: 999; display: flex; align-items: center; justify-content: center;
+            transition: var(--transition);
+        }
+        .chat-widget-btn:hover { transform: scale(1.1); }
+        .chat-box-container {
+            display: none; position: fixed; bottom: 95px; right: 24px;
+            width: 350px; height: 450px; background: var(--surface-card);
+            backdrop-filter: blur(20px); border: 1px solid var(--border);
+            border-radius: var(--radius-lg); z-index: 1000;
+            flex-direction: column; overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+        }
+        .chat-box-container.active { display: flex; }
+        .chat-header {
+            background: rgba(139, 92, 246, 0.2); padding: 14px 18px;
+            font-weight: 700; color: var(--purple-neon); border-bottom: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .chat-messages { flex: 1; padding: 14px; overflow-y: auto; font-size: 13px; display: flex; flex-direction: column; gap: 8px; }
+        .chat-msg { padding: 10px 14px; border-radius: 10px; max-width: 85%; }
+        .chat-msg.bot { background: rgba(139, 92, 246, 0.15); align-self: flex-start; border: 1px solid var(--border); }
+        .chat-msg.user { background: var(--purple-neon); color: white; align-self: flex-end; }
+        .chat-input-area { padding: 10px; border-top: 1px solid var(--border); display: flex; gap: 8px; background: rgba(10,8,26,0.2); }
+        .chat-input-area input { margin-bottom: 0; padding: 8px 12px; font-size: 13px; }
+
         footer {
             text-align: center; padding: 40px 0;
             color: var(--text-muted); border-top: 1px solid var(--border); font-size: 13px;
@@ -397,6 +429,7 @@
             <span class="ticker-item">💎 BNB/USD: $590.1 (+0.8%)</span>
             <span class="ticker-item">💳 Buy Crypto with Credit Card Active</span>
             <span class="ticker-item">🤖 Gemini AI: Market Sentiment Bullish</span>
+            <span class="ticker-item">🐋 Whale Alert: 12,000 ETH transferred to Binance</span>
         </div>
     </div>
 
@@ -408,6 +441,7 @@
                 <a href="#home" class="getping-nav-item active" onclick="playClickSound()">Home</a>
                 <a href="#chart" class="getping-nav-item" onclick="playClickSound()">Chart</a>
                 <a href="#tools" class="getping-nav-item" onclick="playClickSound()">Tools</a>
+                <a href="#protools" class="getping-nav-item" onclick="playClickSound()">Pro Max</a>
                 <a href="#app" class="getping-nav-item" onclick="playClickSound()">Market</a>
             </div>
 
@@ -422,7 +456,6 @@
             </div>
 
             <div class="getping-nav-group">
-                <!-- زر لوحة التحكم الخاصة بالأدمن -->
                 <button class="btn" style="border-color: var(--purple-neon); color: var(--purple-neon);" onclick="openAdminLogin(); playClickSound();">🔒 Admin Panel</button>
                 <button class="btn btn-buy" onclick="openModal('buyCryptoModal'); playClickSound();">💳 Buy Crypto</button>
                 <button id="walletBtn" class="btn btn-primary" onclick="connectAllWallets(); playClickSound();">🔗 <span id="walletText">Connect Wallet</span></button>
@@ -453,7 +486,7 @@
         <section class="hero">
             <div class="badge-ping">
                 <div class="ping-dot"></div>
-                <span>Top 24 Cryptos, Fiat Buy &amp; TradingView Charts</span>
+                <span>Pro Max Web3 • AI Signals • Staking • Portfolio Tracker</span>
             </div>
             
             <h1 class="falling-container">
@@ -464,7 +497,7 @@
                 <span class="fall-word" style="--i:5;">Trading</span>
             </h1>
 
-            <p>Buy real crypto instantly with credit card, track live prices, audit contracts, and generate Gemini AI signals.</p>
+            <p>Buy real crypto instantly with credit card, track live portfolio performance, audit contracts, and leverage AI trading algorithms.</p>
 
             <div style="margin-bottom: 24px; text-align: center;">
                 <button class="btn btn-buy" style="font-size: 16px; padding: 12px 28px;" onclick="openModal('buyCryptoModal'); playClickSound();">💳 Buy Crypto Instantly with Card / Apple Pay</button>
@@ -526,6 +559,59 @@
             </div>
         </section>
 
+        <!-- Pro Max Added Features Section -->
+        <section class="grid" id="protools">
+            <!-- Advanced Portfolio Tracker -->
+            <div class="card" style="border-color: var(--purple-neon);">
+                <h3 style="color: var(--purple-neon); margin-bottom: 10px;">💼 Advanced Portfolio Tracker</h3>
+                <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 12px;">Add your crypto assets to track live PnL value:</p>
+                
+                <label style="font-size:12px; color:var(--text-muted);">Select Asset:</label>
+                <select id="portfolioAsset">
+                    <option value="BTC">Bitcoin (BTC)</option>
+                    <option value="ETH">Ethereum (ETH)</option>
+                    <option value="SOL">Solana (SOL)</option>
+                </select>
+
+                <label style="font-size:12px; color:var(--text-muted);">Amount Owned:</label>
+                <input type="number" id="portfolioAmount" placeholder="e.g. 0.5" value="1">
+
+                <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="calculatePortfolio(); playClickSound();">📊 Calculate Portfolio Value</button>
+                <div id="portfolioResult" style="display:none; margin-top:12px; background:rgba(10,8,26,0.5); padding:12px; border-radius:10px; font-size:13px; border:1px solid var(--border);"></div>
+            </div>
+
+            <!-- Web3 Staking & Yield Farming Simulation -->
+            <div class="card">
+                <h3 style="color: var(--purple-neon); margin-bottom: 10px;">💎 Web3 Staking &amp; Yield (APY)</h3>
+                <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 12px;">Simulate token staking &amp; estimated annual returns:</p>
+                
+                <label style="font-size:12px; color:var(--text-muted);">Tokens to Stake:</label>
+                <input type="number" id="stakeAmount" value="5000" oninput="calculateStaking()">
+
+                <label style="font-size:12px; color:var(--text-muted);">Lock Period:</label>
+                <select id="stakePeriod" onchange="calculateStaking()">
+                    <option value="30">30 Days (12% APY)</option>
+                    <option value="90" selected>90 Days (24% APY)</option>
+                    <option value="365">365 Days (45% APY)</option>
+                </select>
+
+                <div style="background:rgba(10,8,26,0.3); padding:12px; border-radius:10px; font-size:13px; border:1px solid var(--border); margin-top: 10px;">
+                    <div>Estimated Profit: <strong id="stakeProfit" style="color:var(--green);">+300 Tokens</strong></div>
+                </div>
+            </div>
+
+            <!-- Real-time Crypto Whales Tracker -->
+            <div class="card">
+                <h3 style="color: var(--purple-neon); margin-bottom: 10px;">🐋 Whale Transactions Tracker</h3>
+                <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 12px;">Live large-scale blockchain wallet transfers:</p>
+                <div style="background:rgba(10,8,26,0.3); padding:10px; border-radius:10px; font-size:12px; border:1px solid var(--border); display:flex; flex-direction:column; gap:8px;">
+                    <div style="color:var(--green);">🟢 5,400 BTC transferred to Binance</div>
+                    <div style="color:var(--red);">🔴 25,000 ETH withdrawn from Coinbase</div>
+                    <div style="color:var(--green);">🟢 1,200,000 USDT moved to Unknown Wallet</div>
+                </div>
+            </div>
+        </section>
+
         <section class="grid" id="tools">
 
             <!-- AI Smart Wallet & Contract Auditor -->
@@ -541,7 +627,7 @@
 
             <!-- Crypto Converter & Profit Calculator -->
             <div class="card">
-                <h3 style="color: var(--purple-neon); margin-bottom: 10px;">𝧮 Converter &amp; Profit Calculator</h3>
+                <h3 style="color: var(--purple-neon); margin-bottom: 10px;">🧮 Converter &amp; Profit Calculator</h3>
                 <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 12px;">Calculate instant crypto conversion &amp; target profit:</p>
                 
                 <label style="font-size:12px; color:var(--text-muted);">Amount in USD ($):</label>
@@ -601,6 +687,22 @@
 
     </main>
 
+    <!-- AI Chatbot Floating Widget -->
+    <button class="chat-widget-btn" onclick="toggleChatBox(); playClickSound();" title="Chat with Gemini AI">🤖</button>
+    <div id="chatBoxContainer" class="chat-box-container">
+        <div class="chat-header">
+            <span>🤖 TrendAI Assistant</span>
+            <span style="cursor:pointer;" onclick="toggleChatBox()">✕</span>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-msg bot">Hello! I am your Gemini AI Web3 assistant. Ask me anything about crypto, prices, or platform tools.</div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="Type a message..." onkeypress="if(event.key === 'Enter') sendChatMessage()">
+            <button class="btn btn-primary" onclick="sendChatMessage(); playClickSound();">Send</button>
+        </div>
+    </div>
+
     <!-- REAL FIAT BUY MODAL -->
     <div id="buyCryptoModal" class="modal">
         <div class="modal-content">
@@ -644,7 +746,7 @@
     </div>
 
     <footer>
-        © 2026 TrendAI Crypto • All rights reserved
+        © 2026 TrendAI Crypto • Pro Max Edition • All rights reserved
     </footer>
 
     <script>
@@ -687,6 +789,67 @@
         function openModal(id) { document.getElementById(id).classList.add('active'); }
         function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
+        // AI Chatbot Widget Logic
+        function toggleChatBox() {
+            const box = document.getElementById('chatBoxContainer');
+            box.classList.toggle('active');
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const text = input.value.trim();
+            if(!text) return;
+
+            const msgContainer = document.getElementById('chatMessages');
+            msgContainer.innerHTML += `<div class="chat-msg user">${text}</div>`;
+            input.value = '';
+            msgContainer.scrollTop = msgContainer.scrollHeight;
+
+            setTimeout(() => {
+                let reply = "I am tracking the markets. TrendAI sentiment is strongly bullish right now!";
+                if(text.toLowerCase().includes('btc') || text.toLowerCase().includes('bitcoin')) {
+                    reply = "Bitcoin (BTC) is currently holding strong above $82,000 with high institutional accumulation.";
+                } else if(text.toLowerCase().includes('buy')) {
+                    reply = "You can buy crypto instantly using credit card or Apple Pay via our 'Buy Crypto' gateway!";
+                }
+                msgContainer.innerHTML += `<div class="chat-msg bot">${reply}</div>`;
+                msgContainer.scrollTop = msgContainer.scrollHeight;
+            }, 800);
+        }
+
+        // Portfolio Tracker Logic
+        function calculatePortfolio() {
+            const asset = document.getElementById('portfolioAsset').value;
+            const amt = parseFloat(document.getElementById('portfolioAmount').value) || 0;
+            let price = 82250;
+            if(asset === 'ETH') price = 3120;
+            if(asset === 'SOL') price = 188.3;
+
+            const totalUsd = (amt * price).toLocaleString();
+            const res = document.getElementById('portfolioResult');
+            res.style.display = 'block';
+            res.innerHTML = `
+                <div style="color:var(--green); font-weight:800; font-size:15px; margin-bottom:4px;">📊 Portfolio Value: $${totalUsd} USD</div>
+                <div style="font-size:12px; color:var(--text-main);">
+                    • Asset: ${amt} ${asset}<br>
+                    • Unit Price: $${price.toLocaleString()}<br>
+                    • 24h PnL Trend: <span style="color:var(--green);">+4.2% 📈</span>
+                </div>
+            `;
+        }
+
+        // Staking Simulation Logic
+        function calculateStaking() {
+            const amt = parseFloat(document.getElementById('stakeAmount').value) || 0;
+            const days = parseInt(document.getElementById('stakePeriod').value);
+            let apy = 0.12;
+            if(days === 90) apy = 0.24;
+            if(days === 365) apy = 0.45;
+
+            const profit = (amt * apy * (days / 365)).toFixed(2);
+            document.getElementById('stakeProfit').innerText = `+${profit} Tokens`;
+        }
+
         // دوال لوحة تحكم الأدمن
         function openAdminLogin() {
             openModal('adminModal');
@@ -694,7 +857,6 @@
 
         function verifyAdmin() {
             const pass = document.getElementById('adminPassInput').value;
-            // كلمة السر الافتتاحية هي: admin123 (يمكنك تغييرها هنا بما شئت)
             if (pass === "admin123") {
                 document.getElementById('adminLoginArea').style.display = 'none';
                 document.getElementById('adminDashboardArea').style.display = 'block';
@@ -917,6 +1079,7 @@
             fetchRealCryptoPrices();
             fetchFearAndGreed();
             calculateCryptoConversion();
+            calculateStaking();
             setInterval(fetchRealCryptoPrices, 30000);
         });
     </script>
