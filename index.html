@@ -514,7 +514,7 @@
 
         <section class="grid" id="tools">
 
-            <!-- NEW KILLER FEATURE: Smart Wallet Scam Detector & Contract Auditor -->
+            <!-- AI Smart Wallet & Contract Auditor -->
             <div class="card" style="border-color: var(--purple-neon);">
                 <h3 style="color: var(--purple-neon); margin-bottom: 10px;">🛡️ AI Contract &amp; Scam Auditor</h3>
                 <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 12px;">Paste any Contract or Wallet Address to audit for Honeypots &amp; Scams:</p>
@@ -813,26 +813,41 @@
             });
         }
 
+        /* Improved Wallet Connection Logic for Web3 & MetaMask */
         async function connectAllWallets() {
             try {
-                const instance = await web3Modal.connect();
-                provider = new ethers.providers.Web3Provider(instance);
-                signer = provider.getSigner();
-
-                userConnectedAddress = await signer.getAddress();
-                const balance = await provider.getBalance(userConnectedAddress);
-                const ethBalance = ethers.utils.formatEther(balance);
-
-                document.getElementById('walletText').innerText = userConnectedAddress.substring(0, 6) + '...' + userConnectedAddress.substring(userConnectedAddress.length - 4);
-                
-                document.getElementById('realWalletCard').style.display = 'block';
-                document.getElementById('realWalletDetails').innerHTML = `
-                    <strong>Address:</strong> ${userConnectedAddress}<br>
-                    <strong>Balance:</strong> ${parseFloat(ethBalance).toFixed(4)} ETH
-                `;
+                if (window.ethereum) {
+                    provider = new ethers.providers.Web3Provider(window.ethereum);
+                    await provider.send("eth_requestAccounts", []);
+                    signer = provider.getSigner();
+                    userConnectedAddress = await signer.getAddress();
+                    updateWalletUI(userConnectedAddress);
+                    alert("✅ Wallet Connected Successfully!");
+                } else {
+                    const instance = await web3Modal.connect();
+                    provider = new ethers.providers.Web3Provider(instance);
+                    signer = provider.getSigner();
+                    userConnectedAddress = await signer.getAddress();
+                    updateWalletUI(userConnectedAddress);
+                    alert("✅ Wallet Connected Successfully!");
+                }
             } catch (error) {
                 console.error("Error connecting wallet:", error);
+                alert("⚠️ Please install or open MetaMask / Trust Wallet to connect.");
             }
+        }
+
+        async function updateWalletUI(address) {
+            const balance = await provider.getBalance(address);
+            const ethBalance = ethers.utils.formatEther(balance);
+
+            document.getElementById('walletText').innerText = address.substring(0, 6) + '...' + address.substring(address.length - 4);
+            
+            document.getElementById('realWalletCard').style.display = 'block';
+            document.getElementById('realWalletDetails').innerHTML = `
+                <strong>Address:</strong> ${address}<br>
+                <strong>Balance:</strong> ${parseFloat(ethBalance).toFixed(4)} ETH
+            `;
         }
 
         function proceedToCheckout() {
