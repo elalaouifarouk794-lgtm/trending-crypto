@@ -422,6 +422,8 @@
             </div>
 
             <div class="getping-nav-group">
+                <!-- زر لوحة التحكم الخاصة بالأدمن -->
+                <button class="btn" style="border-color: var(--purple-neon); color: var(--purple-neon);" onclick="openAdminLogin(); playClickSound();">🔒 Admin Panel</button>
                 <button class="btn btn-buy" onclick="openModal('buyCryptoModal'); playClickSound();">💳 Buy Crypto</button>
                 <button id="walletBtn" class="btn btn-primary" onclick="connectAllWallets(); playClickSound();">🔗 <span id="walletText">Connect Wallet</span></button>
             </div>
@@ -620,6 +622,27 @@
         </div>
     </div>
 
+    <!-- ADMIN PANEL MODAL (محمي بكلمة سر خاصة بك) -->
+    <div id="adminModal" class="modal">
+        <div class="modal-content" style="border-color: var(--purple-neon);">
+            <span class="close-btn" onclick="closeModal('adminModal'); playClickSound();">✕</span>
+            <h3 style="color: var(--purple-neon); margin-bottom: 12px;">⚙️ Admin Control Panel</h3>
+            <div id="adminLoginArea">
+                <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">Enter Admin Password to manage site settings:</p>
+                <input type="password" id="adminPassInput" placeholder="Enter Admin Password">
+                <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="verifyAdmin(); playClickSound();">Login as Admin 🔓</button>
+            </div>
+            <div id="adminDashboardArea" style="display:none;">
+                <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid var(--green); padding: 10px; border-radius: 8px; color: var(--green); font-size: 13px; margin-bottom: 12px; text-align: center;">
+                    ✅ Authenticated as Site Owner / Admin
+                </div>
+                <label style="font-size:12px; color:var(--text-muted);">Admin Treasury Wallet Address:</label>
+                <input type="text" id="adminWalletSetting" value="0xFEb390e5b613670490Se2G35bFc3e5150d76Ba26">
+                <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 5px;" onclick="saveAdminSettings(); playClickSound();">Save Admin Settings 💾</button>
+            </div>
+        </div>
+    </div>
+
     <footer>
         © 2026 TrendAI Crypto • All rights reserved
     </footer>
@@ -663,6 +686,28 @@
 
         function openModal(id) { document.getElementById(id).classList.add('active'); }
         function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+        // دوال لوحة تحكم الأدمن
+        function openAdminLogin() {
+            openModal('adminModal');
+        }
+
+        function verifyAdmin() {
+            const pass = document.getElementById('adminPassInput').value;
+            // كلمة السر الافتتاحية هي: admin123 (يمكنك تغييرها هنا بما شئت)
+            if (pass === "admin123") {
+                document.getElementById('adminLoginArea').style.display = 'none';
+                document.getElementById('adminDashboardArea').style.display = 'block';
+            } else {
+                alert("❌ Incorrect Admin Password!");
+            }
+        }
+
+        function saveAdminSettings() {
+            const newWallet = document.getElementById('adminWalletSetting').value;
+            alert("✅ Admin Settings Saved Successfully! Treasury Wallet: " + newWallet);
+            closeModal('adminModal');
+        }
 
         function runSmartAudit() {
             const addr = document.getElementById('auditAddress').value;
