@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,7 @@
     
     <!-- PWA Settings -->
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#030303">
+    <meta name="theme-color" content="#050716">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="TrendAI">
@@ -24,17 +24,18 @@
 
     <style>
         :root {
-            --bg: #030303;
-            --surface: #0a0a0c;
-            --surface-card: #111115;
-            --border: rgba(247, 189, 53, 0.12);
-            --border-hover: rgba(247, 189, 53, 0.35);
-            --gold: #f7bd35;
-            --gold-glow: rgba(247, 189, 53, 0.2);
-            --text-main: #ffffff;
-            --text-muted: #8e8d9a;
+            --bg: #050716;
+            --surface: rgba(15, 12, 41, 0.55);
+            --surface-card: rgba(19, 17, 44, 0.6);
+            --border: rgba(139, 92, 246, 0.22);
+            --border-hover: rgba(168, 85, 247, 0.6);
+            --purple-neon: #8b5cf6;
+            --indigo-neon: #6366f1;
+            --glow-purple: rgba(139, 92, 246, 0.3);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
             --green: #10b981;
-            --red: #ef4444;
+            --red: #f43f5e;
             --radius-lg: 24px;
             --radius-md: 14px;
             --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -50,23 +51,24 @@
             line-height: 1.6;
         }
 
-        /* GetPing Style Background Glows */
+        /* Glassmorphism & Glowing Background */
         .bg-grid {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
             background-image: 
-                radial-gradient(circle at 50% 0%, rgba(247, 189, 53, 0.08), transparent 50%),
-                radial-gradient(circle at 80% 60%, rgba(247, 189, 53, 0.04), transparent 40%),
+                radial-gradient(circle at 50% -10%, rgba(139, 92, 246, 0.18), transparent 60%),
+                radial-gradient(circle at 85% 65%, rgba(99, 102, 241, 0.12), transparent 50%),
+                radial-gradient(circle at 15% 85%, rgba(168, 85, 247, 0.1), transparent 50%),
                 linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
                 linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-            background-size: 100% 100%, 100% 100%, 50px 50px, 50px 50px;
+            background-size: 100% 100%, 100% 100%, 100% 100%, 50px 50px, 50px 50px;
             pointer-events: none;
             z-index: -1;
         }
 
         .falling-container {
             display: inline-flex;
-            gap: 10px;
+            gap: 12px;
             flex-wrap: wrap;
             justify-content: center;
             margin-bottom: 20px;
@@ -78,10 +80,10 @@
             transform: translateY(-50px) rotate(-5deg);
             animation: fallIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
             animation-delay: calc(var(--i) * 0.12s);
-            background: linear-gradient(180deg, #ffffff 40%, #8e8d9a 100%);
+            background: linear-gradient(180deg, #ffffff 30%, #c084fc 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-size: 48px;
+            font-size: 52px;
             font-weight: 800;
             letter-spacing: -1px;
         }
@@ -93,9 +95,9 @@
         }
 
         .top-banner {
-            background: rgba(247, 189, 53, 0.05);
+            background: rgba(139, 92, 246, 0.08);
             border-bottom: 1px solid var(--border);
-            color: var(--gold);
+            color: #d8b4fe;
             text-align: center;
             padding: 8px 16px;
             font-size: 13px;
@@ -103,7 +105,7 @@
             letter-spacing: 1px;
             position: relative;
             z-index: 101;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
         }
 
         .wrap { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
@@ -116,18 +118,20 @@
             margin-top: 12px;
         }
 
+        /* Glass Nav Bar */
         .nav-inner {
-            background: rgba(10, 10, 12, 0.75);
+            background: rgba(15, 12, 41, 0.65);
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--border);
             border-radius: 99px;
-            padding: 10px 20px;
+            padding: 10px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
         .brand {
@@ -140,7 +144,7 @@
         }
 
         .brand span {
-            background: linear-gradient(135deg, #fff, var(--gold));
+            background: linear-gradient(135deg, #ffffff, var(--purple-neon));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -148,10 +152,10 @@
         .nav-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 
         .btn {
-            background: var(--surface-card);
+            background: rgba(255, 255, 255, 0.04);
             color: var(--text-main);
             border: 1px solid var(--border);
-            padding: 10px 20px;
+            padding: 10px 22px;
             border-radius: 99px;
             font-size: 14px;
             font-weight: 600;
@@ -161,19 +165,27 @@
             align-items: center;
             gap: 8px;
             text-decoration: none;
+            backdrop-filter: blur(10px);
         }
 
         .btn:hover {
             border-color: var(--border-hover);
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px var(--gold-glow);
+            box-shadow: 0 8px 25px var(--glow-purple);
+            background: rgba(139, 92, 246, 0.15);
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #ffe18a, #d99a13);
-            color: #000000;
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            color: #ffffff;
             font-weight: 700;
             border: none;
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 8px 30px rgba(139, 92, 246, 0.6);
+            transform: translateY(-2px);
         }
 
         .hero {
@@ -185,72 +197,81 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: rgba(247, 189, 53, 0.06);
+            background: rgba(139, 92, 246, 0.1);
             border: 1px solid var(--border);
             padding: 6px 18px;
             border-radius: 99px;
             font-size: 13px;
-            color: var(--gold);
+            color: #c084fc;
             margin-bottom: 24px;
+            backdrop-filter: blur(10px);
         }
 
         .ping-dot {
             width: 8px; height: 8px;
-            background: var(--gold);
+            background: var(--purple-neon);
             border-radius: 50%;
-            box-shadow: 0 0 12px var(--gold);
+            box-shadow: 0 0 12px var(--purple-neon);
             animation: pulsePing 2s infinite;
         }
 
         @keyframes pulsePing {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(247, 189, 53, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(247, 189, 53, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(247, 189, 53, 0); }
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(139, 92, 246, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); }
         }
 
         .hero p {
             font-size: 16px;
             color: var(--text-muted);
-            max-width: 600px;
+            max-width: 620px;
             margin: 0 auto 30px;
         }
 
+        /* Glass Container Cards */
         .dashboard-container {
             background: var(--surface);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             border: 1px solid var(--border);
             border-radius: var(--radius-lg);
             padding: 28px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.9);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.08);
             margin-top: 30px;
-            text-align: right;
+            text-align: left;
         }
-        html[dir="ltr"] .dashboard-container { text-align: left; }
 
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 24px;
             margin: 40px 0;
-            text-align: right;
+            text-align: left;
         }
-        html[dir="ltr"] .grid { text-align: left; }
 
         .card {
             background: var(--surface-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--border);
             border-radius: var(--radius-lg);
             padding: 24px;
             transition: var(--transition);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
         }
 
-        .card:hover { border-color: var(--border-hover); }
+        .card:hover { 
+            border-color: var(--border-hover); 
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
 
-        /* Custom Table Styling for 24 Cryptos */
+        /* Glass Table Styling for 24 Cryptos */
         .table-wrapper {
             max-height: 520px;
             overflow-y: auto;
             border-radius: var(--radius-md);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(139, 92, 246, 0.15);
+            background: rgba(10, 8, 28, 0.4);
         }
 
         .table-wrapper::-webkit-scrollbar {
@@ -261,24 +282,25 @@
             border-radius: 99px;
         }
 
-        table { width: 100%; border-collapse: collapse; font-size: 14px; text-align: inherit; }
+        table { width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; }
         th {
             position: sticky;
             top: 0;
-            background: #0f0f13;
+            background: #0d0a22;
             color: var(--text-muted);
             padding: 14px 16px;
             z-index: 2;
             font-weight: 600;
+            border-bottom: 1px solid var(--border);
         }
-        td { padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.03); }
-        tr:hover td { background: rgba(255,255,255,0.02); }
+        td { padding: 14px 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
+        tr:hover td { background: rgba(139, 92, 246, 0.05); }
         .up { color: var(--green); font-weight: 700; }
         .down { color: var(--red); font-weight: 700; }
 
         input, select, textarea {
             width: 100%;
-            background: #070709;
+            background: rgba(10, 8, 26, 0.7);
             border: 1px solid var(--border);
             color: var(--text-main);
             padding: 12px 16px;
@@ -287,35 +309,41 @@
             font-family: inherit;
         }
 
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--purple-neon);
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
+        }
+
+        /* Glass Modal */
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(10px);
+            background: rgba(5, 7, 22, 0.85);
+            backdrop-filter: blur(16px);
             justify-content: center;
             align-items: center;
             z-index: 1000;
         }
         .modal.active { display: flex; }
         .modal-content {
-            background: var(--surface);
+            background: rgba(15, 12, 41, 0.9);
             border: 1px solid var(--border);
             width: 100%;
             max-width: 450px;
             padding: 28px;
             border-radius: var(--radius-lg);
             position: relative;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.8), 0 0 40px rgba(139, 92, 246, 0.2);
         }
         .close-btn {
             position: absolute;
-            top: 16px; left: 16px;
+            top: 16px; right: 16px;
             cursor: pointer;
             color: var(--text-muted);
             font-weight: bold;
         }
-        html[dir="ltr"] .close-btn { left: auto; right: 16px; }
 
         footer {
             text-align: center;
@@ -329,7 +357,7 @@
 <body>
 
     <div class="top-banner">
-        ✨ 24 REAL-TIME CRYPTO MARKETS & GOOGLE GEMINI AI ⚡
+        ✨ 24 REAL-TIME CRYPTO MARKETS & GOOGLE GEMINI AI INTEGRATION ⚡
     </div>
 
     <div class="bg-grid"></div>
@@ -340,17 +368,11 @@
                 ✨ <span>TrendAI Crypto</span>
             </div>
             <div class="nav-actions">
-                <select id="langSelect" class="btn" onchange="changeLanguage(this.value)" style="padding: 6px 12px;">
-                    <option value="ar">العربية (AR)</option>
-                    <option value="en">English (EN)</option>
-                    <option value="fr">Français (FR)</option>
-                </select>
-                
-                <button id="walletBtn" class="btn btn-primary" onclick="connectAllWallets()">🔗 <span data-i18n="connect_wallet" id="walletText">ربط جميع المحافظ</span></button>
+                <button id="walletBtn" class="btn btn-primary" onclick="connectAllWallets()">🔗 <span id="walletText">Connect Wallet</span></button>
 
                 <div id="authNav" style="display:inline-flex; gap:8px;">
-                    <button class="btn" onclick="openModal('signInModal')" data-i18n="signin_btn">دخول</button>
-                    <button class="btn btn-primary" onclick="openModal('signUpModal')" data-i18n="signup_btn">حساب جديد</button>
+                    <button class="btn" onclick="openModal('signInModal')">Sign In</button>
+                    <button class="btn btn-primary" onclick="openModal('signUpModal')">Sign Up</button>
                 </div>
             </div>
         </div>
@@ -361,39 +383,39 @@
         <section class="hero">
             <div class="badge-ping">
                 <div class="ping-dot"></div>
-                <span data-i18n="badge_text">24 عملة رقمية مع التحديث المباشر من السوق العالمية</span>
+                <span>Top 24 Cryptocurrencies Live Market Feed</span>
             </div>
             
             <h1 class="falling-container">
-                <span class="fall-word" style="--i:1;">تداول</span>
-                <span class="fall-word" style="--i:2;">حقيقي</span>
-                <span class="fall-word" style="--i:3;">مباشر</span>
-                <span class="fall-word" style="--i:4;">بذكاء</span>
-                <span class="fall-word" style="--i:5;">Gemini</span>
+                <span class="fall-word" style="--i:1;">Next-Gen</span>
+                <span class="fall-word" style="--i:2;">Web3</span>
+                <span class="fall-word" style="--i:3;">&amp;</span>
+                <span class="fall-word" style="--i:4;">AI</span>
+                <span class="fall-word" style="--i:5;">Trading</span>
             </h1>
 
-            <p data-i18n="hero_desc">تتبع أفضل 24 عملة رقمية في العالم بدقة لحظية، وحلل اتجاه الأسواق عبر الذكاء الاصطناعي.</p>
+            <p>Track top 24 real-time crypto prices second by second and execute high-precision market analysis powered by Google Gemini AI.</p>
 
-            <div id="realWalletCard" class="card" style="display:none; margin-bottom:20px; text-align:center; border-color:var(--gold);">
-                <h3 style="color:var(--gold); margin-bottom:8px;">💳 المحفظة الحقيقية المتصلة</h3>
+            <div id="realWalletCard" class="card" style="display:none; margin-bottom:20px; text-align:center; border-color:var(--purple-neon);">
+                <h3 style="color:var(--purple-neon); margin-bottom:8px;">💳 Connected Web3 Wallet</h3>
                 <p id="realWalletDetails" style="font-size:14px; color:var(--text-main); margin-bottom: 12px;"></p>
-                <button class="btn btn-primary" onclick="openModal('buyCryptoModal')" data-i18n="btn_buy_real">💳 شراء العملات بالفلوس الحقيقية</button>
+                <button class="btn btn-primary" onclick="openModal('buyCryptoModal')">💳 Buy Crypto with Credit Card</button>
             </div>
 
             <div class="dashboard-container">
-                <h3 style="font-size: 18px; color: var(--gold); margin-bottom: 16px;" data-i18n="market_title">📈 أسعار أفضل 24 عملة رقمية (مباشر)</h3>
+                <h3 style="font-size: 18px; color: #c084fc; margin-bottom: 16px;">📈 Live Market Prices (Top 24 Cryptos)</h3>
                 <div class="table-wrapper">
                     <table>
                         <thead>
                             <tr>
-                                <th data-i18n="th_coin">العملة</th>
-                                <th data-i18n="th_price">السعر الحالي (USD)</th>
-                                <th data-i18n="th_change">تغير 24h</th>
+                                <th>Coin</th>
+                                <th>Live Price (USD)</th>
+                                <th>24h Change</th>
                             </tr>
                         </thead>
                         <tbody id="cryptoTableBody">
                             <tr>
-                                <td colspan="3" style="text-align: center; color: var(--text-muted); padding: 30px;">جاري الاتصال بالسوق العالمي وتحميل 24 عملة...</td>
+                                <td colspan="3" style="text-align: center; color: var(--text-muted); padding: 30px;">Connecting to global exchange API...</td>
                             </tr>
                         </tbody>
                     </table>
@@ -403,19 +425,19 @@
 
         <section class="grid">
             <div class="card">
-                <h3 style="color: var(--gold); margin-bottom: 10px;" data-i18n="ai_title">🤖 مساعد Google Gemini AI</h3>
-                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 14px;" data-i18n="ai_desc">اسأل مساعد Gemini لتحليل السوق والعملات.</p>
-                <textarea id="aiQuery" rows="3" placeholder="مثال: ما هو تحليل أسعار البيتكوين اليوم؟"></textarea>
-                <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="askGeminiAI()" data-i18n="btn_analyze">سؤال Gemini AI ⚡</button>
-                <div id="aiResult" style="margin-top:12px; font-size:14px; color:var(--gold); display:none; background: rgba(0,0,0,0.5); padding: 12px; border-radius: 8px; border: 1px solid var(--border);"></div>
+                <h3 style="color: #c084fc; margin-bottom: 10px;">🤖 Google Gemini AI Assistant</h3>
+                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 14px;">Ask Gemini AI for instant market predictions and technical analysis.</p>
+                <textarea id="aiQuery" rows="3" placeholder="e.g., Is current Bitcoin trend bullish for entry?"></textarea>
+                <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="askGeminiAI()">Analyze Market with Gemini AI ⚡</button>
+                <div id="aiResult" style="margin-top:12px; font-size:14px; color:#c084fc; display:none; background: rgba(10, 8, 26, 0.8); padding: 12px; border-radius: 8px; border: 1px solid var(--border);"></div>
             </div>
 
             <div class="card">
-                <h3 style="color: var(--gold); margin-bottom: 10px;" data-i18n="port_title">🧪 المحفظة الافتراضية</h3>
-                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 14px;" data-i18n="port_desc">رصيد تجريبي USDT للتداول بدون مخاطر.</p>
-                <label style="font-size:12px; color:var(--text-muted);" data-i18n="lbl_balance">الرصيد المتاح:</label>
+                <h3 style="color: #c084fc; margin-bottom: 10px;">🧪 Virtual Portfolio</h3>
+                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 14px;">Simulate trades risk-free using virtual USDT balance.</p>
+                <label style="font-size:12px; color:var(--text-muted);">Available Balance:</label>
                 <input type="text" value="1000 USDT" readonly>
-                <button class="btn" style="width: 100%; justify-content: center; background: rgba(16, 185, 129, 0.15); color: var(--green); border-color: var(--green);" onclick="executeTrade()" data-i18n="btn_buy">تنفيذ صفقة تجريبية</button>
+                <button class="btn" style="width: 100%; justify-content: center; background: rgba(16, 185, 129, 0.15); color: var(--green); border-color: var(--green);" onclick="executeTrade()">Execute Demo Trade</button>
             </div>
         </section>
 
@@ -424,13 +446,13 @@
     <div id="buyCryptoModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('buyCryptoModal')">✕</span>
-            <h3 style="color: var(--gold); margin-bottom: 16px;" data-i18n="modal_buy_title">💳 شراء العملات بالفلوس الحقيقية</h3>
-            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;" data-i18n="modal_buy_desc">اختر المبلغ والعملة لإتمام الشراء عبر بوابة الدفع الآمنة:</p>
+            <h3 style="color: #c084fc; margin-bottom: 16px;">💳 Purchase Crypto with Card</h3>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Select amount and asset to proceed to secure fiat payment gateway:</p>
             
-            <label style="font-size:12px; color:var(--text-muted);">المبلغ بـ (USD):</label>
+            <label style="font-size:12px; color:var(--text-muted);">Amount in USD:</label>
             <input type="number" id="fiatAmount" value="100" min="10">
 
-            <label style="font-size:12px; color:var(--text-muted);">اختر العملة المراد شراؤها:</label>
+            <label style="font-size:12px; color:var(--text-muted);">Select Crypto Asset:</label>
             <select id="cryptoSelect">
                 <option value="ETH">Ethereum (ETH)</option>
                 <option value="BTC">Bitcoin (BTC)</option>
@@ -458,18 +480,18 @@
                 <option value="HBAR">Hedera (HBAR)</option>
             </select>
 
-            <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;" onclick="proceedToCheckout()" data-i18n="btn_proceed_pay">متابعة الدفع بالبطاقة البنكية ⚡</button>
+            <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;" onclick="proceedToCheckout()">Proceed to Checkout ⚡</button>
         </div>
     </div>
 
     <div id="signInModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('signInModal')">✕</span>
-            <h3 style="color: var(--gold); margin-bottom: 16px;" data-i18n="signin_title">تسجيل الدخول</h3>
+            <h3 style="color: #c084fc; margin-bottom: 16px;">Sign In to Account</h3>
             <form onsubmit="handleAuth(event, 'signInEmail')">
-                <input type="email" id="signInEmail" placeholder="البريد الإلكتروني" required>
-                <input type="password" placeholder="كلمة السر" required>
-                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;" data-i18n="signin_btn">دخول</button>
+                <input type="email" id="signInEmail" placeholder="Email Address" required>
+                <input type="password" placeholder="Password" required>
+                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Sign In</button>
             </form>
         </div>
     </div>
@@ -477,18 +499,18 @@
     <div id="signUpModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('signUpModal')">✕</span>
-            <h3 style="color: var(--gold); margin-bottom: 16px;" data-i18n="signup_title">إنشاء حساب جديد</h3>
+            <h3 style="color: #c084fc; margin-bottom: 16px;">Create New Account</h3>
             <form onsubmit="handleAuth(event, 'signUpName')">
-                <input type="text" id="signUpName" placeholder="الاسم الكامل" required>
-                <input type="email" placeholder="البريد الإلكتروني" required>
-                <input type="password" placeholder="كلمة السر" required>
-                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;" data-i18n="signup_btn">تسجيل</button>
+                <input type="text" id="signUpName" placeholder="Full Name" required>
+                <input type="email" placeholder="Email Address" required>
+                <input type="password" placeholder="Password" required>
+                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Register Account</button>
             </form>
         </div>
     </div>
 
     <footer>
-        © 2026 TrendAI Crypto • <span data-i18n="footer_text">جميع الحقوق محفوظة</span>
+        © 2026 TrendAI Crypto • All rights reserved
     </footer>
 
     <script>
@@ -497,107 +519,6 @@
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW reg error:', err));
             });
-        }
-
-        const translations = {
-            ar: {
-                connect_wallet: "ربط جميع المحافظ",
-                signin_btn: "دخول",
-                signup_btn: "حساب جديد",
-                signin_title: "تسجيل الدخول",
-                signup_title: "إنشاء حساب جديد",
-                badge_text: "24 عملة رقمية مع التحديث المباشر من السوق العالمية",
-                hero_desc: "تتبع أفضل 24 عملة رقمية في العالم بدقة لحظية، وحلل اتجاه الأسواق عبر الذكاء الاصطناعي.",
-                market_title: "📈 أسعار أفضل 24 عملة رقمية (مباشر)",
-                th_coin: "العملة",
-                th_price: "السعر الحالي (USD)",
-                th_change: "تغير 24h",
-                ai_title: "🤖 مساعد Google Gemini AI",
-                ai_desc: "اسأل مساعد Gemini لتحليل السوق والعملات.",
-                btn_analyze: "سؤال Gemini AI ⚡",
-                port_title: "🧪 المحفظة الافتراضية",
-                port_desc: "رصيد تجريبي USDT للتداول بدون مخاطر.",
-                lbl_balance: "الرصيد المتاح:",
-                btn_buy: "تنفيذ صفقة تجريبية",
-                btn_buy_real: "💳 شراء العملات بالفلوس الحقيقية",
-                modal_buy_title: "💳 شراء العملات بالفلوس الحقيقية",
-                modal_buy_desc: "اختر المبلغ والعملة لإتمام الشراء عبر بوابة الدفع الآمنة:",
-                btn_proceed_pay: "متابعة الدفع بالبطاقة البنكية ⚡",
-                footer_text: "جميع الحقوق محفوظة",
-                welcome: "مرحباً",
-                logout: "خروج"
-            },
-            en: {
-                connect_wallet: "Connect All Wallets",
-                signin_btn: "Sign In",
-                signup_btn: "Sign Up",
-                signin_title: "Sign In to Account",
-                signup_title: "Create New Account",
-                badge_text: "Top 24 Cryptos Live Market Data",
-                hero_desc: "Track top 24 crypto prices second by second and analyze markets with Gemini AI.",
-                market_title: "📈 Top 24 Live Crypto Prices",
-                th_coin: "Coin",
-                th_price: "Price (USD)",
-                th_change: "24h Change",
-                ai_title: "🤖 Google Gemini AI Assistant",
-                ai_desc: "Ask Gemini assistant for instant market analysis.",
-                btn_analyze: "Ask Gemini AI ⚡",
-                port_title: "🧪 Virtual Portfolio",
-                port_desc: "Simulate trading risk-free with USDT balance.",
-                lbl_balance: "Available Balance:",
-                btn_buy: "Execute Demo Trade",
-                btn_buy_real: "💳 Buy Crypto with Real Money",
-                modal_buy_title: "💳 Buy Crypto with Real Money",
-                modal_buy_desc: "Select amount and crypto to complete purchase via secure gateway:",
-                btn_proceed_pay: "Proceed to Card Checkout ⚡",
-                footer_text: "All rights reserved",
-                welcome: "Welcome",
-                logout: "Logout"
-            },
-            fr: {
-                connect_wallet: "Connecter Portefeuilles",
-                signin_btn: "Connexion",
-                signup_btn: "S'inscrire",
-                signin_title: "Connexion au Compte",
-                signup_title: "Créer un Compte",
-                badge_text: "Top 24 Cryptos en Direct",
-                hero_desc: "Suivez le cours des 24 principales cryptos en temps réel et analysez le marché avec l'IA Gemini.",
-                market_title: "📈 Top 24 Prix Crypto en Direct",
-                th_coin: "Pièce",
-                th_price: "Prix (USD)",
-                th_change: "Var 24h",
-                ai_title: "🤖 Assistant Google Gemini AI",
-                ai_desc: "Demandez à Gemini d'analyser le marché instantanément.",
-                btn_analyze: "Demander à Gemini ⚡",
-                port_title: "🧪 Portefeuille Virtuel",
-                port_desc: "Simulez le trading sans risque avec un solde USDT.",
-                lbl_balance: "Solde Disponible:",
-                btn_buy: "Exécuter Trade Démo",
-                btn_buy_real: "💳 Acheter Crypto (Argent Réel)",
-                modal_buy_title: "💳 Acheter Crypto (Argent Réel)",
-                modal_buy_desc: "Sélectionnez le montant et la crypto via la passerelle sécurisée:",
-                btn_proceed_pay: "Procéder au Paiement par Carte ⚡",
-                footer_text: "Tous droits réservés",
-                welcome: "Bienvenue",
-                logout: "Déconnexion"
-            }
-        };
-
-        let currentLang = localStorage.getItem('app_lang') || 'ar';
-
-        function changeLanguage(lang) {
-            currentLang = lang;
-            localStorage.setItem('app_lang', lang);
-            document.documentElement.lang = lang;
-            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-            
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (translations[lang][key]) {
-                    el.innerText = translations[lang][key];
-                }
-            });
-            checkSession();
         }
 
         function openModal(id) { document.getElementById(id).classList.add('active'); }
@@ -621,11 +542,10 @@
         function checkSession() {
             const user = JSON.parse(localStorage.getItem('user'));
             const authNav = document.getElementById('authNav');
-            const t = translations[currentLang];
             if (user) {
-                authNav.innerHTML = `<span style="color:var(--gold); font-size:14px; font-weight:600;">${t.welcome}, ${user.name}!</span> <button class="btn" style="padding:6px 14px;" onclick="logout()">${t.logout}</button>`;
+                authNav.innerHTML = `<span style="color:#c084fc; font-size:14px; font-weight:600;">Welcome, ${user.name}!</span> <button class="btn" style="padding:6px 14px;" onclick="logout()">Logout</button>`;
             } else {
-                authNav.innerHTML = `<button class="btn" onclick="openModal('signInModal')">${t.signin_btn}</button> <button class="btn btn-primary" onclick="openModal('signUpModal')">${t.signup_btn}</button>`;
+                authNav.innerHTML = `<button class="btn" onclick="openModal('signInModal')">Sign In</button> <button class="btn btn-primary" onclick="openModal('signUpModal')">Sign Up</button>`;
             }
         }
 
@@ -727,8 +647,8 @@
                 
                 document.getElementById('realWalletCard').style.display = 'block';
                 document.getElementById('realWalletDetails').innerHTML = `
-                    <strong>العنوان:</strong> ${userConnectedAddress}<br>
-                    <strong>الرصيد الحقيقي:</strong> ${parseFloat(ethBalance).toFixed(4)} ETH
+                    <strong>Address:</strong> ${userConnectedAddress}<br>
+                    <strong>Balance:</strong> ${parseFloat(ethBalance).toFixed(4)} ETH
                 `;
             } catch (error) {
                 console.error("Error connecting wallet:", error);
@@ -741,17 +661,17 @@
             const resDiv = document.getElementById('aiResult');
             
             if (!query) {
-                alert("يرجى كتابة سؤال أولاً!");
+                alert("Please type a market question first!");
                 return;
             }
 
             resDiv.style.display = 'block';
-            resDiv.innerHTML = "⏳ جاري تحليل السوق بواسطة Google Gemini AI...";
+            resDiv.innerHTML = "⏳ Analyzing live market data via Google Gemini AI...";
 
             const GEMINI_API_KEY = "ضع_المفتاح_الحقيقي_هنا"; 
 
             if (GEMINI_API_KEY === "ضع_المفتاح_الحقيقي_هنا" || !GEMINI_API_KEY.startsWith("AIzaSy")) {
-                resDiv.innerHTML = "⚠️ يرجي كتابة مفتاح Gemini API صحيح يبدأ بـ AIzaSy فـ السطر المقابل من الكود.";
+                resDiv.innerHTML = "⚠️ Please insert a valid Gemini API key starting with AIzaSy in the code.";
                 return;
             }
 
@@ -761,7 +681,7 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         contents: [{
-                            parts: [{ text: `أنت مساعد ذكاء اصطناعي خبير في العملات الرقمية وتحليل الأسواق. أجب باختصار واحترافية على هذا السؤال: ${query}` }]
+                            parts: [{ text: `You are an expert AI crypto trader. Answer concisely and professionally to this query: ${query}` }]
                         }]
                     })
                 });
@@ -770,37 +690,36 @@
                 if (data.candidates && data.candidates[0] && data.candidates[0].content.parts[0].text) {
                     resDiv.innerHTML = `<strong>Gemini AI:</strong><br>${data.candidates[0].content.parts[0].text}`;
                 } else {
-                    resDiv.innerHTML = "❌ حدث خطأ أثناء الاتصال بخدمة Gemini AI.";
+                    resDiv.innerHTML = "❌ Error connecting to Gemini AI service.";
                 }
             } catch (error) {
                 console.error("Gemini Error:", error);
-                resDiv.innerHTML = "❌ تعذر الاتصال بـ Gemini API.";
+                resDiv.innerHTML = "❌ Failed to reach Gemini API.";
             }
         }
 
         function proceedToCheckout() {
             if (!userConnectedAddress) {
-                alert("يرجى ربط محفظتك أولاً لتلقي العملات المشراة!");
+                alert("Please connect your Web3 wallet first to receive purchased tokens!");
                 closeModal('buyCryptoModal');
                 return;
             }
             const amount = document.getElementById('fiatAmount').value;
             const crypto = document.getElementById('cryptoSelect').value;
             
-            alert(`جاري توجيهك لبوابة الدفع الآمنة لشراء ${crypto} بقيمة $${amount} وتحويلها إلى محفظتك: ${userConnectedAddress}`);
+            alert(`Redirecting to secure gateway to purchase $${amount} worth of ${crypto} to wallet: ${userConnectedAddress}`);
             closeModal('buyCryptoModal');
         }
 
         function executeTrade() {
-            alert('تم تنفيذ الصفقة التجريبية بنجاح!');
+            alert('Virtual demo trade executed successfully!');
         }
 
         window.addEventListener('load', () => {
             initWeb3();
             fetchRealCryptoPrices();
-            setInterval(fetchRealCryptoPrices, 30000); // تحديث الأسعار أوتوماتيكياً كل 30 ثانية
-            document.getElementById('langSelect').value = currentLang;
-            changeLanguage(currentLang);
+            setInterval(fetchRealCryptoPrices, 30000);
+            checkSession();
         });
     </script>
 </body>
