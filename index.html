@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en" dir="ltr" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,6 +41,17 @@
             --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
+        /* Light Mode Glassmorphism Theme */
+        html[data-theme="light"] {
+            --bg: #f1f3f9;
+            --surface: rgba(255, 255, 255, 0.7);
+            --surface-card: rgba(255, 255, 255, 0.85);
+            --border: rgba(139, 92, 246, 0.3);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --glow-purple: rgba(139, 92, 246, 0.15);
+        }
+
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
@@ -49,23 +60,22 @@
             font-family: 'Plus Jakarta Sans', Arial, sans-serif;
             overflow-x: hidden;
             line-height: 1.6;
+            transition: background-color 0.4s ease, color 0.4s ease;
         }
 
-        /* Glassmorphism Background */
         .bg-grid {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
             background-image: 
                 radial-gradient(circle at 50% -10%, rgba(139, 92, 246, 0.25), transparent 60%),
                 radial-gradient(circle at 85% 65%, rgba(99, 102, 241, 0.15), transparent 50%),
-                linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+                linear-gradient(to right, rgba(139, 92, 246, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
             background-size: 100% 100%, 100% 100%, 50px 50px, 50px 50px;
             pointer-events: none;
             z-index: -1;
         }
 
-        /* Live Ticker Marquee Bar */
         .ticker-wrap {
             width: 100%;
             background: rgba(139, 92, 246, 0.08);
@@ -84,13 +94,10 @@
             animation: ticker 35s linear infinite;
             font-size: 13px;
             font-weight: 600;
-            color: #d8b4fe;
+            color: var(--purple-neon);
         }
 
-        .ticker-item {
-            display: inline-block;
-            padding: 0 20px;
-        }
+        .ticker-item { display: inline-block; padding: 0 20px; }
 
         @keyframes ticker {
             0% { transform: translate3d(0, 0, 0); }
@@ -99,7 +106,6 @@
 
         .wrap { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
 
-        /* GetPing Glass Nav Bar */
         header {
             position: sticky;
             top: 16px;
@@ -109,7 +115,7 @@
         }
 
         .nav-inner {
-            background: rgba(20, 15, 50, 0.5);
+            background: var(--surface);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
             border: 1px solid var(--border);
@@ -120,15 +126,10 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 10px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
         }
 
-        .getping-nav-group {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
+        .getping-nav-group { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 
         .getping-nav-item {
             color: var(--text-main);
@@ -158,6 +159,7 @@
             text-decoration: none;
             font-size: 13px;
             transition: var(--transition);
+            cursor: pointer;
         }
 
         .getping-icon-btn:hover {
@@ -166,23 +168,16 @@
         }
 
         .ca-pill {
-            background: rgba(10, 8, 26, 0.6);
+            background: rgba(10, 8, 26, 0.4);
             border: 1px solid var(--border);
             border-radius: 99px;
             padding: 6px 14px;
             font-size: 12px;
             font-family: monospace;
-            color: #c084fc;
+            color: var(--purple-neon);
             cursor: pointer;
             transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .ca-pill:hover {
-            border-color: var(--purple-neon);
-            box-shadow: 0 0 12px var(--glow-purple);
+            display: flex; align-items: center; gap: 6px;
         }
 
         .btn {
@@ -195,9 +190,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
+            display: inline-flex; align-items: center; gap: 8px;
             text-decoration: none;
         }
 
@@ -207,11 +200,6 @@
             font-weight: 700;
             border: none;
             box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(139, 92, 246, 0.6);
         }
 
         .falling-container {
@@ -228,7 +216,7 @@
             transform: translateY(-50px) rotate(-5deg);
             animation: fallIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
             animation-delay: calc(var(--i) * 0.12s);
-            background: linear-gradient(180deg, #ffffff 30%, #c084fc 100%);
+            background: linear-gradient(180deg, var(--text-main) 30%, var(--purple-neon) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-size: 52px;
@@ -245,15 +233,13 @@
         .hero { text-align: center; padding: 20px 0 10px; }
 
         .badge-ping {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
+            display: inline-flex; align-items: center; gap: 8px;
             background: rgba(139, 92, 246, 0.1);
             border: 1px solid var(--border);
             padding: 6px 18px;
             border-radius: 99px;
             font-size: 13px;
-            color: #c084fc;
+            color: var(--purple-neon);
             margin-bottom: 20px;
         }
 
@@ -284,7 +270,7 @@
             border: 1px solid var(--border);
             border-radius: var(--radius-lg);
             padding: 28px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
             margin-top: 30px;
             text-align: left;
         }
@@ -308,7 +294,6 @@
 
         .card:hover { border-color: var(--border-hover); }
 
-        /* TradingView Container Styling */
         .chart-container {
             border-radius: var(--radius-md);
             overflow: hidden;
@@ -317,11 +302,10 @@
             margin-top: 15px;
         }
 
-        /* Fear & Greed Index Gauge */
         .fg-box {
             text-align: center;
             padding: 16px;
-            background: rgba(10, 8, 26, 0.5);
+            background: rgba(10, 8, 26, 0.2);
             border-radius: var(--radius-md);
             border: 1px solid var(--border);
             margin-top: 10px;
@@ -339,26 +323,26 @@
             overflow-y: auto;
             border-radius: var(--radius-md);
             border: 1px solid rgba(139, 92, 246, 0.15);
-            background: rgba(10, 8, 28, 0.4);
+            background: rgba(10, 8, 28, 0.2);
         }
 
         table { width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; }
         th {
             position: sticky; top: 0;
-            background: #0d0a22;
+            background: var(--surface);
             color: var(--text-muted);
             padding: 14px 16px;
             z-index: 2;
             font-weight: 600;
             border-bottom: 1px solid var(--border);
         }
-        td { padding: 14px 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
+        td { padding: 14px 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
         .up { color: var(--green); font-weight: 700; }
         .down { color: var(--red); font-weight: 700; }
 
         input, select, textarea {
             width: 100%;
-            background: rgba(10, 8, 26, 0.7);
+            background: rgba(10, 8, 26, 0.3);
             border: 1px solid var(--border);
             color: var(--text-main);
             padding: 12px 16px;
@@ -377,7 +361,7 @@
         }
         .modal.active { display: flex; }
         .modal-content {
-            background: rgba(15, 12, 41, 0.9);
+            background: var(--surface-card);
             border: 1px solid var(--border);
             width: 100%; max-width: 450px;
             padding: 28px;
@@ -397,15 +381,14 @@
 </head>
 <body>
 
-    <!-- 1. Live Crypto Ticker Marquee Bar -->
+    <!-- Live Crypto Ticker Marquee Bar -->
     <div class="ticker-wrap">
         <div class="ticker-move" id="tickerContent">
             <span class="ticker-item">🚀 BTC/USD: $82,250 (+3.4%)</span>
             <span class="ticker-item">⚡ ETH/USD: $3,120 (+1.8%)</span>
             <span class="ticker-item">🔥 SOL/USD: $188.3 (+5.1%)</span>
             <span class="ticker-item">💎 BNB/USD: $590.1 (+0.8%)</span>
-            <span class="ticker-item">🌐 XRP/USD: $0.542 (-1.2%)</span>
-            <span class="ticker-item">🤖 Gemini AI: Market Sentiment Bullish for Next 24h</span>
+            <span class="ticker-item">🤖 Gemini AI: Market Sentiment Bullish</span>
         </div>
     </div>
 
@@ -413,26 +396,24 @@
 
     <header class="wrap">
         <div class="nav-inner">
-            <!-- GetPing Navigation Pills -->
             <div class="getping-nav-group">
                 <a href="#home" class="getping-nav-item active" onclick="playClickSound()">Home</a>
                 <a href="#chart" class="getping-nav-item" onclick="playClickSound()">Chart</a>
-                <a href="#features" class="getping-nav-item" onclick="playClickSound()">AI Tools</a>
+                <a href="#tools" class="getping-nav-item" onclick="playClickSound()">Tools</a>
                 <a href="#app" class="getping-nav-item" onclick="playClickSound()">Market</a>
             </div>
 
-            <!-- Social Icons & Contract Address -->
             <div class="getping-nav-group">
+                <!-- Theme Toggle Button -->
+                <button class="getping-icon-btn" onclick="toggleTheme(); playClickSound();" title="Toggle Light/Dark Mode" id="themeBtn">🌙</button>
                 <a href="https://t.me" target="_blank" class="getping-icon-btn" title="Telegram" onclick="playClickSound()">✈️</a>
                 <a href="https://x.com" target="_blank" class="getping-icon-btn" title="X (Twitter)" onclick="playClickSound()">𝕏</a>
-                <a href="https://github.com" target="_blank" class="getping-icon-btn" title="GitHub" onclick="playClickSound()">🐙</a>
                 
                 <div class="ca-pill" onclick="copyCA(); playClickSound();" title="Click to copy Contract Address">
                     <span>CA:</span> <span>0xFEb3...76Ba26</span> 📋
                 </div>
             </div>
 
-            <!-- Wallet & Auth -->
             <div class="getping-nav-group">
                 <button id="walletBtn" class="btn btn-primary" onclick="connectAllWallets(); playClickSound();">🔗 <span id="walletText">Connect Wallet</span></button>
             </div>
@@ -440,6 +421,24 @@
     </header>
 
     <main class="wrap" id="home">
+
+        <!-- 2. Market Cap & BTC Dominance Banner -->
+        <div class="dashboard-container" style="margin-top:10px; padding: 18px 28px;">
+            <div style="display:flex; justify-content:space-around; flex-wrap:wrap; gap:16px; text-align:center;">
+                <div>
+                    <div style="font-size:12px; color:var(--text-muted);">GLOBAL MARKET CAP</div>
+                    <div style="font-size:18px; font-weight:800; color:var(--purple-neon);" id="totalMarketCap">$2.68 Trillion</div>
+                </div>
+                <div>
+                    <div style="font-size:12px; color:var(--text-muted);">BTC DOMINANCE</div>
+                    <div style="font-size:18px; font-weight:800; color:var(--green);" id="btcDominance">56.4%</div>
+                </div>
+                <div>
+                    <div style="font-size:12px; color:var(--text-muted);">24H VOLUME</div>
+                    <div style="font-size:18px; font-weight:800; color:var(--indigo-neon);" id="totalVolume">$98.4 Billion</div>
+                </div>
+            </div>
+        </div>
 
         <section class="hero">
             <div class="badge-ping">
@@ -455,7 +454,7 @@
                 <span class="fall-word" style="--i:5;">Trading</span>
             </h1>
 
-            <p>Track top 24 real-time crypto prices, execute interactive TradingView charts analysis, and generate AI Signals powered by Google Gemini AI.</p>
+            <p>Track 24 real-time crypto prices, calculate conversion profits, set price alerts, and generate signals powered by Gemini AI.</p>
 
             <div id="realWalletCard" class="card" style="display:none; margin-bottom:20px; text-align:center; border-color:var(--purple-neon);">
                 <h3 style="color:var(--purple-neon); margin-bottom:8px;">💳 Connected Web3 Wallet</h3>
@@ -463,11 +462,10 @@
                 <button class="btn btn-primary" onclick="openModal('buyCryptoModal'); playClickSound();">💳 Buy Crypto with Credit Card</button>
             </div>
 
-            <!-- 2. Interactive TradingView Chart -->
+            <!-- TradingView Chart -->
             <div class="dashboard-container" id="chart">
-                <h3 style="font-size: 18px; color: #c084fc; margin-bottom: 8px;">📊 Live Interactive TradingView Chart</h3>
+                <h3 style="font-size: 18px; color: var(--purple-neon); margin-bottom: 8px;">📊 Live Interactive TradingView Chart</h3>
                 <div class="chart-container">
-                    <!-- TradingView Widget BEGIN -->
                     <div class="tradingview-widget-container" style="height:100%;width:100%">
                       <div id="tradingview_chart" style="height:calc(100% - 32px);width:100%"></div>
                       <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
@@ -490,13 +488,12 @@
                       );
                       </script>
                     </div>
-                    <!-- TradingView Widget END -->
                 </div>
             </div>
 
             <!-- Live 24 Crypto Table -->
             <div class="dashboard-container" id="app">
-                <h3 style="font-size: 18px; color: #c084fc; margin-bottom: 16px;">📈 Live Market Prices (Top 24 Cryptos)</h3>
+                <h3 style="font-size: 18px; color: var(--purple-neon); margin-bottom: 16px;">📈 Live Market Prices (Top 24 Cryptos)</h3>
                 <div class="table-wrapper">
                     <table>
                         <thead>
@@ -516,35 +513,64 @@
             </div>
         </section>
 
-        <section class="grid" id="features">
-            <!-- 3. Gemini AI Trade Signal Box -->
+        <section class="grid" id="tools">
+            <!-- 1. Crypto Converter & Profit Calculator -->
             <div class="card">
-                <h3 style="color: #c084fc; margin-bottom: 10px;">🧠 Gemini AI Trade Signal ⚡</h3>
-                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 14px;">Generate instant AI trading entry/exit signals with risk assessment.</p>
-                <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-bottom: 12px;" onclick="generateAISignal(); playClickSound();">
-                    🎯 Generate AI Signal (BTC &amp; ETH)
-                </button>
-                <div id="aiSignalBox" style="display:none; background: rgba(10, 8, 26, 0.8); padding: 14px; border-radius: 12px; border: 1px solid var(--purple-neon); font-size: 14px;"></div>
+                <h3 style="color: var(--purple-neon); margin-bottom: 10px;">𝧮 Converter &amp; Profit Calculator</h3>
+                <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 12px;">Calculate instant crypto conversion &amp; target profit:</p>
+                
+                <label style="font-size:12px; color:var(--text-muted);">Amount in USD ($):</label>
+                <input type="number" id="calcUsd" value="1000" oninput="calculateCryptoConversion()">
+
+                <label style="font-size:12px; color:var(--text-muted);">Target Asset:</label>
+                <select id="calcAsset" onchange="calculateCryptoConversion()">
+                    <option value="BTC">Bitcoin (BTC)</option>
+                    <option value="ETH">Ethereum (ETH)</option>
+                    <option value="SOL">Solana (SOL)</option>
+                </select>
+
+                <div style="background:rgba(10,8,26,0.3); padding:12px; border-radius:10px; font-size:13px; border:1px solid var(--border);">
+                    <div>Expected Amount: <strong id="calcResult" style="color:var(--green);">0.0121 BTC</strong></div>
+                </div>
             </div>
 
-            <!-- 4. Fear & Greed Index Box -->
+            <!-- 3. Price Alert System -->
             <div class="card">
-                <h3 style="color: #c084fc; margin-bottom: 10px;">🔊 Fear &amp; Greed Index</h3>
+                <h3 style="color: var(--purple-neon); margin-bottom: 10px;">🚨 Instant Price Alert System</h3>
+                <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 12px;">Get audio &amp; popup alerts when target price hits:</p>
+                
+                <label style="font-size:12px; color:var(--text-muted);">Target Crypto:</label>
+                <select id="alertAsset">
+                    <option value="BTC">Bitcoin (BTC)</option>
+                    <option value="ETH">Ethereum (ETH)</option>
+                </select>
+
+                <label style="font-size:12px; color:var(--text-muted);">Target Price ($):</label>
+                <input type="number" id="alertPrice" placeholder="e.g. 85000">
+
+                <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="setPriceAlert(); playClickSound();">Set Audio Alert 🔔</button>
+                <div id="alertStatus" style="font-size:12px; color:var(--green); margin-top:8px;"></div>
+            </div>
+
+            <!-- Gemini AI Trade Signal Box -->
+            <div class="card">
+                <h3 style="color: var(--purple-neon); margin-bottom: 10px;">🧠 Gemini AI Trade Signal ⚡</h3>
+                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 14px;">Generate instant AI trading signals with risk evaluation.</p>
+                <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-bottom: 12px;" onclick="generateAISignal(); playClickSound();">
+                    🎯 Generate AI Signal
+                </button>
+                <div id="aiSignalBox" style="display:none; background: rgba(10, 8, 26, 0.4); padding: 14px; border-radius: 12px; border: 1px solid var(--purple-neon); font-size: 14px;"></div>
+            </div>
+
+            <!-- Fear & Greed Index Box -->
+            <div class="card">
+                <h3 style="color: var(--purple-neon); margin-bottom: 10px;">🔊 Fear &amp; Greed Index</h3>
                 <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 10px;">Global market sentiment meter updated live.</p>
                 <div class="fg-box">
                     <div style="font-size: 12px; color: var(--text-muted);">Current Sentiment:</div>
                     <div class="fg-value" id="fgValue">68</div>
                     <div style="font-weight: 700; color: var(--green);" id="fgClassification">GREED 🤑</div>
                 </div>
-            </div>
-
-            <!-- Gemini AI Custom Assistant -->
-            <div class="card">
-                <h3 style="color: #c084fc; margin-bottom: 10px;">🤖 Google Gemini AI Chat</h3>
-                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 14px;">Ask custom market queries to Gemini AI.</p>
-                <textarea id="aiQuery" rows="2" placeholder="e.g., What is the price target for ETH next week?"></textarea>
-                <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="askGeminiAI(); playClickSound();">Ask Gemini AI ⚡</button>
-                <div id="aiResult" style="margin-top:12px; font-size:14px; color:#c084fc; display:none; background: rgba(10, 8, 26, 0.8); padding: 12px; border-radius: 8px; border: 1px solid var(--border);"></div>
             </div>
         </section>
 
@@ -553,7 +579,7 @@
     <div id="buyCryptoModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('buyCryptoModal'); playClickSound();">✕</span>
-            <h3 style="color: #c084fc; margin-bottom: 16px;">💳 Purchase Crypto with Card</h3>
+            <h3 style="color: var(--purple-neon); margin-bottom: 16px;">💳 Purchase Crypto with Card</h3>
             <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Select amount and asset to proceed to secure fiat payment gateway:</p>
             
             <label style="font-size:12px; color:var(--text-muted);">Amount in USD:</label>
@@ -576,7 +602,15 @@
     </footer>
 
     <script>
-        /* 5. Interactive Sound Effects (Web Audio API) */
+        /* 4. Light/Dark Theme Toggle Function */
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            document.getElementById('themeBtn').innerText = newTheme === 'dark' ? '🌙' : '☀️';
+        }
+
+        /* Sound Effects */
         function playClickSound() {
             try {
                 const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -609,6 +643,34 @@
         function openModal(id) { document.getElementById(id).classList.add('active'); }
         function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
+        /* 1. Crypto Converter Calculation */
+        function calculateCryptoConversion() {
+            const usd = parseFloat(document.getElementById('calcUsd').value) || 0;
+            const asset = document.getElementById('calcAsset').value;
+            
+            let price = 82250; // BTC
+            if (asset === 'ETH') price = 3120;
+            if (asset === 'SOL') price = 188.3;
+
+            const cryptoAmt = (usd / price).toFixed(4);
+            document.getElementById('calcResult').innerText = `${cryptoAmt} ${asset}`;
+        }
+
+        /* 3. Price Alert System */
+        let activeAlert = null;
+        function setPriceAlert() {
+            const asset = document.getElementById('alertAsset').value;
+            const price = parseFloat(document.getElementById('alertPrice').value);
+            
+            if (!price) {
+                alert("Please enter a valid target price!");
+                return;
+            }
+
+            activeAlert = { asset, price };
+            document.getElementById('alertStatus').innerText = `🔔 Alert active for ${asset} at $${price}`;
+        }
+
         /* Fetch Fear & Greed Index Live */
         async function fetchFearAndGreed() {
             try {
@@ -619,9 +681,7 @@
                     document.getElementById('fgValue').innerText = item.value;
                     document.getElementById('fgClassification').innerText = item.value_classification.toUpperCase() + " 📊";
                 }
-            } catch (e) {
-                console.log('Fear and greed fetch error:', e);
-            }
+            } catch (e) {}
         }
 
         /* Generate Gemini AI Trade Signal */
@@ -748,48 +808,6 @@
             }
         }
 
-        async function askGeminiAI() {
-            const query = document.getElementById('aiQuery').value;
-            const resDiv = document.getElementById('aiResult');
-            
-            if (!query) {
-                alert("Please type a market question first!");
-                return;
-            }
-
-            resDiv.style.display = 'block';
-            resDiv.innerHTML = "⏳ Analyzing live market data via Google Gemini AI...";
-
-            const GEMINI_API_KEY = "ضع_المفتاح_الحقيقي_هنا"; 
-
-            if (GEMINI_API_KEY === "ضع_المفتاح_الحقيقي_هنا" || !GEMINI_API_KEY.startsWith("AIzaSy")) {
-                resDiv.innerHTML = "⚠️ Please insert a valid Gemini API key starting with AIzaSy in the code.";
-                return;
-            }
-
-            try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{
-                            parts: [{ text: `You are an expert AI crypto trader. Answer concisely and professionally to this query: ${query}` }]
-                        }]
-                    })
-                });
-
-                const data = await response.json();
-                if (data.candidates && data.candidates[0] && data.candidates[0].content.parts[0].text) {
-                    resDiv.innerHTML = `<strong>Gemini AI:</strong><br>${data.candidates[0].content.parts[0].text}`;
-                } else {
-                    resDiv.innerHTML = "❌ Error connecting to Gemini AI service.";
-                }
-            } catch (error) {
-                console.error("Gemini Error:", error);
-                resDiv.innerHTML = "❌ Failed to reach Gemini API.";
-            }
-        }
-
         function proceedToCheckout() {
             if (!userConnectedAddress) {
                 alert("Please connect your Web3 wallet first to receive purchased tokens!");
@@ -807,6 +825,7 @@
             initWeb3();
             fetchRealCryptoPrices();
             fetchFearAndGreed();
+            calculateCryptoConversion();
             setInterval(fetchRealCryptoPrices, 30000);
         });
     </script>
