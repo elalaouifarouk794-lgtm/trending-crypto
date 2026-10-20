@@ -201,6 +201,14 @@
             box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
         }
 
+        .btn-buy {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #ffffff;
+            font-weight: 700;
+            border: none;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        }
+
         .falling-container {
             display: inline-flex;
             gap: 12px;
@@ -414,6 +422,8 @@
             </div>
 
             <div class="getping-nav-group">
+                <!-- Direct Buy Button Added -->
+                <button class="btn btn-buy" onclick="openModal('buyCryptoModal'); playClickSound();">💳 Buy Crypto</button>
                 <button id="walletBtn" class="btn btn-primary" onclick="connectAllWallets(); playClickSound();">🔗 <span id="walletText">Connect Wallet</span></button>
             </div>
         </div>
@@ -455,10 +465,13 @@
 
             <p>Buy real crypto instantly with credit card, track live prices, audit contracts, and generate Gemini AI signals.</p>
 
+            <div style="margin-bottom: 24px; text-align: center;">
+                <button class="btn btn-buy" style="font-size: 16px; padding: 12px 28px;" onclick="openModal('buyCryptoModal'); playClickSound();">💳 Buy Crypto Instantly with Card / Apple Pay</button>
+            </div>
+
             <div id="realWalletCard" class="card" style="display:none; margin-bottom:20px; text-align:center; border-color:var(--purple-neon);">
                 <h3 style="color:var(--purple-neon); margin-bottom:8px;">💳 Connected Web3 Wallet</h3>
                 <p id="realWalletDetails" style="font-size:14px; color:var(--text-main); margin-bottom: 12px;"></p>
-                <button class="btn btn-primary" onclick="openModal('buyCryptoModal'); playClickSound();">💳 Buy Crypto with Credit Card / Apple Pay</button>
             </div>
 
             <!-- TradingView Chart -->
@@ -587,12 +600,12 @@
 
     </main>
 
-    <!-- REAL FIAT BUY MODAL (MoonPay / Transak Widget Integration) -->
+    <!-- REAL FIAT BUY MODAL -->
     <div id="buyCryptoModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('buyCryptoModal'); playClickSound();">✕</span>
             <h3 style="color: var(--purple-neon); margin-bottom: 12px;">💳 Instant Fiat to Crypto Purchase</h3>
-            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Buy real crypto directly to your Web3 wallet using Card, Apple Pay or Bank Transfer:</p>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">Buy real crypto directly using Card, Apple Pay or Bank Transfer:</p>
             
             <label style="font-size:12px; color:var(--text-muted);">Select Currency &amp; Asset:</label>
             <select id="cryptoSelect">
@@ -602,7 +615,7 @@
                 <option value="SOL">Solana (SOL)</option>
             </select>
 
-            <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;" onclick="proceedToCheckout(); playClickSound();">
+            <button class="btn btn-buy" style="width: 100%; justify-content: center; margin-top: 10px;" onclick="proceedToCheckout(); playClickSound();">
                 💳 Launch Secure Payment Gateway ⚡
             </button>
         </div>
@@ -848,17 +861,10 @@
             `;
         }
 
-        /* REAL FIAT BUY GATEWAY LAUNCH (MoonPay / Transak Integration) */
         function proceedToCheckout() {
-            if (!userConnectedAddress) {
-                alert("Please connect your Web3 wallet first!");
-                closeModal('buyCryptoModal');
-                return;
-            }
             const crypto = document.getElementById('cryptoSelect').value;
-            
-            // Redirects to Transak / MoonPay real fiat payment gateway
-            const payUrl = `https://global.transak.com/?apiKey=cb9f196a-49bf-4786-a2dc-d603e62f5255&cryptoCurrencyCode=${crypto}&walletAddress=${userConnectedAddress}`;
+            const walletParam = userConnectedAddress ? `&walletAddress=${userConnectedAddress}` : '';
+            const payUrl = `https://global.transak.com/?apiKey=cb9f196a-49bf-4786-a2dc-d603e62f5255&cryptoCurrencyCode=${crypto}${walletParam}`;
             window.open(payUrl, '_blank');
             closeModal('buyCryptoModal');
         }
