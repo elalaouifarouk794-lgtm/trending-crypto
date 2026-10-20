@@ -81,7 +81,7 @@
 
         .wrap { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
 
-        /* Exact GetPing Glass Nav Bar */
+        /* GetPing Glass Nav Bar */
         header {
             position: sticky;
             top: 16px;
@@ -356,7 +356,7 @@
 
     <header class="wrap">
         <div class="nav-inner">
-            <!-- GetPing Exact Navigation Pills -->
+            <!-- GetPing Navigation Pills -->
             <div class="getping-nav-group">
                 <a href="#home" class="getping-nav-item active">Home</a>
                 <a href="#features" class="getping-nav-item">Features</a>
@@ -480,7 +480,6 @@
             alert("Contract Address Copied: " + ca);
         }
 
-        // PWA Service Worker Registration
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW reg error:', err));
@@ -490,7 +489,6 @@
         function openModal(id) { document.getElementById(id).classList.add('active'); }
         function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
-        /* --- Fetch 24 Real Crypto Prices from CoinGecko API --- */
         const crypto24List = [
             { id: 'bitcoin', name: 'Bitcoin (BTC)' },
             { id: 'ethereum', name: 'Ethereum (ETH)' },
@@ -550,7 +548,6 @@
             }
         }
 
-        /* --- Web3 & WalletConnect Config --- */
         let web3Modal;
         let provider;
         let signer;
@@ -596,7 +593,6 @@
             }
         }
 
-        /* --- Google Gemini AI Integration --- */
         async function askGeminiAI() {
             const query = document.getElementById('aiQuery').value;
             const resDiv = document.getElementById('aiResult');
