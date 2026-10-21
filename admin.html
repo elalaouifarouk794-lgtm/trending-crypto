@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrendAI | Master Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050716;
+            --surface: rgba(19, 17, 44, 0.7);
+            --border: rgba(139, 92, 246, 0.3);
+            --purple: #8b5cf6;
+            --green: #10b981;
+            --red: #f43f5e;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: var(--bg); color: var(--text); padding: 30px 15px; }
+        .wrap { max-width: 1100px; margin: 0 auto; }
+
+        .login-card {
+            max-width: 420px; margin: 80px auto; background: var(--surface);
+            border: 1px solid var(--border); padding: 32px; border-radius: 20px; text-align: center;
+        }
+
+        input, select, textarea {
+            width: 100%; background: rgba(10, 8, 26, 0.5); border: 1px solid var(--border);
+            color: var(--text); padding: 12px 16px; border-radius: 12px; margin-bottom: 12px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--purple), #6366f1); color: #fff;
+            border: none; padding: 12px 24px; border-radius: 99px; font-weight: 700; cursor: pointer; width: 100%;
+        }
+
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 20px; }
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 20px; }
+        .stat-box { display: flex; justify-content: space-between; margin-bottom: 15px; }
+        .stat-val { font-size: 22px; font-weight: 800; color: var(--purple); }
+
+        .toggle-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+<div class="wrap">
+
+    <!-- LOGIN AREA -->
+    <div id="loginArea" class="login-card">
+        <h2 style="color:var(--purple); margin-bottom: 10px;">🔐 Admin Authentication</h2>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">Enter your Master Password to access control room:</p>
+        <input type="password" id="adminPass" placeholder="Master Password">
+        <button class="btn" onclick="login()">Login to Dashboard 🔓</button>
+    </div>
+
+    <!-- MASTER DASHBOARD AREA -->
+    <div id="dashArea" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 25px;">
+            <h1>⚙️ Master Admin Control Center</h1>
+            <button class="btn" style="width:auto; background:var(--red);" onclick="logout()">Logout 🔒</button>
+        </div>
+
+        <!-- STATS OVERVIEW -->
+        <div class="dashboard-grid">
+            <div class="card">
+                <h3>📊 Traffic & Revenue Overview</h3>
+                <hr style="border-color:var(--border); margin:10px 0;">
+                <div class="stat-box"><span>Live Active Visitors:</span> <span class="stat-val">1,240</span></div>
+                <div class="stat-box"><span>Total Presale Raised:</span> <span class="stat-val" style="color:var(--green);">$745,200</span></div>
+                <div class="stat-box"><span>Connected Wallets:</span> <span class="stat-val">3,890</span></div>
+            </div>
+
+            <!-- TREASURY & PRESALE SETTINGS -->
+            <div class="card">
+                <h3>💰 Treasury & Presale Settings</h3>
+                <hr style="border-color:var(--border); margin:10px 0;">
+                <label style="font-size:12px; color:var(--text-muted);">Treasury Wallet Address:</label>
+                <input type="text" id="treasuryWallet" value="0xFEb390e5b613670490Se2G35bFc3e5150d76Ba26">
+
+                <label style="font-size:12px; color:var(--text-muted);">$TAI Token Presale Price ($):</label>
+                <input type="number" id="tokenPrice" value="0.05" step="0.01">
+
+                <button class="btn" onclick="saveSettings()">Save Treasury Config 💾</button>
+            </div>
+        </div>
+
+        <div class="dashboard-grid" style="margin-top:20px;">
+            <!-- GLOBAL SITE ANNOUNCEMENT BANNER -->
+            <div class="card">
+                <h3>📢 Global Announcement Banner</h3>
+                <hr style="border-color:var(--border); margin:10px 0;">
+                <p style="font-size: 12px; color:var(--text-muted); margin-bottom:8px;">Broadcast a top banner message to all live visitors:</p>
+                <input type="text" id="bannerMsg" placeholder="e.g. 🔥 Presale Round 1 is 80% Sold Out!">
+                <button class="btn" onclick="updateBanner()">Publish Live Banner 🚀</button>
+            </div>
+
+            <!-- FEATURE SWITCHES -->
+            <div class="card">
+                <h3>⚡ Platform Feature Switches</h3>
+                <hr style="border-color:var(--border); margin:10px 0;">
+                <div class="toggle-row">
+                    <span>Enable Token Launchpad:</span>
+                    <input type="checkbox" checked style="width:auto;">
+                </div>
+                <div class="toggle-row">
+                    <span>Enable Community Comments:</span>
+                    <input type="checkbox" checked style="width:auto;">
+                </div>
+                <div class="toggle-row">
+                    <span>Enable Gemini AI Chatbot:</span>
+                    <input type="checkbox" checked style="width:auto;">
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top:20px;">
+            <a href="index.html" style="color:var(--purple); text-decoration:none; font-weight:700;">← Return to Main Website</a>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function login() {
+        const pass = document.getElementById('adminPass').value;
+        if(pass === 'admin123') {
+            document.getElementById('loginArea').style.display = 'none';
+            document.getElementById('dashArea').style.display = 'block';
+        } else {
+            alert('❌ Wrong Password!');
+        }
+    }
+
+    function logout() {
+        document.getElementById('loginArea').style.display = 'block';
+        document.getElementById('dashArea').style.display = 'none';
+    }
+
+    function saveSettings() {
+        alert('✅ Settings saved successfully!');
+    }
+
+    function updateBanner() {
+        const msg = document.getElementById('bannerMsg').value;
+        alert('📢 Live Banner Broadcasted: ' + msg);
+    }
+</script>
+
+</body>
+</html>
