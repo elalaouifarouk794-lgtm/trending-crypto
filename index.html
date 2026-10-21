@@ -1,451 +1,757 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" data-theme="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TrendAI Crypto | Pro Max Next-Gen Web3 & AI Platform</title>
+    <title>Trending Crypto - Binary Options & Trading Platform</title>
     
-    <!-- PWA Settings -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#050716">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="TrendAI">
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/6001/6001368.png">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Web3 & WalletConnect v2 Libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/web3modal@1.9.12/dist/index.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@walletconnect/web3-provider@1.8.0/dist/umd/index.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'tc-bg': '#0a0e1a',
+                a        'tc-sidebar': '#111728',
+                        'tc-card': '#172036',
+                        'tc-border': '#222f4d',
+                        'tc-blue': '#2563eb',
+                        'tc-blue-hover': '#1d4ed8',
+                        'tc-green': '#10b981',
+                        'tc-green-hover': '#059669',
+                        'tc-red': '#f43f5e',
+                        'tc-red-hover': '#e11d48',
+                        'tc-gold': '#f59e0b'
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
 
     <style>
-        :root {
-            --bg: #030014;
-            --surface: rgba(15, 12, 41, 0.65);
-            --surface-card: rgba(19, 17, 44, 0.7);
-            --border: rgba(139, 92, 246, 0.3);
-            --border-hover: rgba(168, 85, 247, 0.7);
-            --purple-neon: #8b5cf6;
-            --indigo-neon: #6366f1;
-            --glow-purple: rgba(139, 92, 246, 0.4);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --green: #10b981;
-            --red: #f43f5e;
-            --radius-lg: 20px;
-            --radius-md: 12px;
-            --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0e1a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #222f4d;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2f4068;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            background-color: var(--bg);
-            color: var(--text-main);
-            font-family: 'Plus Jakarta Sans', Arial, sans-serif;
-            overflow-x: hidden;
-            line-height: 1.5;
+        /* Ambient Glow & Background Radial */
+        .chart-bg {
+            background: radial-gradient(circle at 50% 30%, #17233f 0%, #0a0e1a 80%);
         }
 
-        /* Hero Neon Glow Wallpapers */
-        .hero-wallpaper-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -2;
-            background: #030014;
-            overflow: hidden;
-            pointer-events: none;
+        /* Glowing Pulse Animation for Chart Target Point */
+        @keyframes targetPulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7); }
+            70% { box-shadow: 0 0 0 12px rgba(37, 99, 235, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
         }
 
-        .neon-orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.6;
-            animation: floatGlow 12s infinite alternate ease-in-out;
+        .pulse-point {
+            animation: targetPulse 1.8s infinite;
         }
 
-        .orb-1 {
-            width: 500px; height: 500px;
-            background: radial-gradient(circle, #8b5cf6 0%, rgba(139, 92, 246, 0) 70%);
-            top: 10%; left: 10%;
-        }
-
-        .orb-2 {
-            width: 550px; height: 550px;
-            background: radial-gradient(circle, #6366f1 0%, rgba(99, 102, 241, 0) 70%);
-            top: 15%; right: 5%;
-            animation-delay: -4s;
-        }
-
-        @keyframes floatGlow {
-            0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(40px, 30px) scale(1.1); }
-            100% { transform: translate(-30px, 50px) scale(0.95); }
-        }
-
-        .cyber-grid {
-            position: absolute;
-            width: 100%; height: 100%;
-            background-image: 
-                linear-gradient(to right, rgba(139, 92, 246, 0.08) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(139, 92, 246, 0.08) 1px, transparent 1px);
-            background-size: 35px 35px;
-            mask-image: radial-gradient(circle at 50% 50%, black 40%, transparent 90%);
-        }
-
-        .ticker-wrap {
-            width: 100%;
-            background: rgba(139, 92, 246, 0.12);
-            border-bottom: 1px solid var(--border);
-            overflow: hidden;
-            white-space: nowrap;
-            padding: 6px 0;
+        /* Glassmorphism subtle overlay */
+        .glass-panel {
+            background: rgba(23, 32, 54, 0.85);
             backdrop-filter: blur(12px);
-            position: relative;
-            z-index: 101;
-            font-size: 12px;
-            font-weight: 600;
         }
-
-        .ticker-move {
-            display: inline-block;
-            white-space: nowrap;
-            animation: ticker 35s linear infinite;
-            color: var(--purple-neon);
-        }
-
-        .ticker-item { display: inline-block; padding: 0 25px; }
-
-        @keyframes ticker {
-            0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(-50%, 0, 0); }
-        }
-
-        .wrap { max-width: 1350px; margin: 0 auto; padding: 0 20px; }
-
-        header {
-            position: sticky;
-            top: 12px;
-            z-index: 100;
-            margin-bottom: 25px;
-            margin-top: 10px;
-        }
-
-        .nav-inner {
-            background: var(--surface);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border);
-            border-radius: 99px;
-            padding: 6px 14px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-        }
-
-        .getping-nav-group { display: flex; align-items: center; gap: 6px; }
-
-        .brand-logo {
-            font-weight: 800;
-            font-size: 15px;
-            color: #fff;
-            padding: 6px 14px;
-            background: linear-gradient(135deg, rgba(139,92,246,0.3), rgba(99,102,241,0.3));
-            border-radius: 99px;
-            border: 1px solid var(--border);
-            display: flex; align-items: center; gap: 6px;
-        }
-
-        .getping-nav-item {
-            color: var(--text-main);
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 600;
-            padding: 6px 14px;
-            border-radius: 99px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: var(--transition);
-        }
-
-        .getping-nav-item:hover, .getping-nav-item.active {
-            background: rgba(139, 92, 246, 0.25);
-            border-color: var(--border-hover);
-            color: #ffffff;
-        }
-
-        .ca-pill {
-            background: rgba(10, 8, 26, 0.6);
-            border: 1px solid var(--border);
-            border-radius: 99px;
-            padding: 5px 12px;
-            font-size: 11px;
-            font-family: monospace;
-            color: var(--purple-neon);
-            cursor: pointer;
-        }
-
-        .btn {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-main);
-            border: 1px solid var(--border);
-            padding: 6px 14px;
-            border-radius: 99px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-flex; align-items: center; gap: 6px;
-            text-decoration: none;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #8b5cf6, #6366f1);
-            color: #ffffff;
-            font-weight: 700;
-            border: none;
-        }
-
-        .btn-buy {
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: #ffffff;
-            font-weight: 700;
-            border: none;
-        }
-
-        .hero { text-align: center; padding: 15px 0 25px; }
-
-        .hero h1 {
-            font-size: 44px;
-            font-weight: 800;
-            background: linear-gradient(180deg, #ffffff 40%, var(--purple-neon) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
-        }
-
-        .hero p {
-            font-size: 14px;
-            color: var(--text-muted);
-            max-width: 650px;
-            margin: 0 auto 20px;
-        }
-
-        .stats-bar {
-            background: var(--surface);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border);
-            border-radius: 99px;
-            padding: 10px 24px;
-            display: flex; justify-content: space-around; align-items: center;
-            max-width: 900px; margin: 0 auto 25px;
-            font-size: 13px;
-        }
-
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 16px;
-            margin-bottom: 25px;
-        }
-
-        .card {
-            background: var(--surface-card);
-            backdrop-filter: blur(16px);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 18px;
-            transition: var(--transition);
-        }
-
-        .card-header {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 12px; font-size: 14px; font-weight: 700; color: var(--purple-neon);
-        }
-
-        input, select, textarea {
-            width: 100%;
-            background: rgba(10, 8, 26, 0.5);
-            border: 1px solid var(--border);
-            color: var(--text-main);
-            padding: 8px 12px;
-            border-radius: var(--radius-md);
-            margin-bottom: 10px;
-            font-size: 12px;
-            font-family: inherit;
-        }
-
-        .chat-widget-btn {
-            position: fixed; bottom: 20px; right: 20px;
-            background: linear-gradient(135deg, #8b5cf6, #6366f1);
-            color: white; border: none; padding: 10px 18px;
-            border-radius: 99px; font-size: 13px; font-weight: 700; cursor: pointer;
-            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.5);
-            z-index: 999; display: flex; align-items: center; gap: 8px;
-        }
-
-        table { width: 100%; border-collapse: collapse; font-size: 12px; }
-        th { color: var(--text-muted); padding: 8px; text-align: left; border-bottom: 1px solid var(--border); }
-        td { padding: 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
     </style>
 </head>
-<body>
+<body class="bg-tc-bg text-gray-200 font-sans h-screen flex flex-col overflow-hidden select-none">
 
-    <!-- Wallpaper Background Layer -->
-    <div class="hero-wallpaper-bg">
-        <div class="cyber-grid"></div>
-        <div class="neon-orb orb-1"></div>
-        <div class="neon-orb orb-2"></div>
-    </div>
-
-    <!-- Live Ticker Marquee Bar -->
-    <div class="ticker-wrap">
-        <div class="ticker-move">
-            <span class="ticker-item">🚀 BTC/USD: $82,250 (+3.4%)</span>
-            <span class="ticker-item">⚡ ETH/USD: $3,120 (+1.8%)</span>
-            <span class="ticker-item">🔥 SOL/USD: $188.3 (+5.1%)</span>
-            <span class="ticker-item">💬 Community Comments Active</span>
-        </div>
-    </div>
-
-    <header class="wrap">
-        <div class="nav-inner">
-            <div class="getping-nav-group">
-                <div class="brand-logo">🔮 TrendAI Crypto Pro Max</div>
-                <a href="#home" class="getping-nav-item active">Home</a>
-                <a href="#launchpad" class="getping-nav-item">🚀 Launchpad</a>
-                <a href="#community" class="getping-nav-item">💬 Community</a>
-                <a href="#chart" class="getping-nav-item">Chart</a>
-                <a href="#tools" class="getping-nav-item">Tools</a>
+    <!-- TOP HEADER NAVBAR -->
+    <header class="h-14 bg-tc-sidebar border-b border-tc-border flex items-center justify-between px-3 z-30 shrink-0">
+        <!-- Brand & Assets Selection -->
+        <div class="flex items-center gap-4">
+            <!-- Brand Logo -->
+            <div class="flex items-center gap-2 cursor-pointer group">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-lg shadow-blue-500/20 group-hover:scale-105 transition">
+                    <i class="fa-solid fa-chart-line text-sm"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-extrabold text-sm text-white tracking-wider flex items-center gap-1">
+                        TRENDING <span class="text-blue-500">CRYPTO</span>
+                    </span>
+                    <span class="text-[9px] text-gray-400 font-mono tracking-widest uppercase">PRO PLATFORM</span>
+                </div>
             </div>
 
-            <div class="getping-nav-group">
-                <div class="ca-pill" onclick="navigator.clipboard.writeText('0xFEb390e5b613670490Se2G35bFc3e5150d76Ba26'); alert('Copied CA!');">
-                    CA: 0xFEb3...76Ba26 📋
+            <div class="h-6 w-[1px] bg-tc-border"></div>
+
+            <!-- Asset Selector Button -->
+            <div onclick="toggleAssetMenu()" class="bg-tc-card hover:bg-tc-border border border-tc-border rounded-lg px-3 py-1.5 flex items-center gap-3 cursor-pointer transition shadow-sm">
+                <div class="flex items-center gap-2">
+                    <span id="currentAssetIcon" class="text-base">₿</span>
+                    <div class="flex flex-col">
+                        <span id="currentAssetName" class="text-xs font-bold text-white tracking-wide">BTC/USDT OTC</span>
+                        <span class="text-[9px] text-gray-400">Crypto Index</span>
+                    </div>
+                    <span id="currentAssetPayout" class="bg-emerald-500/20 text-emerald-400 font-mono font-extrabold text-[11px] px-1.5 py-0.5 rounded ml-1">+92%</span>
                 </div>
-                <a href="admin.html" class="btn" style="border-color:var(--purple-neon); color:var(--purple-neon);">🔒 Admin Dashboard</a>
-                <button class="btn btn-buy">💳 Buy Crypto</button>
-                <button class="btn btn-primary">🔗 Connect Wallet</button>
+                <i class="fa-solid fa-chevron-down text-xs text-gray-400"></i>
+            </div>
+        </div>
+
+        <!-- Promo Banner -->
+        <div class="hidden lg:flex items-center bg-gradient-to-r from-blue-900/30 via-indigo-900/30 to-purple-900/30 border border-blue-500/20 rounded-full px-4 py-1 text-xs gap-3 shadow-inner">
+            <div class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-xs">
+                <i class="fa-solid fa-gift"></i>
+            </div>
+            <div>
+                <span class="text-white font-semibold">GET A 50% BONUS ON YOUR FIRST DEPOSIT</span>
+                <span class="text-gray-400 text-[10px] block">Use code: <strong class="text-amber-400">TRENDING50</strong></span>
+            </div>
+            <button class="text-gray-400 hover:text-white ml-2 text-xs"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <!-- Balance Switcher & Deposit Button -->
+        <div class="flex items-center gap-3">
+            <!-- Account Type & Balance Dropdown -->
+            <div onclick="toggleAccountMenu()" class="bg-tc-card hover:border-gray-600 border border-tc-border rounded-lg px-3 py-1.5 flex items-center gap-3 cursor-pointer transition">
+                <div class="w-2 h-2 rounded-full bg-emerald-400"></div>
+                <div class="flex flex-col text-right">
+                    <span id="accountTypeLabel" class="text-gray-400 text-[9px] uppercase tracking-wider block font-semibold">Demo Account</span>
+                    <span id="accountBalance" class="text-white font-mono font-extrabold text-sm leading-none">$10,000.00</span>
+                </div>
+                <i class="fa-solid fa-caret-down text-xs text-gray-400"></i>
+            </div>
+
+            <!-- Deposit / Recharge Button -->
+            <button onclick="openDepositModal()" class="bg-tc-green hover:bg-tc-green-hover text-white font-bold text-xs uppercase px-4 py-2.5 rounded-lg shadow-lg shadow-emerald-900/30 transition flex items-center gap-2 active:scale-95">
+                <i class="fa-solid fa-wallet"></i>
+                <span class="hidden sm:inline">Deposit</span>
+            </button>
+
+            <!-- User Avatar Profile -->
+            <div class="w-8 h-8 rounded-lg bg-tc-card border border-tc-border flex items-center justify-center cursor-pointer hover:border-blue-500 transition text-gray-300">
+                <i class="fa-solid fa-user text-xs"></i>
             </div>
         </div>
     </header>
 
-    <main class="wrap" id="home">
+    <!-- MAIN BODY WORKSPACE -->
+    <div class="flex-1 flex overflow-hidden relative">
 
-        <!-- Global Stats Header -->
-        <div class="stats-bar">
-            <div>Global Market Cap: <strong style="color:var(--purple-neon);">$2.68 Trillion</strong></div>
-            <div>BTC Dominance: <strong style="color:var(--green);">56.4%</strong></div>
-            <div>24H Volume: <strong style="color:var(--indigo-neon);">$98.4 Billion</strong></div>
-        </div>
+        <!-- LEFT SIDE NAVIGATION BAR -->
+        <aside class="w-16 bg-tc-sidebar border-r border-tc-border flex flex-col items-center py-3 gap-4 text-gray-400 text-xs shrink-0 z-20 overflow-y-auto">
+            <button class="flex flex-col items-center gap-1 text-blue-500 font-semibold transition w-full py-2 border-l-2 border-blue-500 bg-blue-500/10">
+                <i class="fa-solid fa-chart-line text-base"></i>
+                <span class="text-[9px]">Trading</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 hover:text-white transition w-full py-2">
+                <i class="fa-solid fa-vault text-base"></i>
+                <span class="text-[9px]">Finance</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 hover:text-white transition w-full py-2">
+                <i class="fa-regular fa-id-card text-base"></i>
+                <span class="text-[9px]">Profile</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 hover:text-white transition w-full py-2">
+                <i class="fa-solid fa-store text-base"></i>
+                <span class="text-[9px]">Market</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 hover:text-white transition w-full py-2 relative">
+                <i class="fa-solid fa-bolt text-base text-amber-400"></i>
+                <span class="text-[9px]">Signals</span>
+                <span class="absolute top-1 right-3 w-2 h-2 bg-blue-500 rounded-full"></span>
+            </button>
+            <button class="flex flex-col items-center gap-1 hover:text-white transition w-full py-2 relative">
+                <i class="fa-solid fa-comments text-base"></i>
+                <span class="text-[9px]">Social Chat</span>
+                <span class="absolute top-1 right-2 bg-rose-500 text-[8px] text-white px-1 rounded-full font-bold">8</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 hover:text-white transition w-full py-2">
+                <i class="fa-regular fa-circle-question text-base"></i>
+                <span class="text-[9px]">Support</span>
+            </button>
 
-        <!-- Hero Section -->
-        <section class="hero">
-            <h1>Next-Gen Web3 & AI Trading</h1>
-            <p>TrendAI Crypto Pro Max empowers users with real-time AI trading signals, on-chain whale animations, non-custodial swaps, and next-gen presale launchpad ecosystem.</p>
-            <div style="display:flex; justify-content:center; gap:12px; margin-bottom:15px;">
-                <button class="btn btn-buy" style="padding:10px 22px; font-size:13px;">💳 Buy Crypto Instantly with Card / Apple Pay</button>
-            </div>
-            <div style="font-size:12px; color:var(--text-muted);">
-                Connected Wallet: <span style="color:var(--purple-neon); font-family:monospace;">0xFEb3...76Ba26</span> 📋
-            </div>
-        </section>
+            <div class="w-8 h-[1px] bg-tc-border my-1"></div>
 
-        <!-- Upper 4 Cards Grid Layout (Matching Screenshot Exactly) -->
-        <div class="dashboard-grid">
+            <button class="flex flex-col items-center gap-1 text-amber-400 hover:text-amber-300 transition w-full py-1">
+                <i class="fa-solid fa-bullhorn text-base"></i>
+                <span class="text-[9px] font-bold">PROMO</span>
+            </button>
+            <button class="flex flex-col items-center gap-1 text-emerald-400 hover:text-emerald-300 transition w-full py-1">
+                <i class="fa-solid fa-users text-base"></i>
+                <span class="text-[9px]">Referral</span>
+            </button>
+        </aside>
+
+        <!-- CENTER INTERACTIVE LIVE CHART -->
+        <div class="flex-1 flex flex-col relative chart-bg overflow-hidden">
             
-            <!-- 1. Launchpad Presale -->
-            <div class="card" style="grid-column: span 3;" id="launchpad">
-                <div class="card-header">🚀 TrendAI Token Launchpad (Presale Stage 1)</div>
-                <div style="font-size:11px; color:var(--text-muted); margin-bottom:8px;">Presale Stage 1 | 100/1000 USDT</div>
-                <div style="background:rgba(10,8,26,0.5); padding:10px; border-radius:10px; margin-bottom:10px;">
-                    <div style="font-size:11px; color:var(--green);">Price: $0.05 USDT</div>
-                    <div style="font-size:11px;">Investment: <strong>$360.0500</strong></div>
+            <!-- Chart Toolbar Floating Controls -->
+            <div class="absolute top-3 left-3 z-20 flex items-center gap-2">
+                <!-- Timeframe Selector -->
+                <div class="flex items-center bg-tc-card/90 backdrop-blur border border-tc-border rounded-lg p-1 gap-1 shadow-lg">
+                    <button onclick="setTimeframe('M1')" id="tf-M1" class="px-2.5 py-1 text-xs text-white bg-blue-600 rounded font-bold transition">S5</button>
+                    <button onclick="setTimeframe('M3')" id="tf-M3" class="px-2.5 py-1 text-xs text-gray-400 hover:text-white rounded font-medium transition">M1</button>
+                    <button onclick="setTimeframe('M5')" id="tf-M5" class="px-2.5 py-1 text-xs text-gray-400 hover:text-white rounded font-medium transition">M5</button>
                 </div>
-                <button class="btn btn-primary" style="width:100%; justify-content:center;">Invest Now</button>
-            </div>
 
-            <!-- 2. Community Feedback -->
-            <div class="card" style="grid-column: span 3;" id="community">
-                <div class="card-header">💬 Community Feedback & Comments</div>
-                <div style="max-height:110px; overflow-y:auto; font-size:11px; margin-bottom:8px;">
-                    <div style="margin-bottom:6px;"><strong>Founder:</strong> Welcome to TrendAI Crypto Pro Max!</div>
-                    <div style="margin-bottom:6px;"><strong>CryptoUser:</strong> Fast live price updates!</div>
-                </div>
-                <input type="text" placeholder="Add a comment...">
-            </div>
-
-            <!-- 3. TradingView Chart Box -->
-            <div class="card" style="grid-column: span 3;" id="chart">
-                <div class="card-header">📊 TradingView Chart</div>
-                <div style="height:140px; background:rgba(0,0,0,0.3); border-radius:10px; display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:11px;">
-                    [ BINANCE:BTCUSDT Interactive Chart Loaded ]
+                <!-- Chart Type Selector -->
+                <div class="flex items-center bg-tc-card/90 backdrop-blur border border-tc-border rounded-lg p-1 gap-1 shadow-lg">
+                    <button class="p-1.5 text-xs text-blue-400 hover:bg-tc-border rounded"><i class="fa-solid fa-chart-area"></i></button>
+                    <button class="p-1.5 text-xs text-gray-400 hover:text-white rounded"><i class="fa-solid fa-chart-simple"></i></button>
+                    <button class="p-1.5 text-xs text-gray-400 hover:text-white rounded"><i class="fa-solid fa-sliders"></i></button>
                 </div>
             </div>
 
-            <!-- 4. Live Market Prices -->
-            <div class="card" style="grid-column: span 3;">
-                <div class="card-header">📈 Live Market Prices</div>
-                <table>
-                    <thead>
-                        <tr><th>Crypto</th><th>Price</th><th>Change</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>BTC</td><td>$82,250.00</td><td style="color:var(--green);">+3.4%</td></tr>
-                        <tr><td>ETH</td><td>$3,120.00</td><td style="color:var(--green);">+1.8%</td></tr>
-                        <tr><td>SOL</td><td>$188.30</td><td style="color:var(--green);">+5.1%</td></tr>
-                    </tbody>
-                </table>
+            <!-- Server Time Overlay -->
+            <div class="absolute top-3 right-4 z-20 text-right">
+                <span class="text-[10px] text-gray-400 block uppercase tracking-wider font-semibold">Expiration Countdown</span>
+                <span id="chartClock" class="text-sm font-mono font-bold text-blue-400 bg-tc-card/80 px-2 py-0.5 rounded border border-tc-border shadow">15:49:22 UTC</span>
             </div>
 
+            <!-- CANVAS REALTIME GRAPH -->
+            <div class="flex-1 relative w-full h-full">
+                <canvas id="liveChartCanvas" class="w-full h-full block cursor-crosshair"></canvas>
+
+                <!-- Floating Current Price Y-Axis Badge -->
+                <div id="livePriceBadge" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-blue-600 text-white font-mono font-bold text-xs px-2.5 py-1 rounded-l shadow-xl border-l-2 border-blue-300 flex items-center gap-1 z-20 transition-all duration-75">
+                    <span id="livePriceValue">82,250.00</span>
+                </div>
+            </div>
+
+            <!-- CHART FOOTER TIMELINE BAR -->
+            <div class="h-7 bg-tc-sidebar/80 border-t border-tc-border flex items-center justify-between px-4 text-[11px] text-gray-400 z-10 font-mono">
+                <div class="flex items-center gap-6" id="timeGridLabels">
+                    <span>15:47:30</span>
+                    <span>15:48:00</span>
+                    <span>15:48:30</span>
+                    <span>15:49:00</span>
+                    <span>15:49:30</span>
+                </div>
+                <div class="flex items-center gap-2 text-[10px]">
+                    <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span>REALTIME FEED OK</span>
+                </div>
+            </div>
         </div>
 
-        <!-- Lower 5 Tools Grid Layout (Matching Screenshot Exactly) -->
-        <div class="dashboard-grid" id="tools">
+        <!-- RIGHT TRADING CONTROL PANEL -->
+        <div class="w-72 bg-tc-sidebar border-l border-tc-border flex flex-col justify-between p-4 shrink-0 z-20">
             
-            <!-- Portfolio Tracker -->
-            <div class="card" style="grid-column: span 3;">
-                <div class="card-header">💼 Advanced Portfolio Tracker</div>
-                <div style="font-size:11px; color:var(--text-muted);">Asset: BTC ($82,250)</div>
-                <div style="font-size:14px; font-weight:800; color:var(--green); margin:6px 0;">+$2,250 (+6.5%)</div>
+            <!-- Top Trader Sentiment Gauge -->
+            <div class="flex flex-col gap-1.5 bg-tc-card border border-tc-border rounded-xl p-2.5">
+                <div class="flex justify-between items-center text-[10px] font-bold">
+                    <span class="text-tc-green flex items-center gap-1"><i class="fa-solid fa-caret-up"></i> BUYERS <span id="buyersPct">64%</span></span>
+                    <span class="text-tc-red flex items-center gap-1">SELLERS <span id="sellersPct">36%</span> <i class="fa-solid fa-caret-down"></i></span>
+                </div>
+                <div class="h-2 w-full bg-tc-red rounded-full overflow-hidden flex shadow-inner">
+                    <div id="sentimentBar" class="h-full bg-tc-green transition-all duration-500 rounded-full" style="width: 64%;"></div>
+                </div>
             </div>
 
-            <!-- Web3 Staking -->
-            <div class="card" style="grid-column: span 2;">
-                <div class="card-header">💎 Web3 Staking & Yield</div>
-                <div style="font-size:11px; color:var(--text-muted);">Estimated APY: <strong style="color:var(--green);">24.4%</strong></div>
+            <!-- Trading Execution Controls Box -->
+            <div class="flex flex-col gap-4 my-2">
+                
+                <!-- Expiration Time Input -->
+                <div class="bg-tc-card border border-tc-border rounded-xl p-3 flex flex-col gap-1">
+                    <span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider flex justify-between">
+                        <span>Time (Timer)</span>
+                        <i class="fa-regular fa-clock text-blue-400"></i>
+                    </span>
+                    <div class="flex items-center justify-between mt-1">
+                        <button onclick="adjustTimer(-1)" class="w-8 h-8 bg-tc-border hover:bg-gray-700 rounded-lg text-white font-bold flex items-center justify-center text-sm transition active:scale-95">-</button>
+                        <div class="text-center">
+                            <span id="timerDisplay" class="font-mono font-extrabold text-2xl text-white tracking-widest block">00:00:03</span>
+                        </div>
+                        <button onclick="adjustTimer(1)" class="w-8 h-8 bg-tc-border hover:bg-gray-700 rounded-lg text-white font-bold flex items-center justify-center text-sm transition active:scale-95">+</button>
+                    </div>
+                </div>
+
+                <!-- Investment Amount Input -->
+                <div class="bg-tc-card border border-tc-border rounded-xl p-3 flex flex-col gap-1">
+                    <span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider flex justify-between">
+                        <span>Investment Amount</span>
+                        <i class="fa-solid fa-dollar-sign text-emerald-400"></i>
+                    </span>
+                    <div class="flex items-center justify-between mt-1">
+                        <button onclick="adjustAmount(-5)" class="w-8 h-8 bg-tc-border hover:bg-gray-700 rounded-lg text-white font-bold flex items-center justify-center text-sm transition active:scale-95">-</button>
+                        <div class="flex items-center justify-center">
+                            <span class="text-gray-400 font-bold text-lg mr-1">$</span>
+                            <input type="number" id="tradeAmountInput" value="10" min="1" class="bg-transparent text-center font-mono font-extrabold text-2xl text-white w-20 focus:outline-none">
+                        </div>
+                        <button onclick="adjustAmount(5)" class="w-8 h-8 bg-tc-border hover:bg-gray-700 rounded-lg text-white font-bold flex items-center justify-center text-sm transition active:scale-95">+</button>
+                    </div>
+                </div>
+
+                <!-- Profit/Payout Box Display -->
+                <div class="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-2.5 text-center flex justify-between items-center px-4">
+                    <div class="text-left">
+                        <span class="text-[10px] text-gray-400 font-semibold block uppercase">Payout Rate</span>
+                        <span id="payoutRate" class="text-tc-green font-extrabold text-sm">+92%</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-[10px] text-gray-400 font-semibold block uppercase">Profit Potential</span>
+                        <span id="payoutValue" class="text-tc-green font-mono font-extrabold text-base">+$19.20</span>
+                    </div>
+                </div>
+
+                <!-- HIGHER / LOWER Action Buttons -->
+                <div class="flex flex-col gap-3 mt-1">
+                    <!-- CALL / HIGHER Button -->
+                    <button onclick="placeTrade('CALL')" class="bg-tc-green hover:bg-tc-green-hover text-white font-extrabold py-4 rounded-xl shadow-lg shadow-emerald-900/40 transition flex items-center justify-between px-5 active:scale-95 group">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-arrow-trend-up text-2xl group-hover:-translate-y-1 transition"></i>
+                            <div class="text-left">
+                                <span class="text-base leading-none block uppercase">HIGHER</span>
+                                <span class="text-[10px] text-emerald-200 font-normal">Price will go UP</span>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-xs opacity-50"></i>
+                    </button>
+
+                    <!-- PUT / LOWER Button -->
+                    <button onclick="placeTrade('PUT')" class="bg-tc-red hover:bg-tc-red-hover text-white font-extrabold py-4 rounded-xl shadow-lg shadow-rose-900/40 transition flex items-center justify-between px-5 active:scale-95 group">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-arrow-trend-down text-2xl group-hover:translate-y-1 transition"></i>
+                            <div class="text-left">
+                                <span class="text-base leading-none block uppercase">LOWER</span>
+                                <span class="text-[10px] text-rose-200 font-normal">Price will go DOWN</span>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-xs opacity-50"></i>
+                    </button>
+                </div>
             </div>
 
-            <!-- AI Contract Auditor -->
-            <div class="card" style="grid-column: span 2;">
-                <div class="card-header">🛡️ AI Contract Auditor</div>
-                <input type="text" placeholder="Paste Contract 0x..." style="margin-bottom:4px;">
-            </div>
+            <!-- Open Positions / Trades History Section -->
+            <div class="flex-1 flex flex-col border-t border-tc-border pt-3 min-h-[140px]">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-[11px] font-bold text-gray-300 uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="fa-solid fa-clock-rotate-left text-blue-400"></i> Open Trades
+                    </span>
+                    <span id="openCount" class="bg-blue-600 text-white font-bold text-[10px] px-1.5 py-0.2 rounded-full">0</span>
+                </div>
 
-            <!-- Gemini AI Signal Box -->
-            <div class="card" style="grid-column: span 3;">
-                <div class="card-header">🧠 Gemini AI Trade Signal Box</div>
-                <div style="font-size:11px; color:var(--green); font-weight:700;">🟢 BULLISH SIGNAL: BUY BTC</div>
-            </div>
-
-            <!-- Fear & Greed Index -->
-            <div class="card" style="grid-column: span 2;">
-                <div class="card-header">🔊 Fear & Greed Index</div>
-                <div style="font-size:20px; font-weight:800; color:var(--green); text-align:center;">68 GREED</div>
+                <div id="tradesList" class="flex-1 overflow-y-auto space-y-2 pr-1 max-h-40">
+                    <div class="text-[11px] text-gray-500 italic text-center py-4">No active positions</div>
+                </div>
             </div>
 
         </div>
 
-    </main>
+    </div>
 
-    <!-- Floating AI Chatbot Button -->
-    <button class="chat-widget-btn">🤖 Chat with Gemini AI</button>
+    <!-- ASSET SELECTOR MODAL -->
+    <div id="assetModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-tc-card border border-tc-border rounded-2xl w-full max-w-md p-5 shadow-2xl">
+            <div class="flex justify-between items-center border-b border-tc-border pb-3 mb-3">
+                <h3 class="font-bold text-white text-base">Select Trading Asset</h3>
+                <button onclick="toggleAssetMenu()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="space-y-2 max-h-80 overflow-y-auto">
+                <div onclick="selectAsset('BTC/USDT OTC', '₿', 92)" class="p-3 bg-tc-sidebar hover:bg-tc-border rounded-xl cursor-pointer flex justify-between items-center transition border border-tc-border">
+                    <div class="flex items-center gap-3">
+                        <span class="text-xl">₿</span>
+                        <div>
+                            <span class="font-bold text-white text-sm block">BTC/USDT OTC</span>
+                            <span class="text-[10px] text-gray-400">Bitcoin Index</span>
+                        </div>
+                    </div>
+                    <span class="bg-emerald-500/20 text-emerald-400 font-mono font-bold text-xs px-2 py-1 rounded">+92%</span>
+                </div>
 
+                <div onclick="selectAsset('ETH/USDT OTC', 'Ξ', 89)" class="p-3 bg-tc-sidebar hover:bg-tc-border rounded-xl cursor-pointer flex justify-between items-center transition border border-tc-border">
+                    <div class="flex items-center gap-3">
+                        <span class="text-xl">Ξ</span>
+                        <div>
+                            <span class="font-bold text-white text-sm block">ETH/USDT OTC</span>
+                            <span class="text-[10px] text-gray-400">Ethereum Index</span>
+                        </div>
+                    </div>
+                    <span class="bg-emerald-500/20 text-emerald-400 font-mono font-bold text-xs px-2 py-1 rounded">+89%</span>
+                </div>
+
+                <div onclick="selectAsset('AUD/CAD OTC', '🇦🇺🇨🇦', 95)" class="p-3 bg-tc-sidebar hover:bg-tc-border rounded-xl cursor-pointer flex justify-between items-center transition border border-tc-border">
+                    <div class="flex items-center gap-3">
+                        <span class="text-xl">🇦🇺</span>
+                        <div>
+                            <span class="font-bold text-white text-sm block">AUD/CAD OTC</span>
+                            <span class="text-[10px] text-gray-400">Forex Pair</span>
+                        </div>
+                    </div>
+                    <span class="bg-emerald-500/20 text-emerald-400 font-mono font-bold text-xs px-2 py-1 rounded">+95%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ACCOUNT SWITCHER / DEPOSIT MODAL -->
+    <div id="depositModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-tc-card border border-tc-border rounded-2xl w-full max-w-md p-5 shadow-2xl">
+            <div class="flex justify-between items-center border-b border-tc-border pb-3 mb-4">
+                <h3 class="font-bold text-white text-base">Account Balance & Deposit</h3>
+                <button onclick="openDepositModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            
+            <div class="space-y-3 mb-5">
+                <div onclick="switchAccount('Demo')" class="p-3 bg-tc-sidebar hover:bg-tc-border border border-tc-border rounded-xl cursor-pointer flex justify-between items-center transition">
+                    <div>
+                        <span class="font-bold text-emerald-400 text-sm block">Demo Account</span>
+                        <span class="text-[10px] text-gray-400">Practice with virtual funds</span>
+                    </div>
+                    <span id="modalDemoBalance" class="font-mono font-bold text-white">$10,000.00</span>
+                </div>
+
+                <button onclick="refillDemo()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-2.5 rounded-xl text-xs transition">
+                    <i class="fa-solid fa-rotate mr-1"></i> Reset Demo Balance to $10,000
+                </button>
+            </div>
+
+            <div class="flex justify-end">
+                <button onclick="openDepositModal()" class="bg-gray-700 hover:bg-gray-600 text-white font-bold text-xs px-4 py-2 rounded-lg">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- AUDIO SOUND EFFECTS (Web Audio API Synthesizer) -->
+    <script>
+        // Web Audio API Sound Generator for Clicks and Trade Execution
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSound(type) {
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            if (type === 'CLICK') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.05);
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.05);
+            } else if (type === 'WIN') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.2);
+                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.2);
+            } else if (type === 'LOSS') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(300, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.2);
+                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.2);
+            }
+        }
+
+        // Global Platform State
+        let balance = 10000.00;
+        let activeAsset = 'BTC/USDT OTC';
+        let payoutRateVal = 92;
+        let timerSecs = 3;
+        let currentPrice = 82250.00;
+        let priceHistory = [];
+        let activeTrades = [];
+
+        // Canvas Setup
+        const canvas = document.getElementById('liveChartCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // Seed Price History
+        for (let i = 0; i < 120; i++) {
+            currentPrice += (Math.random() - 0.495) * 12.5;
+            priceHistory.push(currentPrice);
+        }
+
+        // Chart Render Loop
+        function renderChart() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const width = canvas.width;
+            const height = canvas.height;
+            const paddingRight = 90;
+
+            const minPrice = Math.min(...priceHistory) - 15;
+            const maxPrice = Math.max(...priceHistory) + 15;
+            const stepX = (width - paddingRight) / (priceHistory.length - 1);
+
+            // Draw Horizontal Grid Lines
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
+            ctx.lineWidth = 1;
+            const gridRows = 6;
+            for (let i = 0; i < gridRows; i++) {
+                const y = (height / gridRows) * i;
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(width, y);
+                ctx.stroke();
+
+                const priceAtY = maxPrice - (i / gridRows) * (maxPrice - minPrice);
+                ctx.fillStyle = '#4b5563';
+                ctx.font = '10px JetBrains Mono';
+                ctx.fillText(priceAtY.toFixed(2), width - 75, y + 12);
+            }
+
+            // Draw Area Gradient Fill
+            ctx.beginPath();
+            ctx.moveTo(0, height);
+            for (let i = 0; i < priceHistory.length; i++) {
+                const x = i * stepX;
+                const y = height - ((priceHistory[i] - minPrice) / (maxPrice - minPrice)) * height;
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+
+            const lastX = (priceHistory.length - 1) * stepX;
+            const lastY = height - ((priceHistory[priceHistory.length - 1] - minPrice) / (maxPrice - minPrice)) * height;
+
+            ctx.lineTo(lastX, height);
+            ctx.closePath();
+
+            const areaGrad = ctx.createLinearGradient(0, 0, 0, height);
+            areaGrad.addColorStop(0, 'rgba(37, 99, 235, 0.35)');
+            areaGrad.addColorStop(1, 'rgba(37, 99, 235, 0.0)');
+            ctx.fillStyle = areaGrad;
+            ctx.fill();
+
+            // Draw Price Trend Line
+            ctx.beginPath();
+            for (let i = 0; i < priceHistory.length; i++) {
+                const x = i * stepX;
+                const y = height - ((priceHistory[i] - minPrice) / (maxPrice - minPrice)) * height;
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.strokeStyle = '#2563eb';
+            ctx.lineWidth = 2.5;
+            ctx.stroke();
+
+            // Draw Open Trade Strike Lines
+            activeTrades.forEach(t => {
+                const strikeY = height - ((t.entryPrice - minPrice) / (maxPrice - minPrice)) * height;
+                ctx.strokeStyle = t.type === 'CALL' ? '#10b981' : '#f44336';
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath();
+                ctx.moveTo(0, strikeY);
+                ctx.lineTo(width, strikeY);
+                ctx.stroke();
+                ctx.setLineDash([]);
+            });
+
+            // Draw Target Glowing Point
+            ctx.beginPath();
+            ctx.arc(lastX, lastY, 6, 0, Math.PI * 2);
+            ctx.fillStyle = '#2563eb';
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.arc(lastX, lastY, 3, 0, Math.PI * 2);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+
+            // Update Floating Price Badge Position
+            const badge = document.getElementById('livePriceBadge');
+            badge.style.top = `${lastY}px`;
+            document.getElementById('livePriceValue').innerText = currentPrice.toFixed(2);
+
+            requestAnimationFrame(renderChart);
+        }
+
+        // Live Realtime Price Tick Generator
+        setInterval(() => {
+            const delta = (Math.random() - 0.495) * 6.5;
+            currentPrice += delta;
+            priceHistory.shift();
+            priceHistory.push(currentPrice);
+
+            // Dynamic Sentiment Fluctuations
+            const buyers = Math.floor(45 + Math.random() * 30);
+            document.getElementById('buyersPct').innerText = `${buyers}%`;
+            document.getElementById('sellersPct').innerText = `${100 - buyers}%`;
+            document.getElementById('sentimentBar').style.width = `${buyers}%`;
+        }, 250);
+
+        // Trade Amount & Timer Adjustments
+        const amountInput = document.getElementById('tradeAmountInput');
+        amountInput.addEventListener('input', updatePayout);
+
+        function adjustAmount(delta) {
+            playSound('CLICK');
+            let val = parseFloat(amountInput.value) || 10;
+            val = Math.max(1, val + delta);
+            amountInput.value = val;
+            updatePayout();
+        }
+
+        function adjustTimer(delta) {
+            playSound('CLICK');
+            timerSecs = Math.max(1, timerSecs + delta);
+            document.getElementById('timerDisplay').innerText = `00:00:${timerSecs.toString().padStart(2, '0')}`;
+        }
+
+        function updatePayout() {
+            const amt = parseFloat(amountInput.value) || 0;
+            const profit = amt * (payoutRateVal / 100);
+            document.getElementById('payoutValue').innerText = `+$${profit.toFixed(2)}`;
+        }
+
+        // Place Trade Action
+        function placeTrade(type) {
+            playSound('CLICK');
+            const amt = parseFloat(amountInput.value) || 10;
+
+            if (balance < amt) {
+                alert("Insufficient balance! Please refill your demo account.");
+                openDepositModal();
+                return;
+            }
+
+            balance -= amt;
+            updateBalanceDisplay();
+
+            const trade = {
+                id: Date.now(),
+                type: type,
+                amount: amt,
+                entryPrice: currentPrice,
+                timer: timerSecs
+            };
+
+            activeTrades.push(trade);
+            renderTradesList();
+
+            const tradeInterval = setInterval(() => {
+                trade.timer--;
+                renderTradesList();
+
+                if (trade.timer <= 0) {
+                    clearInterval(tradeInterval);
+                    settleTrade(trade);
+                }
+            }, 1000);
+        }
+
+        function settleTrade(trade) {
+            const win = (trade.type === 'CALL' && currentPrice >= trade.entryPrice) ||
+                        (trade.type === 'PUT' && currentPrice <= trade.entryPrice);
+
+            if (win) {
+                playSound('WIN');
+                const winAmount = trade.amount + (trade.amount * (payoutRateVal / 100));
+                balance += winAmount;
+                updateBalanceDisplay();
+            } else {
+                playSound('LOSS');
+            }
+
+            activeTrades = activeTrades.filter(t => t.id !== trade.id);
+            renderTradesList();
+        }
+
+        function renderTradesList() {
+            const listContainer = document.getElementById('tradesList');
+            document.getElementById('openCount').innerText = activeTrades.length;
+
+            if (activeTrades.length === 0) {
+                listContainer.innerHTML = `<div class="text-[11px] text-gray-500 italic text-center py-4">No active positions</div>`;
+                return;
+            }
+
+            listContainer.innerHTML = activeTrades.map(t => `
+                <div class="bg-tc-card border border-tc-border rounded-xl p-2.5 flex justify-between items-center text-xs">
+                    <div>
+                        <span class="font-extrabold ${t.type === 'CALL' ? 'text-tc-green' : 'text-tc-red'}">${t.type} $${t.amount}</span>
+                        <span class="text-gray-400 block text-[10px] font-mono">Strike: ${t.entryPrice.toFixed(2)}</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="font-mono font-bold text-white text-sm block">${t.timer}s</span>
+                        <span class="text-emerald-400 text-[10px] font-bold">+${payoutRateVal}% Payout</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateBalanceDisplay() {
+            document.getElementById('accountBalance').innerText = `$${balance.toFixed(2)}`;
+            document.getElementById('modalDemoBalance').innerText = `$${balance.toFixed(2)}`;
+        }
+
+        // Modals & Menu Toggles
+        function toggleAssetMenu() {
+            playSound('CLICK');
+            document.getElementById('assetModal').classList.toggle('hidden');
+        }
+
+        function selectAsset(name, icon, payout) {
+            activeAsset = name;
+            payoutRateVal = payout;
+            document.getElementById('currentAssetName').innerText = name;
+            document.getElementById('currentAssetIcon').innerText = icon;
+            document.getElementById('currentAssetPayout').innerText = `+${payout}%`;
+            document.getElementById('payoutRate').innerText = `+${payout}%`;
+            updatePayout();
+            toggleAssetMenu();
+        }
+
+        function openDepositModal() {
+            playSound('CLICK');
+            document.getElementById('depositModal').classList.toggle('hidden');
+        }
+
+        function refillDemo() {
+            balance = 10000.00;
+            updateBalanceDisplay();
+            openDepositModal();
+        }
+
+        function setTimeframe(tf) {
+            playSound('CLICK');
+            document.querySelectorAll('[id^="tf-"]').forEach(el => {
+                el.className = "px-2.5 py-1 text-xs text-gray-400 hover:text-white rounded font-medium transition";
+            });
+            document.getElementById(`tf-${tf}`).className = "px-2.5 py-1 text-xs text-white bg-blue-600 rounded font-bold transition";
+        }
+
+        // Server Clock
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('chartClock').innerText = `${now.toTimeString().split(' ')[0]} UTC`;
+        }, 1000);
+
+        // Start App
+        renderChart();
+    </script>
 </body>
 </html>
