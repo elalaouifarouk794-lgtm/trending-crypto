@@ -3,502 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TrendAI Crypto Pro Max | Plateforme Web3 & Trading AI</title>
-    <meta name="description" content="L'application crypto à détention en propre où votre argent travaille en permanence pendant que vous tradez.">
-    <meta name="theme-color" content="#ffffff">
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-    
-    <!-- FontAwesome Icons -->
+    <title>TrendAI Crypto Pro Max | Web3 Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Web3 Ethers.js -->
     <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-
     <style>
-        :root {
-            --bg-light: #f7f9fc;
-            --bg-white: #ffffff;
-            --bg-dark-card: #0f1115;
-            --text-black: #090a0c;
-            --text-muted: #5e6473;
-            --primary-orange: #f6851b;
-            --primary-orange-hover: #e2761b;
-            --green-accent: #10b981;
-            --border-color: #e2e8f0;
-            --font-main: 'Plus Jakarta Sans', sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: #ffffff; color: #000000; overflow-x: hidden; }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: var(--font-main);
-        }
+        /* Top Bar */
+        .top-banner { background: #000; color: #fff; text-align: center; padding: 12px; font-size: 0.85rem; font-weight: 600; }
+        .top-banner span { background: #f6851b; padding: 2px 8px; border-radius: 4px; margin-right: 6px; }
 
-        body {
-            background-color: var(--bg-light);
-            color: var(--text-black);
-            overflow-x: hidden;
-        }
+        /* Navbar */
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 20px 6%; background: #ffffff; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #f0f0f0; }
+        .brand { display: flex; align-items: center; gap: 12px; font-size: 1.4rem; font-weight: 900; color: #000; text-decoration: none; }
+        
+        /* TrendAI Fox-Style Custom Logo */
+        .brand-icon { width: 42px; height: 42px; background: #f6851b; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; box-shadow: 0 4px 12px rgba(246, 133, 27, 0.4); }
 
-        /* Top Notification Banner */
-        .top-banner {
-            background: #000;
-            color: #fff;
-            text-align: center;
-            padding: 10px 15px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
+        .nav-links { display: flex; gap: 30px; list-style: none; font-weight: 600; font-size: 0.95rem; }
+        .nav-links a { text-decoration: none; color: #111; }
+        .nav-links a:hover { color: #f6851b; }
 
-        .top-banner span {
-            background: var(--primary-orange);
-            color: #fff;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            margin-right: 8px;
-        }
-
-        /* Header Navbar */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 18px 5%;
-            background: var(--bg-white);
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .brand-logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.3rem;
-            font-weight: 900;
-            color: var(--text-black);
-            text-decoration: none;
-        }
-
-        .brand-icon {
-            width: 36px;
-            height: 36px;
-            background: var(--primary-orange);
-            color: white;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-            box-shadow: 0 4px 10px rgba(246, 133, 27, 0.3);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 25px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-black);
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary-orange);
-        }
-
-        .btn-connect {
-            background: #000;
-            color: #fff;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-connect:hover {
-            background: #222;
-            transform: translateY(-1px);
-        }
+        .btn-commencer { background: #000; color: #fff; border: none; padding: 12px 28px; border-radius: 30px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+        .btn-commencer:hover { background: #222; }
 
         /* Hero Section */
-        .hero {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 60px 5%;
-            max-width: 1300px;
-            margin: 0 auto;
-            gap: 40px;
-        }
+        .hero { display: flex; justify-content: space-between; align-items: center; padding: 80px 6%; max-width: 1400px; margin: 0 auto; gap: 50px; }
+        .hero-content { flex: 1.1; }
+        
+        .hero-title { font-size: 4.5rem; font-weight: 900; line-height: 1.05; letter-spacing: -2px; margin-bottom: 25px; color: #000; }
+        .hero-desc { font-size: 1.2rem; color: #555; line-height: 1.5; margin-bottom: 35px; max-width: 550px; font-weight: 500; }
 
-        .hero-text {
-            flex: 1.2;
-        }
+        /* Exact Replica Mockup Card */
+        .hero-mockup-wrapper { flex: 0.9; display: flex; justify-content: center; }
+        .mm-card { background: #0f1115; color: #fff; border-radius: 32px; padding: 28px; width: 100%; max-width: 440px; box-shadow: 0 30px 60px rgba(0,0,0,0.3); border: 1px solid #222; }
 
-        .hero-title {
-            font-size: 4rem;
-            font-weight: 900;
-            line-height: 1.05;
-            letter-spacing: -1.5px;
-            margin-bottom: 20px;
-        }
+        .mm-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .mm-pill { background: #1a1e29; padding: 6px 14px; border-radius: 20px; font-size: 0.82rem; font-weight: 600; border: 1px solid #2d3548; }
+        
+        .mm-balance { font-size: 2.6rem; font-weight: 900; margin-bottom: 4px; }
+        .mm-subbalance { color: #10b981; font-weight: 700; font-size: 0.9rem; margin-bottom: 25px; }
 
-        .hero-subtitle {
-            font-size: 1.15rem;
-            color: var(--text-muted);
-            line-height: 1.5;
-            margin-bottom: 30px;
-            max-width: 500px;
-        }
+        .mm-actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 25px; }
+        .mm-act-btn { background: #1a1e29; border: 1px solid #282f40; padding: 12px 6px; border-radius: 16px; text-align: center; cursor: pointer; color: #fff; transition: 0.2s; }
+        .mm-act-btn:hover { background: #242c3d; }
+        .mm-act-btn i { color: #f6851b; font-size: 1.1rem; margin-bottom: 6px; display: block; }
+        .mm-act-btn span { font-size: 0.75rem; font-weight: 600; }
 
-        /* App Card Mockup */
-        .app-mockup {
-            flex: 1;
-            background: var(--bg-dark-card);
-            color: white;
-            border-radius: 28px;
-            padding: 28px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-            max-width: 420px;
-            width: 100%;
-        }
+        /* Ticker Bar */
+        .ticker-section { background: #f8fafc; border-top: 1px solid #eaeaea; border-bottom: 1px solid #eaeaea; padding: 15px 0; display: flex; gap: 20px; overflow-x: auto; white-space: nowrap; }
+        .ticker-card { background: #fff; border: 1px solid #e2e8f0; padding: 10px 20px; border-radius: 16px; font-weight: 700; font-size: 0.85rem; display: inline-flex; gap: 10px; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
 
-        .mockup-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .mockup-pill {
-            background: #1c1f26;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .mockup-balance {
-            font-size: 2.8rem;
-            font-weight: 800;
-            margin-bottom: 4px;
-        }
-
-        .mockup-profit {
-            color: var(--green-accent);
-            font-size: 0.9rem;
-            font-weight: 700;
-            margin-bottom: 25px;
-        }
-
-        .mockup-actions {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-bottom: 25px;
-        }
-
-        .action-item {
-            background: #1a1d24;
-            border: 1px solid #282c37;
-            padding: 12px;
-            border-radius: 14px;
-            text-align: center;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .action-item:hover {
-            background: #252934;
-        }
-
-        .action-item i {
-            font-size: 1.1rem;
-            margin-bottom: 6px;
-            color: var(--primary-orange);
-            display: block;
-        }
-
-        .action-item span {
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        /* Live Crypto Ticker */
-        .ticker-bar {
-            background: var(--bg-white);
-            border-y: 1px solid var(--border-color);
-            padding: 12px 0;
-            display: flex;
-            gap: 30px;
-            overflow-x: auto;
-            white-space: nowrap;
-            margin-bottom: 60px;
-        }
-
-        .ticker-item {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 6px 16px;
-            background: var(--bg-light);
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 700;
-        }
-
-        /* Feature Cards Grid */
-        .features-section {
-            max-width: 1300px;
-            margin: 0 auto 80px auto;
-            padding: 0 5%;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 900;
-            margin-bottom: 40px;
-        }
-
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
-        }
-
-        .card {
-            border-radius: 20px;
-            padding: 25px;
-            min-height: 280px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.2s;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card-1 { background: #e0f2fe; color: #0369a1; }
-        .card-2 { background: #fef3c7; color: #b45309; }
-        .card-3 { background: #fce7f3; color: #be185d; }
-        .card-4 { background: #dcfce7; color: #15803d; }
-
-        .card-title {
-            font-size: 1.6rem;
-            font-weight: 800;
-            margin-bottom: 10px;
-        }
-
-        .card-desc {
-            font-size: 0.9rem;
-            opacity: 0.85;
-            line-height: 1.4;
-        }
-
-        footer {
-            background: #000;
-            color: #888;
-            padding: 40px 5%;
-            text-align: center;
-            font-size: 0.85rem;
-        }
-
-        @media (max-width: 900px) {
-            .hero {
-                flex-direction: column;
-                text-align: center;
-            }
-            .hero-title {
-                font-size: 2.8rem;
-            }
-            .nav-links {
-                display: none;
-            }
+        @media(max-width: 900px) {
+            .hero { flex-direction: column; text-align: center; }
+            .hero-title { font-size: 3rem; }
+            .nav-links { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Top Announcement Banner -->
     <div class="top-banner">
-        <span>NOUVEAU</span> Achetez & Vendez vos cryptos sans frais élevés directement depuis TrendAI Crypto Pro Max !
+        <span>Nouveau</span> Tradez n’importe quoi, gagnez plus avec les moteurs autonomes TrendAI !
     </div>
 
-    <!-- Main Navigation Bar -->
     <nav class="navbar">
-        <a href="#" class="brand-logo">
+        <a href="#" class="brand">
             <div class="brand-icon"><i class="fas fa-brain"></i></div>
             TrendAI
         </a>
-
         <ul class="nav-links">
-            <li><a href="#features">Fonctionnalités</a></li>
-            <li><a href="#rewards">Récompenses</a></li>
-            <li><a href="#swap">Échanger</a></li>
-            <li><a href="#ai">Secteur AI</a></li>
+            <li><a href="#">Fonctionnalités</a></li>
+            <li><a href="#">Récompenses</a></li>
+            <li><a href="#">Échanger</a></li>
+            <li><a href="#">Secteur AI</a></li>
         </ul>
-
-        <button class="btn-connect" onclick="connectWallet()">
-            <i class="fas fa-wallet"></i> <span id="btnText">Commencer</span>
-        </button>
+        <button class="btn-commencer" onclick="connectWeb3()">Commencer</button>
     </nav>
 
-    <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-text">
+        <div class="hero-content">
             <h1 class="hero-title">Tradez n’importe quoi. Gagnez plus.</h1>
-            <p class="hero-subtitle">L'application crypto à détention en propre où votre argent travaille en permanence pendant que vous tradez, envoyez et dépensez.</p>
-            <button class="btn-connect" style="padding: 16px 36px; font-size: 1rem;" onclick="connectWallet()">Commencer</button>
+            <p class="hero-desc">L'application crypto à détention en propre où votre argent travaille en permanence pendant que vous tradez, envoyez et dépensez en toute autonomie.</p>
+            <button class="btn-commencer" style="padding: 16px 36px; font-size: 1rem;" onclick="connectWeb3()">Commencer</button>
         </div>
 
-        <!-- TrendAI Interactive App Mockup -->
-        <div class="app-mockup">
-            <div class="mockup-header">
-                <div class="mockup-pill">Main <i class="fas fa-chevron-down" style="font-size:0.7rem;"></i></div>
-                <div style="display:flex; gap:12px; color:#888;">
-                    <i class="fas fa-clock"></i>
-                    <i class="fas fa-search"></i>
-                    <i class="fas fa-bars"></i>
+        <div class="hero-mockup-wrapper">
+            <div class="mm-card">
+                <div class="mm-header">
+                    <div class="mm-pill">Main <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i></div>
+                    <div style="display: flex; gap: 14px; color: #888;">
+                        <i class="fas fa-clock"></i>
+                        <i class="fas fa-search"></i>
+                        <i class="fas fa-bars"></i>
+                    </div>
                 </div>
-            </div>
 
-            <div class="mockup-balance">10 000,00 $</div>
-            <div class="mockup-profit">+500,00 $ (+5 %)</div>
+                <div class="mm-balance" id="displayBal">10 000,00 $</div>
+                <div class="mm-subbalance">+500,00 $ (+5 %) • AI Active</div>
 
-            <div class="mockup-actions">
-                <div class="action-item" onclick="alert('Option d\'achat activée')">
-                    <i class="fas fa-dollar-sign"></i>
-                    <span>Achat</span>
+                <div class="mm-actions">
+                    <div class="mm-act-btn" onclick="alert('Module d\'achat instantané')">
+                        <i class="fas fa-dollar-sign"></i>
+                        <span>Achat</span>
+                    </div>
+                    <div class="mm-act-btn" onclick="alert('Swap intelligent actif')">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>Échanger</span>
+                    </div>
+                    <div class="mm-act-btn" onclick="sendTransaction()">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>Envoyer</span>
+                    </div>
+                    <div class="mm-act-btn" onclick="alert('Adresse Web3 générée')">
+                        <i class="fas fa-wallet"></i>
+                        <span>Recevoir</span>
+                    </div>
                 </div>
-                <div class="action-item" onclick="alert('Trading Bot Actif 24/7')">
-                    <i class="fas fa-exchange-alt"></i>
-                    <span>Échanger</span>
-                </div>
-                <div class="action-item" onclick="sendCrypto()">
-                    <i class="fas fa-paper-plane"></i>
-                    <span>Envoyer</span>
-                </div>
-                <div class="action-item" onclick="alert('Adresse de dépôt générée')">
-                    <i class="fas fa-qrcode"></i>
-                    <span>Recevoir</span>
-                </div>
-            </div>
 
-            <!-- Token Balances inside Mockup -->
-            <div style="background: #14171f; border-radius: 16px; padding: 15px;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:0.9rem;">
-                    <span>Compte Money • mUSD</span>
-                    <span style="color:var(--green-accent)">RMP de 6 %</span>
-                </div>
-                <div style="display:flex; justify-content:space-between; font-weight:700;">
-                    <span>Bitcoin (BTC)</span>
-                    <span>11 960,00 $</span>
-                </div>
-                <div style="display:flex; justify-content:space-between; font-weight:700; margin-top:8px;">
-                    <span>Ethereum (ETH)</span>
-                    <span>5 500,00 $</span>
+                <div style="background: #141824; padding: 14px; border-radius: 14px; font-size: 0.85rem;">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:6px; color:#aaa;">
+                        <span>Compte Money • mUSD</span>
+                        <span style="color:#10b981;">RMP 6%</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; font-weight:700;">
+                        <span>Bitcoin (Bot BTC)</span>
+                        <span>11 960,00 $</span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Crypto Live Price Ticker -->
-    <div class="ticker-bar">
-        <div class="ticker-item"><span>Solana SOL</span> <span style="color:red">-3.61%</span> <span>104,451 $</span></div>
-        <div class="ticker-item"><span>NVIDIA Stock</span> <span style="color:red">-3.24%</span> <span>213,33 $</span></div>
-        <div class="ticker-item"><span>Ethereum ETH</span> <span style="color:green">+4.58%</span> <span>2 394,73 $</span></div>
-        <div class="ticker-item"><span>Bitcoin BTC</span> <span style="color:green">+2.10%</span> <span>68 250,00 $</span></div>
-        <div class="ticker-item"><span>TrendAI TAI</span> <span style="color:green">+12.4%</span> <span>1.25 $</span></div>
+    <div class="ticker-section">
+        <div class="ticker-card"><span>Solana SOL</span> <span style="color:red">-3.6%</span> <span>104.45 $</span></div>
+        <div class="ticker-card"><span>Ethereum ETH</span> <span style="color:green">+4.5%</span> <span>2,394 $</span></div>
+        <div class="ticker-card"><span>Bitcoin BTC</span> <span style="color:green">+2.1%</span> <span>68,250 $</span></div>
+        <div class="ticker-card"><span>TrendAI TAI</span> <span style="color:green">+12.4%</span> <span>1.25 $</span></div>
     </div>
 
-    <!-- Feature Cards Grid -->
-    <section class="features-section" id="features">
-        <h2 class="section-title">Des millions de façons de trader</h2>
-        
-        <div class="cards-grid">
-            <div class="card card-1">
-                <div>
-                    <div class="card-title">Perps</div>
-                    <p class="card-desc">Prenez des positions longues ou courtes sur plus de 270 actifs avec un effet de levier jusqu'à 50x.</p>
-                </div>
-                <i class="fas fa-chart-line" style="font-size: 2.5rem;"></i>
-            </div>
-
-            <div class="card card-2">
-                <div>
-                    <div class="card-title">Prédictions AI</div>
-                    <p class="card-desc">Prédisez le résultat d'événements financiers et de marché grâce au moteur TrendAI Pro.</p>
-                </div>
-                <i class="fas fa-robot" style="font-size: 2.5rem;"></i>
-            </div>
-
-            <div class="card card-3">
-                <div>
-                    <div class="card-title">Actions Tokenisées</div>
-                    <p class="card-desc">Investissez dans plus de 1 000 actions tokenisées, matières premières et ETF.</p>
-                </div>
-                <i class="fas fa-globe" style="font-size: 2.5rem;"></i>
-            </div>
-
-            <div class="card card-4">
-                <div>
-                    <div class="card-title">Swaps L2</div>
-                    <p class="card-desc">Tradez plus de 100 000 actifs sur les principaux réseaux avec les meilleurs frais.</p>
-                </div>
-                <i class="fas fa-sync" style="font-size: 2.5rem;"></i>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2026 TrendAI Crypto Pro Max | Tous droits réservés.</p>
-    </footer>
-
     <script>
-        async function connectWallet() {
+        async function connectWeb3() {
             if (typeof window.ethereum !== 'undefined') {
                 try {
                     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                    const account = accounts[0];
-                    const shortAddr = account.substring(0, 6) + '...' + account.substring(account.length - 4);
-                    document.getElementById('btnText').innerText = shortAddr;
-                    alert('Wallet connecté : ' + account);
-                } catch (error) {
-                    console.error("Erreur de connexion", error);
-                }
+                    const acc = accounts[0].substring(0, 6) + '...' + accounts[0].substring(38);
+                    document.querySelector('.btn-commencer').innerText = acc;
+                    alert('Connecté avec succès : ' + accounts[0]);
+                } catch(e) { console.error(e); }
             } else {
-                alert("Veuillez installer MetaMask ou une extension Web3 !");
+                alert('Veuillez installer une extension Web3 compatible !');
             }
         }
 
-        function sendCrypto() {
-            const recipient = prompt("Entrez l'adresse du destinataire :");
-            const amount = prompt("Entrez le montant :");
-            if(recipient && amount) {
-                alert(`Transaction envoyée : ${amount} vers ${recipient}`);
-            }
+        function sendTransaction() {
+            const dest = prompt("Entrez l'adresse de destination :");
+            const amt = prompt("Montant :");
+            if(dest && amt) alert(`Envoyé ${amt} avec succès.`);
         }
     </script>
 </body>
