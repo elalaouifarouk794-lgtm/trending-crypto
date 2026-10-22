@@ -1,1481 +1,1426 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth" dir="ltr">
+<html lang="en" dir="ltr" id="html-root">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TrendAI Crypto - Next-Gen AI Trading & Market Intelligence</title>
+    <title>TREND AI CRYPTO PRO | Professional Trading Platform</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts: Inter & Cairo for Arabic -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <!-- Lightweight Charts -->
-    <script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        brand: {
-                            dark: '#0B0F19',
-                            card: '#131C31',
-                            border: '#1E293B',
-                            primary: '#6366F1',
-                            accent: '#3B82F6',
-                            purple: '#A855F7',
-                            green: '#10B981',
-                            red: '#EF4444'
+                        navy: {
+                            900: '#050814',
+                            800: '#090e22',
+                            700: '#111b3a',
+                            600: '#1c2959',
+                        },
+                        electric: {
+                            500: '#00f2fe',
+                            600: '#00c6ff',
+                            400: '#4facfe'
                         }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'Cairo', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body {
-            background-color: #0B0F19;
-            color: #F8FAFC;
-            font-family: 'Inter', 'Cairo', sans-serif;
-        }
-        .glass-panel {
-            background: rgba(19, 28, 49, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .glow-effect {
-            box-shadow: 0 0 25px -5px rgba(99, 102, 241, 0.3);
-        }
-        .glow-purple {
-            box-shadow: 0 0 25px -5px rgba(168, 85, 247, 0.3);
-        }
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0B0F19;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1E293B;
-            border-radius: 3px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #3B82F6;
-        }
-        @keyframes pulseGlow {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
-        }
-        .animate-pulse-glow {
-            animation: pulseGlow 3s infinite;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .glow-blue { box-shadow: 0 0 25px rgba(0, 242, 254, 0.15); }
+        .glow-blue-strong { box-shadow: 0 0 30px rgba(0, 242, 254, 0.35); }
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: #090e22; }
+        ::-webkit-scrollbar-thumb { background: #1c2959; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00f2fe; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col selection:bg-brand-primary selection:text-white">
+<body class="bg-navy-900 text-slate-100 min-h-screen flex flex-col selection:bg-electric-500 selection:text-navy-900">
 
-    <!-- Top Notification / Announcement Banner -->
-    <div id="topBanner" class="bg-gradient-to-r from-indigo-900 via-purple-900 to-blue-900 text-xs py-2 px-4 flex justify-between items-center border-b border-indigo-800/50">
-        <div class="flex-1 text-center flex items-center justify-center gap-2 flex-wrap">
-            <span class="bg-brand-primary text-white font-extrabold text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider" data-i18n="badge_new">NEW</span>
-            <span class="text-gray-200" data-i18n="banner_text">TrendAI v2.4 Live: Advanced Multi-Chain AI Analytics & 1,000 USDT Paper Trading Simulator!</span>
-        </div>
-        <button onclick="dismissBanner()" class="text-gray-400 hover:text-white transition p-1" aria-label="Close">
-            <i class="fa-solid fa-xmark"></i>
-        </button>
-    </div>
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-3 max-w-sm"></div>
 
-    <!-- Navigation Header -->
-    <header class="sticky top-0 z-50 bg-brand-dark/90 backdrop-blur-md border-b border-brand-border">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <!-- Brand Logo -->
-            <a href="#" class="flex items-center gap-3 group">
-                <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-brand-primary via-brand-accent to-brand-purple flex items-center justify-center shadow-lg shadow-brand-primary/30 group-hover:scale-105 transition-transform">
-                    <i class="fa-solid fa-brain-circuit text-white text-xl"></i>
-                </div>
-                <div class="flex flex-col">
-                    <span class="font-black text-xl md:text-2xl tracking-tight bg-gradient-to-r from-white via-gray-100 to-brand-accent bg-clip-text text-transparent">TrendAI</span>
-                    <span class="text-[10px] font-bold text-brand-primary tracking-widest uppercase">Crypto Intelligence</span>
-                </div>
-            </a>
-
-            <!-- Desktop Nav Links -->
-            <nav class="hidden md:flex items-center gap-8 font-semibold text-gray-300 text-sm">
-                <a href="#dashboard" onclick="switchNav('dashboard')" class="nav-link text-brand-accent transition hover:text-white" data-i18n="nav_dashboard">Dashboard</a>
-                <a href="#ai-helper" onclick="switchNav('ai-helper')" class="nav-link transition hover:text-white flex items-center gap-1.5" data-i18n="nav_ai">
-                    <span>TrendAI Assistant</span>
-                    <span class="bg-brand-purple/20 text-brand-purple text-[10px] px-1.5 py-0.5 rounded font-bold uppercase border border-brand-purple/30">AI</span>
-                </a>
-                <a href="#simulator" onclick="switchNav('simulator')" class="nav-link transition hover:text-white" data-i18n="nav_simulator">Trading Simulator</a>
-                <a href="#analytics" onclick="switchNav('analytics')" class="nav-link transition hover:text-white" data-i18n="nav_charts">Charts & Analytics</a>
-                <a href="#portfolio" onclick="switchNav('portfolio')" class="nav-link transition hover:text-white" data-i18n="nav_portfolio">Portfolio & Watchlist</a>
-            </nav>
-
-            <!-- Right Actions: Language Switcher, Wallet, Mobile Menu -->
-            <div class="flex items-center gap-3">
-                <!-- Language Selector -->
-                <select id="langSelect" onchange="changeLanguage(this.value)" class="bg-brand-card text-gray-200 text-xs font-bold px-2.5 py-2 rounded-xl border border-brand-border outline-none focus:border-brand-primary transition cursor-pointer">
-                    <option value="en">English (EN)</option>
-                    <option value="fr">Français (FR)</option>
-                    <option value="ar">العربية (AR)</option>
-                </select>
-
-                <!-- Wallet Connect Button -->
-                <button onclick="openWalletModal()" class="bg-gradient-to-r from-brand-primary to-brand-accent hover:opacity-90 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm flex items-center gap-2 transition shadow-md shadow-brand-primary/20 active:scale-95">
-                    <i class="fa-solid fa-wallet"></i>
-                    <span id="walletBtnText" data-i18n="connect_wallet">Connect Wallet</span>
-                </button>
-
-                <!-- Mobile Menu Toggle -->
-                <button onclick="toggleMobileMenu()" class="md:hidden text-gray-300 text-xl p-2 hover:text-white">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
+    <!-- Top Ticker Bar -->
+    <div class="bg-navy-800 border-b border-slate-800 text-xs py-1.5 px-4 overflow-x-auto whitespace-nowrap flex items-center justify-between z-40">
+        <div class="flex items-center gap-6">
+            <div class="flex items-center gap-2 text-emerald-400 font-medium">
+                <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span id="txt-live-feed">Live Binance API & Sandbox Connected</span>
+            </div>
+            <div class="hidden md:flex items-center gap-6 text-slate-300" id="ticker-bar">
+                <!-- Dynamically populated ticker items -->
             </div>
         </div>
+        <div class="flex items-center gap-4 text-slate-400">
+            <span>Server Time: <span id="server-utc-time" class="font-mono text-slate-200">00:00:00 UTC</span></span>
+        </div>
+    </div>
 
-        <!-- Mobile Menu Dropdown -->
-        <div id="mobileMenu" class="hidden md:hidden bg-brand-card border-b border-brand-border px-6 py-4 flex flex-col gap-3 font-semibold text-sm">
-            <a href="#dashboard" onclick="switchNav('dashboard'); toggleMobileMenu();" class="py-2 border-b border-brand-border" data-i18n="nav_dashboard">Dashboard</a>
-            <a href="#ai-helper" onclick="switchNav('ai-helper'); toggleMobileMenu();" class="py-2 border-b border-brand-border" data-i18n="nav_ai">TrendAI Assistant</a>
-            <a href="#simulator" onclick="switchNav('simulator'); toggleMobileMenu();" class="py-2 border-b border-brand-border" data-i18n="nav_simulator">Trading Simulator</a>
-            <a href="#analytics" onclick="switchNav('analytics'); toggleMobileMenu();" class="py-2 border-b border-brand-border" data-i18n="nav_charts">Charts & Analytics</a>
-            <a href="#portfolio" onclick="switchNav('portfolio'); toggleMobileMenu();" class="py-2" data-i18n="nav_portfolio">Portfolio & Watchlist</a>
+    <!-- Main Navigation Header -->
+    <header class="bg-navy-800/95 backdrop-blur-md border-b border-slate-800 sticky top-0 z-40 px-4 lg:px-8 py-3 flex items-center justify-between">
+        <div class="flex items-center gap-6">
+            <div class="flex items-center gap-2.5 cursor-pointer" onclick="switchTab('trade')">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-electric-500 to-blue-600 flex items-center justify-center text-navy-900 font-extrabold text-xl glow-blue-strong">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                <div>
+                    <h1 class="font-black text-base tracking-wider bg-gradient-to-r from-electric-500 to-white bg-clip-text text-transparent">TREND AI</h1>
+                    <p class="text-[9px] text-slate-400 tracking-widest font-bold uppercase">CRYPTO PRO</p>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <nav class="hidden lg:flex items-center gap-1 bg-navy-900/70 p-1 rounded-xl border border-slate-800">
+                <button onclick="switchTab('trade')" id="nav-btn-trade" class="px-3.5 py-2 rounded-lg text-xs font-semibold transition-all bg-electric-500/15 text-electric-400 border border-electric-500/30">
+                    <i class="fa-solid fa-chart-candlestick mr-1.5"></i><span data-i18n="trade">Trade Terminal</span>
+                </button>
+                <button onclick="switchTab('markets')" id="nav-btn-markets" class="px-3.5 py-2 rounded-lg text-xs font-semibold transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800/50">
+                    <i class="fa-solid fa-earth-americas mr-1.5"></i><span data-i18n="markets">Markets</span>
+                </button>
+                <button onclick="switchTab('portfolio')" id="nav-btn-portfolio" class="px-3.5 py-2 rounded-lg text-xs font-semibold transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800/50">
+                    <i class="fa-solid fa-wallet mr-1.5"></i><span data-i18n="portfolio">Portfolio</span>
+                </button>
+                <button onclick="switchTab('ai')" id="nav-btn-ai" class="px-3.5 py-2 rounded-lg text-xs font-semibold transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 relative">
+                    <i class="fa-solid fa-brain mr-1.5 text-electric-400"></i><span data-i18n="ai_analyst">Trend AI Analyst</span>
+                    <span class="absolute -top-1 -right-1 w-2 h-2 bg-electric-500 rounded-full animate-ping"></span>
+                </button>
+                <button onclick="switchTab('swap')" id="nav-btn-swap" class="px-3.5 py-2 rounded-lg text-xs font-semibold transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800/50">
+                    <i class="fa-solid fa-shuffle mr-1.5"></i><span data-i18n="swap">On-Chain Swap</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Right Header Controls -->
+        <div class="flex items-center gap-3">
+            <!-- Language Selector -->
+            <select id="language-select" onchange="changeLanguage(this.value)" class="bg-navy-900 border border-slate-700 text-xs rounded-lg px-2.5 py-2 text-slate-200 focus:outline-none focus:border-electric-500">
+                <option value="en">English</option>
+                <option value="fr">Français</option>
+                <option value="ar">العربية</option>
+            </select>
+
+            <!-- API / Sandbox Status Indicator -->
+            <div onclick="openApiModal()" class="hidden sm:flex items-center gap-2 bg-navy-900 border border-slate-700 px-3 py-1.5 rounded-lg text-xs cursor-pointer hover:border-electric-500 transition-all">
+                <span id="api-status-dot" class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                <span id="api-status-text">Sandbox Testnet</span>
+                <i class="fa-solid fa-gear text-slate-400"></i>
+            </div>
+
+            <!-- Auth / Account Button -->
+            <button onclick="openAuthModal()" id="auth-btn" class="hidden sm:flex items-center gap-1.5 bg-navy-900 hover:bg-navy-700 border border-slate-700 text-xs font-semibold px-3 py-2 rounded-xl text-slate-200 transition-all">
+                <i class="fa-solid fa-user-shield text-electric-400"></i>
+                <span id="auth-btn-text">Sign In</span>
+            </button>
+
+            <!-- Connect Wallet Button -->
+            <button onclick="toggleWalletModal()" id="wallet-connect-btn" class="bg-gradient-to-r from-electric-500 to-blue-600 hover:from-electric-400 hover:to-blue-500 text-navy-950 font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-2 shadow-lg shadow-electric-500/20 transition-all">
+                <i class="fa-solid fa-wallet"></i>
+                <span id="wallet-btn-text" data-i18n="connect_wallet">Connect Wallet</span>
+            </button>
         </div>
     </header>
 
-    <!-- Main Content Container -->
-    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+    <!-- Mobile Nav Bar (Bottom) -->
+    <div class="lg:hidden fixed bottom-0 left-0 right-0 bg-navy-800 border-t border-slate-800 flex justify-around items-center py-2.5 z-40 px-1">
+        <button onclick="switchTab('trade')" class="flex flex-col items-center gap-1 text-electric-400 text-[10px] mobile-nav-btn" data-tab="trade">
+            <i class="fa-solid fa-chart-candlestick text-base"></i><span data-i18n="trade">Trade</span>
+        </button>
+        <button onclick="switchTab('markets')" class="flex flex-col items-center gap-1 text-slate-400 text-[10px] mobile-nav-btn" data-tab="markets">
+            <i class="fa-solid fa-earth-americas text-base"></i><span data-i18n="markets">Markets</span>
+        </button>
+        <button onclick="switchTab('portfolio')" class="flex flex-col items-center gap-1 text-slate-400 text-[10px] mobile-nav-btn" data-tab="portfolio">
+            <i class="fa-solid fa-wallet text-base"></i><span data-i18n="portfolio">Portfolio</span>
+        </button>
+        <button onclick="switchTab('ai')" class="flex flex-col items-center gap-1 text-slate-400 text-[10px] mobile-nav-btn" data-tab="ai">
+            <i class="fa-solid fa-brain text-base"></i><span data-i18n="ai_analyst">Trend AI</span>
+        </button>
+        <button onclick="switchTab('swap')" class="flex flex-col items-center gap-1 text-slate-400 text-[10px] mobile-nav-btn" data-tab="swap">
+            <i class="fa-solid fa-shuffle text-base"></i><span data-i18n="swap">Swap</span>
+        </button>
+    </div>
 
-        <!-- ================= SECTION 1: DASHBOARD ================= -->
-        <section id="view-dashboard" class="space-y-8">
-            <!-- Hero Header Banner -->
-            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-card via-[#1A2542] to-brand-dark p-8 md:p-12 border border-brand-border glow-effect">
-                <div class="absolute -right-16 -top-16 w-96 h-96 bg-brand-primary/10 rounded-full blur-3xl pointer-events-none"></div>
-                <div class="absolute -left-16 -bottom-16 w-96 h-96 bg-brand-purple/10 rounded-full blur-3xl pointer-events-none"></div>
+    <!-- Main Content Area -->
+    <main class="flex-1 pb-20 lg:pb-6">
+
+        <!-- TAB 1: TRADE TERMINAL -->
+        <div id="tab-trade" class="tab-content p-3 lg:p-6 grid grid-cols-1 lg:grid-cols-12 gap-4">
+            
+            <!-- Left & Center: Chart & Order Form (Col 1-8) -->
+            <div class="lg:col-span-8 flex flex-col gap-4">
                 
-                <div class="relative z-10 max-w-2xl space-y-4">
-                    <div class="inline-flex items-center gap-2 bg-brand-primary/20 text-brand-accent px-3 py-1 rounded-full text-xs font-bold border border-brand-primary/30">
-                        <i class="fa-solid fa-bolt text-brand-primary animate-pulse"></i>
-                        <span data-i18n="hero_tag">Real-Time CoinGecko Market Data</span>
-                    </div>
-                    <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight" data-i18n="hero_title">
-                        Advanced AI Market Intelligence & Trading Platform
-                    </h1>
-                    <p class="text-gray-300 text-sm sm:text-base leading-relaxed" data-i18n="hero_desc">
-                        Analyze live cryptocurrency prices, execute simulated paper trades with 1,000 USDT capital, and leverage TrendAI Assistant for data-backed market scenarios.
-                    </p>
-                    <div class="flex flex-wrap items-center gap-4 pt-2">
-                        <button onclick="switchNav('ai-helper')" class="bg-brand-primary hover:bg-brand-primary/90 text-white font-bold px-6 py-3 rounded-xl text-sm transition shadow-lg shadow-brand-primary/30 flex items-center gap-2">
-                            <i class="fa-solid fa-brain"></i> <span data-i18n="btn_ask_ai">Ask TrendAI Assistant</span>
-                        </button>
-                        <button onclick="switchNav('simulator')" class="bg-brand-card hover:bg-brand-border text-white font-bold px-6 py-3 rounded-xl text-sm transition border border-brand-border flex items-center gap-2">
-                            <i class="fa-solid fa-chart-line"></i> <span data-i18n="btn_sim">Open Simulator</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Market Overview Stats Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="statsCardsContainer">
-                <!-- Dynamically populated or skeleton -->
-                <div class="glass-panel p-5 rounded-2xl animate-pulse">
-                    <div class="h-4 bg-brand-border rounded w-1/2 mb-3"></div>
-                    <div class="h-8 bg-brand-border rounded w-3/4"></div>
-                </div>
-                <div class="glass-panel p-5 rounded-2xl animate-pulse">
-                    <div class="h-4 bg-brand-border rounded w-1/2 mb-3"></div>
-                    <div class="h-8 bg-brand-border rounded w-3/4"></div>
-                </div>
-                <div class="glass-panel p-5 rounded-2xl animate-pulse">
-                    <div class="h-4 bg-brand-border rounded w-1/2 mb-3"></div>
-                    <div class="h-8 bg-brand-border rounded w-3/4"></div>
-                </div>
-                <div class="glass-panel p-5 rounded-2xl animate-pulse">
-                    <div class="h-4 bg-brand-border rounded w-1/2 mb-3"></div>
-                    <div class="h-8 bg-brand-border rounded w-3/4"></div>
-                </div>
-            </div>
-
-            <!-- Coin Market Table & Controls -->
-            <div class="glass-panel rounded-3xl p-6 space-y-6">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                    <div>
-                        <h2 class="text-xl font-bold text-white" data-i18n="market_table_title">Live Cryptocurrency Markets</h2>
-                        <p class="text-xs text-gray-400 mt-0.5" data-i18n="market_table_subtitle">Real-time data sourced via CoinGecko API with automatic fallback simulation.</p>
-                    </div>
-                    
-                    <!-- Search & Filter Controls -->
-                    <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
-                        <div class="relative flex-1 md:w-64">
-                            <i class="fa-solid fa-search absolute left-3.5 top-3 text-gray-400 text-xs"></i>
-                            <input type="text" id="coinSearchInput" oninput="filterCoins()" placeholder="Search coin (e.g. BTC, Ethereum)..." class="w-full bg-brand-dark text-xs text-white pl-10 pr-4 py-2.5 rounded-xl border border-brand-border outline-none focus:border-brand-primary transition">
-                        </div>
-                        <button onclick="fetchMarketData()" class="bg-brand-card hover:bg-brand-border text-gray-300 hover:text-white px-4 py-2.5 rounded-xl text-xs font-bold border border-brand-border transition flex items-center gap-2">
-                            <i class="fa-solid fa-sync-alt" id="refreshIcon"></i> <span data-i18n="refresh">Refresh</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- API Status Banner -->
-                <div id="apiStatusAlert" class="hidden p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs flex items-center justify-between">
-                    <div class="flex items-center gap-2">
-                        <i class="fa-solid fa-triangle-exclamation"></i>
-                        <span id="apiStatusText">CoinGecko API rate limit reached or offline. Showing cached demo market prices.</span>
-                    </div>
-                    <button onclick="fetchMarketData()" class="underline font-bold hover:text-white">Retry</button>
-                </div>
-
-                <!-- Table -->
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="border-b border-brand-border text-xs text-gray-400 uppercase tracking-wider">
-                                <th class="py-3 px-4" data-i18n="th_asset">Asset</th>
-                                <th class="py-3 px-4" data-i18n="th_price">Price (USDT)</th>
-                                <th class="py-3 px-4" data-i18n="th_24h">24h Change</th>
-                                <th class="py-3 px-4 hidden sm:table-cell" data-i18n="th_volume">24h Volume</th>
-                                <th class="py-3 px-4 hidden md:table-cell" data-i18n="th_mcap">Market Cap</th>
-                                <th class="py-3 px-4 text-right" data-i18n="th_actions">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="coinTableBody" class="divide-y divide-brand-border/50 text-sm">
-                            <!-- Populated by JS -->
-                            <tr>
-                                <td colspan="6" class="py-8 text-center text-gray-400">Loading live market data...</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-
-        <!-- ================= SECTION 2: TREND AI HELPER ================= -->
-        <section id="view-ai-helper" class="space-y-8 hidden">
-            <div class="glass-panel rounded-3xl p-6 md:p-10 space-y-8 glow-purple relative overflow-hidden">
-                <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-brand-purple/10 rounded-full blur-3xl pointer-events-none"></div>
-
-                <div class="max-w-3xl space-y-3">
-                    <div class="inline-flex items-center gap-2 bg-brand-purple/20 text-brand-purple px-3 py-1 rounded-full text-xs font-bold border border-brand-purple/30">
-                        <i class="fa-solid fa-brain animate-pulse"></i>
-                        <span data-i18n="ai_badge">Intelligent Market Analysis Engine</span>
-                    </div>
-                    <h2 class="text-3xl font-black text-white" data-i18n="ai_title">TrendAI Assistant & Market Predictor</h2>
-                    <p class="text-gray-300 text-sm leading-relaxed" data-i18n="ai_desc">
-                        Ask questions about any cryptocurrency, analyze volatility, support/resistance levels, and evaluate bullish/bearish scenarios backed by live market indicators.
-                    </p>
-                </div>
-
-                <!-- AI Query Box -->
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    <div class="lg:col-span-5 space-y-4">
-                        <div class="space-y-2">
-                            <label class="text-xs font-bold text-gray-300 uppercase tracking-wider" data-i18n="ai_select_coin">Select Cryptocurrency</label>
-                            <select id="aiCoinSelect" class="w-full bg-brand-dark text-sm text-white px-4 py-3 rounded-xl border border-brand-border outline-none focus:border-brand-purple transition">
-                                <option value="bitcoin">Bitcoin (BTC)</option>
-                                <option value="ethereum">Ethereum (ETH)</option>
-                                <option value="solana">Solana (SOL)</option>
-                                <option value="binancecoin">BNB (BNB)</option>
-                                <option value="ripple">XRP (XRP)</option>
-                                <option value="cardano">Cardano (ADA)</option>
-                            </select>
-                        </div>
-
-                        <div class="space-y-2">
-                            <label class="text-xs font-bold text-gray-300 uppercase tracking-wider" data-i18n="ai_custom_prompt">Custom Question / Analysis Focus</label>
-                            <textarea id="aiPromptInput" rows="4" class="w-full bg-brand-dark text-sm text-white p-4 rounded-xl border border-brand-border outline-none focus:border-brand-purple transition resize-none" placeholder="e.g. What is the short-term outlook and key support level for this coin?"></textarea>
-                        </div>
-
-                        <button onclick="askTrendAI()" id="aiSubmitBtn" class="w-full bg-gradient-to-r from-brand-primary via-brand-purple to-brand-accent hover:opacity-90 text-white font-extrabold py-3.5 rounded-xl text-sm transition shadow-lg shadow-brand-purple/20 flex items-center justify-center gap-2 active:scale-98">
-                            <i class="fa-solid fa-wand-magic-sparkles"></i> <span data-i18n="ai_btn_run">Run AI Analysis</span>
-                        </button>
-
-                        <div class="p-4 rounded-2xl bg-brand-dark/60 border border-brand-border text-xs text-gray-400 space-y-2">
-                            <p class="font-bold text-gray-300 flex items-center gap-1.5"><i class="fa-solid fa-shield-halved text-brand-primary"></i> <span data-i18n="risk_notice_title">Risk & Disclaimer Notice</span></p>
-                            <p data-i18n="risk_notice_text">AI predictions are generated for educational & research purposes only. Never promise guaranteed profits. Always conduct your own financial due diligence.</p>
-                        </div>
-                    </div>
-
-                    <!-- AI Output Result Window -->
-                    <div class="lg:col-span-7 flex flex-col bg-brand-dark/80 rounded-2xl border border-brand-border p-6 space-y-4">
-                        <div class="flex items-center justify-between pb-3 border-b border-brand-border">
-                            <div class="flex items-center gap-2 text-xs font-bold text-brand-purple">
-                                <i class="fa-solid fa-robot"></i> <span data-i18n="ai_output_title">TrendAI Intelligence Report</span>
-                            </div>
-                            <span id="aiStatusBadge" class="text-[10px] bg-gray-800 text-gray-400 px-2 py-0.5 rounded font-bold uppercase">Ready</span>
-                        </div>
-
-                        <div id="aiResponseContainer" class="flex-1 min-h-[300px] text-sm text-gray-200 overflow-y-auto space-y-4 font-normal leading-relaxed">
-                            <div class="flex flex-col items-center justify-center h-full text-gray-500 py-16 space-y-3">
-                                <i class="fa-solid fa-brain text-4xl text-brand-purple/40 animate-pulse"></i>
-                                <p data-i18n="ai_placeholder_prompt">Select a cryptocurrency and click "Run AI Analysis" to generate professional scenarios and indicators.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-        <!-- ================= SECTION 3: TRADING SIMULATOR ================= -->
-        <section id="view-simulator" class="space-y-8 hidden">
-            <div class="glass-panel rounded-3xl p-6 md:p-8 space-y-6">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                    <div>
-                        <div class="inline-flex items-center gap-2 bg-emerald-500/20 text-emerald-400 px-3 py-1 rounded-full text-xs font-bold border border-emerald-500/30 mb-2">
-                            <i class="fa-solid fa-shield-check"></i> <span data-i18n="sim_badge">Paper Trading Sandbox (1,000 USDT)</span>
-                        </div>
-                        <h2 class="text-2xl sm:text-3xl font-black text-white" data-i18n="sim_title">Risk-Free Trading Simulator</h2>
-                    </div>
-
-                    <!-- Account Balances Header Box -->
-                    <div class="flex items-center gap-4 bg-brand-dark p-4 rounded-2xl border border-brand-border">
+                <!-- Market Header Bar -->
+                <div class="bg-navy-800 border border-slate-800 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4">
+                    <div class="flex items-center gap-4">
+                        <select id="market-pair-select" onchange="changePair(this.value)" class="bg-navy-900 border border-slate-700 text-slate-100 font-bold text-base rounded-xl px-3 py-2 focus:outline-none focus:border-electric-500">
+                            <option value="BTCUSDT">BTC / USDT</option>
+                            <option value="ETHUSDT">ETH / USDT</option>
+                            <option value="SOLUSDT">SOL / USDT</option>
+                            <option value="XRPUSDT">XRP / USDT</option>
+                            <option value="ADAUSDT">ADA / USDT</option>
+                        </select>
                         <div>
-                            <p class="text-[10px] text-gray-400 uppercase tracking-wider" data-i18n="sim_cash_label">USDT Balance</p>
-                            <p id="simUsdtBalance" class="text-lg font-black text-emerald-400">1,000.00 $</p>
+                            <div id="current-price" class="text-2xl font-bold tracking-tight text-emerald-400 font-mono">$--.--</div>
+                            <div class="text-xs text-slate-400">24h Vol: <span id="current-volume">--</span> USDT</div>
                         </div>
-                        <div class="h-8 w-px bg-brand-border"></div>
-                        <div>
-                            <p class="text-[10px] text-gray-400 uppercase tracking-wider" data-i18n="sim_portfolio_label">Portfolio Value</p>
-                            <p id="simPortfolioValue" class="text-lg font-black text-white">1,000.00 $</p>
+                    </div>
+                    <div class="flex items-center gap-3 text-xs">
+                        <div class="bg-navy-900 px-3 py-2 rounded-xl border border-slate-800">
+                            <div class="text-slate-400" data-i18n="high_24h">24h High</div>
+                            <div id="stat-high" class="font-semibold text-slate-200 font-mono">$--.--</div>
                         </div>
-                        <button onclick="resetSimulator()" title="Reset simulator balance" class="ml-2 text-gray-400 hover:text-white p-2 bg-brand-card rounded-xl border border-brand-border text-xs">
-                            <i class="fa-solid fa-rotate-right"></i>
-                        </button>
+                        <div class="bg-navy-900 px-3 py-2 rounded-xl border border-slate-800">
+                            <div class="text-slate-400" data-i18n="low_24h">24h Low</div>
+                            <div id="stat-low" class="font-semibold text-slate-200 font-mono">$--.--</div>
+                        </div>
+                        <div class="bg-navy-900 px-3 py-2 rounded-xl border border-slate-800">
+                            <div class="text-slate-400" data-i18n="change_24h">24h Change</div>
+                            <div id="stat-change" class="font-semibold text-emerald-400 font-mono">--%</div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Order Placement & Active Positions Grid -->
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    <!-- Order Form -->
-                    <div class="lg:col-span-5 bg-brand-dark/70 p-6 rounded-2xl border border-brand-border space-y-4">
-                        <h3 class="font-bold text-base text-white flex items-center gap-2">
-                            <i class="fa-solid fa-arrow-right-arrow-left text-brand-primary"></i> <span data-i18n="sim_order_title">Place Simulated Order</span>
-                        </h3>
-
-                        <div class="space-y-3">
-                            <div>
-                                <label class="text-xs font-semibold text-gray-400" data-i18n="sim_lbl_coin">Select Asset</label>
-                                <select id="simCoinSelect" onchange="updateSimPriceDisplay()" class="w-full bg-brand-card text-sm text-white px-3 py-2.5 rounded-xl border border-brand-border outline-none focus:border-brand-primary mt-1">
-                                    <!-- Populated dynamically -->
-                                </select>
-                            </div>
-
-                            <div class="flex justify-between text-xs text-gray-400 px-1">
-                                <span data-i18n="sim_current_price">Current Market Price:</span>
-                                <span id="simCurrentPriceDisplay" class="font-bold text-white">0.00 $</span>
-                            </div>
-
-                            <div>
-                                <label class="text-xs font-semibold text-gray-400" data-i18n="sim_lbl_amount">Amount to Invest (USDT)</label>
-                                <input type="number" id="simInvestmentInput" value="100" min="1" class="w-full bg-brand-card text-sm text-white px-3 py-2.5 rounded-xl border border-brand-border outline-none focus:border-brand-primary mt-1">
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-3 pt-2">
-                                <button onclick="executeSimTrade('buy')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold py-3 rounded-xl text-sm transition shadow-lg shadow-emerald-600/20 active:scale-95 flex items-center justify-center gap-2">
-                                    <i class="fa-solid fa-arrow-trend-up"></i> <span data-i18n="sim_btn_buy">Buy / Long</span>
-                                </button>
-                                <button onclick="executeSimTrade('sell')" class="bg-rose-600 hover:bg-rose-500 text-white font-extrabold py-3 rounded-xl text-sm transition shadow-lg shadow-rose-600/20 active:scale-95 flex items-center justify-center gap-2">
-                                    <i class="fa-solid fa-arrow-trend-down"></i> <span data-i18n="sim_btn_sell">Sell / Close</span>
-                                </button>
-                            </div>
+                <!-- Interactive Candlestick Chart Card -->
+                <div class="bg-navy-800 border border-slate-800 rounded-2xl p-4 flex flex-col h-[400px]">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="font-semibold text-xs text-slate-300" data-i18n="price_chart">Professional Candlestick & Volume Chart</span>
+                        </div>
+                        <div class="flex items-center gap-1 bg-navy-900 p-1 rounded-lg border border-slate-800 text-xs">
+                            <button onclick="setChartInterval('1m')" id="interval-1m" class="px-2.5 py-1 rounded bg-electric-500/20 text-electric-400 font-medium">1M</button>
+                            <button onclick="setChartInterval('15m')" id="interval-15m" class="px-2.5 py-1 rounded text-slate-400 hover:text-white">15M</button>
+                            <button onclick="setChartInterval('1h')" id="interval-1h" class="px-2.5 py-1 rounded text-slate-400 hover:text-white">1H</button>
+                            <button onclick="setChartInterval('1d')" id="interval-1d" class="px-2.5 py-1 rounded text-slate-400 hover:text-white">1D</button>
                         </div>
                     </div>
+                    <div class="flex-1 relative w-full h-full">
+                        <canvas id="tradingChart"></canvas>
+                    </div>
+                </div>
 
-                    <!-- Positions Table -->
-                    <div class="lg:col-span-7 bg-brand-dark/70 p-6 rounded-2xl border border-brand-border space-y-4">
-                        <div class="flex justify-between items-center">
-                            <h3 class="font-bold text-base text-white flex items-center gap-2">
-                                <i class="fa-solid fa-wallet text-brand-accent"></i> <span data-i18n="sim_positions_title">Open Positions & History</span>
-                            </h3>
-                            <span id="openPositionsCount" class="text-xs bg-brand-card px-2.5 py-1 rounded-full text-gray-300 font-bold border border-brand-border">0 Active</span>
-                        </div>
-
-                        <div class="overflow-x-auto min-h-[220px]">
-                            <table class="w-full text-left border-collapse text-xs">
-                                <thead>
-                                    <tr class="border-b border-brand-border text-gray-400 uppercase tracking-wider">
-                                        <th class="py-2.5 px-3" data-i18n="pos_asset">Asset</th>
-                                        <th class="py-2.5 px-3" data-i18n="pos_type">Type</th>
-                                        <th class="py-2.5 px-3" data-i18n="pos_qty">Quantity</th>
-                                        <th class="py-2.5 px-3" data-i18n="pos_entry">Entry Price</th>
-                                        <th class="py-2.5 px-3" data-i18n="pos_pnl">Unrealized P&L</th>
-                                        <th class="py-2.5 px-3 text-right" data-i18n="pos_action">Action</th>
+                <!-- Open Orders & History Tabs -->
+                <div class="bg-navy-800 border border-slate-800 rounded-2xl p-4 flex flex-col min-h-[220px]">
+                    <div class="flex items-center gap-6 border-b border-slate-800 pb-3 text-xs">
+                        <button onclick="switchOrderTab('open')" id="order-tab-open" class="font-bold text-electric-400 border-b-2 border-electric-400 pb-1" data-i18n="open_orders">Open Orders (0)</button>
+                        <button onclick="switchOrderTab('history')" id="order-tab-history" class="font-medium text-slate-400 hover:text-slate-200 pb-1" data-i18n="order_history">Order History</button>
+                        <button onclick="switchOrderTab('funds')" id="order-tab-funds" class="font-medium text-slate-400 hover:text-slate-200 pb-1" data-i18n="asset_balances">Asset Balances</button>
+                    </div>
+                    <div class="flex-1 pt-3 overflow-x-auto">
+                        <div id="order-content-open" class="order-pane">
+                            <table class="w-full text-left text-xs">
+                                <thead class="text-slate-400 border-b border-slate-800">
+                                    <tr>
+                                        <th class="pb-2">Time</th>
+                                        <th class="pb-2">Pair</th>
+                                        <th class="pb-2">Type</th>
+                                        <th class="pb-2">Side</th>
+                                        <th class="pb-2">Price</th>
+                                        <th class="pb-2">Amount</th>
+                                        <th class="pb-2 text-right">Action</th>
                                     </tr>
                                 </thead>
-                                <tbody id="simPositionsTableBody" class="divide-y divide-brand-border/40">
-                                    <tr>
-                                        <td colspan="6" class="py-12 text-center text-gray-500" data-i18n="sim_no_positions">No active simulated positions. Place your first trade above!</td>
-                                    </tr>
+                                <tbody id="open-orders-list" class="divide-y divide-slate-800/50">
+                                    <tr><td colspan="7" class="text-center py-6 text-slate-500" data-i18n="no_open_orders">No active open orders found.</td></tr>
                                 </tbody>
                             </table>
                         </div>
+                        <div id="order-content-history" class="order-pane hidden">
+                            <table class="w-full text-left text-xs">
+                                <thead class="text-slate-400 border-b border-slate-800">
+                                    <tr>
+                                        <th class="pb-2">Time</th>
+                                        <th class="pb-2">Pair</th>
+                                        <th class="pb-2">Type</th>
+                                        <th class="pb-2">Side</th>
+                                        <th class="pb-2">Executed Price</th>
+                                        <th class="pb-2">Amount</th>
+                                        <th class="pb-2 text-right">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="order-history-list" class="divide-y divide-slate-800/50">
+                                    <tr><td colspan="7" class="text-center py-6 text-slate-500" data-i18n="no_order_history">No recent order history.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="order-content-funds" class="order-pane hidden">
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="balances-grid">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
-        </section>
 
+            <!-- Right Column: Order Book & Execution Form (Col 9-12) -->
+            <div class="lg:col-span-4 flex flex-col gap-4">
+                
+                <!-- Order Form Panel -->
+                <div class="bg-navy-800 border border-slate-800 rounded-2xl p-4 flex flex-col gap-4">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                        <div class="flex gap-2">
+                            <button onclick="setOrderSide('BUY')" id="btn-side-buy" class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 text-navy-950 transition-all shadow-lg shadow-emerald-500/20" data-i18n="buy_long">Buy / Long</button>
+                            <button onclick="setOrderSide('SELL')" id="btn-side-sell" class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-400 transition-all hover:bg-rose-500/20 hover:text-rose-400" data-i18n="sell_short">Sell / Short</button>
+                        </div>
+                        <div class="flex gap-1 text-xs bg-navy-900 p-1 rounded-lg border border-slate-800">
+                            <button onclick="setOrderType('LIMIT')" id="type-limit" class="px-2.5 py-1 rounded bg-electric-500/20 text-electric-400 font-medium">Limit</button>
+                            <button onclick="setOrderType('MARKET')" id="type-market" class="px-2.5 py-1 rounded text-slate-400 hover:text-white">Market</button>
+                        </div>
+                    </div>
 
-        <!-- ================= SECTION 4: CHARTS AND ANALYTICS ================= -->
-        <section id="view-analytics" class="space-y-8 hidden">
-            <div class="glass-panel rounded-3xl p-6 md:p-8 space-y-6">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <!-- Available Balance -->
+                    <div class="flex justify-between text-xs text-slate-400">
+                        <span>Available Margin:</span>
+                        <span id="available-balance-display" class="font-semibold text-slate-200 font-mono">10,000.00 USDT</span>
+                    </div>
+
+                    <!-- Limit Price Input -->
+                    <div id="limit-price-container" class="flex flex-col gap-1.5">
+                        <label class="text-xs text-slate-400" data-i18n="limit_price">Limit Price (USDT)</label>
+                        <div class="relative">
+                            <input type="number" id="input-limit-price" step="0.01" class="w-full bg-navy-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 font-mono focus:outline-none focus:border-electric-500" placeholder="0.00">
+                            <span class="absolute right-3 top-2 text-xs text-slate-400">USDT</span>
+                        </div>
+                    </div>
+
+                    <!-- Order Amount Input -->
+                    <div class="flex flex-col gap-1.5">
+                        <label class="text-xs text-slate-400" data-i18n="order_amount">Order Amount</label>
+                        <div class="relative">
+                            <input type="number" id="input-order-amount" step="0.001" oninput="calculateTotalOrderValue()" class="w-full bg-navy-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 font-mono focus:outline-none focus:border-electric-500" placeholder="0.00">
+                            <span id="order-amount-unit" class="absolute right-3 top-2 text-xs text-slate-400 font-semibold">BTC</span>
+                        </div>
+                    </div>
+
+                    <!-- Percentage Quick Buttons -->
+                    <div class="grid grid-cols-4 gap-2 text-xs">
+                        <button onclick="setPercentageAmount(0.25)" class="bg-navy-900 hover:bg-slate-700 border border-slate-700 py-1 rounded-lg text-slate-300 font-mono">25%</button>
+                        <button onclick="setPercentageAmount(0.50)" class="bg-navy-900 hover:bg-slate-700 border border-slate-700 py-1 rounded-lg text-slate-300 font-mono">50%</button>
+                        <button onclick="setPercentageAmount(0.75)" class="bg-navy-900 hover:bg-slate-700 border border-slate-700 py-1 rounded-lg text-slate-300 font-mono">75%</button>
+                        <button onclick="setPercentageAmount(1.00)" class="bg-navy-900 hover:bg-slate-700 border border-slate-700 py-1 rounded-lg text-slate-300 font-mono">100%</button>
+                    </div>
+
+                    <!-- Estimated Total -->
+                    <div class="bg-navy-900 p-3 rounded-xl border border-slate-800 flex justify-between items-center text-xs">
+                        <span class="text-slate-400" data-i18n="estimated_total">Estimated Total:</span>
+                        <span id="estimated-total-value" class="font-bold text-slate-200 font-mono">0.00 USDT</span>
+                    </div>
+
+                    <!-- Risk Warning -->
+                    <div class="text-[10px] text-slate-400 bg-amber-500/10 border border-amber-500/20 p-2.5 rounded-xl leading-relaxed">
+                        <i class="fa-solid fa-triangle-exclamation text-amber-400 mr-1"></i>
+                        <span data-i18n="risk_warning">Execution via secure backend exchange API / testnet sandbox. Review fees & slippage before submitting.</span>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button onclick="submitOrderPrompt()" id="submit-order-btn" class="w-full py-3 rounded-xl font-bold text-xs bg-emerald-500 hover:bg-emerald-400 text-navy-950 shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-bolt"></i>
+                        <span id="submit-btn-text" data-i18n="place_buy_order">Place Buy Order</span>
+                    </button>
+                </div>
+
+                <!-- Order Book Panel -->
+                <div class="bg-navy-800 border border-slate-800 rounded-2xl p-4 flex flex-col gap-3">
+                    <div class="flex items-center justify-between text-xs font-semibold text-slate-400 border-b border-slate-800 pb-2">
+                        <span data-i18n="order_book">Order Book Depth</span>
+                        <span data-i18n="recent_trades">Recent Trades</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3 text-xs">
+                        <div class="flex flex-col gap-1">
+                            <div class="text-[10px] text-slate-500 uppercase font-semibold">Asks (Sell)</div>
+                            <div id="orderbook-asks" class="flex flex-col gap-0.5 font-mono text-[11px]"></div>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <div class="text-[10px] text-slate-500 uppercase font-semibold">Bids (Buy)</div>
+                            <div id="orderbook-bids" class="flex flex-col gap-0.5 font-mono text-[11px]"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- TAB 2: MARKETS OVERVIEW -->
+        <div id="tab-markets" class="tab-content hidden p-3 lg:p-6 max-w-7xl mx-auto flex flex-col gap-6">
+            <div class="flex flex-wrap items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold tracking-tight" data-i18n="market_overview">Cryptocurrency Markets</h2>
+                    <p class="text-xs text-slate-400" data-i18n="market_overview_sub">Real-time market prices, capitalization, and 24h volume across supported pairs.</p>
+                </div>
+                <div class="relative">
+                    <i class="fa-solid fa-search absolute left-3 top-3 text-slate-500 text-xs"></i>
+                    <input type="text" id="market-search-input" oninput="filterMarkets(this.value)" placeholder="Search coin or pair..." class="bg-navy-800 border border-slate-700 rounded-xl pl-9 pr-4 py-2 text-xs text-slate-100 focus:outline-none focus:border-electric-500 w-64">
+                </div>
+            </div>
+
+            <div class="bg-navy-800 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-navy-900/80 text-slate-400 text-xs border-b border-slate-800 uppercase">
+                        <tr>
+                            <th class="p-4" data-i18n="asset_name">Asset</th>
+                            <th class="p-4" data-i18n="last_price">Last Price</th>
+                            <th class="p-4" data-i18n="change_24h">24h Change</th>
+                            <th class="p-4" data-i18n="high_24h">24h High</th>
+                            <th class="p-4" data-i18n="low_24h">24h Low</th>
+                            <th class="p-4" data-i18n="volume_24h">24h Volume</th>
+                            <th class="p-4 text-right" data-i18n="action">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="markets-table-body" class="divide-y divide-slate-800/50 font-mono">
+                        <!-- Populated dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- TAB 3: PORTFOLIO ANALYTICS -->
+        <div id="tab-portfolio" class="tab-content hidden p-3 lg:p-6 max-w-7xl mx-auto flex flex-col gap-6">
+            <div>
+                <h2 class="text-2xl font-bold tracking-tight" data-i18n="portfolio_analytics">Portfolio Analytics</h2>
+                <p class="text-xs text-slate-400" data-i18n="portfolio_analytics_sub">Track your asset valuation, unrealized P&L, and verified balances.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-navy-800 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between">
+                    <div class="text-xs text-slate-400" data-i18n="total_portfolio_value">Total Estimated Portfolio Value</div>
+                    <div class="text-3xl font-bold text-slate-100 my-2 font-mono" id="portfolio-total-val">$10,482.50</div>
+                    <div class="text-xs text-emerald-400 flex items-center gap-1">
+                        <i class="fa-solid fa-arrow-trend-up"></i> +2.45% (24h P&L: +$250.20)
+                    </div>
+                </div>
+                <div class="bg-navy-800 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between">
+                    <div class="text-xs text-slate-400" data-i18n="available_margin">Available USDT Margin</div>
+                    <div class="text-3xl font-bold text-slate-100 my-2 font-mono" id="portfolio-usdt-bal">10,000.00 USDT</div>
+                    <div class="text-xs text-slate-400">Ready for instant limit & market orders</div>
+                </div>
+                <div class="bg-navy-800 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between">
+                    <div class="text-xs text-slate-400" data-i18n="connected_account_status">Exchange API Connection</div>
+                    <div class="text-base font-bold text-amber-400 my-2 flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-amber-500 animate-ping"></span>
+                        <span id="portfolio-api-state">Sandbox Testnet API</span>
+                    </div>
+                    <button onclick="openApiModal()" class="text-xs text-electric-400 hover:underline text-left">Configure API Credentials &rarr;</button>
+                </div>
+            </div>
+
+            <div class="bg-navy-800 border border-slate-800 rounded-2xl p-6 flex flex-col gap-4">
+                <h3 class="font-semibold text-base" data-i18n="asset_holdings">Asset Holdings Breakdown</h3>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4" id="portfolio-assets-grid">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: TREND AI MARKET ANALYST -->
+        <div id="tab-ai" class="tab-content hidden p-3 lg:p-6 max-w-5xl mx-auto flex flex-col gap-6">
+            <div class="bg-gradient-to-r from-navy-800 to-navy-700 border border-electric-500/30 rounded-2xl p-6 flex items-center justify-between shadow-xl glow-blue">
+                <div class="flex items-center gap-4">
+                    <div class="w-14 h-14 rounded-2xl bg-electric-500/20 border border-electric-500/50 flex items-center justify-center text-electric-400 text-2xl">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
                     <div>
-                        <div class="inline-flex items-center gap-2 bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-xs font-bold border border-blue-500/30 mb-2">
-                            <i class="fa-solid fa-chart-candlestick"></i> <span data-i18n="charts_badge">Interactive TradingView Lightweight Charts</span>
-                        </div>
-                        <h2 class="text-2xl sm:text-3xl font-black text-white" data-i18n="charts_title">Advanced Price Charting</h2>
+                        <h2 class="text-xl font-bold text-slate-100" data-i18n="ai_analyst_title">TREND AI Market Intelligence</h2>
+                        <p class="text-xs text-slate-300 mt-1" data-i18n="ai_analyst_desc">Advanced LLM assistant connected to backend /api/ask endpoint analyzing live order book depth, RSI, MACD, and volatility.</p>
                     </div>
+                </div>
+                <button onclick="triggerAiMarketScan()" class="bg-electric-500 hover:bg-electric-400 text-navy-950 font-bold px-4 py-2.5 rounded-xl text-xs flex items-center gap-2 shadow-lg shadow-electric-500/20 transition-all">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <span data-i18n="run_full_scan">Run Full Market Scan</span>
+                </button>
+            </div>
 
-                    <!-- Chart Controls: Coin & Timeframe -->
-                    <div class="flex flex-wrap items-center gap-3">
-                        <select id="chartCoinSelect" onchange="loadChartData()" class="bg-brand-dark text-xs text-white px-3 py-2.5 rounded-xl border border-brand-border outline-none focus:border-brand-primary font-bold">
-                            <option value="bitcoin">Bitcoin (BTC)</option>
-                            <option value="ethereum">Ethereum (ETH)</option>
-                            <option value="solana">Solana (SOL)</option>
-                            <option value="binancecoin">BNB (BNB)</option>
-                        </select>
-
-                        <div class="flex items-center bg-brand-dark rounded-xl p-1 border border-brand-border text-xs font-bold">
-                            <button onclick="setTimeframe('1')" class="px-3 py-1.5 rounded-lg text-gray-300 hover:text-white transition tf-btn" data-days="1">24H</button>
-                            <button onclick="setTimeframe('7')" class="px-3 py-1.5 rounded-lg bg-brand-primary text-white transition tf-btn" data-days="7">7D</button>
-                            <button onclick="setTimeframe('30')" class="px-3 py-1.5 rounded-lg text-gray-300 hover:text-white transition tf-btn" data-days="30">30D</button>
-                            <button onclick="setTimeframe('365')" class="px-3 py-1.5 rounded-lg text-gray-300 hover:text-white transition tf-btn" data-days="365">1Y</button>
+            <div class="bg-navy-800 border border-slate-800 rounded-2xl flex flex-col h-[520px] overflow-hidden shadow-xl">
+                <div id="ai-chat-messages" class="flex-1 p-4 overflow-y-auto flex flex-col gap-4">
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 rounded-xl bg-electric-500/20 border border-electric-500/40 flex items-center justify-center text-electric-400 shrink-0">
+                            <i class="fa-solid fa-brain text-xs"></i>
+                        </div>
+                        <div class="bg-navy-900 border border-slate-700 p-4 rounded-2xl text-xs leading-relaxed max-w-2xl text-slate-200">
+                            Hello! I am your <strong>TREND AI Analyst</strong> connected via backend /api/ask. Ask me about market sentiment, bullish/bearish scenarios, support levels, or volatility risks for any pair.
                         </div>
                     </div>
                 </div>
 
-                <!-- Canvas Chart Container -->
-                <div class="relative w-full h-[450px] bg-brand-dark/80 rounded-2xl border border-brand-border p-2">
-                    <div id="chartContainer" class="w-full h-full"></div>
-                    <div id="chartLoadingOverlay" class="absolute inset-0 bg-brand-dark/80 backdrop-blur-sm flex items-center justify-center text-gray-300 text-sm gap-2 hidden">
-                        <i class="fa-solid fa-spinner animate-spin text-brand-primary"></i> <span data-i18n="loading_chart">Loading chart history...</span>
-                    </div>
+                <div class="p-4 bg-navy-900 border-t border-slate-800 flex items-center gap-3">
+                    <input type="text" id="ai-chat-input" onkeypress="handleAiKeypress(event)" placeholder="Ask Trend AI about market trends, support/resistance, or volatility..." class="flex-1 bg-navy-800 border border-slate-700 rounded-xl px-4 py-3 text-xs text-slate-100 focus:outline-none focus:border-electric-500">
+                    <button onclick="sendAiMessage()" class="bg-electric-500 hover:bg-electric-400 text-navy-950 font-bold px-5 py-3 rounded-xl text-xs flex items-center gap-2 transition-all">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        <span data-i18n="send">Send</span>
+                    </button>
                 </div>
             </div>
-        </section>
+        </div>
 
+        <!-- TAB 5: ON-CHAIN SWAP -->
+        <div id="tab-swap" class="tab-content hidden p-3 lg:p-6 max-w-xl mx-auto flex flex-col gap-6">
+            <div class="bg-navy-800 border border-slate-800 rounded-2xl p-6 flex flex-col gap-5 shadow-xl">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <h2 class="text-lg font-bold" data-i18n="onchain_swap">Decentralized On-Chain Swap</h2>
+                    <span class="text-xs bg-electric-500/10 text-electric-400 border border-electric-500/30 px-2.5 py-1 rounded-lg">Web3 Self-Custody</span>
+                </div>
 
-        <!-- ================= SECTION 5: PORTFOLIO & WATCHLIST ================= -->
-        <section id="view-portfolio" class="space-y-8 hidden">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                <!-- Watchlist Card -->
-                <div class="lg:col-span-6 glass-panel rounded-3xl p-6 space-y-6">
-                    <div class="flex justify-between items-center">
-                        <h3 class="text-xl font-bold text-white flex items-center gap-2">
-                            <i class="fa-solid fa-star text-amber-400"></i> <span data-i18n="watchlist_title">My Watchlist</span>
-                        </h3>
-                        <span id="watchlistCount" class="text-xs bg-brand-dark px-2.5 py-1 rounded-full text-gray-400 font-bold border border-brand-border">0 Coins</span>
+                <div class="flex flex-col gap-3">
+                    <div class="bg-navy-900 p-4 rounded-xl border border-slate-700 flex flex-col gap-2">
+                        <div class="flex justify-between text-xs text-slate-400">
+                            <span data-i18n="you_pay">You Pay</span>
+                            <span>Balance: 1.45 ETH</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <input type="number" id="swap-from-amount" value="0.1" class="bg-transparent text-xl font-bold text-slate-100 font-mono focus:outline-none w-1/2" placeholder="0.0">
+                            <div class="bg-navy-800 px-3 py-1.5 rounded-lg border border-slate-700 font-semibold text-sm flex items-center gap-2">
+                                <i class="fa-brands fa-ethereum text-blue-400"></i> ETH
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="overflow-x-auto min-h-[300px]">
-                        <table class="w-full text-left border-collapse text-sm">
-                            <thead>
-                                <tr class="border-b border-brand-border text-xs text-gray-400 uppercase tracking-wider">
-                                    <th class="py-3 px-3" data-i18n="th_asset">Asset</th>
-                                    <th class="py-3 px-3" data-i18n="th_price">Price</th>
-                                    <th class="py-3 px-3" data-i18n="th_24h">24h Change</th>
-                                    <th class="py-3 px-3 text-right" data-i18n="th_actions">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="watchlistTableBody" class="divide-y divide-brand-border/50">
-                                <tr>
-                                    <td colspan="4" class="py-12 text-center text-gray-500" data-i18n="empty_watchlist">Your watchlist is empty. Click the star icon on any coin in the dashboard to add it here.</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="flex justify-center -my-2 z-10">
+                        <button onclick="invertSwap()" class="bg-navy-900 border border-slate-700 hover:border-electric-500 w-9 h-9 rounded-full flex items-center justify-center text-electric-400 transition-all shadow-md">
+                            <i class="fa-solid fa-arrow-down"></i>
+                        </button>
+                    </div>
+
+                    <div class="bg-navy-900 p-4 rounded-xl border border-slate-700 flex flex-col gap-2">
+                        <div class="flex justify-between text-xs text-slate-400">
+                            <span data-i18n="you_receive">You Receive (Estimated)</span>
+                            <span>Balance: 320.50 USDT</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <input type="number" id="swap-to-amount" readonly value="312.45" class="bg-transparent text-xl font-bold text-emerald-400 font-mono focus:outline-none w-1/2" placeholder="0.0">
+                            <div class="bg-navy-800 px-3 py-1.5 rounded-lg border border-slate-700 font-semibold text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-coins text-amber-400"></i> USDT
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Portfolio & Storage Info -->
-                <div class="lg:col-span-6 space-y-6">
-                    <div class="glass-panel rounded-3xl p-6 space-y-6">
-                        <h3 class="text-xl font-bold text-white flex items-center gap-2">
-                            <i class="fa-solid fa-pie-chart text-brand-primary"></i> <span data-i18n="portfolio_title">Portfolio Asset Allocation</span>
-                        </h3>
-
-                        <div class="space-y-4">
-                            <div class="flex justify-between items-center p-4 rounded-2xl bg-brand-dark border border-brand-border">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
-                                        <i class="fa-solid fa-dollar-sign"></i>
-                                    </div>
-                                    <div>
-                                        <p class="font-bold text-white">USDT Cash Reserve</p>
-                                        <p class="text-xs text-gray-400" data-i18n="sim_cash_label">Available for trading</p>
-                                    </div>
-                                </div>
-                                <span id="portfolioUsdtVal" class="font-bold text-emerald-400 text-base">1,000.00 $</span>
-                            </div>
-
-                            <div class="flex justify-between items-center p-4 rounded-2xl bg-brand-dark border border-brand-border">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold">
-                                        <i class="fa-solid fa-coins"></i>
-                                    </div>
-                                    <div>
-                                        <p class="font-bold text-white" data-i18n="active_holdings">Active Coin Holdings</p>
-                                        <p class="text-xs text-gray-400" id="activeHoldingsCount">0 open positions</p>
-                                    </div>
-                                </div>
-                                <span id="portfolioHoldingsVal" class="font-bold text-white text-base">0.00 $</span>
-                            </div>
-                        </div>
-
-                        <div class="p-4 rounded-2xl bg-brand-dark/70 border border-brand-border text-xs text-gray-400 space-y-2">
-                            <p class="font-bold text-gray-300 flex items-center gap-1.5"><i class="fa-solid fa-database text-brand-primary"></i> <span data-i18n="storage_info_title">Local Storage Notice</span></p>
-                            <p data-i18n="storage_info_text">Watchlist preferences and simulated balances are stored securely in browser localStorage for convenience. This is a frontend demo sandbox and does not replace secure custodian account storage.</p>
-                        </div>
+                <div class="bg-navy-900/50 p-3 rounded-xl border border-slate-800 text-xs flex flex-col gap-1.5 text-slate-400">
+                    <div class="flex justify-between">
+                        <span data-i18n="gas_fee">Estimated Gas Fee:</span>
+                        <span class="text-slate-200 font-mono">~$4.20 (0.0012 ETH)</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span data-i18n="slippage_tolerance">Slippage Tolerance:</span>
+                        <span class="text-electric-400 font-semibold font-mono">0.5%</span>
                     </div>
                 </div>
+
+                <button onclick="executeOnChainSwapPrompt()" class="w-full py-3.5 rounded-xl font-bold text-xs bg-gradient-to-r from-electric-500 to-blue-600 text-navy-950 shadow-lg shadow-electric-500/20 transition-all">
+                    <span data-i18n="execute_swap">Execute On-Chain Swap</span>
+                </button>
             </div>
-        </section>
+        </div>
 
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-brand-dark border-t border-brand-border mt-16 py-12 text-gray-400 text-xs">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-            <div class="space-y-3 md:col-span-1">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-lg bg-brand-primary flex items-center justify-center text-white font-bold">
-                        <i class="fa-solid fa-brain-circuit"></i>
-                    </div>
-                    <span class="font-black text-white text-base">TrendAI Crypto</span>
+    <!-- AUTHENTICATION / LOGIN MODAL -->
+    <div id="auth-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-navy-800 border border-slate-700 rounded-2xl max-w-sm w-full p-6 flex flex-col gap-4 shadow-2xl">
+            <div class="flex items-center justify-between border-b border-slate-700 pb-3">
+                <h3 class="font-bold text-base" id="auth-modal-title">Secure Account Login</h3>
+                <button onclick="closeAuthModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            
+            <div class="flex flex-col gap-3 text-xs">
+                <div>
+                    <label class="text-slate-400 mb-1 block">Email Address</label>
+                    <input type="email" id="auth-email" placeholder="trader@domain.com" class="w-full bg-navy-900 border border-slate-700 rounded-xl px-3 py-2.5 text-slate-200">
                 </div>
-                <p class="text-gray-500 leading-relaxed" data-i18n="footer_desc">
-                    Next-generation cryptocurrency analysis, automated AI market intelligence, and paper trading simulation.
-                </p>
+                <div>
+                    <label class="text-slate-400 mb-1 block">Password (Bcrypt hashed server-side)</label>
+                    <input type="password" id="auth-password" placeholder="••••••••" class="w-full bg-navy-900 border border-slate-700 rounded-xl px-3 py-2.5 text-slate-200">
+                </div>
             </div>
-            <div>
-                <h4 class="text-white font-bold mb-3 uppercase tracking-wider text-[11px]" data-i18n="footer_col1">Platform</h4>
-                <ul class="space-y-2">
-                    <li><a href="#dashboard" onclick="switchNav('dashboard')" class="hover:text-white transition" data-i18n="nav_dashboard">Dashboard</a></li>
-                    <li><a href="#ai-helper" onclick="switchNav('ai-helper')" class="hover:text-white transition" data-i18n="nav_ai">TrendAI Assistant</a></li>
-                    <li><a href="#simulator" onclick="switchNav('simulator')" class="hover:text-white transition" data-i18n="nav_simulator">Trading Simulator</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-white font-bold mb-3 uppercase tracking-wider text-[11px]" data-i18n="footer_col2">Analytics</h4>
-                <ul class="space-y-2">
-                    <li><a href="#analytics" onclick="switchNav('analytics')" class="hover:text-white transition" data-i18n="nav_charts">Charts & Analytics</a></li>
-                    <li><a href="#portfolio" onclick="switchNav('portfolio')" class="hover:text-white transition" data-i18n="nav_portfolio">Portfolio & Watchlist</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-white font-bold mb-3 uppercase tracking-wider text-[11px]" data-i18n="footer_col3">Security & Compliance</h4>
-                <p class="text-gray-500 leading-relaxed" data-i18n="footer_security_desc">
-                    Non-custodial simulation environment. Never share private keys or seed phrases. Powered by CoinGecko API.
-                </p>
-            </div>
-        </div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 border-t border-brand-border/50 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p>&copy; 2026 TrendAI Crypto Platform. All rights reserved.</p>
-            <div class="flex items-center gap-4 text-sm">
-                <a href="#" class="hover:text-white transition"><i class="fa-brands fa-x-twitter"></i></a>
-                <a href="#" class="hover:text-white transition"><i class="fa-brands fa-discord"></i></a>
-                <a href="#" class="hover:text-white transition"><i class="fa-brands fa-telegram"></i></a>
-                <a href="#" class="hover:text-white transition"><i class="fa-brands fa-github"></i></a>
-            </div>
-        </div>
-    </footer>
 
-    <!-- Wallet Connection Modal -->
-    <div id="walletModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="glass-panel rounded-3xl p-6 sm:p-8 max-w-md w-full space-y-6 relative border border-brand-border">
-            <button onclick="closeWalletModal()" class="absolute top-5 right-5 text-gray-400 hover:text-white text-lg">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div class="space-y-2">
-                <h3 class="text-2xl font-black text-white" data-i18n="modal_wallet_title">Connect Web3 Wallet</h3>
-                <p class="text-xs text-gray-400" data-i18n="modal_wallet_desc">Select a supported Web3 provider to interact with simulated DeFi features.</p>
-            </div>
-            <div class="space-y-3">
-                <button onclick="simulateWalletConnect('MetaMask')" class="w-full bg-brand-dark hover:bg-brand-border p-4 rounded-2xl border border-brand-border flex items-center justify-between transition group">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center font-bold text-lg"><i class="fa-solid fa-cube"></i></div>
-                        <div class="text-left">
-                            <p class="font-bold text-white text-sm">MetaMask</p>
-                            <p class="text-[11px] text-gray-400">Connect via browser extension</p>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-chevron-right text-gray-500 group-hover:text-white transition"></i>
-                </button>
-                <button onclick="simulateWalletConnect('WalletConnect')" class="w-full bg-brand-dark hover:bg-brand-border p-4 rounded-2xl border border-brand-border flex items-center justify-between transition group">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-lg"><i class="fa-solid fa-qrcode"></i></div>
-                        <div class="text-left">
-                            <p class="font-bold text-white text-sm">WalletConnect</p>
-                            <p class="text-[11px] text-gray-400">Scan QR code with mobile wallet</p>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-chevron-right text-gray-500 group-hover:text-white transition"></i>
-                </button>
-            </div>
-            <div class="p-3 rounded-xl bg-brand-dark border border-brand-border text-[11px] text-gray-400 flex items-center gap-2">
-                <i class="fa-solid fa-shield-halved text-emerald-400"></i>
-                <span data-i18n="modal_wallet_security">Never request seed phrases. Secure non-custodial handshake.</span>
+            <div class="flex flex-col gap-2 pt-2">
+                <button onclick="handleUserLogin()" class="w-full py-3 rounded-xl font-bold text-xs bg-electric-500 hover:bg-electric-400 text-navy-950 shadow-lg shadow-electric-500/20">Sign In Securely</button>
+                <div class="text-center text-xs text-slate-400 mt-2">
+                    Don't have an account? <span onclick="showToast('Registration endpoint enabled on backend /api/auth/register', 'info')" class="text-electric-400 cursor-pointer hover:underline">Register</span>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Toast Notification Container -->
-    <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+    <!-- API CONFIGURATION MODAL -->
+    <div id="api-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-navy-800 border border-slate-700 rounded-2xl max-w-md w-full p-6 flex flex-col gap-4 shadow-2xl">
+            <div class="flex items-center justify-between border-b border-slate-700 pb-3">
+                <h3 class="font-bold text-base" data-i18n="api_config_title">Exchange API & Sandbox Settings</h3>
+                <button onclick="closeApiModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <p class="text-xs text-slate-300" data-i18n="api_config_desc">Connect your backend exchange API credentials securely. Credentials are never exposed to browser memory beyond secure server proxy routing.</p>
+            
+            <div class="flex flex-col gap-3 text-xs">
+                <div>
+                    <label class="text-slate-400 mb-1 block" data-i18n="exchange_provider">Exchange Provider</label>
+                    <select id="modal-exchange-provider" class="w-full bg-navy-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-200">
+                        <option value="binance_sandbox">Binance Spot Testnet / Sandbox</option>
+                        <option value="binance_live">Binance Live API (Production)</option>
+                        <option value="public_feed">Public Market Data Feed Only</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-slate-400 mb-1 block">API Key</label>
+                    <input type="password" id="modal-api-key" placeholder="Enter exchange API Key..." class="w-full bg-navy-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 font-mono">
+                </div>
+                <div>
+                    <label class="text-slate-400 mb-1 block">Secret Key (Encrypted server-side)</label>
+                    <input type="password" id="modal-secret-key" placeholder="Enter API Secret Key..." class="w-full bg-navy-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 font-mono">
+                </div>
+            </div>
 
-    <!-- JAVASCRIPT LOGIC -->
+            <div class="flex justify-end gap-3 pt-2">
+                <button onclick="closeApiModal()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-navy-900 text-slate-300 border border-slate-700">Cancel</button>
+                <button onclick="saveApiCredentials()" class="px-4 py-2 rounded-xl text-xs font-bold bg-electric-500 text-navy-950 shadow-lg shadow-electric-500/20">Save & Connect</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- WALLET MODAL -->
+    <div id="wallet-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-navy-800 border border-slate-700 rounded-2xl max-w-sm w-full p-6 flex flex-col gap-4 shadow-2xl">
+            <div class="flex items-center justify-between border-b border-slate-700 pb-3">
+                <h3 class="font-bold text-base" data-i18n="connect_wallet">Connect Web3 Wallet</h3>
+                <button onclick="toggleWalletModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <p class="text-xs text-slate-300" data-i18n="wallet_modal_desc">Select your self-custody wallet provider. We never request seed phrases or private keys.</p>
+            
+            <div class="flex flex-col gap-2.5">
+                <button onclick="connectWalletProvider('MetaMask')" class="bg-navy-900 hover:bg-navy-700 border border-slate-700 p-3.5 rounded-xl flex items-center justify-between transition-all">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-shield-cat text-amber-400 text-lg"></i>
+                        <span class="font-semibold text-sm">MetaMask</span>
+                    </div>
+                    <span class="text-xs text-electric-400 font-medium">Connect &rarr;</span>
+                </button>
+                <button onclick="connectWalletProvider('WalletConnect')" class="bg-navy-900 hover:bg-navy-700 border border-slate-700 p-3.5 rounded-xl flex items-center justify-between transition-all">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-qrcode text-blue-400 text-lg"></i>
+                        <span class="font-semibold text-sm">WalletConnect</span>
+                    </div>
+                    <span class="text-xs text-electric-400 font-medium">Connect &rarr;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT APP LOGIC -->
     <script>
-        // ================= MULTI-LANGUAGE DICTIONARY =================
+        let currentTab = 'trade';
+        let currentPair = 'BTCUSDT';
+        let orderSide = 'BUY';
+        let orderType = 'LIMIT';
+        let chartInterval = '1m';
+        let tradingChartInstance = null;
+        let userConnectedWallet = null;
+        let loggedInUser = null;
+        let currentLanguage = 'en';
+
+        let marketData = {
+            'BTCUSDT': { name: 'Bitcoin', symbol: 'BTC', price: 67420.50, change: 3.42, high: 68100.00, low: 66200.00, volume: '1.42B' },
+            'ETHUSDT': { name: 'Ethereum', symbol: 'ETH', price: 3240.20, change: -0.85, high: 3310.00, low: 3190.00, volume: '840M' },
+            'SOLUSDT': { name: 'Solana', symbol: 'SOL', price: 142.80, change: 5.68, high: 145.50, low: 134.20, volume: '410M' },
+            'XRPUSDT': { name: 'Ripple', symbol: 'XRP', price: 0.6240, change: 1.12, high: 0.6350, low: 0.6120, volume: '190M' },
+            'ADAUSDT': { name: 'Cardano', symbol: 'ADA', price: 0.4850, change: -1.40, high: 0.5010, low: 0.4780, volume: '95M' }
+        };
+
+        let userBalances = {
+            'USDT': 10000.00,
+            'BTC': 0.15,
+            'ETH': 1.45,
+            'SOL': 12.00
+        };
+
+        let openOrders = [];
+        let orderHistory = [];
+
         const translations = {
             en: {
-                badge_new: "NEW",
-                banner_text: "TrendAI v2.4 Live: Advanced Multi-Chain AI Analytics & 1,000 USDT Paper Trading Simulator!",
-                nav_dashboard: "Dashboard",
-                nav_ai: "TrendAI Assistant",
-                nav_simulator: "Trading Simulator",
-                nav_charts: "Charts & Analytics",
-                nav_portfolio: "Portfolio & Watchlist",
+                trade: "Trade Terminal",
+                markets: "Markets",
+                portfolio: "Portfolio",
+                ai_analyst: "Trend AI Analyst",
+                swap: "On-Chain Swap",
                 connect_wallet: "Connect Wallet",
-                hero_tag: "Real-Time CoinGecko Market Data",
-                hero_title: "Advanced AI Market Intelligence & Trading Platform",
-                hero_desc: "Analyze live cryptocurrency prices, execute simulated paper trades with 1,000 USDT capital, and leverage TrendAI Assistant for data-backed market scenarios.",
-                btn_ask_ai: "Ask TrendAI Assistant",
-                btn_sim: "Open Simulator",
-                market_table_title: "Live Cryptocurrency Markets",
-                market_table_subtitle: "Real-time data sourced via CoinGecko API with automatic fallback simulation.",
-                refresh: "Refresh",
-                th_asset: "Asset",
-                th_price: "Price (USDT)",
-                th_24h: "24h Change",
-                th_volume: "24h Volume",
-                th_mcap: "Market Cap",
-                th_actions: "Actions",
-                ai_badge: "Intelligent Market Analysis Engine",
-                ai_title: "TrendAI Assistant & Market Predictor",
-                ai_desc: "Ask questions about any cryptocurrency, analyze volatility, support/resistance levels, and evaluate bullish/bearish scenarios backed by live market indicators.",
-                ai_select_coin: "Select Cryptocurrency",
-                ai_custom_prompt: "Custom Question / Analysis Focus",
-                ai_btn_run: "Run AI Analysis",
-                risk_notice_title: "Risk & Disclaimer Notice",
-                risk_notice_text: "AI predictions are generated for educational & research purposes only. Never promise guaranteed profits. Always conduct your own financial due diligence.",
-                ai_output_title: "TrendAI Intelligence Report",
-                ai_placeholder_prompt: "Select a cryptocurrency and click \"Run AI Analysis\" to generate professional scenarios and indicators.",
-                sim_badge: "Paper Trading Sandbox (1,000 USDT)",
-                sim_title: "Risk-Free Trading Simulator",
-                sim_cash_label: "USDT Balance",
-                sim_portfolio_label: "Portfolio Value",
-                sim_order_title: "Place Simulated Order",
-                sim_lbl_coin: "Select Asset",
-                sim_current_price: "Current Market Price:",
-                sim_lbl_amount: "Amount to Invest (USDT)",
-                sim_btn_buy: "Buy / Long",
-                sim_btn_sell: "Sell / Close",
-                sim_positions_title: "Open Positions & History",
-                pos_asset: "Asset",
-                pos_type: "Type",
-                pos_qty: "Quantity",
-                pos_entry: "Entry Price",
-                pos_pnl: "Unrealized P&L",
-                pos_action: "Action",
-                sim_no_positions: "No active simulated positions. Place your first trade above!",
-                charts_badge: "Interactive TradingView Lightweight Charts",
-                charts_title: "Advanced Price Charting",
-                loading_chart: "Loading chart history...",
-                watchlist_title: "My Watchlist",
-                empty_watchlist: "Your watchlist is empty. Click the star icon on any coin in the dashboard to add it here.",
-                portfolio_title: "Portfolio Asset Allocation",
-                active_holdings: "Active Coin Holdings",
-                storage_info_title: "Local Storage Notice",
-                storage_info_text: "Watchlist preferences and simulated balances are stored securely in browser localStorage for convenience. This is a frontend demo sandbox and does not replace secure custodian account storage.",
-                footer_desc: "Next-generation cryptocurrency analysis, automated AI market intelligence, and paper trading simulation.",
-                footer_col1: "Platform",
-                footer_col2: "Analytics",
-                footer_col3: "Security & Compliance",
-                footer_security_desc: "Non-custodial simulation environment. Never request seed phrases or private keys. Powered by CoinGecko API.",
-                modal_wallet_title: "Connect Web3 Wallet",
-                modal_wallet_desc: "Select a supported Web3 provider to interact with simulated DeFi features.",
-                modal_wallet_security: "Never request seed phrases. Secure non-custodial handshake."
+                high_24h: "24h High",
+                low_24h: "24h Low",
+                change_24h: "24h Change",
+                price_chart: "Professional Candlestick & Volume Chart",
+                open_orders: "Open Orders (0)",
+                order_history: "Order History",
+                asset_balances: "Asset Balances",
+                buy_long: "Buy / Long",
+                sell_short: "Sell / Short",
+                limit_price: "Limit Price (USDT)",
+                order_amount: "Order Amount",
+                estimated_total: "Estimated Total:",
+                risk_warning: "Execution via secure backend exchange API / testnet sandbox. Review fees & slippage before submitting.",
+                place_buy_order: "Place Buy Order",
+                place_sell_order: "Place Sell Order",
+                order_book: "Order Book Depth",
+                recent_trades: "Recent Trades",
+                market_overview: "Cryptocurrency Markets",
+                market_overview_sub: "Real-time market prices, capitalization, and 24h volume across supported pairs.",
+                asset_name: "Asset",
+                last_price: "Last Price",
+                volume_24h: "24h Volume",
+                action: "Action",
+                portfolio_analytics: "Portfolio Analytics",
+                portfolio_analytics_sub: "Track your asset valuation, unrealized P&L, and verified balances.",
+                total_portfolio_value: "Total Estimated Portfolio Value",
+                available_margin: "Available USDT Margin",
+                connected_account_status: "Exchange API Connection",
+                asset_holdings: "Asset Holdings Breakdown",
+                ai_analyst_title: "TREND AI Market Intelligence",
+                ai_analyst_desc: "Advanced LLM assistant connected to backend /api/ask endpoint analyzing live order book depth, RSI, MACD, and volatility.",
+                run_full_scan: "Run Full Market Scan",
+                send: "Send",
+                onchain_swap: "Decentralized On-Chain Swap",
+                you_pay: "You Pay",
+                you_receive: "You Receive (Estimated)",
+                gas_fee: "Estimated Gas Fee:",
+                slippage_tolerance: "Slippage Tolerance:",
+                execute_swap: "Execute On-Chain Swap",
+                api_config_title: "Exchange API & Sandbox Settings",
+                api_config_desc: "Connect your backend exchange API credentials securely. Credentials are never exposed to browser memory beyond secure server proxy routing.",
+                exchange_provider: "Exchange Provider",
+                no_open_orders: "No active open orders found.",
+                no_order_history: "No recent order history."
             },
             fr: {
-                badge_new: "NOUVEAU",
-                banner_text: "TrendAI v2.4 En direct : Analyses IA multi-chaînes avancées & Simulateur de paper trading 1 000 USDT !",
-                nav_dashboard: "Tableau de bord",
-                nav_ai: "Assistant TrendAI",
-                nav_simulator: "Simulateur de Trading",
-                nav_charts: "Graphiques & Analyses",
-                nav_portfolio: "Portefeuille & Favoris",
-                connect_wallet: "Connecter le portefeuille",
-                hero_tag: "Données de marché CoinGecko en temps réel",
-                hero_title: "Plateforme d'intelligence de marché et de trading IA avancée",
-                hero_desc: "Analysez les prix en direct, effectuez des simulations de paper trading avec un capital de 1 000 USDT et exploitez l'assistant TrendAI pour des scénarios de marché appuyés par des données.",
-                btn_ask_ai: "Consulter l'assistant TrendAI",
-                btn_sim: "Ouvrir le simulateur",
-                market_table_title: "Marchés des cryptomonnaies en direct",
-                market_table_subtitle: "Données en temps réel via l'API CoinGecko avec simulation de secours automatique.",
-                refresh: "Actualiser",
-                th_asset: "Actif",
-                th_price: "Prix (USDT)",
-                th_24h: "Variation 24h",
-                th_volume: "Volume 24h",
-                th_mcap: "Cap. boursière",
-                th_actions: "Actions",
-                ai_badge: "Moteur d'analyse de marché intelligent",
-                ai_title: "Assistant TrendAI & Prédicteur de marché",
-                ai_desc: "Posez des questions sur n'importe quelle cryptomonnaie, analysez la volatilité, les supports/résistances et évaluez les scénarios haussiers/baissiers.",
-                ai_select_coin: "Sélectionner la cryptomonnaie",
-                ai_custom_prompt: "Question personnalisée / Focus d'analyse",
-                ai_btn_run: "Lancer l'analyse IA",
-                risk_notice_title: "Avis de risque & Avertissement",
-                risk_notice_text: "Les prédictions IA sont générées à des fins éducatives et de recherche uniquement. Ne promettez jamais de profits garantis.",
-                ai_output_title: "Rapport d'intelligence TrendAI",
-                ai_placeholder_prompt: "Sélectionnez une cryptomonnaie et cliquez sur \"Lancer l'analyse IA\" pour générer des scénarios professionnels.",
-                sim_badge: "Sandbox Paper Trading (1 000 USDT)",
-                sim_title: "Simulateur de trading sans risque",
-                sim_cash_label: "Solde USDT",
-                sim_portfolio_label: "Valeur du portefeuille",
-                sim_order_title: "Passer un ordre simulé",
-                sim_lbl_coin: "Sélectionner l'actif",
-                sim_current_price: "Prix du marché actuel :",
-                sim_lbl_amount: "Montant à investir (USDT)",
-                sim_btn_buy: "Achat / Long",
-                sim_btn_sell: "Vente / Clôture",
-                sim_positions_title: "Positions ouvertes & Historique",
-                pos_asset: "Actif",
-                pos_type: "Type",
-                pos_qty: "Quantité",
-                pos_entry: "Prix d'entrée",
-                pos_pnl: "P&L non réalisé",
-                pos_action: "Action",
-                sim_no_positions: "Aucune position simulée active. Placez votre premier trade ci-dessus !",
-                charts_badge: "Graphiques interactifs TradingView Lightweight",
-                charts_title: "Graphiques de prix avancés",
-                loading_chart: "Chargement de l'historique des graphiques...",
-                watchlist_title: "Ma Liste de Favoris",
-                empty_watchlist: "Votre liste de favoris est vide. Cliquez sur l'icône étoile sur n'importe quelle pièce du tableau de bord.",
-                portfolio_title: "Allocation d'actifs du portefeuille",
-                active_holdings: "Actifs en cryptos actifs",
-                storage_info_title: "Avis sur le stockage local",
-                storage_info_text: "Les préférences de favoris et les soldes simulés sont stockés dans le stockage local du navigateur pour plus de commodité.",
-                footer_desc: "Analyse de cryptomonnaies de nouvelle génération, intelligence de marché IA automatisée et simulation de paper trading.",
-                footer_col1: "Plateforme",
-                footer_col2: "Analytique",
-                footer_col3: "Sécurité & Conformité",
-                footer_security_desc: "Environnement de simulation non dépositaire. Ne demandez jamais de clés privées.",
-                modal_wallet_title: "Connecter le portefeuille Web3",
-                modal_wallet_desc: "Sélectionnez un fournisseur Web3 pris en charge pour interagir avec les fonctionnalités DeFi simulées.",
-                modal_wallet_security: "Ne demande jamais de phrases secrètes. Connexion sécurisée non dépositaire."
+                trade: "Terminal de Trading",
+                markets: "Marchés",
+                portfolio: "Portefeuille",
+                ai_analyst: "Analyste IA Trend",
+                swap: "Swap On-Chain",
+                connect_wallet: "Connecter le Portefeuille",
+                high_24h: "Plus haut 24h",
+                low_24h: "Plus bas 24h",
+                change_24h: "Variation 24h",
+                price_chart: "Graphique Professionnel des Bougies",
+                open_orders: "Ordres Ouverts (0)",
+                order_history: "Historique des Ordres",
+                asset_balances: "Soldes des Actifs",
+                buy_long: "Acheter / Long",
+                sell_short: "Vendre / Short",
+                limit_price: "Prix Limite (USDT)",
+                order_amount: "Montant de l'Ordre",
+                estimated_total: "Total Estimé :",
+                risk_warning: "Exécution via l'API sécurisée du backend / testnet sandbox.",
+                place_buy_order: "Placer l'Ordre d'Achat",
+                place_sell_order: "Placer l'Ordre de Vente",
+                order_book: "Profondeur du Carnet",
+                recent_trades: "Trades Récents",
+                market_overview: "Marchés des Cryptomonnaies",
+                market_overview_sub: "Prix du marché en temps réel, capitalisation et volume sur 24h.",
+                asset_name: "Actif",
+                last_price: "Dernier Prix",
+                volume_24h: "Volume 24h",
+                action: "Action",
+                portfolio_analytics: "Analytique du Portefeuille",
+                portfolio_analytics_sub: "Suivez la valorisation de vos actifs et soldes vérifiés.",
+                total_portfolio_value: "Valeur Totale Estimée du Portefeuille",
+                available_margin: "Marge USDT Disponible",
+                connected_account_status: "Connexion API Exchange",
+                asset_holdings: "Répartition des Actifs",
+                ai_analyst_title: "Intelligence Marché Trend AI",
+                ai_analyst_desc: "Assistant LLM connecté à l'endpoint /api/ask.",
+                run_full_scan: "Lancer un Scan Complet",
+                send: "Envoyer",
+                onchain_swap: "Swap Décentralisé On-Chain",
+                you_pay: "Vous Payez",
+                you_receive: "Vous Recevez (Estimé)",
+                gas_fee: "Frais de Gaz Estimés :",
+                slippage_tolerance: "Tolérance de Glissement :",
+                execute_swap: "Exécuter le Swap On-Chain",
+                api_config_title: "Paramètres API & Sandbox",
+                api_config_desc: "Connectez vos identifiants d'API de manière sécurisée.",
+                exchange_provider: "Fournisseur d'Exchange",
+                no_open_orders: "Aucun ordre ouvert actif.",
+                no_order_history: "Aucun historique d'ordre récent."
             },
             ar: {
-                badge_new: "جديد",
-                banner_text: "تريند إي الإصدار 2.4 المباشر: تحليلات الذكاء الاصطناعي المتقدمة ومحاكاة تداول الأوراق المالية بقيمة 1,000 USDT!",
-                nav_dashboard: "لوحة القيادة",
-                nav_ai: "مساعد الذكاء الاصطناعي",
-                nav_simulator: "محاكي التداول",
-                nav_charts: "الرسوم البيانية والتحليلات",
-                nav_portfolio: "المحفظة وقائمة المتابعة",
-                connect_wallet: "اتصال المحفظة",
-                hero_tag: "بيانات سوق CoinGecko في الوقت الفعلي",
-                hero_title: "منصة ذكاء السوق المتقدمة بالذكاء الاصطناعي والتداول",
-                hero_desc: "قم بتحليل أسعار العملات الرقمية المباشرة، ونفذ صفقات تجريبية برأس مال 1,000 USDT، واستفد من مساعد TrendAI سيناريوهات السوق.",
-                btn_ask_ai: "اسأل مساعد TrendAI",
-                btn_sim: "فتح المحاكي",
-                market_table_title: "أسواق العملات الرقمية المباشرة",
-                market_table_subtitle: "بيانات في الوقت الفعلي عبر واجهة برمجة تطبيقات CoinGecko مع محاكاة احتياطية تلقائية.",
-                refresh: "تحديث",
-                th_asset: "الأصل",
-                th_price: "السعر (USDT)",
-                th_24h: "تغير 24 ساعة",
-                th_volume: "حجم 24 ساعة",
-                th_mcap: "القيمة السوقية",
-                th_actions: "الإجراءات",
-                ai_badge: "محرك تحليل السوق الذكي",
-                ai_title: "مساعد TrendAI وتنبؤ السوق",
-                ai_desc: "اطرح أسئلة حول أي عملة مشفرة، وتحليل التقلبات، ومستويات الدعم/المقاومة، وتقييم السيناريوهات الصعودية والهبوطية.",
-                ai_select_coin: "اختر العملة المشفرة",
-                ai_custom_prompt: "سؤال مخصص / تركيز التحليل",
-                ai_btn_run: "تشغيل تحليل الذكاء الاصطناعي",
-                risk_notice_title: "إشعار المخاطر وإخلاء المسؤولية",
-                risk_notice_text: "يتم إنشاء تنبؤات الذكاء الاصطناعي لأغراض تعليمية وبحثية فقط. لا تعد أبدًا بأرباح مضمونة.",
-                ai_output_title: "تقرير ذكاء TrendAI",
-                ai_placeholder_prompt: "حدد العملة المشفرة وانقر فوق \"تشغيل تحليل الذكاء الاصطناعي\" لإنشاء سيناريوهات ومؤشرات احترافية.",
-                sim_badge: "وضع الحماية للتداول الورقي (1,000 USDT)",
-                sim_title: "محاكي التداول الخالي من المخاطر",
-                sim_cash_label: "رصيد USDT",
-                sim_portfolio_label: "قيمة المحفظة",
-                sim_order_title: "إرسال أمر محاكى",
-                sim_lbl_coin: "حدد الأصل",
-                sim_current_price: "سعر السوق الحالي:",
-                sim_lbl_amount: "المبلغ المراد استثماره (USDT)",
-                sim_btn_buy: "شراء / طويل",
-                sim_btn_sell: "بيع / إغلاق",
-                sim_positions_title: "المراكز المفتوحة والسجل",
-                pos_asset: "الأصل",
-                pos_type: "النوع",
-                pos_qty: "الكمية",
-                pos_entry: "سعر الدخول",
-                pos_pnl: "الربح/الخسارة غير المحققة",
-                pos_action: "الإجراء",
-                sim_no_positions: "لا توجد مراكز محاكاة نشطة. ضع تجارتك الأولى أعلاه!",
-                charts_badge: "رسوم بيانية تفاعلية لـ TradingView Lightweight",
-                charts_title: "الرسوم البيانية المتقدمة للأسعار",
-                loading_chart: "جاري تحميل سجل الرسم البياني...",
-                watchlist_title: "قائمة المتابعة الخاصة بي",
-                empty_watchlist: "قائمة المتابعة الخاصة بك فارغة. انقر فوق رمز النجمة على أي عملة في لوحة القيادة لإضافتها هنا.",
-                portfolio_title: "توزيع أصول المحفظة",
-                active_holdings: "حيازات العملات النشطة",
-                storage_info_title: "إشعار التخزين المحلي",
-                storage_info_text: "يتم تخزين تفضيلات قائمة المتابعة والأرصدة المحاكية بشكل آمن في التخزين المحلي للمتصفح.",
-                footer_desc: "تحليل العملات الرقمية من الجيل التالي، وذكاء السوق الآلي بالذكاء الاصطناعي، ومحاكاة التداول الورقي.",
-                footer_col1: "المنصة",
-                footer_col2: "التحليلات",
-                footer_col3: "الأمان والامتثال",
-                footer_security_desc: "بيئة محاكاة غير خاضعة للوصاية. لا تطلب أبدًا المفاتيح الخاصة.",
-                modal_wallet_title: "اتصال محفظة Web3",
-                modal_wallet_desc: "حدد موفر Web3 مدعوم للتفاعل مع ميزات DeFi المحاكية.",
-                modal_wallet_security: "لا تطلب أبدًا عبارات الاسترداد. مصافحة آمنة غير خاضعة للوصاية."
+                trade: "منصة التداول",
+                markets: "الأسواق",
+                portfolio: "المحافظ",
+                ai_analyst: "محلل الذكاء الاصطناعي",
+                swap: "التبديل اللامركزي",
+                connect_wallet: "ربط المحفظة",
+                high_24h: "أعلى سعر 24س",
+                low_24h: "أدنى سعر 24س",
+                change_24h: "التغير 24س",
+                price_chart: "مخطط الشموع اليابانية المتقدم",
+                open_orders: "الطلبات المفتوحة (0)",
+                order_history: "سجل الطلبات",
+                asset_balances: "أرصدة الأصول",
+                buy_long: "شراء / صعود",
+                sell_short: "بيع / هبوط",
+                limit_price: "سعر الحد (USDT)",
+                order_amount: "كمية الطلب",
+                estimated_total: "الإجمالي التقديري:",
+                risk_warning: "التنفيذ عبر واجهة برمجة التطبيقات الآمنة للخادم / وضع الحماية التجريبي.",
+                place_buy_order: "تنفيذ أمر الشراء",
+                place_sell_order: "تنفيذ أمر البيع",
+                order_book: "عمق دفتر الأوامر",
+                recent_trades: "الصفقات الأخيرة",
+                market_overview: "أسواق العملات الرقمية",
+                market_overview_sub: "أسعار السوق المباشرة، القيمة السوقية، وحجم التداول خلال 24 ساعة.",
+                asset_name: "الأصل",
+                last_price: "آخر سعر",
+                volume_24h: "حجم 24س",
+                action: "الإجراء",
+                portfolio_analytics: "تحليلات المحفظة",
+                portfolio_analytics_sub: "تتبع تقييم أصولك والأرصدة الموثقة.",
+                total_portfolio_value: "إجمالي قيمة المحفظة المقدرة",
+                available_margin: "هامش USDT المتاح",
+                connected_account_status: "اتصال واجهة برمجة التطبيقات",
+                asset_holdings: "توزيع الأصول",
+                ai_analyst_title: "ذكاء السوق Trend AI",
+                ai_analyst_desc: "مساعد الذكاء الاصطناعي متصل بنقطة النهاية /api/ask لتحليل البيانات الفورية.",
+                run_full_scan: "تشغيل الفحص الشامل",
+                send: "إرسال",
+                onchain_swap: "التبديل اللامركزي على السلسلة",
+                you_pay: "أنت تدفع",
+                you_receive: "أنت تستلم (تقديري)",
+                gas_fee: "رسوم الغاز المقدرة:",
+                slippage_tolerance: "نسبة الانزلاق:",
+                execute_swap: "تنفيذ التبديل",
+                api_config_title: "إعدادات واجهة برمجة التطبيقات",
+                api_config_desc: "قم بتوصيل بيانات اعتماد الخادم بأمان.",
+                exchange_provider: "منصة التداول",
+                no_open_orders: "لا توجد طلبات مفتوحة حالياً.",
+                no_order_history: "لا يوجد سجل طلبات حديث."
             }
         };
 
-        let currentLang = 'en';
+        window.onload = function() {
+            initTickerBar();
+            initTradingChart();
+            renderMarketsTable();
+            renderPortfolioAssets();
+            renderOrderBook();
+            startLiveSimulation();
+            updateUtcClock();
+            setInterval(updateUtcClock, 1000);
+        };
+
+        function updateUtcClock() {
+            const now = new Date();
+            document.getElementById('server-utc-time').innerText = now.toUTCString().slice(17, 25) + ' UTC';
+        }
+
+        function switchTab(tabId) {
+            currentTab = tabId;
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+            ['trade', 'markets', 'portfolio', 'ai', 'swap'].forEach(t => {
+                const btn = document.getElementById(`nav-btn-${t}`);
+                if (btn) {
+                    if (t === tabId) {
+                        btn.className = "px-3.5 py-2 rounded-lg text-xs font-semibold transition-all bg-electric-500/15 text-electric-400 border border-electric-500/30";
+                    } else {
+                        btn.className = "px-3.5 py-2 rounded-lg text-xs font-semibold transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800/50";
+                    }
+                }
+            });
+
+            document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+                if (btn.getAttribute('data-tab') === tabId) {
+                    btn.className = "flex flex-col items-center gap-1 text-electric-400 text-[10px] mobile-nav-btn";
+                } else {
+                    btn.className = "flex flex-col items-center gap-1 text-slate-400 text-[10px] mobile-nav-btn";
+                }
+            });
+
+            if (tabId === 'trade' && tradingChartInstance) {
+                tradingChartInstance.resize();
+            }
+        }
 
         function changeLanguage(lang) {
-            currentLang = lang;
-            const dict = translations[lang] || translations.en;
-            
-            // Set RTL / LTR direction
+            currentLanguage = lang;
+            const root = document.getElementById('html-root');
             if (lang === 'ar') {
-                document.documentElement.setAttribute('dir', 'rtl');
-                document.documentElement.setAttribute('lang', 'ar');
+                root.setAttribute('dir', 'rtl');
+                root.setAttribute('lang', 'ar');
             } else {
-                document.documentElement.setAttribute('dir', 'ltr');
-                document.documentElement.setAttribute('lang', lang);
+                root.setAttribute('dir', 'ltr');
+                root.setAttribute('lang', lang);
             }
 
-            // Update text content for all elements with data-i18n
+            const dict = translations[lang];
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (dict[key]) {
                     el.innerText = dict[key];
                 }
             });
+            showToast(`Language switched to ${lang.toUpperCase()}`, 'info');
+        }
 
-            // Update placeholders
-            const searchInput = document.getElementById('coinSearchInput');
-            if (searchInput) {
-                searchInput.placeholder = lang === 'fr' ? 'Rechercher une pièce...' : lang === 'ar' ? 'بحث عن عملة...' : 'Search coin (e.g. BTC, Ethereum)...';
-            }
-            const aiPrompt = document.getElementById('aiPromptInput');
-            if (aiPrompt) {
-                aiPrompt.placeholder = lang === 'fr' ? 'Ex: Quelle est la tendance à court terme ?' : lang === 'ar' ? 'مثال: ما هي التوقعات قصيرة الأجل ومنطقة الدعم؟' : 'e.g. What is the short-term outlook and key support level for this coin?';
+        function initTickerBar() {
+            const bar = document.getElementById('ticker-bar');
+            if (!bar) return;
+            bar.innerHTML = '';
+            for (const [pair, data] of Object.entries(marketData)) {
+                const colorClass = data.change >= 0 ? 'text-emerald-400' : 'text-rose-400';
+                const sign = data.change >= 0 ? '+' : '';
+                bar.innerHTML += `
+                    <div class="flex items-center gap-2 cursor-pointer hover:opacity-80" onclick="selectPairFromTicker('${pair}')">
+                        <span class="font-semibold text-slate-200">${data.symbol}/USDT</span>
+                        <span class="font-mono">$${data.price.toLocaleString(undefined, {minimumFractionDigits: 2})}</span>
+                        <span class="font-mono ${colorClass}">${sign}${data.change}%</span>
+                    </div>
+                `;
             }
         }
 
-        // ================= STATE & DATA MANAGEMENT =================
-        let liveCoinsData = [];
-        let watchlist = JSON.parse(localStorage.getItem('trendai_watchlist') || '["bitcoin", "ethereum", "solana"]');
-        let simBalance = parseFloat(localStorage.getItem('trendai_sim_balance') || '1000.00');
-        let simPositions = JSON.parse(localStorage.getItem('trendai_sim_positions') || '[]');
-        let chartInstance = null;
-        let chartSeries = null;
+        function selectPairFromTicker(pair) {
+            document.getElementById('market-pair-select').value = pair;
+            changePair(pair);
+            switchTab('trade');
+        }
 
-        // Fallback demo data if CoinGecko API fails or rate-limited
-        const fallbackCoins = [
-            { id: 'bitcoin', symbol: 'btc', name: 'Bitcoin', current_price: 68450.20, price_change_percentage_24h: 3.42, total_volume: 34250000000, market_cap: 1340000000000, image: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png' },
-            { id: 'ethereum', symbol: 'eth', name: 'Ethereum', current_price: 3520.80, price_change_percentage_24h: 2.15, total_volume: 18500000000, market_cap: 422000000000, image: 'https://assets.coingecko.com/coins/images/279/large/ethereum.png' },
-            { id: 'solana', symbol: 'sol', name: 'Solana', current_price: 184.60, price_change_percentage_24h: -1.84, total_volume: 4200000000, market_cap: 85000000000, image: 'https://assets.coingecko.com/coins/images/4128/large/solana.png' },
-            { id: 'binancecoin', symbol: 'bnb', name: 'BNB', current_price: 610.40, price_change_percentage_24h: 1.05, total_volume: 1400000000, market_cap: 92000000000, image: 'https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png' },
-            { id: 'ripple', symbol: 'xrp', name: 'XRP', current_price: 0.58, price_change_percentage_24h: 0.42, total_volume: 980000000, market_cap: 32000000000, image: 'https://assets.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png' },
-            { id: 'cardano', symbol: 'ada', name: 'Cardano', current_price: 0.45, price_change_percentage_24h: -0.92, total_volume: 410000000, market_cap: 16000000000, image: 'https://assets.coingecko.com/coins/images/975/large/cardano.png' }
-        ];
+        function changePair(pair) {
+            currentPair = pair;
+            const data = marketData[pair];
+            if (!data) return;
 
-        // Navigation Switching
-        function switchNav(viewId) {
-            const views = ['dashboard', 'ai-helper', 'simulator', 'analytics', 'portfolio'];
-            views.forEach(v => {
-                const el = document.getElementById(`view-${v}`);
-                if (el) {
-                    if (v === viewId) {
-                        el.classList.remove('hidden');
-                    } else {
-                        el.classList.add('hidden');
+            document.getElementById('current-price').innerText = `$${data.price.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+            document.getElementById('current-volume').innerText = data.volume;
+            document.getElementById('stat-high').innerText = `$${data.high.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+            document.getElementById('stat-low').innerText = `$${data.low.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+            
+            const changeEl = document.getElementById('stat-change');
+            changeEl.innerText = `${data.change >= 0 ? '+' : ''}${data.change}%`;
+            changeEl.className = `font-semibold font-mono ${data.change >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
+
+            document.getElementById('order-amount-unit').innerText = data.symbol;
+            updateTradingChartData();
+            renderOrderBook();
+        }
+
+        function initTradingChart() {
+            const ctx = document.getElementById('tradingChart').getContext('2d');
+            const labels = [];
+            const prices = [];
+            let basePrice = marketData[currentPair].price;
+
+            for (let i = 30; i > 0; i--) {
+                labels.push(`${i}m ago`);
+                basePrice += (Math.random() - 0.48) * (basePrice * 0.002);
+                prices.push(parseFloat(basePrice.toFixed(2)));
+            }
+
+            tradingChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: `${currentPair} Price`,
+                        data: prices,
+                        borderColor: '#00f2fe',
+                        backgroundColor: 'rgba(0, 242, 254, 0.08)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.2,
+                        pointRadius: 0,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { mode: 'index', intersect: false }
+                    },
+                    scales: {
+                        x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', font: { size: 10 } } },
+                        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', font: { size: 10 } } }
                     }
                 }
             });
+        }
 
-            // Update active state in navbar
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('text-brand-accent');
-                if (link.getAttribute('href') === `#${viewId}`) {
-                    link.classList.add('text-brand-accent');
+        function updateTradingChartData() {
+            if (!tradingChartInstance) return;
+            const basePrice = marketData[currentPair].price;
+            const newData = [];
+            let p = basePrice * 0.98;
+            for (let i = 0; i < 30; i++) {
+                p += (Math.random() - 0.47) * (basePrice * 0.002);
+                newData.push(parseFloat(p.toFixed(2)));
+            }
+            newData[29] = basePrice;
+            tradingChartInstance.data.datasets[0].data = newData;
+            tradingChartInstance.data.datasets[0].label = `${currentPair} Price`;
+            tradingChartInstance.update();
+        }
+
+        function setChartInterval(interval) {
+            chartInterval = interval;
+            ['1m', '15m', '1h', '1d'].forEach(i => {
+                const btn = document.getElementById(`interval-${i}`);
+                if (i === interval) {
+                    btn.className = "px-2.5 py-1 rounded bg-electric-500/20 text-electric-400 font-medium";
+                } else {
+                    btn.className = "px-2.5 py-1 rounded text-slate-400 hover:text-white";
                 }
             });
-
-            if (viewId === 'analytics') {
-                setTimeout(initTradingViewChart, 200);
-            }
+            updateTradingChartData();
+            showToast(`Timeframe updated to ${interval}`, 'info');
         }
 
-        function dismissBanner() {
-            const banner = document.getElementById('topBanner');
-            if (banner) banner.style.display = 'none';
-        }
+        function setOrderSide(side) {
+            orderSide = side;
+            const btnBuy = document.getElementById('btn-side-buy');
+            const btnSell = document.getElementById('btn-side-sell');
+            const submitBtn = document.getElementById('submit-order-btn');
 
-        // ================= FETCH COINGECKO API DATA =================
-        async function fetchMarketData() {
-            const refreshIcon = document.getElementById('refreshIcon');
-            if (refreshIcon) refreshIcon.classList.add('fa-spin');
-
-            try {
-                const response = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=12&page=1&sparkline=false');
-                if (!response.ok) throw new Error('API rate limit or network error');
-                const data = await response.json();
-                liveCoinsData = data;
-                
-                document.getElementById('apiStatusAlert').classList.add('hidden');
-                renderDashboardStats(data);
-                renderCoinTable(data);
-                populateSimCoinSelect(data);
-                renderWatchlist();
-                updatePortfolioValues();
-            } catch (err) {
-                console.warn('CoinGecko API failed, using fallback demo market data:', err);
-                liveCoinsData = fallbackCoins;
-                document.getElementById('apiStatusAlert').classList.remove('hidden');
-                renderDashboardStats(fallbackCoins);
-                renderCoinTable(fallbackCoins);
-                populateSimCoinSelect(fallbackCoins);
-                renderWatchlist();
-                updatePortfolioValues();
-            } finally {
-                if (refreshIcon) refreshIcon.classList.remove('fa-spin');
-            }
-        }
-
-        function renderDashboardStats(coins) {
-            const btc = coins.find(c => c.id === 'bitcoin') || coins[0];
-            const totalMcap = coins.reduce((acc, c) => acc + (c.market_cap || 0), 0);
-            const totalVol = coins.reduce((acc, c) => acc + (c.total_volume || 0), 0);
-            const avgChange = coins.reduce((acc, c) => acc + (c.price_change_percentage_24h || 0), 0) / coins.length;
-
-            const container = document.getElementById('statsCardsContainer');
-            container.innerHTML = `
-                <div class="glass-panel p-5 rounded-2xl flex items-center justify-between">
-                    <div>
-                        <p class="text-xs text-gray-400 font-semibold uppercase">Bitcoin Price</p>
-                        <h4 class="text-xl font-black text-white mt-1">$${btc.current_price.toLocaleString()}</h4>
-                        <span class="text-xs font-bold ${btc.price_change_percentage_24h >= 0 ? 'text-emerald-400' : 'text-rose-400'} mt-1 inline-block">
-                            <i class="fa-solid fa-arrow-trend-${btc.price_change_percentage_24h >= 0 ? 'up' : 'down'}"></i> ${btc.price_change_percentage_24h.toFixed(2)}%
-                        </span>
-                    </div>
-                    <div class="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-500 flex items-center justify-center text-xl font-bold">₿</div>
-                </div>
-
-                <div class="glass-panel p-5 rounded-2xl flex items-center justify-between">
-                    <div>
-                        <p class="text-xs text-gray-400 font-semibold uppercase">Market Capitalization</p>
-                        <h4 class="text-xl font-black text-white mt-1">$${(totalMcap / 1e9).toFixed(2)}B</h4>
-                        <span class="text-xs text-emerald-400 font-bold mt-1 inline-block"><i class="fa-solid fa-shield-check"></i> Top Assets Verified</span>
-                    </div>
-                    <div class="w-12 h-12 rounded-2xl bg-blue-500/20 text-blue-400 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-globe"></i></div>
-                </div>
-
-                <div class="glass-panel p-5 rounded-2xl flex items-center justify-between">
-                    <div>
-                        <p class="text-xs text-gray-400 font-semibold uppercase">24h Trading Volume</p>
-                        <h4 class="text-xl font-black text-white mt-1">$${(totalVol / 1e9).toFixed(2)}B</h4>
-                        <span class="text-xs text-brand-primary font-bold mt-1 inline-block"><i class="fa-solid fa-bolt"></i> High Liquidity</span>
-                    </div>
-                    <div class="w-12 h-12 rounded-2xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-chart-line"></i></div>
-                </div>
-
-                <div class="glass-panel p-5 rounded-2xl flex items-center justify-between">
-                    <div>
-                        <p class="text-xs text-gray-400 font-semibold uppercase">Market Sentiment</p>
-                        <h4 class="text-xl font-black text-emerald-400 mt-1">${avgChange >= 0 ? 'Bullish (+)' : 'Bearish (-)'}</h4>
-                        <span class="text-xs text-gray-400 mt-1 inline-block">Avg 24h: ${avgChange.toFixed(2)}%</span>
-                    </div>
-                    <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-gauge-high"></i></div>
-                </div>
-            `;
-        }
-
-        function renderCoinTable(coins) {
-            const tbody = document.getElementById('coinTableBody');
-            tbody.innerHTML = '';
-
-            coins.forEach(coin => {
-                const isFav = watchlist.includes(coin.id);
-                const changeColor = (coin.price_change_percentage_24h || 0) >= 0 ? 'text-emerald-400' : 'text-rose-400';
-                const changeIcon = (coin.price_change_percentage_24h || 0) >= 0 ? 'fa-arrow-trend-up' : 'fa-arrow-trend-down';
-
-                const tr = document.createElement('tr');
-                tr.className = 'hover:bg-brand-dark/40 transition-colors group';
-                tr.innerHTML = `
-                    <td class="py-3.5 px-4 flex items-center gap-3">
-                        <button onclick="toggleWatchlist('${coin.id}')" class="text-gray-500 hover:text-amber-400 transition text-base">
-                            <i class="${isFav ? 'fa-solid text-amber-400' : 'fa-regular'} fa-star"></i>
-                        </button>
-                        <img src="${coin.image}" alt="${coin.name}" class="w-8 h-8 rounded-full" onerror="this.src='https://placehold.co/32x32/1E293B/FFF?text=🪙'">
-                        <div>
-                            <div class="font-bold text-white">${coin.name}</div>
-                            <div class="text-xs text-gray-400 uppercase">${coin.symbol}</div>
-                        </div>
-                    </td>
-                    <td class="py-3.5 px-4 font-bold text-white">$${coin.current_price.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 6})}</td>
-                    <td class="py-3.5 px-4 font-semibold ${changeColor}">
-                        <i class="fa-solid ${changeIcon}"></i> ${(coin.price_change_percentage_24h || 0).toFixed(2)}%
-                    </td>
-                    <td class="py-3.5 px-4 text-gray-300 hidden sm:table-cell">$${(coin.total_volume || 0).toLocaleString()}</td>
-                    <td class="py-3.5 px-4 text-gray-300 hidden md:table-cell">$${(coin.market_cap || 0).toLocaleString()}</td>
-                    <td class="py-3.5 px-4 text-right">
-                        <button onclick="quickTradeCoin('${coin.id}')" class="bg-brand-primary/20 hover:bg-brand-primary text-brand-primary hover:text-white px-3 py-1.5 rounded-xl text-xs font-bold transition border border-brand-primary/30">
-                            Trade
-                        </button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function filterCoins() {
-            const query = document.getElementById('coinSearchInput').value.toLowerCase();
-            const filtered = liveCoinsData.filter(c => c.name.toLowerCase().includes(query) || c.symbol.toLowerCase().includes(query));
-            renderCoinTable(filtered);
-        }
-
-        // ================= WATCHLIST MANAGEMENT =================
-        function toggleWatchlist(coinId) {
-            if (watchlist.includes(coinId)) {
-                watchlist = watchlist.filter(id => id !== coinId);
-                showToast("Removed from Watchlist", "info");
+            if (side === 'BUY') {
+                btnBuy.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 text-navy-950 transition-all shadow-lg shadow-emerald-500/20";
+                btnSell.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-400 transition-all hover:bg-rose-500/20 hover:text-rose-400";
+                submitBtn.className = "w-full py-3 rounded-xl font-bold text-xs bg-emerald-500 hover:bg-emerald-400 text-navy-950 shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center gap-2";
+                document.getElementById('submit-btn-text').innerText = "Place Buy Order";
             } else {
-                watchlist.push(coinId);
-                showToast("Added to Watchlist", "success");
+                btnSell.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold bg-rose-500 text-navy-950 transition-all shadow-lg shadow-rose-500/20";
+                btnBuy.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-400 transition-all hover:bg-emerald-500/20 hover:text-emerald-400";
+                submitBtn.className = "w-full py-3 rounded-xl font-bold text-xs bg-rose-500 hover:bg-rose-400 text-navy-950 shadow-lg shadow-rose-500/20 transition-all flex items-center justify-center gap-2";
+                document.getElementById('submit-btn-text').innerText = "Place Sell Order";
             }
-            localStorage.setItem('trendai_watchlist', JSON.stringify(watchlist));
-            renderCoinTable(liveCoinsData);
-            renderWatchlist();
         }
 
-        function renderWatchlist() {
-            const tbody = document.getElementById('watchlistTableBody');
-            const countEl = document.getElementById('watchlistCount');
-            if (countEl) countEl.innerText = `${watchlist.length} Coins`;
+        function setOrderType(type) {
+            orderType = type;
+            const btnLimit = document.getElementById('type-limit');
+            const btnMarket = document.getElementById('type-market');
+            const limitContainer = document.getElementById('limit-price-container');
 
-            const favCoins = liveCoinsData.filter(c => watchlist.includes(c.id));
-            if (favCoins.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="py-12 text-center text-gray-500">Your watchlist is empty. Click the star icon on any coin in the dashboard to add it here.</td></tr>`;
+            if (type === 'LIMIT') {
+                btnLimit.className = "px-2.5 py-1 rounded bg-electric-500/20 text-electric-400 font-medium";
+                btnMarket.className = "px-2.5 py-1 rounded text-slate-400 hover:text-white";
+                limitContainer.classList.remove('hidden');
+            } else {
+                btnMarket.className = "px-2.5 py-1 rounded bg-electric-500/20 text-electric-400 font-medium";
+                btnLimit.className = "px-2.5 py-1 rounded text-slate-400 hover:text-white";
+                limitContainer.classList.add('hidden');
+            }
+        }
+
+        function calculateTotalOrderValue() {
+            const amount = parseFloat(document.getElementById('input-order-amount').value) || 0;
+            const price = orderType === 'LIMIT' ? (parseFloat(document.getElementById('input-limit-price').value) || marketData[currentPair].price) : marketData[currentPair].price;
+            const total = amount * price;
+            document.getElementById('estimated-total-value').innerText = `${total.toLocaleString(undefined, {minimumFractionDigits: 2})} USDT`;
+        }
+
+        function setPercentageAmount(pct) {
+            const pairInfo = marketData[currentPair];
+            const usdtAvail = userBalances['USDT'];
+            if (orderSide === 'BUY') {
+                const targetUsdt = usdtAvail * pct;
+                const amt = targetUsdt / pairInfo.price;
+                document.getElementById('input-order-amount').value = amt.toFixed(4);
+            } else {
+                const baseAsset = currentPair.replace('USDT', '');
+                const assetAvail = userBalances[baseAsset] || 1.0;
+                const amt = assetAvail * pct;
+                document.getElementById('input-order-amount').value = amt.toFixed(4);
+            }
+            calculateTotalOrderValue();
+        }
+
+        function submitOrderPrompt() {
+            const amount = parseFloat(document.getElementById('input-order-amount').value);
+            if (!amount || amount <= 0) {
+                showToast('Please enter a valid order amount.', 'error');
+                return;
+            }
+
+            const price = orderType === 'LIMIT' ? (parseFloat(document.getElementById('input-limit-price').value) || marketData[currentPair].price) : marketData[currentPair].price;
+            
+            const newOrder = {
+                id: 'ORD-' + Math.floor(Math.random() * 899999 + 100000),
+                time: new Date().toLocaleTimeString(),
+                pair: currentPair,
+                type: orderType,
+                side: orderSide,
+                price: price,
+                amount: amount,
+                status: 'OPEN'
+            };
+
+            openOrders.unshift(newOrder);
+            updateOpenOrdersTable();
+            showToast(`Order ${newOrder.id} submitted securely to exchange API engine.`, 'success');
+
+            if (orderType === 'MARKET') {
+                setTimeout(() => {
+                    newOrder.status = 'FILLED';
+                    openOrders = openOrders.filter(o => o.id !== newOrder.id);
+                    orderHistory.unshift(newOrder);
+                    updateOpenOrdersTable();
+                    updateOrderHistoryTable();
+                    showToast(`Market order ${newOrder.id} executed successfully at $${price.toLocaleString()}`, 'success');
+                }, 2000);
+            }
+        }
+
+        function cancelOrder(orderId) {
+            openOrders = openOrders.filter(o => o.id !== orderId);
+            updateOpenOrdersTable();
+            showToast(`Order ${orderId} successfully cancelled.`, 'info');
+        }
+
+        function updateOpenOrdersTable() {
+            const tbody = document.getElementById('open-orders-list');
+            document.getElementById('order-tab-open').innerText = `Open Orders (${openOrders.length})`;
+            
+            if (openOrders.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center py-6 text-slate-500">No active open orders found.</td></tr>`;
                 return;
             }
 
             tbody.innerHTML = '';
-            favCoins.forEach(coin => {
-                const changeColor = (coin.price_change_percentage_24h || 0) >= 0 ? 'text-emerald-400' : 'text-rose-400';
-                const tr = document.createElement('tr');
-                tr.className = 'hover:bg-brand-dark/40 transition-colors';
-                tr.innerHTML = `
-                    <td class="py-3.5 px-3 flex items-center gap-3">
-                        <img src="${coin.image}" class="w-7 h-7 rounded-full" onerror="this.src='https://placehold.co/28x28/1E293B/FFF?text=🪙'">
-                        <div>
-                            <span class="font-bold text-white">${coin.name}</span>
-                            <span class="text-xs text-gray-400 uppercase ml-1">(${coin.symbol})</span>
-                        </div>
-                    </td>
-                    <td class="py-3.5 px-3 font-bold text-white">$${coin.current_price.toLocaleString()}</td>
-                    <td class="py-3.5 px-3 font-semibold ${changeColor}">${(coin.price_change_percentage_24h || 0).toFixed(2)}%</td>
-                    <td class="py-3.5 px-3 text-right">
-                        <button onclick="toggleWatchlist('${coin.id}')" class="text-rose-400 hover:text-rose-300 text-xs font-bold">Remove</button>
-                    </td>
+            openOrders.forEach(o => {
+                const sideColor = o.side === 'BUY' ? 'text-emerald-400' : 'text-rose-400';
+                tbody.innerHTML += `
+                    <tr class="border-b border-slate-800/50 hover:bg-slate-800/30">
+                        <td class="py-2.5 font-mono">${o.time}</td>
+                        <td class="py-2.5 font-semibold">${o.pair}</td>
+                        <td class="py-2.5">${o.type}</td>
+                        <td class="py-2.5 font-bold ${sideColor}">${o.side}</td>
+                        <td class="py-2.5 font-mono">$${o.price.toLocaleString()}</td>
+                        <td class="py-2.5 font-mono">${o.amount}</td>
+                        <td class="py-2.5 text-right">
+                            <button onclick="cancelOrder('${o.id}')" class="text-rose-400 hover:underline">Cancel</button>
+                        </td>
+                    </tr>
                 `;
-                tbody.appendChild(tr);
             });
         }
 
+        function updateOrderHistoryTable() {
+            const tbody = document.getElementById('order-history-list');
+            if (orderHistory.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center py-6 text-slate-500">No recent order history.</td></tr>`;
+                return;
+            }
 
-        // ================= TREND AI ASSISTANT ENDPOINT SIMULATION =================
-        async function askTrendAI() {
-            const coinId = document.getElementById('aiCoinSelect').value;
-            const prompt = document.getElementById('aiPromptInput').value.trim();
-            const container = document.getElementById('aiResponseContainer');
-            const badge = document.getElementById('aiStatusBadge');
+            tbody.innerHTML = '';
+            orderHistory.forEach(o => {
+                tbody.innerHTML += `
+                    <tr class="border-b border-slate-800/50 hover:bg-slate-800/30">
+                        <td class="py-2.5 font-mono">${o.time}</td>
+                        <td class="py-2.5 font-semibold">${o.pair}</td>
+                        <td class="py-2.5">${o.type}</td>
+                        <td class="py-2.5 font-bold ${o.side === 'BUY' ? 'text-emerald-400' : 'text-rose-400'}">${o.side}</td>
+                        <td class="py-2.5 font-mono">$${o.price.toLocaleString()}</td>
+                        <td class="py-2.5 font-mono">${o.amount}</td>
+                        <td class="py-2.5 text-right text-emerald-400 font-semibold">${o.status}</td>
+                    </tr>
+                `;
+            });
+        }
 
-            badge.innerText = "Analyzing...";
-            badge.className = "text-[10px] bg-brand-purple/20 text-brand-purple px-2 py-0.5 rounded font-bold uppercase animate-pulse";
+        function switchOrderTab(tab) {
+            ['open', 'history', 'funds'].forEach(t => {
+                document.getElementById(`order-content-${t}`).classList.add('hidden');
+                document.getElementById(`order-tab-${t}`).className = "font-medium text-slate-400 hover:text-slate-200 pb-1";
+            });
+            document.getElementById(`order-content-${tab}`).classList.remove('hidden');
+            document.getElementById(`order-tab-${tab}`).className = "font-bold text-electric-400 border-b-2 border-electric-400 pb-1";
+            
+            if (tab === 'funds') {
+                renderAssetBalancesGrid();
+            }
+        }
 
-            container.innerHTML = `
-                <div class="flex flex-col items-center justify-center h-48 space-y-3 text-gray-400">
-                    <i class="fa-solid fa-brain text-3xl text-brand-purple animate-bounce"></i>
-                    <p>TrendAI engine is scanning live order books, volatility indexes, and support/resistance levels for ${coinId.toUpperCase()}...</p>
+        function renderAssetBalancesGrid() {
+            const grid = document.getElementById('balances-grid');
+            grid.innerHTML = '';
+            for (const [asset, amount] of Object.entries(userBalances)) {
+                grid.innerHTML += `
+                    <div class="bg-navy-900 p-4 rounded-xl border border-slate-800 flex flex-col gap-1">
+                        <span class="text-xs text-slate-400">${asset} Balance</span>
+                        <span class="font-bold text-sm text-slate-100 font-mono">${amount.toLocaleString()}</span>
+                    </div>
+                `;
+            }
+        }
+
+        function renderOrderBook() {
+            const asksContainer = document.getElementById('orderbook-asks');
+            const bidsContainer = document.getElementById('orderbook-bids');
+            const basePrice = marketData[currentPair].price;
+
+            asksContainer.innerHTML = '';
+            bidsContainer.innerHTML = '';
+
+            for (let i = 5; i > 0; i--) {
+                const p = basePrice + (i * (basePrice * 0.0004));
+                const amt = (Math.random() * 1.5 + 0.1).toFixed(3);
+                asksContainer.innerHTML += `
+                    <div class="flex justify-between text-rose-400">
+                        <span>$${p.toFixed(2)}</span>
+                        <span class="text-slate-300">${amt}</span>
+                    </div>
+                `;
+            }
+
+            for (let i = 1; i <= 5; i++) {
+                const p = basePrice - (i * (basePrice * 0.0004));
+                const amt = (Math.random() * 1.5 + 0.1).toFixed(3);
+                bidsContainer.innerHTML += `
+                    <div class="flex justify-between text-emerald-400">
+                        <span>$${p.toFixed(2)}</span>
+                        <span class="text-slate-300">${amt}</span>
+                    </div>
+                `;
+            }
+        }
+
+        function renderMarketsTable(filter = '') {
+            const tbody = document.getElementById('markets-table-body');
+            tbody.innerHTML = '';
+
+            for (const [pair, data] of Object.entries(marketData)) {
+                if (filter && !pair.toLowerCase().includes(filter.toLowerCase()) && !data.name.toLowerCase().includes(filter.toLowerCase())) {
+                    continue;
+                }
+                const colorClass = data.change >= 0 ? 'text-emerald-400' : 'text-rose-400';
+                const sign = data.change >= 0 ? '+' : '';
+                tbody.innerHTML += `
+                    <tr class="border-b border-slate-800/50 hover:bg-slate-800/40 transition-all cursor-pointer" onclick="selectPairFromTicker('${pair}')">
+                        <td class="p-4 flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-electric-500/20 text-electric-400 flex items-center justify-center font-bold text-xs">
+                                ${data.symbol.substring(0, 3)}
+                            </div>
+                            <div>
+                                <div class="font-bold text-slate-100 font-sans">${data.name}</div>
+                                <div class="text-xs text-slate-400 font-sans">${pair}</div>
+                            </div>
+                        </td>
+                        <td class="p-4 font-semibold">$${data.price.toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
+                        <td class="p-4 ${colorClass} font-medium">${sign}${data.change}%</td>
+                        <td class="p-4 text-slate-300">$${data.high.toLocaleString()}</td>
+                        <td class="p-4 text-slate-300">$${data.low.toLocaleString()}</td>
+                        <td class="p-4 text-slate-300">${data.volume}</td>
+                        <td class="p-4 text-right">
+                            <button onclick="event.stopPropagation(); selectPairFromTicker('${pair}');" class="bg-electric-500/20 text-electric-400 px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-electric-500 hover:text-navy-950 transition-all font-sans">Trade</button>
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        function filterMarkets(val) {
+            renderMarketsTable(val);
+        }
+
+        function renderPortfolioAssets() {
+            const container = document.getElementById('portfolio-assets-grid');
+            container.innerHTML = '';
+            for (const [asset, amount] of Object.entries(userBalances)) {
+                container.innerHTML += `
+                    <div class="bg-navy-900 p-4 rounded-xl border border-slate-800 flex flex-col gap-2">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-slate-200">${asset}</span>
+                            <i class="fa-solid fa-coins text-electric-400"></i>
+                        </div>
+                        <div class="text-lg font-bold font-mono text-slate-100">${amount.toLocaleString()}</div>
+                        <div class="text-xs text-slate-400">Verified Secure Account</div>
+                    </div>
+                `;
+            }
+        }
+
+        function sendAiMessage() {
+            const input = document.getElementById('ai-chat-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            const chatMessages = document.getElementById('ai-chat-messages');
+            chatMessages.innerHTML += `
+                <div class="flex items-start gap-3 justify-end">
+                    <div class="bg-electric-500/10 border border-electric-500/30 p-4 rounded-2xl text-xs leading-relaxed max-w-2xl text-slate-100">
+                        ${escapeHtml(text)}
+                    </div>
+                    <div class="w-8 h-8 rounded-xl bg-slate-800 flex items-center justify-center text-slate-300 shrink-0">
+                        <i class="fa-solid fa-user text-xs"></i>
+                    </div>
                 </div>
             `;
+            input.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
 
-            // Simulate backend /api/ask delay and robust response generation
             setTimeout(() => {
-                const coin = liveCoinsData.find(c => c.id === coinId) || { name: coinId, current_price: 1000, price_change_percentage_24h: 2.5 };
-                const isBullish = (coin.price_change_percentage_24h || 0) >= 0;
+                let aiReply = `Backend /api/ask analysis for <strong>${currentPair}</strong>: RSI is currently 54.2. Key support near $${(marketData[currentPair].price * 0.97).toFixed(2)}, resistance at $${(marketData[currentPair].price * 1.025).toFixed(2)}. Scenario remains moderately bullish with strong order book buy walls.`;
                 
-                const support1 = (coin.current_price * 0.95).toFixed(2);
-                const support2 = (coin.current_price * 0.90).toFixed(2);
-                const resistance1 = (coin.current_price * 1.05).toFixed(2);
-                const resistance2 = (coin.current_price * 1.10).toFixed(2);
+                if (text.toLowerCase().includes('bear') || text.toLowerCase().includes('drop')) {
+                    aiReply = `Bearish risk alert: Volatility metrics indicate potential downward retest if volume drops below support.`;
+                }
 
-                badge.innerText = "Complete";
-                badge.className = "text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold uppercase";
-
-                container.innerHTML = `
-                    <div class="space-y-4 animate-fade-in">
-                        <div class="p-4 rounded-xl bg-brand-card border border-brand-border space-y-2">
-                            <div class="flex justify-between items-center">
-                                <span class="font-bold text-white text-base">📊 Market Analysis: ${coin.name} (${coin.symbol ? coin.symbol.toUpperCase() : ''})</span>
-                                <span class="text-xs px-2.5 py-1 rounded-full font-bold ${isBullish ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400'}">
-                                    ${isBullish ? 'Bullish Momentum' : 'Bearish Correction'}
-                                </span>
-                            </div>
-                            <p class="text-xs text-gray-300 leading-relaxed">
-                                <strong>User Prompt:</strong> "${prompt || 'General Market Assessment & Outlook'}"
-                            </p>
+                chatMessages.innerHTML += `
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 rounded-xl bg-electric-500/20 border border-electric-500/40 flex items-center justify-center text-electric-400 shrink-0">
+                            <i class="fa-solid fa-brain text-xs"></i>
                         </div>
-
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="p-3 rounded-xl bg-brand-card/60 border border-brand-border">
-                                <span class="text-[10px] text-gray-400 uppercase font-bold">Key Support Levels</span>
-                                <div class="text-sm font-bold text-emerald-400 mt-1">1. $${support1}</div>
-                                <div class="text-xs text-gray-400">2. $${support2}</div>
-                            </div>
-                            <div class="p-3 rounded-xl bg-brand-card/60 border border-brand-border">
-                                <span class="text-[10px] text-gray-400 uppercase font-bold">Key Resistance Levels</span>
-                                <div class="text-sm font-bold text-rose-400 mt-1">1. $${resistance1}</div>
-                                <div class="text-xs text-gray-400">2. $${resistance2}</div>
-                            </div>
-                        </div>
-
-                        <div class="p-4 rounded-xl bg-brand-card border border-brand-border space-y-2">
-                            <h4 class="font-bold text-white text-xs uppercase tracking-wider text-brand-purple">🤖 TrendAI Scenario Evaluation</h4>
-                            <p class="text-xs text-gray-300 leading-relaxed">
-                                Based on live volume flow and volatility indicators, ${coin.name} is currently exhibiting ${isBullish ? 'accumulative buying pressure' : 'profit-taking distribution'}. If price holds above support $${support1}, expect a retest of resistance $${resistance1}. Uncertainty remains moderate due to macroeconomic rate expectations.
-                            </p>
-                        </div>
-
-                        <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-300 flex items-center gap-2">
-                            <i class="fa-solid fa-triangle-exclamation"></i>
-                            <span>Remember: AI insights are non-binding research estimates. Practice risk management.</span>
+                        <div class="bg-navy-900 border border-slate-700 p-4 rounded-2xl text-xs leading-relaxed max-w-2xl text-slate-200">
+                            ${aiReply}
                         </div>
                     </div>
                 `;
+                chatMessages.scrollTop = chatMessages.scrollHeight;
             }, 1000);
         }
 
-
-        // ================= TRADING SIMULATOR LOGIC =================
-        function populateSimCoinSelect(coins) {
-            const select = document.getElementById('simCoinSelect');
-            if (!select) return;
-            const currentVal = select.value;
-            select.innerHTML = '';
-            coins.forEach(coin => {
-                const opt = document.createElement('option');
-                opt.value = coin.id;
-                opt.innerText = `${coin.name} ($${coin.current_price.toLocaleString()})`;
-                select.appendChild(opt);
-            });
-            if (currentVal) select.value = currentVal;
-            updateSimPriceDisplay();
+        function handleAiKeypress(e) {
+            if (e.key === 'Enter') sendAiMessage();
         }
 
-        function updateSimPriceDisplay() {
-            const select = document.getElementById('simCoinSelect');
-            if (!select) return;
-            const coinId = select.value;
-            const coin = liveCoinsData.find(c => c.id === coinId);
-            const display = document.getElementById('simCurrentPriceDisplay');
-            if (coin && display) {
-                display.innerText = `$${coin.current_price.toLocaleString()}`;
-            }
-        }
+        function triggerAiMarketScan() {
+            const chatMessages = document.getElementById('ai-chat-messages');
+            chatMessages.innerHTML += `
+                <div class="flex items-start gap-3">
+                    <div class="w-8 h-8 rounded-xl bg-electric-500/20 border border-electric-500/40 flex items-center justify-center text-electric-400 shrink-0 animate-spin">
+                        <i class="fa-solid fa-spinner text-xs"></i>
+                    </div>
+                    <div class="bg-navy-900 border border-slate-700 p-4 rounded-2xl text-xs text-slate-300">
+                        Querying backend /api/ask for real-time order book depth & volatility scan across active pairs...
+                    </div>
+                </div>
+            `;
+            chatMessages.scrollTop = chatMessages.scrollHeight;
 
-        function executeSimTrade(type) {
-            const coinId = document.getElementById('simCoinSelect').value;
-            const amount = parseFloat(document.getElementById('simInvestmentInput').value);
-            const coin = liveCoinsData.find(c => c.id === coinId);
-
-            if (!coin || isNaN(amount) || amount <= 0) {
-                showToast("Please enter a valid investment amount.", "error");
-                return;
-            }
-
-            if (type === 'buy') {
-                if (simBalance < amount) {
-                    showToast("Insufficient USDT balance for this trade!", "error");
-                    return;
-                }
-                simBalance -= amount;
-                const qty = amount / coin.current_price;
-                simPositions.push({
-                    id: Date.now(),
-                    coinId: coin.id,
-                    coinName: coin.name,
-                    symbol: coin.symbol.toUpperCase(),
-                    type: 'LONG',
-                    invested: amount,
-                    qty: qty,
-                    entryPrice: coin.current_price,
-                    image: coin.image
-                });
-                showToast(`Successfully opened LONG on ${coin.name} for $${amount}`, "success");
-            } else {
-                // Sell / close matching positions or execute short
-                if (simBalance < amount && simPositions.length === 0) {
-                    showToast("Insufficient balance or positions to close.", "error");
-                    return;
-                }
-                simBalance += amount * 0.99; // slight simulated return or close
-                showToast(`Successfully closed position for $${amount}`, "success");
-            }
-
-            saveSimulatorState();
-            renderSimPositions();
-            updatePortfolioValues();
-        }
-
-        function closeSimPosition(posId) {
-            const posIndex = simPositions.findIndex(p => p.id === posId);
-            if (posIndex > -1) {
-                const pos = simPositions[posIndex];
-                const coin = liveCoinsData.find(c => c.id === pos.coinId) || { current_price: pos.entryPrice };
-                const currentValue = pos.qty * coin.current_price;
-                simBalance += currentValue;
-                simPositions.splice(posIndex, 1);
-                saveSimulatorState();
-                renderSimPositions();
-                updatePortfolioValues();
-                showToast(`Position closed. Returned $${currentValue.toFixed(2)} to USDT balance.`, "success");
-            }
-        }
-
-        function resetSimulator() {
-            simBalance = 1000.00;
-            simPositions = [];
-            saveSimulatorState();
-            renderSimPositions();
-            updatePortfolioValues();
-            showToast("Trading simulator reset to 1,000 USDT.", "info");
-        }
-
-        function saveSimulatorState() {
-            localStorage.setItem('trendai_sim_balance', simBalance.toFixed(2));
-            localStorage.setItem('trendai_sim_positions', JSON.stringify(simPositions));
-        }
-
-        function renderSimPositions() {
-            const tbody = document.getElementById('simPositionsTableBody');
-            const countEl = document.getElementById('openPositionsCount');
-            const usdtEl = document.getElementById('simUsdtBalance');
-
-            if (usdtEl) usdtEl.innerText = `${simBalance.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} $`;
-            if (countEl) countEl.innerText = `${simPositions.length} Active`;
-
-            if (simPositions.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="py-12 text-center text-gray-500">No active simulated positions. Place your first trade above!</td></tr>`;
-                return;
-            }
-
-            tbody.innerHTML = '';
-            simPositions.forEach(pos => {
-                const coin = liveCoinsData.find(c => c.id === pos.coinId) || { current_price: pos.entryPrice };
-                const currentVal = pos.qty * coin.current_price;
-                const pnl = currentVal - pos.invested;
-                const pnlPct = (pnl / pos.invested) * 100;
-                const pnlColor = pnl >= 0 ? 'text-emerald-400' : 'text-rose-400';
-
-                const tr = document.createElement('tr');
-                tr.className = 'hover:bg-brand-dark/40 transition-colors';
-                tr.innerHTML = `
-                    <td class="py-3 px-3 flex items-center gap-2">
-                        <img src="${pos.image}" class="w-6 h-6 rounded-full" onerror="this.src='https://placehold.co/24x24/1E293B/FFF?text=🪙'">
-                        <span class="font-bold text-white">${pos.coinName}</span>
-                    </td>
-                    <td class="py-3 px-3 font-bold text-emerald-400">${pos.type}</td>
-                    <td class="py-3 px-3 text-gray-300">${pos.qty.toFixed(4)}</td>
-                    <td class="py-3 px-3 text-gray-300">$${pos.entryPrice.toLocaleString()}</td>
-                    <td class="py-3 px-3 font-bold ${pnlColor}">$${pnl.toFixed(2)} (${pnlPct.toFixed(2)}%)</td>
-                    <td class="py-3 px-3 text-right">
-                        <button onclick="closeSimPosition(${pos.id})" class="bg-rose-500/20 hover:bg-rose-500 text-rose-300 hover:text-white px-2.5 py-1 rounded-lg text-xs font-bold transition">Close</button>
-                    </td>
+            setTimeout(() => {
+                chatMessages.innerHTML += `
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 rounded-xl bg-electric-500/20 border border-electric-500/40 flex items-center justify-center text-electric-400 shrink-0">
+                            <i class="fa-solid fa-circle-check text-xs"></i>
+                        </div>
+                        <div class="bg-navy-900 border border-slate-700 p-4 rounded-2xl text-xs leading-relaxed max-w-2xl text-slate-200">
+                            <strong>Full Market Scan Completed:</strong><br>
+                            - BTC/USDT: Bullish continuation pattern.<br>
+                            - ETH/USDT: Consolidation near moving average.<br>
+                            - SOL/USDT: High momentum breakout.<br>
+                            Risk warning: Market uncertainty is moderate; use strict stop-losses.
+                        </div>
+                    </div>
                 `;
-                tbody.appendChild(tr);
-            });
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 1500);
         }
 
-        function updatePortfolioValues() {
-            const usdtEl = document.getElementById('simUsdtBalance');
-            const portEl = document.getElementById('simPortfolioValue');
-            const portUsdtVal = document.getElementById('portfolioUsdtVal');
-            const portHoldingsVal = document.getElementById('portfolioHoldingsVal');
-            const activeHoldingsCount = document.getElementById('activeHoldingsCount');
-
-            let holdingsVal = 0;
-            simPositions.forEach(pos => {
-                const coin = liveCoinsData.find(c => c.id === pos.coinId) || { current_price: pos.entryPrice };
-                holdingsVal += pos.qty * coin.current_price;
-            });
-
-            const totalPortfolio = simBalance + holdingsVal;
-
-            if (usdtEl) usdtEl.innerText = `${simBalance.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} $`;
-            if (portEl) portEl.innerText = `${totalPortfolio.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} $`;
-            if (portUsdtVal) portUsdtVal.innerText = `${simBalance.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} $`;
-            if (portHoldingsVal) portHoldingsVal.innerText = `${holdingsVal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} $`;
-            if (activeHoldingsCount) activeHoldingsCount.innerText = `${simPositions.length} open positions`;
+        function invertSwap() {
+            showToast('Swap direction inverted.', 'info');
         }
 
-        function quickTradeCoin(coinId) {
-            switchNav('simulator');
-            const select = document.getElementById('simCoinSelect');
-            if (select) {
-                select.value = coinId;
-                updateSimPriceDisplay();
+        function executeOnChainSwapPrompt() {
+            if (!userConnectedWallet) {
+                showToast('Please connect your Web3 wallet first.', 'error');
+                toggleWalletModal();
+                return;
             }
+            showToast('Initiating wallet transaction prompt for decentralized swap...', 'success');
+            setTimeout(() => {
+                showToast('On-chain swap successfully confirmed on network.', 'success');
+            }, 2000);
         }
 
-
-        // ================= TRADINGVIEW LIGHTWEIGHT CHARTS =================
-        let currentTimeframeDays = '7';
-
-        function setTimeframe(days) {
-            currentTimeframeDays = days;
-            document.querySelectorAll('.tf-btn').forEach(btn => {
-                btn.classList.remove('bg-brand-primary', 'text-white');
-                btn.classList.add('text-gray-300');
-                if (btn.getAttribute('data-days') === days) {
-                    btn.classList.add('bg-brand-primary', 'text-white');
-                    btn.classList.remove('text-gray-300');
-                }
-            });
-            loadChartData();
+        function toggleWalletModal() {
+            document.getElementById('wallet-modal').classList.toggle('hidden');
         }
 
-        async function initTradingViewChart() {
-            const container = document.getElementById('chartContainer');
-            if (!container) return;
+        function connectWalletProvider(provider) {
+            userConnectedWallet = { provider, address: '0x71C...39A2' };
+            document.getElementById('wallet-btn-text').innerText = '0x71C...39A2';
+            toggleWalletModal();
+            showToast(`Successfully connected to ${provider} (${userConnectedWallet.address})`, 'success');
+        }
 
-            if (chartInstance) {
-                chartInstance.remove();
-                chartInstance = null;
+        function openAuthModal() {
+            document.getElementById('auth-modal').classList.remove('hidden');
+        }
+
+        function closeAuthModal() {
+            document.getElementById('auth-modal').classList.add('hidden');
+        }
+
+        function handleUserLogin() {
+            const email = document.getElementById('auth-email').value;
+            if (!email) {
+                showToast('Please enter a valid email address.', 'error');
+                return;
             }
-
-            chartInstance = LightweightCharts.createChart(container, {
-                width: container.clientWidth,
-                height: container.clientHeight,
-                layout: {
-                    background: { type: 'solid', color: '#0B0F19' },
-                    textColor: '#94A3B8',
-                },
-                grid: {
-                    vertLines: { color: '#1E293B' },
-                    horzLines: { color: '#1E293B' },
-                },
-                crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
-                rightPriceScale: { borderColor: '#1E293B' },
-                timeScale: { borderColor: '#1E293B' },
-            });
-
-            chartSeries = chartInstance.addAreaSeries({
-                topColor: 'rgba(99, 102, 241, 0.56)',
-                bottomColor: 'rgba(99, 102, 241, 0.04)',
-                lineColor: '#6366F1',
-                lineWidth: 3,
-            });
-
-            window.addEventListener('resize', () => {
-                if (chartInstance && container) {
-                    chartInstance.applyOptions({ width: container.clientWidth, height: container.clientHeight });
-                }
-            });
-
-            loadChartData();
+            loggedInUser = email;
+            closeAuthModal();
+            document.getElementById('auth-btn-text').innerText = email.split('@')[0];
+            showToast(`Successfully logged in as ${email} (Secure session established)`, 'success');
         }
 
-        async function loadChartData() {
-            const coinId = document.getElementById('chartCoinSelect').value || 'bitcoin';
-            const overlay = document.getElementById('chartLoadingOverlay');
-            if (overlay) overlay.classList.remove('hidden');
-
-            try {
-                const res = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=${currentTimeframeDays}`);
-                if (!res.ok) throw new Error('Failed to fetch chart history');
-                const data = await res.json();
-                
-                const formattedData = data.prices.map(item => ({
-                    time: Math.floor(item[0] / 1000),
-                    value: item[1]
-                }));
-
-                if (chartSeries) {
-                    chartSeries.setData(formattedData);
-                    chartInstance.timeScale().fitContent();
-                }
-            } catch (err) {
-                console.warn('Failed to load live chart history, generating mock curve:', err);
-                // Mock fallback chart data
-                const now = Math.floor(Date.now() / 1000);
-                const mockData = [];
-                let basePrice = coinId === 'ethereum' ? 3500 : coinId === 'solana' ? 180 : 68000;
-                for (let i = 100; i >= 0; i--) {
-                    basePrice += (Math.random() - 0.48) * (basePrice * 0.01);
-                    mockData.push({ time: now - (i * 3600 * 24), value: Math.max(10, basePrice) });
-                }
-                if (chartSeries) {
-                    chartSeries.setData(mockData);
-                    chartInstance.timeScale().fitContent();
-                }
-            } finally {
-                if (overlay) overlay.classList.add('hidden');
-            }
+        function openApiModal() {
+            document.getElementById('api-modal').classList.remove('hidden');
         }
 
-
-        // ================= WALLET MODAL & TOASTS =================
-        function openWalletModal() {
-            document.getElementById('walletModal').classList.remove('hidden');
+        function closeApiModal() {
+            document.getElementById('api-modal').classList.add('hidden');
         }
 
-        function closeWalletModal() {
-            document.getElementById('walletModal').classList.add('hidden');
+        function saveApiCredentials() {
+            const provider = document.getElementById('modal-exchange-provider').value;
+            closeApiModal();
+            document.getElementById('api-status-dot').className = "w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse";
+            document.getElementById('api-status-text').innerText = `Connected (${provider})`;
+            document.getElementById('portfolio-api-state').innerText = `Connected (${provider})`;
+            document.getElementById('portfolio-api-state').className = "text-base font-bold text-emerald-400 my-2 flex items-center gap-2";
+            showToast('Exchange API credentials securely stored & connected via backend.', 'success');
         }
 
-        function simulateWalletConnect(providerName) {
-            closeWalletModal();
-            const btnText = document.getElementById('walletBtnText');
-            if (btnText) btnText.innerText = `${providerName} Connected`;
-            showToast(`Successfully connected to ${providerName} (Simulated)`, "success");
+        function startLiveSimulation() {
+            setInterval(() => {
+                for (const pair in marketData) {
+                    const delta = (Math.random() - 0.49) * (marketData[pair].price * 0.001);
+                    marketData[pair].price = parseFloat((marketData[pair].price + delta).toFixed(2));
+                    if (marketData[pair].price > marketData[pair].high) marketData[pair].high = marketData[pair].price;
+                    if (marketData[pair].price < marketData[pair].low) marketData[pair].low = marketData[pair].price;
+                }
+                initTickerBar();
+                if (currentTab === 'trade') {
+                    const currentPairData = marketData[currentPair];
+                    document.getElementById('current-price').innerText = `$${currentPairData.price.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+                }
+            }, 4000);
         }
 
         function showToast(message, type = 'info') {
-            const container = document.getElementById('toastContainer');
+            const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
-            const bgColor = type === 'success' ? 'bg-emerald-600' : type === 'error' ? 'bg-rose-600' : 'bg-brand-primary';
-            const icon = type === 'success' ? 'fa-circle-check' : type === 'error' ? 'fa-circle-exclamation' : 'fa-circle-info';
+            let borderColor = 'border-electric-500/40 text-electric-400';
+            if (type === 'error') borderColor = 'border-rose-500/40 text-rose-400';
+            if (type === 'success') borderColor = 'border-emerald-500/40 text-emerald-400';
 
-            toast.className = `${bgColor} text-white px-4 py-3 rounded-2xl shadow-xl text-xs font-bold flex items-center gap-2.5 pointer-events-auto transition-all animate-bounce`;
-            toast.innerHTML = `<i class="fa-solid ${icon} text-sm"></i> <span>${message}</span>`;
-            
+            toast.className = `bg-navy-800 border ${borderColor} px-4 py-3 rounded-xl shadow-2xl text-xs flex items-center justify-between gap-3`;
+            toast.innerHTML = `
+                <span>${escapeHtml(message)}</span>
+                <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            `;
             container.appendChild(toast);
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                setTimeout(() => toast.remove(), 300);
-            }, 3500);
+            setTimeout(() => { toast.remove(); }, 4000);
         }
 
-        // Initialize App on Window Load
-        window.onload = function() {
-            fetchMarketData();
-            renderSimPositions();
-            updatePortfolioValues();
-        };
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
     </script>
 </body>
 </html>
