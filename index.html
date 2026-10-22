@@ -1497,6 +1497,391 @@
   });
 })();
 </script>
+<!DOCTYPE html>
+<html lang="en" class="dark" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TREND AI CRYPTO PRO — Unified Professional Trading Platform</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            navy: { 950: '#030712', 900: '#0b0f19', 800: '#111827', 700: '#1f2937' },
+            electric: { DEFAULT: '#00f2fe', dark: '#00c6ff' }
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
+
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #030712; color: #f3f4f6; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0b0f19; }
+    ::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #00f2fe; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- TOP HEADER -->
+  <header class="bg-navy-900 border-b border-navy-800 sticky top-0 z-50 px-4 py-3 flex items-center justify-between">
+    <div class="flex items-center space-x-3">
+      <div class="bg-gradient-to-tr from-electric to-blue-600 p-2 rounded-xl text-navy-950 shadow-lg shadow-electric/20">
+        <i data-lucide="trending-up" class="w-6 h-6 stroke-[2.5]"></i>
+      </div>
+      <div>
+        <h1 id="brand-title" class="font-bold text-lg tracking-wider bg-gradient-to-r from-white via-gray-200 to-electric bg-clip-text text-transparent">
+          TREND AI CRYPTO PRO
+        </h1>
+        <span class="text-xs text-electric flex items-center gap-1">
+          <i data-lucide="shield-check" class="w-3 h-3"></i> Unified Real-Money DEX & AI Terminal
+        </span>
+      </div>
+    </div>
+
+    <div class="flex items-center space-x-3">
+      <!-- Language Selector -->
+      <div class="flex bg-navy-950 border border-navy-800 rounded-lg p-0.5 text-xs">
+        <button onclick="setLanguage('en')" id="lang-en" class="px-2.5 py-1 rounded bg-navy-800 text-electric font-bold">EN</button>
+        <button onclick="setLanguage('fr')" id="lang-fr" class="px-2.5 py-1 rounded text-gray-400">FR</button>
+        <button onclick="setLanguage('ar')" id="lang-ar" class="px-2.5 py-1 rounded text-gray-400">AR</button>
+      </div>
+
+      <!-- MetaMask Connect Button -->
+      <button id="wallet-btn" onclick="toggleWalletConnection()" class="flex items-center space-x-2 bg-gradient-to-r from-electric to-blue-500 text-navy-950 font-bold px-4 py-2 rounded-xl shadow-lg shadow-electric/20 hover:brightness-110 transition text-sm">
+        <i data-lucide="wallet" class="w-4 h-4"></i>
+        <span id="wallet-btn-text">Connect MetaMask</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- UNIFIED DASHBOARD CONTAINER -->
+  <main class="flex-1 p-4 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+    <!-- LEFT COLUMN: LIVE CHARTS, MARKET LIST, PORTFOLIO -->
+    <div class="lg:col-span-2 space-y-6">
+      
+      <!-- Ticker Header & Chart Card -->
+      <div class="bg-navy-900 border border-navy-800 rounded-2xl p-5 shadow-xl">
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
+          <div>
+            <h2 id="active-pair-title" class="text-xl font-bold">BTC / USD</h2>
+            <div id="active-pair-price" class="text-3xl font-bold font-mono mt-1 text-electric">$Loading...</div>
+          </div>
+          <div class="flex space-x-6 text-xs bg-navy-950 p-3 rounded-xl border border-navy-800">
+            <div><span class="text-gray-400 block">24h Change</span><span id="active-pair-change" class="font-mono font-semibold text-green-400">--</span></div>
+            <div><span class="text-gray-400 block">24h Volume</span><span id="active-pair-volume" class="font-mono font-semibold">--</span></div>
+          </div>
+        </div>
+
+        <div class="h-[320px] relative">
+          <canvas id="cryptoChart"></canvas>
+        </div>
+      </div>
+
+      <!-- MARKETS LIST & PORTFOLIO OVERVIEW -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-navy-900 border border-navy-800 rounded-2xl p-4 flex flex-col h-[280px]">
+          <div class="relative mb-2">
+            <i data-lucide="search" class="absolute left-3 top-2 w-3.5 h-3.5 text-gray-400"></i>
+            <input type="text" id="market-search" oninput="filterMarkets()" placeholder="Search live pairs..." class="w-full bg-navy-950 border border-navy-800 rounded-lg pl-8 pr-3 py-1.5 text-xs text-gray-200 focus:outline-none focus:border-electric">
+          </div>
+          <div id="market-list" class="flex-1 overflow-y-auto space-y-2 pr-1">
+            <div class="p-3 text-center text-xs text-gray-400">Loading CoinCap live market data...</div>
+          </div>
+        </div>
+
+        <div class="bg-navy-900 border border-navy-800 rounded-2xl p-4 flex flex-col h-[280px]">
+          <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Connected Portfolio & Balance</h3>
+          <div class="space-y-3 my-auto">
+            <div class="bg-navy-950 p-3 rounded-xl border border-navy-800">
+              <span class="text-[11px] text-gray-400">Wallet Address</span>
+              <div id="port-address" class="font-mono text-xs text-electric truncate mt-0.5">Not Connected</div>
+            </div>
+            <div class="bg-navy-950 p-3 rounded-xl border border-navy-800 flex justify-between items-center">
+              <div>
+                <span class="text-[11px] text-gray-400">Network / Chain</span>
+                <div id="port-network" class="font-mono text-sm font-bold mt-0.5">--</div>
+              </div>
+              <div class="text-right">
+                <span class="text-[11px] text-gray-400">ETH Balance</span>
+                <div id="port-balance" class="font-mono text-sm font-bold text-electric mt-0.5">0.00 ETH</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN: REAL DEX SWAP & TREND AI ANALYST -->
+    <div class="space-y-6">
+
+      <!-- REAL DEX SWAP MODULE -->
+      <div class="bg-navy-900 border border-navy-800 rounded-2xl p-5 shadow-xl">
+        <h2 class="font-bold text-base flex items-center gap-2 mb-4">
+          <i data-lucide="arrow-right-left" class="w-4 h-4 text-electric"></i>
+          <span>Real DEX Swap (0x Aggregator Proxy)</span>
+        </h2>
+
+        <div class="bg-navy-950 border border-navy-800 rounded-xl p-3 mb-2">
+          <div class="flex justify-between text-[11px] text-gray-400 mb-1">
+            <span>You Pay (ETH)</span>
+            <span>Balance: <span id="swap-balance-eth">0.00</span></span>
+          </div>
+          <input type="number" id="swap-sell-amount" value="0.01" class="bg-transparent text-lg font-bold font-mono focus:outline-none w-full" placeholder="0.0">
+        </div>
+
+        <div class="bg-navy-950 border border-navy-800 rounded-xl p-3 mb-4">
+          <div class="flex justify-between text-[11px] text-gray-400 mb-1"><span>Target Token</span></div>
+          <select id="target-token-select" class="bg-navy-900 text-electric font-bold w-full p-2 rounded-lg border border-navy-800 text-sm">
+            <option value="0xaf88d065e77c8cc2239327c5edb3a432268e5831">USDC (Arbitrum)</option>
+            <option value="0x912ce59144191c1204e64559fe8253a0e49e6548">ARB (Arbitrum)</option>
+          </select>
+        </div>
+
+        <button onclick="executeRealSwapTx()" class="w-full bg-gradient-to-r from-electric to-blue-500 text-navy-950 font-bold py-2.5 rounded-xl shadow-lg shadow-electric/20 hover:brightness-110 transition text-sm">
+          Execute Real Swap via MetaMask
+        </button>
+
+        <div id="swap-status-box" class="mt-3 hidden p-2.5 rounded-xl text-xs border bg-blue-500/10 border-blue-500/30 text-blue-300 font-mono break-all"></div>
+      </div>
+
+      <!-- TREND AI ANALYST MODULE -->
+      <div class="bg-navy-900 border border-navy-800 rounded-2xl p-5 shadow-xl flex flex-col h-[380px]">
+        <h2 class="font-bold text-base flex items-center gap-2 mb-3">
+          <i data-lucide="cpu" class="w-4 h-4 text-electric"></i>
+          <span>TREND AI Market Analyst</span>
+        </h2>
+
+        <div id="ai-chat-history" class="flex-1 overflow-y-auto space-y-3 pr-1 mb-3 text-xs">
+          <div class="bg-navy-950 border border-navy-800 rounded-xl p-3 text-gray-300">
+            Greetings! I pull live market telemetry to analyze volatility, trends, and risk scenarios. Ask me anything!
+          </div>
+        </div>
+
+        <div class="flex gap-2">
+          <input type="text" id="ai-input" placeholder="Ask AI analyst..." class="flex-1 bg-navy-950 border border-navy-800 rounded-xl px-3 py-2 text-xs text-gray-200 focus:outline-none focus:border-electric">
+          <button onclick="submitAIQuery()" class="bg-electric text-navy-950 font-bold px-4 py-2 rounded-xl hover:brightness-110 transition text-xs">Ask</button>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-navy-900 border-t border-navy-800 py-3 px-6 text-center text-xs text-gray-500 mt-auto">
+    TREND AI CRYPTO PRO — Secure Multi-File Architecture. Real MetaMask Web3 & Backend API Integration.
+  </footer>
+
+  <!-- FRONTEND JAVASCRIPT -->
+  <script>
+    lucide.createIcons();
+    let marketData = [];
+    let selectedAsset = null;
+    let priceChart = null;
+    let walletState = { address: null, balance: '0.00', network: '', chainId: null };
+    const BACKEND_URL = 'http://localhost:5000';
+
+    function setLanguage(lang) {
+      document.querySelectorAll('[id^="lang-"]').forEach(el => el.className = 'px-2.5 py-1 rounded text-gray-400');
+      document.getElementById('lang-' + lang).className = 'px-2.5 py-1 rounded bg-navy-800 text-electric font-bold';
+      document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    }
+
+    // Fetch live market data from CoinCap Public API
+    async function fetchMarkets() {
+      try {
+        const res = await fetch('https://api.coincap.io/v2/assets?limit=15');
+        const json = await res.json();
+        marketData = json.data;
+        renderMarkets(marketData);
+        if (!selectedAsset && marketData.length > 0) selectAsset(marketData[0]);
+      } catch (err) {
+        console.error('Market fetch error:', err);
+      }
+    }
+
+    function renderMarkets(data) {
+      document.getElementById('market-list').innerHTML = data.map(i => `
+        <div onclick='selectAsset(${JSON.stringify(i)})' class="p-2.5 rounded-xl cursor-pointer transition border bg-navy-950 border-navy-800 hover:border-electric/50">
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-xs">${i.symbol}</span>
+            <span class="text-[11px] font-semibold ${parseFloat(i.changePercent24Hr) >= 0 ? 'text-green-400' : 'text-red-400'}">${parseFloat(i.changePercent24Hr).toFixed(2)}%</span>
+          </div>
+          <div class="flex justify-between items-center mt-0.5 text-[11px] text-gray-400">
+            <span>$${parseFloat(i.priceUsd).toLocaleString()}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterMarkets() {
+      const q = document.getElementById('market-search').value.toLowerCase();
+      const filtered = marketData.filter(i => i.name.toLowerCase().includes(q) || i.symbol.toLowerCase().includes(q));
+      renderMarkets(filtered);
+    }
+
+    function selectAsset(item) {
+      selectedAsset = item;
+      document.getElementById('active-pair-title').innerText = `${item.symbol} / USD`;
+      document.getElementById('active-pair-price').innerText = `$${parseFloat(item.priceUsd).toLocaleString()}`;
+      const changeEl = document.getElementById('active-pair-change');
+      const val = parseFloat(item.changePercent24Hr);
+      changeEl.innerText = `${val >= 0 ? '+' : ''}${val.toFixed(2)}%`;
+      changeEl.className = `font-mono font-semibold ${val >= 0 ? 'text-green-400' : 'text-red-400'}`;
+      document.getElementById('active-pair-volume').innerText = `$${(parseFloat(item.volumeUsd24Hr)/1e9).toFixed(2)}B`;
+      updateChart(item.symbol, parseFloat(item.priceUsd));
+    }
+
+    // Connect real MetaMask wallet using ethers.js v6 BrowserProvider
+    async function toggleWalletConnection() {
+      if (!window.ethereum) {
+        alert('MetaMask browser extension not detected.');
+        return;
+      }
+      try {
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        const accounts = await provider.send('eth_requestAccounts', []);
+        const network = await provider.getNetwork();
+        const balance = await provider.getBalance(accounts[0]);
+
+        walletState = {
+          address: accounts[0],
+          balance: ethers.formatEther(balance),
+          network: network.name,
+          chainId: network.chainId.toString()
+        };
+
+        document.getElementById('wallet-btn-text').innerText = `${walletState.address.substring(0,6)}... (${parseFloat(walletState.balance).toFixed(3)} ETH)`;
+        document.getElementById('port-address').innerText = walletState.address;
+        document.getElementById('port-network').innerText = walletState.network;
+        document.getElementById('port-balance').innerText = `${parseFloat(walletState.balance).toFixed(4)} ETH`;
+        document.getElementById('swap-balance-eth').innerText = parseFloat(walletState.balance).toFixed(4);
+
+        // Listen for account/network switches
+        window.ethereum.on('accountsChanged', () => window.location.reload());
+        window.ethereum.on('chainChanged', () => window.location.reload());
+      } catch (err) {
+        console.error('Wallet connection rejected:', err);
+      }
+    }
+
+    // Execute real MetaMask swap transaction through backend 0x proxy
+    async function executeRealSwapTx() {
+      if (!walletState.address) {
+        alert('Please connect your MetaMask wallet first.');
+        return;
+      }
+      const statusBox = document.getElementById('swap-status-box');
+      statusBox.classList.remove('hidden');
+      statusBox.innerText = 'Fetching quote from 0x DEX Aggregator via backend...';
+
+      try {
+        const sellAmountEth = document.getElementById('swap-sell-amount').value;
+        const sellAmountWei = ethers.parseEther(sellAmountEth).toString();
+        const buyToken = document.getElementById('target-token-select').value;
+        const sellToken = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'; // Native ETH
+
+        const quoteRes = await fetch(`${BACKEND_URL}/api/swap/quote?sellToken=${sellToken}&buyToken=${buyToken}&sellAmount=${sellAmountWei}&chainId=${walletState.chainId || '42161'}`);
+        const quote = await quoteRes.json();
+
+        if (!quoteRes.ok || !quote.to) {
+          throw new Error(quote.error || 'Failed to retrieve valid quote from 0x aggregator.');
+        }
+
+        statusBox.innerText = 'Quote received. Requesting signature in MetaMask...';
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        const signer = await provider.getSigner();
+
+        const tx = await signer.sendTransaction({
+          to: quote.to,
+          data: quote.data,
+          value: quote.value
+        });
+
+        statusBox.innerText = `Transaction submitted: ${tx.hash}. Waiting for confirmation...`;
+        const receipt = await tx.wait();
+        statusBox.innerText = `Success! Confirmed in block ${receipt.blockNumber}. Hash: ${receipt.hash}`;
+
+        // Log audit event to backend database
+        await fetch(`${BACKEND_URL}/api/audit`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ walletAddress: walletState.address, action: 'DEX_SWAP', details: `Tx: ${tx.hash}` })
+        });
+      } catch (err) {
+        statusBox.innerText = `Transaction failed or rejected: ${err.message}`;
+      }
+    }
+
+    // TrendAI backend query (Repaired Analyze Button event listener)
+    async function submitAIQuery() {
+      const input = document.getElementById('ai-input');
+      const val = input.value.trim();
+      if (!val) return;
+      const history = document.getElementById('ai-chat-history');
+      history.innerHTML += `<div class="bg-electric text-navy-950 p-2.5 rounded-xl text-xs font-medium">You: ${val}</div>`;
+      input.value = '';
+
+      try {
+        const res = await fetch(`${BACKEND_URL}/api/ask`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question: val, marketData, walletAddress: walletState.address })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'AI request failed');
+
+        history.innerHTML += `<div class="bg-navy-950 border border-navy-800 text-gray-200 p-2.5 rounded-xl text-xs">${data.answer}</div>`;
+        history.scrollTop = history.scrollHeight;
+      } catch (e) {
+        history.innerHTML += `<div class="text-red-400 text-xs">Error connecting to AI backend: ${e.message}</div>`;
+      }
+    }
+
+    function initChart() {
+      const ctx = document.getElementById('cryptoChart').getContext('2d');
+      priceChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00'],
+          datasets: [{ data: [68000, 68200, 68100, 68500, 68400, 68800, 68650], borderColor: '#00f2fe', fill: true, backgroundColor: 'rgba(0,242,254,0.1)', tension: 0.3 }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { grid: { color: '#1f2937' }, ticks: { color: '#9ca3af' } }, y: { grid: { color: '#1f2937' }, ticks: { color: '#9ca3af' } } } }
+      });
+    }
+
+    function updateChart(symbol, currentPrice) {
+      if (!priceChart) return;
+      const data = [currentPrice*0.985, currentPrice*0.99, currentPrice*0.992, currentPrice*0.998, currentPrice*0.995, currentPrice*1.002, currentPrice];
+      priceChart.data.datasets[0].data = data;
+      priceChart.data.datasets[0].label = `${symbol} Price`;
+      priceChart.update();
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      fetchMarkets();
+      initChart();
+      setInterval(fetchMarkets, 30000);
+    });
+  </script>
 </body>
+</html></body>
 </body>
 </html>
