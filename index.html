@@ -1705,7 +1705,52 @@
     }
 
     // Fetch live market data from CoinCap Public API
-    async function fetchMarkets() {
+    
+async function fetchMarkets() {
+  const list = document.getElementById('market-list');
+
+  try {
+    const res = await fetch(
+      'https://trendai-helper.elalaouifarouk794.workers.dev/api/market',
+      { cache: 'no-store' }
+    );
+
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
+    }
+
+    const json = await res.json();
+
+    if (!Array.isArray(json) || json.length === 0) {
+      throw new Error('Market data is empty');
+    }
+
+    marketData = json.map(c => ({
+      id: c.id,
+      name: c.name,
+      symbol: c.symbol.toUpperCase(),
+      priceUsd: String(c.current_price),
+      changePercent24Hr: String(c.price_change_percentage_24h ?? 0),
+      volumeUsd24Hr: String(c.total_volume ?? 0)
+    }));
+
+    renderMarkets(marketData);
+
+    if (!selectedAsset) {
+      selectAsset(marketData[0]);
+    } else {
+      const updated = marketData.find(
+        c => c.id === selectedAsset.id
+      );
+      if (updated) selectAsset(updated);
+    }
+  } catch (err) {
+    console.error('Market loading failed:', err);
+    list.textContent =
+      'تعذر تحميل الأسعار. عاود المحاولة بعد قليل.';
+  }
+}
+ {
       try {
         const res = await fetch('https://api.coincap.io/v2/assets?limit=15');
         const json = await res.json();
