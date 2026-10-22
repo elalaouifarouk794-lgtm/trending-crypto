@@ -1,780 +1,756 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" data-theme="dark">
+<html lang="fr" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TrendAI Crypto Pro Max | Next-Gen Web3 Trading & Analytics Platform</title>
-    <meta name="google-site-verification" content="7_HNTMVbXM1XFVZ6QuwNP40qmh-Dh-QGLFnb5-VRfLM" />
-    <meta name="theme-color" content="#030014">
-    
-    <!-- Fonts & Icons -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <title>TrendAI Crypto Pro Max - Modern Web3 & AI Crypto Platform</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Web3, Chart.js SDKs -->
-    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+    <!-- Google Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            orange: '#F6851B',
+                            darkOrange: '#E2761B',
+                            black: '#121212',
+                            cardBg: '#1A1D24',
+                            border: '#2C303B'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        :root {
-            --bg-main: #060411;
-            --bg-card: rgba(15, 12, 35, 0.85);
-            --bg-card-hover: rgba(22, 17, 50, 0.95);
-            --border-color: rgba(139, 92, 246, 0.25);
-            --border-glow: rgba(139, 92, 246, 0.6);
-            --primary: #7c3aed;
-            --primary-glow: #8b5cf6;
-            --secondary: #06b6d4;
-            --secondary-glow: #22d3ee;
-            --accent: #ec4899;
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
-            --success: #10b981;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --font-primary: 'Plus Jakarta Sans', sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: var(--font-primary);
-        }
-
         body {
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            min-height: 100vh;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FAFAFB;
+            color: #141619;
             overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 15% 15%, rgba(124, 58, 237, 0.18) 0%, transparent 45%),
-                radial-gradient(circle at 85% 85%, rgba(6, 182, 212, 0.15) 0%, transparent 45%),
-                radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.08) 0%, transparent 60%);
-            background-attachment: fixed;
         }
-
-        /* Top Live Price Ticker */
-        .ticker-bar-container {
-            width: 100%;
-            background: rgba(3, 0, 20, 0.95);
-            border-bottom: 1px solid var(--border-color);
-            padding: 8px 0;
-            font-size: 0.82rem;
-            font-family: var(--font-mono);
-            overflow: hidden;
-            white-space: nowrap;
+        .hero-gradient {
+            background: linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 100%);
         }
-
-        .ticker-wrapper {
-            display: inline-block;
-            animation: tickerSlide 30s linear infinite;
+        .glass-mockup {
+            background: #0D0E10;
+            border: 1px solid #272A30;
+            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.4);
         }
-
-        .ticker-item {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-right: 35px;
+        .text-huge {
+            font-size: clamp(2.8rem, 6.5vw, 5.5rem);
+            line-height: 0.95;
+            letter-spacing: -0.04em;
         }
-
-        @keyframes tickerSlide {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
-
-        /* Navbar Layout */
-        .top-navbar-container {
-            width: 94%;
-            max-width: 1500px;
-            margin: 15px auto;
-            background: rgba(13, 10, 31, 0.9);
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            padding: 14px 28px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 10px 35px rgba(0,0,0,0.6);
-            flex-wrap: wrap;
-            gap: 15px;
-            position: sticky;
-            top: 15px;
-            z-index: 1000;
-        }
-
-        .brand-logo-area {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            cursor: pointer;
-        }
-
-        .logo-icons {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .logo-icons .fa-rocket {
-            font-size: 34px !important;
-            color: var(--primary-glow);
-            filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.8));
-        }
-
-        .logo-icons .fa-tools {
-            font-size: 32px !important;
-            color: var(--secondary);
-            filter: drop-shadow(0 0 10px rgba(6, 182, 212, 0.8));
-        }
-
-        .brand-title {
-            background: linear-gradient(135deg, #a78bfa, #38bdf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 800;
-            font-size: 1.45rem;
-        }
-
-        .nav-links-pills {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .nav-pill {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            color: var(--text-main);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.88rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-        }
-
-        .nav-pill:hover, .nav-pill.active {
-            background: var(--primary);
-            border-color: var(--primary-glow);
-            color: white;
-            box-shadow: 0 0 18px rgba(124, 58, 237, 0.6);
-        }
-
-        .nav-actions-right {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-        }
-
-        .btn-action {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 18px;
-            font-weight: 700;
-            font-size: 0.88rem;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.35);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .btn-action.green-btn {
-            background: linear-gradient(135deg, #10b981, #059669);
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);
-        }
-
-        .btn-action.purple-btn {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.45);
-        }
-
-        .btn-action:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.15);
-        }
-
-        /* Hero Header */
-        .hero-banner {
-            text-align: center;
-            max-width: 900px;
-            margin: 25px auto 35px auto;
-            padding: 0 20px;
-        }
-
-        .hero-banner h1 {
-            font-size: 2.2rem;
-            font-weight: 800;
-            margin-bottom: 12px;
-            background: linear-gradient(135deg, #ffffff, #a78bfa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-banner p {
-            color: var(--text-muted);
-            font-size: 0.98rem;
-            line-height: 1.6;
-        }
-
-        .connected-status-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.35);
-            color: var(--success);
-            padding: 8px 18px;
-            border-radius: 20px;
-            font-size: 0.82rem;
-            font-family: var(--font-mono);
-            margin-top: 15px;
-            word-break: break-all;
-        }
-
-        /* Main Grid (Auto Fit - المنظم لمنع التداخل) */
-        .dashboard-container {
-            width: 94%;
-            max-width: 1500px;
-            margin: 0 auto 60px auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 22px;
-        }
-
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 22px;
-            padding: 24px;
-            backdrop-filter: blur(16px);
-            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.45);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: all 0.3s ease;
-            min-height: 310px;
-        }
-
-        .card:hover {
-            background: var(--bg-card-hover);
-            border-color: var(--border-glow);
-            transform: translateY(-4px);
-        }
-
-        .card-header-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-        }
-
-        .card-header-title div {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .input-styled {
-            width: 100%;
-            background: rgba(5, 3, 15, 0.75);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 12px 16px;
-            color: white;
-            font-size: 0.9rem;
-            outline: none;
-            margin-bottom: 14px;
-        }
-
-        .input-styled:focus {
-            border-color: var(--primary-glow);
-        }
-
-        .badge-stage {
-            background: rgba(16, 185, 129, 0.15);
-            color: var(--success);
-            padding: 5px 12px;
-            border-radius: 14px;
-            font-size: 0.78rem;
-            font-weight: 700;
-            border: 1px solid rgba(16, 185, 129, 0.3);
-        }
-
-        .progress-bar-bg {
-            background: rgba(255, 255, 255, 0.08);
-            height: 10px;
-            border-radius: 10px;
-            overflow: hidden;
-            margin: 12px 0;
-        }
-
-        .progress-bar-fill {
-            width: 74.5%;
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            border-radius: 10px;
-        }
-
-        .comments-box {
-            background: rgba(5, 3, 15, 0.6);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 12px;
-            padding: 12px;
-            max-height: 110px;
-            overflow-y: auto;
-            margin-bottom: 12px;
-        }
-
-        .comment-item {
-            font-size: 0.82rem;
-            margin-bottom: 8px;
-            padding-bottom: 6px;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
-        }
-
-        .comment-item strong {
-            color: #a78bfa;
-        }
-
-        .chart-placeholder {
-            width: 100%;
-            height: 170px;
-            background: rgba(5, 3, 15, 0.5);
-            border-radius: 12px;
-            position: relative;
-            padding: 10px;
-        }
-
-        .floating-ai-chat {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: linear-gradient(135deg, #8b5cf6, #3b82f6);
-            color: white;
-            padding: 14px 26px;
-            border-radius: 35px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.5);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            z-index: 9999;
-            transition: all 0.3s ease;
-        }
-
-        .floating-ai-chat:hover {
-            transform: scale(1.08);
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(3, 0, 20, 0.88);
-            backdrop-filter: blur(12px);
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-        }
-
-        .modal-content {
-            background: #111827;
-            border: 1px solid var(--border-glow);
-            padding: 35px;
-            border-radius: 24px;
-            width: 90%;
-            max-width: 420px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
-            position: relative;
-        }
-
-        .close-modal-btn {
-            position: absolute;
-            top: 18px; right: 22px;
-            cursor: pointer;
-            font-size: 1.4rem;
-            color: var(--text-muted);
-        }
-
-        footer {
-            text-align: center;
-            padding: 30px;
-            color: var(--text-muted);
-            border-top: 1px solid var(--border-color);
-            font-size: 0.85rem;
-            background: rgba(3, 0, 20, 0.95);
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Live Ticker Bar -->
-    <div class="ticker-bar-container">
-        <div class="ticker-wrapper">
-            <span class="ticker-item"><i class="fab fa-bitcoin" style="color: #f59e0b;"></i> BTC/USD: <strong style="color:#10b981;">$82,250.00 (+3.4%)</strong></span>
-            <span class="ticker-item"><i class="fab fa-ethereum" style="color: #38bdf8;"></i> ETH/USD: <strong style="color:#10b981;">$3,120.00 (+1.8%)</strong></span>
-            <span class="ticker-item"><i class="fas fa-bolt" style="color: #ec4899;"></i> SOL/USD: <strong style="color:#10b981;">$188.30 (+5.1%)</strong></span>
-            <span class="ticker-item"><i class="fas fa-gem" style="color: #a78bfa;"></i> TAI Presale: <strong style="color:#22d3ee;">$0.05 (Live Stage 1)</strong></span>
-            <span class="ticker-item"><i class="fas fa-gas-pump" style="color: #f472b6;"></i> ETH Gas: <strong style="color:#f59e0b;">14 Gwei</strong></span>
+    <!-- Top Promotional Banner -->
+    <div id="topBanner" class="bg-black text-white text-xs md:text-sm py-2.5 px-4 flex justify-between items-center border-b border-gray-800">
+        <div class="flex-1 text-center flex items-center justify-center gap-2 flex-wrap">
+            <span class="bg-gradient-to-r from-orange-500 to-amber-500 text-black font-extrabold text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider">NOUVEAU</span>
+            <span class="font-medium text-gray-200">Achetez & Vendez vos cryptos sans frais élevés directement depuis TrendAI !</span>
+            <a href="#swap" class="text-amber-400 hover:text-amber-300 font-semibold inline-flex items-center gap-1 transition">
+                Explorer <i class="fa-solid fa-arrow-right text-xs"></i>
+            </a>
         </div>
+        <button onclick="dismissBanner()" class="text-gray-400 hover:text-white transition p-1" aria-label="Fermer">
+            <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
     </div>
 
-    <!-- Top Navigation Header -->
-    <div class="top-navbar-container">
-        <div class="brand-logo-area" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
-            <div class="logo-icons">
-                <i class="fas fa-rocket"></i>
-                <i class="fas fa-tools"></i>
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-2.5 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center shadow-md shadow-orange-500/20 group-hover:scale-105 transition-transform duration-200">
+                    <i class="fa-solid fa-brain-circuit text-white text-xl"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-black text-xl md:text-2xl tracking-tight text-gray-900 leading-none">TrendAI</span>
+                    <span class="text-[10px] font-bold text-orange-600 tracking-widest uppercase">Crypto Pro Max</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center gap-8 font-semibold text-gray-700 text-sm">
+                <a href="#features" class="hover:text-orange-600 transition">Fonctionnalités</a>
+                <a href="#rewards" class="hover:text-orange-600 transition">Récompenses</a>
+                <a href="#swap" class="hover:text-orange-600 transition">Échanger</a>
+                <a href="#ai-sector" class="flex items-center gap-1.5 hover:text-orange-600 transition">
+                    <span>Secteur AI</span>
+                    <span class="bg-orange-100 text-orange-700 text-[10px] px-1.5 py-0.5 rounded font-bold uppercase">PRO</span>
+                </a>
+            </nav>
+
+            <!-- Actions & Wallet Button -->
+            <div class="flex items-center gap-3">
+                <button id="connectWalletBtn" onclick="toggleWalletConnect()" class="bg-black hover:bg-gray-800 text-white font-bold px-5 py-2.5 rounded-full text-sm flex items-center gap-2 transition shadow-md hover:shadow-lg active:scale-95">
+                    <i class="fa-solid fa-wallet text-amber-400"></i>
+                    <span id="connectWalletText">Commencer</span>
+                </button>
+
+                <button class="md:hidden text-gray-800 text-2xl p-2" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
-            <span class="brand-title">Trending Crypto Pro Max</span>
         </div>
 
-        <div class="nav-links-pills">
-            <a class="nav-pill active"><i class="fas fa-home"></i> Home</a>
-            <a class="nav-pill"><i class="fas fa-rocket"></i> Launchpad</a>
-            <a class="nav-pill"><i class="fas fa-comments"></i> Community</a>
-            <a class="nav-pill"><i class="fas fa-chart-area"></i> Trading Chart</a>
-            <a class="nav-pill"><i class="fas fa-wrench"></i> Tools</a>
-            <a class="nav-pill" style="background: rgba(139, 92, 246, 0.2);" onclick="openAdminModal()"><i class="fas fa-user-shield"></i> Admin Dashboard</a>
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-b border-gray-200 px-6 py-4 flex-col gap-4">
+            <a href="#features" onclick="toggleMobileMenu()" class="font-bold py-2 border-b">Fonctionnalités</a>
+            <a href="#rewards" onclick="toggleMobileMenu()" class="font-bold py-2 border-b">Récompenses</a>
+            <a href="#swap" onclick="toggleMobileMenu()" class="font-bold py-2 border-b">Échanger</a>
+            <a href="#analytics" onclick="toggleMobileMenu()" class="font-bold py-2">Secteur AI</a>
         </div>
+    </header>
 
-        <div class="nav-actions-right">
-            <button id="connectMetaMaskBtn" class="btn-action" onclick="connectWallet()"><i class="fas fa-wallet"></i> Connect MetaMask</button>
-            <button class="btn-action green-btn" onclick="openBuyModal()"><i class="fas fa-shopping-cart"></i> Buy Crypto</button>
-            <div id="authContainer">
-                <button onclick="openAuthModal()" class="btn-action purple-btn"><i class="fas fa-user"></i> Sign In</button>
+    <!-- HERO SECTION -->
+    <section class="relative pt-8 pb-16 lg:pt-16 lg:pb-28 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left Column: Bold Text & CTA -->
+                <div class="lg:col-span-7 space-y-8">
+                    <h1 class="text-huge font-extrabold text-brand-black tracking-tight leading-none">
+                        Tradez<br>
+                        n'importe<br>
+                        quoi. Gagnez<br>
+                        plus.
+                    </h1>
+                    
+                    <p class="text-lg sm:text-xl text-gray-600 font-medium max-w-xl leading-relaxed">
+                        L'application crypto à détention en propre où votre argent travaille en permanence pendant que vous tradez, envoyez et dépensez.
+                    </p>
+
+                    <div class="flex flex-wrap items-center gap-4 pt-2">
+                        <button onclick="connectWallet()" class="bg-brand-black hover:bg-gray-800 text-white text-base font-bold px-8 py-4 rounded-full shadow-xl transition-all hover:scale-105 active:scale-95 flex items-center gap-3">
+                            <span>Commencer</span>
+                            <i class="fas fa-arrow-right text-sm"></i>
+                        </button>
+                        
+                        <a href="#features" class="bg-gray-200 hover:bg-gray-300 text-brand-black text-base font-bold px-7 py-4 rounded-full transition-all">
+                            En savoir plus
+                        </a>
+                    </div>
+
+                    <!-- Trust Stats -->
+                    <div class="pt-6 flex items-center gap-8 border-t border-gray-200 text-gray-600 font-semibold text-sm">
+                        <div>
+                            <div class="text-2xl font-extrabold text-brand-black">100M+</div>
+                            <div class="text-xs text-gray-500 uppercase tracking-wider">Utilisateurs actifs</div>
+                        </div>
+                        <div class="h-8 w-px bg-gray-200"></div>
+                        <div>
+                            <div class="text-2xl font-extrabold text-brand-black">100%</div>
+                            <div class="text-xs text-gray-500 uppercase tracking-wider">Auto-garde Sécurisée</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Interactive Dark MetaMask App Mockup -->
+                <div class="lg:col-span-5 relative">
+                    <!-- Background Glow Decor -->
+                    <div class="absolute -top-10 -right-10 w-72 h-72 bg-brand-orange/20 rounded-full blur-3xl pointer-events-none"></div>
+                    
+                    <!-- App Card Replica -->
+                    <div class="glass-mockup text-white rounded-[32px] p-6 sm:p-7 relative z-10 transition-transform duration-500 hover:scale-[1.01]">
+                        
+                        <!-- App Header Bar -->
+                        <div class="flex items-center justify-between pb-6 border-b border-gray-800">
+                            <!-- Account Selector -->
+                            <div class="bg-gray-800/80 hover:bg-gray-800 cursor-pointer px-4 py-1.5 rounded-full flex items-center gap-2 text-sm font-bold">
+                                <span>Main</span>
+                                <i class="fas fa-chevron-down text-xs text-gray-400"></i>
+                            </div>
+
+                            <!-- Actions Header -->
+                            <div class="flex items-center gap-3">
+                                <button onclick="fetchLatestData()" title="Rafraîchir les données" class="w-9 h-9 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center text-xs transition-colors">
+                                    <i class="fas fa-sync-alt text-gray-300"></i>
+                                </button>
+                                <button onclick="toggleSearch()" class="w-9 h-9 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center text-xs transition-colors">
+                                    <i class="fas fa-search text-gray-300"></i>
+                                </button>
+                                <button class="w-9 h-9 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center text-xs transition-colors">
+                                    <i class="fas fa-bars text-gray-300"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Balance Section -->
+                        <div class="py-6">
+                            <div class="text-4xl sm:text-5xl font-extrabold tracking-tight" id="heroBalance">
+                                10 000,00 $
+                            </div>
+                            <div class="flex items-center gap-2 mt-2 text-sm font-bold text-brand-accentGreen">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+500,00 $ (+5 %)</span>
+                                <span class="text-xs text-gray-400 font-normal ml-1">24h</span>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons Bar -->
+                        <div class="grid grid-cols-4 gap-3 py-4">
+                            <button onclick="openActionModal('Achat')" class="bg-gray-800/90 hover:bg-gray-700 p-3.5 rounded-2xl flex flex-col items-center gap-2 transition-all">
+                                <div class="text-lg text-brand-orange"><i class="fas fa-dollar-sign"></i></div>
+                                <span class="text-xs font-bold">Achat</span>
+                            </button>
+                            <button onclick="openActionModal('Échanger')" class="bg-gray-800/90 hover:bg-gray-700 p-3.5 rounded-2xl flex flex-col items-center gap-2 transition-all">
+                                <div class="text-lg text-brand-orange"><i class="fas fa-arrows-rotate"></i></div>
+                                <span class="text-xs font-bold">Échanger</span>
+                            </button>
+                            <button onclick="openActionModal('Envoyer')" class="bg-gray-800/90 hover:bg-gray-700 p-3.5 rounded-2xl flex flex-col items-center gap-2 transition-all">
+                                <div class="text-lg text-brand-orange"><i class="fas fa-paper-plane"></i></div>
+                                <span class="text-xs font-bold">Envoyer</span>
+                            </button>
+                            <button onclick="openActionModal('Recevoir')" class="bg-gray-800/90 hover:bg-gray-700 p-3.5 rounded-2xl flex flex-col items-center gap-2 transition-all">
+                                <div class="text-lg text-brand-orange"><i class="fas fa-qrcode"></i></div>
+                                <span class="text-xs font-bold">Recevoir</span>
+                            </button>
+                        </div>
+
+                        <!-- Sub-Account / Yield Widget -->
+                        <div class="bg-gray-800/50 rounded-2xl p-4 my-2 flex items-center justify-between border border-gray-800">
+                            <div>
+                                <div class="text-xs text-gray-400 font-medium">Solde du compte Money • mUSD</div>
+                                <div class="flex items-center gap-2 font-bold text-base mt-0.5">
+                                    <span>2 000,00 $</span>
+                                    <span class="text-xs text-brand-accentGreen bg-brand-accentGreen/10 px-2 py-0.5 rounded-full flex items-center gap-1">
+                                        <i class="fas fa-rotate"></i> RMP de 6 %
+                                    </span>
+                                </div>
+                            </div>
+                            <button onclick="openActionModal('Ajouter')" class="bg-white hover:bg-gray-200 text-black text-xs font-extrabold px-4 py-2 rounded-full transition-colors">
+                                Ajouter
+                            </button>
+                        </div>
+
+                        <!-- Tokens Portfolio List -->
+                        <div class="space-y-3 pt-4 border-t border-gray-800/80">
+                            
+                            <!-- Bitcoin Asset -->
+                            <div class="flex items-center justify-between p-2.5 rounded-xl hover:bg-gray-800/40 transition-colors cursor-pointer">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-amber-500/20 text-amber-500 flex items-center justify-center font-bold text-lg">
+                                        <i class="fab fa-bitcoin"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-bold text-sm">Bitcoin</div>
+                                        <div class="text-xs text-gray-400">0,14 BTC</div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="font-bold text-sm">11 960,00 $</div>
+                                    <div class="text-xs text-brand-accentGreen font-semibold">+2,4%</div>
+                                </div>
+                            </div>
+
+                            <!-- Ethereum Asset -->
+                            <div class="flex items-center justify-between p-2.5 rounded-xl hover:bg-gray-800/40 transition-colors cursor-pointer">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-lg">
+                                        <i class="fab fa-ethereum"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-bold text-sm">Ethereum</div>
+                                        <div class="text-xs text-gray-400">2,12 ETH</div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="font-bold text-sm">5 500,00 $</div>
+                                    <div class="text-xs text-brand-accentGreen font-semibold">+1,8%</div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- LIVE TICKER BAR (Infinite Marquee) -->
+    <div class="bg-white border-y border-gray-200 py-3 overflow-hidden select-none">
+        <div class="flex gap-8 animate-marquee whitespace-nowrap font-bold text-sm text-gray-700">
+            <div class="flex items-center gap-2 bg-gray-50 px-4 py-1.5 rounded-full border border-gray-200">
+                <span class="text-purple-600"><i class="fas fa-coins"></i> Solana</span>
+                <span>104,51 $</span>
+                <span class="text-red-500 text-xs">-3.24%</span>
+            </div>
+
+            <div class="flex items-center gap-2 bg-gray-50 px-4 py-1.5 rounded-full border border-gray-200">
+                <span class="text-green-600"><i class="fas fa-microchip"></i> NVIDIA Token</span>
+                <span>213,33 $</span>
+                <span class="text-brand-accentGreen text-xs">+4.15%</span>
+            </div>
+
+            <div class="flex items-center gap-2 bg-gray-50 px-4 py-1.5 rounded-full border border-gray-200">
+                <span class="text-blue-600"><i class="fab fa-ethereum"></i> Ethereum</span>
+                <span>2 394,73 $</span>
+                <span class="text-brand-accentGreen text-xs">+2.88%</span>
+            </div>
+
+            <div class="flex items-center gap-2 bg-gray-50 px-4 py-1.5 rounded-full border border-gray-200">
+                <span class="text-amber-600"><i class="fas fa-chart-line"></i> Swap SOL ➔ USDC</span>
+                <span class="text-xs bg-gray-200 px-2 py-0.5 rounded">Meilleur taux</span>
+            </div>
+
+            <!-- Repeated Duplicate for Loop Seamlessness -->
+            <div class="flex items-center gap-2 bg-gray-50 px-4 py-1.5 rounded-full border border-gray-200">
+                <span class="text-purple-600"><i class="fas fa-coins"></i> Solana</span>
+                <span>104,51 $</span>
+                <span class="text-red-500 text-xs">-3.24%</span>
+            </div>
+
+            <div class="flex items-center gap-2 bg-gray-50 px-4 py-1.5 rounded-full border border-gray-200">
+                <span class="text-green-600"><i class="fas fa-microchip"></i> NVIDIA Token</span>
+                <span>213,33 $</span>
+                <span class="text-brand-accentGreen text-xs">+4.15%</span>
+            </div>
+
+            <div class="flex items-center gap-2 bg-gray-50 px-4 py-1.5 rounded-full border border-gray-200">
+                <span class="text-blue-600"><i class="fab fa-ethereum"></i> Ethereum</span>
+                <span>2 394,73 $</span>
+                <span class="text-brand-accentGreen text-xs">+2.88%</span>
             </div>
         </div>
     </div>
 
-    <!-- Hero Header Text -->
-    <div class="hero-banner">
-        <h1>Next-Gen Web3 Analytics & Trading Hub</h1>
-        <p>Trending Crypto Pro Max combines real-time live trading charts, non-custodial Web3 wallet connectivity, AI contract auditing, and next-gen presale launchpad ecosystem.</p>
-        <div style="margin-top: 18px;">
-            <button class="btn-action green-btn" style="padding: 12px 28px; font-size: 1rem;" onclick="openBuyModal()"><i class="fas fa-credit-card"></i> Buy Crypto Instantly with Card / Apple Pay</button>
-        </div>
-        <div class="connected-status-pill" id="connectedWalletDisplay">
-            <i class="fas fa-check-circle"></i> Connected Wallet: 0xFEb390e5b613670490Se2G35bFc3e5150d76Ba26
-        </div>
-    </div>
-
-    <!-- Main Grid Workspace -->
-    <div class="dashboard-container">
-
-        <!-- 1. Token Launchpad -->
-        <div class="card">
-            <div>
-                <div class="card-header-title">
-                    <div><i class="fas fa-rocket" style="color: #ec4899;"></i> Token Launchpad</div>
-                    <span class="badge-stage">Stage 1</span>
-                </div>
-                <p style="font-size: 0.82rem; color: var(--text-muted);">Presale Soft Cap: $745,200 / $1,000,000</p>
-                <div class="progress-bar-bg"><div class="progress-bar-fill"></div></div>
-                <p style="font-size: 0.82rem; color: #a78bfa; margin-bottom: 12px;">Price: 1 $TAI = $0.05 USD</p>
-                <label style="font-size: 0.78rem; color: var(--text-muted);">Invest Amount (USDT):</label>
-                <input type="number" id="usdtInvestInput" class="input-styled" value="250" oninput="calculateTokens()">
-                <p style="font-size: 0.85rem; color: var(--success); font-weight: 700; margin-bottom: 12px;" id="tokenCalculatedDisplay">Tokens: 5,000 $TAI</p>
+    <!-- SECTION: FEATURE CARDS GRID ("Des millions de façons de trader") -->
+    <section id="features" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-4xl sm:text-5xl font-extrabold text-brand-black tracking-tight mb-4">
+                    Des millions de façons de trader
+                </h2>
+                <p class="text-gray-600 font-medium text-lg">
+                    Chaque actif numérique vit ici sur plus de 700 réseaux pris en charge. Gagnez en continu entre deux mouvements avec un Money Account.
+                </p>
             </div>
-            <button class="btn-action purple-btn" style="width: 100%; justify-content: center;" onclick="buyPresaleTokens()"><i class="fas fa-bolt"></i> Buy Presale Allocation</button>
-        </div>
 
-        <!-- 2. Community Feedback -->
-        <div class="card">
-            <div>
-                <div class="card-header-title">
-                    <div><i class="fas fa-comments" style="color: #38bdf8;"></i> Community Feedback</div>
+            <!-- 4 Colorful Cards Grid -->
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Card 1: Perps -->
+                <div class="bg-lime-100 rounded-[28px] p-7 flex flex-col justify-between hover:shadow-xl transition-all group">
+                    <div class="space-y-4">
+                        <div class="h-36 flex items-center justify-center text-brand-black text-6xl group-hover:scale-110 transition-transform">
+                            <i class="fas fa-chart-candlestick text-lime-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-brand-black">Perps</h3>
+                        <p class="text-sm font-medium text-gray-700 leading-relaxed">
+                            Prenez des positions longues ou courtes sur plus de 270 actifs avec un effet de levier jusqu'à 50.
+                        </p>
+                    </div>
+                    <div class="pt-8">
+                        <button onclick="openActionModal('Perps')" class="bg-brand-black text-white text-xs font-extrabold px-5 py-3 rounded-full hover:bg-gray-800 transition-colors">
+                            Explorer les perps
+                        </button>
+                    </div>
                 </div>
-                <div class="comments-box" id="commentsList">
-                    <div class="comment-item"><strong>Farouk (Founder):</strong> Welcome to Trending Crypto Pro Max!</div>
-                    <div class="comment-item"><strong>CryptoWhale:</strong> Very smooth interface & live price ticker!</div>
-                </div>
-                <input type="text" id="newCommentInput" class="input-styled" placeholder="Add a comment...">
-            </div>
-            <button class="btn-action purple-btn" style="width: 100%; justify-content: center;" onclick="postComment()"><i class="fas fa-paper-plane"></i> Post Comment</button>
-        </div>
 
-        <!-- 3. Live Price Action Chart -->
-        <div class="card">
-            <div>
-                <div class="card-header-title">
-                    <div><i class="fas fa-chart-line" style="color: #10b981;"></i> Live Price Chart</div>
-                    <span style="color: #ef4444; font-size: 0.85rem;">$82,349.03 ▼</span>
+                <!-- Card 2: Prédictions -->
+                <div class="bg-blue-100 rounded-[28px] p-7 flex flex-col justify-between hover:shadow-xl transition-all group">
+                    <div class="space-y-4">
+                        <div class="h-36 flex items-center justify-center text-brand-black text-6xl group-hover:scale-110 transition-transform">
+                            <i class="fas fa-building-columns text-blue-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-brand-black">Prédictions</h3>
+                        <p class="text-sm font-medium text-gray-700 leading-relaxed">
+                            Prédisez le résultat d'événements sportifs, politiques, technologiques et culturels.
+                        </p>
+                    </div>
+                    <div class="pt-8">
+                        <button onclick="openActionModal('Prédictions')" class="bg-brand-black text-white text-xs font-extrabold px-5 py-3 rounded-full hover:bg-gray-800 transition-colors">
+                            Explorer les prédictions
+                        </button>
+                    </div>
                 </div>
-                <div class="chart-placeholder">
-                    <canvas id="liveMiniChart"></canvas>
-                </div>
-            </div>
-        </div>
 
-        <!-- 4. Live Market Prices -->
-        <div class="card">
-            <div>
-                <div class="card-header-title">
-                    <div><i class="fas fa-coins" style="color: #f59e0b;"></i> Live Market Prices</div>
-                </div>
-                <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
-                    <thead>
-                        <tr style="color: var(--text-muted); text-align: left; border-bottom: 1px solid rgba(255,255,255,0.08);">
-                            <th style="padding: 8px 0;">Coin</th><th>Price</th><th>24h</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-                            <td style="padding: 10px 0;"><strong>BTC</strong></td><td>$82,250.00</td><td style="color: #10b981;">+3.4%</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-                            <td style="padding: 10px 0;"><strong>ETH</strong></td><td>$3,120.00</td><td style="color: #10b981;">+1.8%</td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 10px 0;"><strong>SOL</strong></td><td>$188.30</td><td style="color: #10b981;">+5.1%</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+                <!-- Card 3: Actions tokenisées -->
+                <div class="bg-orange-100 rounded-[28px] p-7 flex flex-col justify-between hover:shadow-xl transition-all group">
+                    <div class="space-y-4">
+                        <div class="h-36 flex items-center justify-center text-brand-black text-6xl group-hover:scale-110 transition-transform">
+                    <div class="flex items-center gap-2 border-b border-gray-800 pb-3">
+                        <div class="w-7 h-7 rounded-lg bg-orange-500/20 flex items-center justify-center">
+                            <i class="fa-solid fa-brain text-orange-400 text-xs"></i>
+                        </div>
+                        <span class="text-white text-xs font-bold">Aperçu du Portefeuille TrendAI</span>
+                    </div>
 
-        <!-- 5. Advanced Portfolio Tracker -->
-        <div class="card">
-            <div>
-                <div class="card-header-title">
-                    <div><i class="fas fa-briefcase" style="color: #f59e0b;"></i> Portfolio Tracker</div>
-                </div>
-                <label style="font-size: 0.78rem; color: var(--text-muted);">Select Asset:</label>
-                <select id="portfolioAssetSelect" class="input-styled" onchange="calculatePortfolio()">
-                    <option value="82250">Bitcoin (BTC)</option>
-                    <option value="3120">Ethereum (ETH)</option>
-                    <option value="188.3">Solana (SOL)</option>
-                </select>
-                <label style="font-size: 0.78rem; color: var(--text-muted);">Holdings Amount:</label>
-                <input type="number" id="portfolioAmountInput" class="input-styled" value="1" oninput="calculatePortfolio()">
-                <p style="font-size: 0.9rem; color: var(--success); font-weight: 700; margin-bottom: 10px;" id="portfolioResult">Total Value: $82,250.00</p>
-            </div>
-            <button class="btn-action purple-btn" style="width: 100%; justify-content: center;" onclick="calculatePortfolio()"><i class="fas fa-calculator"></i> Calculate Value</button>
-        </div>
+                    <!-- Balance Row -->
+                    <div>
+                        <p class="text-xs text-gray-400">Solde Total Estimé</p>
+                        <h4 id="userBalanceDisplay" class="text-2xl font-black text-white mt-0.5">$12,840.50</h4>
+                        <p class="text-[11px] text-green-400 font-semibold mt-0.5"><i class="fa-solid fa-arrow-trend-up"></i> +4.85% cette semaine</p>
+                    </div>
 
-        <!-- 6. Web3 Staking & Yield -->
-        <div class="card">
-            <div>
-                <div class="card-header-title">
-                    <div><i class="fas fa-gem" style="color: #38bdf8;"></i> Web3 Staking & Yield</div>
-                </div>
-                <label style="font-size: 0.78rem; color: var(--text-muted);">Tokens Staked ($TAI):</label>
-                <input type="number" id="stakingInput" class="input-styled" value="5000" oninput="calculateStaking()">
-                <p style="font-size: 0.85rem; color: var(--success); font-weight: 700; margin-bottom: 12px;" id="stakingProfitDisplay">Est. Profit (90 Days): +296 TAI</p>
-            </div>
-            <button class="btn-action purple-btn" style="width: 100%; justify-content: center;" onclick="alert('Tokens locked into Staking Contract for 90 days!')"><i class="fas fa-lock"></i> Stake Tokens Now</button>
-        </div>
+                    <!-- Quick Action Buttons -->
+                    <div class="grid grid-cols-4 gap-2 text-center my-2">
+                        <button onclick="triggerToast('Fonction d\'envoi rapide active')" class="bg-gray-800/80 hover:bg-gray-700 p-2.5 rounded-xl transition text-gray-200">
+                            <i class="fa-solid fa-paper-plane text-orange-400 block text-base mb-1"></i>
+                            <span class="text-[10px] font-medium">Envoyer</span>
+                        </button>
+                        <button onclick="triggerToast('Fonction de réception active')" class="bg-gray-800/80 hover:bg-gray-700 p-2.5 rounded-xl transition text-gray-200">
+                            <i class="fa-solid fa-qrcode text-amber-400 block text-base mb-1"></i>
+                            <span class="text-[10px] font-medium">Recevoir</span>
+                        </button>
+                        <button onclick="triggerToast('Swap AI optimisé prêt')" class="bg-gray-800/80 hover:bg-gray-700 p-2.5 rounded-xl transition text-gray-200">
+                            <i class="fa-solid fa-arrows-rotate text-emerald-400 block text-base mb-1"></i>
+                            <span class="text-[10px] font-medium">Échanger</span>
+                        </button>
+                        <button onclick="triggerToast('Carte TrendAI Pro active')" class="bg-gray-800/80 hover:bg-gray-700 p-2.5 rounded-xl transition text-gray-200">
+                            <i class="fa-solid fa-credit-card text-purple-400 block text-base mb-1"></i>
+                            <span class="text-[10px] font-medium">Carte</span>
+                        </button>
+                    </div>
 
-        <!-- 7. Advanced Smart Contract Risk Scanner -->
-        <div class="card">
-            <div>
-                <div class="card-header-title">
-                    <div><i class="fas fa-shield-virus" style="color: #ec4899;"></i> Contract Risk Scanner</div>
-                </div>
-                <label style="font-size: 0.78rem; color: var(--text-muted);">Smart Contract Address:</label>
-                <input type="text" id="contractAuditInput" class="input-styled" placeholder="0x1234...5678">
-                <div id="auditResultDisplay" style="font-size: 0.8rem; margin-bottom: 10px;"></div>
-            </div>
-            <button class="btn-action purple-btn" style="width: 100%; justify-content: center;" onclick="runContractAudit()"><i class="fas fa-search"></i> Run Honeypot & Safety Scan</button>
-        </div>
-
-        <!-- 8. Gemini AI Trade Signal -->
-        <div class="card">
-            <div>
-                <div class="card-header-title">
-                    <div><i class="fas fa-brain" style="color: #ec4899;"></i> Gemini AI Signal</div>
-                </div>
-                <div id="aiSignalDisplay" style="padding: 10px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 10px; margin-bottom: 12px;">
-                    <p style="font-size: 0.8rem; color: var(--success); font-weight: 700;"><i class="fas fa-circle"></i> BULLISH SIGNAL: BUY BTC</p>
-                    <p style="font-size: 0.75rem; color: var(--text-muted);">Target: $85,400 | Stop: $80,100</p>
+                    <!-- Mini Crypto Holdings List -->
+                    <div class="space-y-2 pt-2 border-t border-gray-800/80">
+                        <div class="flex items-center justify-between text-xs">
+                            <div class="flex items-center gap-2">
+                                <div class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-[10px]">₿</div>
+                                <div>
+                                    <p class="text-white font-semibold">Bitcoin</p>
+                                    <p class="text-[10px] text-gray-400">0.18 BTC</p>
+                                </div>
+                            </div>
+                            <span class="text-white font-semibold">$12,240.00</span>
+                        </div>
+                        <div class="flex items-center justify-between text-xs">
+                            <div class="flex items-center gap-2">
+                                <div class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-[10px]">Ξ</div>
+                                <div>
+                                    <p class="text-white font-semibold">Ethereum</p>
+                                    <p class="text-[10px] text-gray-400">0.18 ETH</p>
+                                </div>
+                            </div>
+                            <span class="text-white font-semibold">$600.50</span>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <button class="btn-action purple-btn" style="width: 100%; justify-content: center;" onclick="generateAiSignal()"><i class="fas fa-sync"></i> Generate Signal</button>
         </div>
+    </section>
 
-        <!-- 9. Fear & Greed Index -->
-        <div class="card" style="text-align: center;">
-            <div>
-                <div class="card-header-title" style="justify-content: center;">
-                    <div><i class="fas fa-gauge" style="color: #f59e0b;"></i> Fear & Greed</div>
-                </div>
-                <h2 style="font-size: 2.5rem; color: var(--success); margin: 10px 0;" id="fearGreedValue">68</h2>
-                <p style="font-size: 0.9rem; color: var(--success); font-weight: 700;">GREED 🤑</p>
+    <!-- Interactive Section 1: Features -->
+    <section id="features" class="py-20 bg-gray-50 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl md:text-5xl font-black text-gray-900 tracking-tight">Pourquoi choisir TrendAI Crypto Pro Max ?</h2>
+                <p class="mt-4 text-gray-600 text-lg">Découvrez la suite d'outils Web3 propulsée par intelligence artificielle pour maximiser vos rendements en toute sécurité.</p>
             </div>
-            <button class="btn-action" style="width: 100%; justify-content: center; margin-top: 15px;" onclick="updateFearGreed()"><i class="fas fa-redo"></i> Refresh Index</button>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group hover:-translate-y-1">
+                    <div class="w-14 h-14 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Signaux IA & Algorithmes</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6">
+                        Analyse prédictive automatique du marché grâce au moteur TrendAI Pro Max pour anticiper les tendances fortes.
+                    </p>
+                    <a href="#ai-sector" class="text-xs font-bold text-orange-600 hover:text-orange-700 inline-flex items-center gap-1">
+                        En savoir plus <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                    </a>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group hover:-translate-y-1">
+                    <div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Sécurité Multi-Couches</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6">
+                        Auto-garde de vos clés privées avec protection en temps réel contre le phishing et les contrats dangereux.
+                    </p>
+                    <a href="#features" class="text-xs font-bold text-orange-600 hover:text-orange-700 inline-flex items-center gap-1">
+                        Découvrir la sécurité <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                    </a>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group hover:-translate-y-1">
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Swaps Cross-Chain Ultra Rapides</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6">
+                        Échangez vos tokens sur Ethereum, BNB Chain, Polygon, Arbitrum et Solana aux meilleurs taux garantis.
+                    </p>
+                    <a href="#swap" class="text-xs font-bold text-orange-600 hover:text-orange-700 inline-flex items-center gap-1">
+                        Essayer le Swap <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                    </a>
+                </div>
+            </div>
         </div>
+    </section>
 
-    </div>
+    <!-- Interactive Section 2: Swap Simulator -->
+    <section id="swap" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <span class="bg-orange-100 text-orange-700 font-bold text-xs px-3 py-1 rounded-full uppercase tracking-wider">Agrégateur de Swaps</span>
+                    <h2 class="text-3xl md:text-5xl font-black text-gray-900 tracking-tight mt-4">Obtenez le meilleur cours à chaque transaction</h2>
+                    <p class="mt-4 text-gray-600 text-base leading-relaxed">
+                        TrendAI scrute des dizaines de DEX (Decentralized Exchanges) en temps réel pour router vos échanges par le chemin le plus économique et le plus rapide.
+                    </p>
+                    <ul class="mt-6 space-y-3">
+                        <li class="flex items-center gap-3 text-gray-700 text-sm font-medium">
+                            <i class="fa-solid fa-circle-check text-green-500"></i> Protection anti-front-running (MEV Guard)
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-700 text-sm font-medium">
+                            <i class="fa-solid fa-circle-check text-green-500"></i> Frais de réseau optimisés par IA
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-700 text-sm font-medium">
+                            <i class="fa-solid fa-circle-check text-green-500"></i> Support multi-réseaux instantané
+                        </li>
+                    </ul>
+                </div>
 
-    <!-- Floating AI Chat Assistant -->
-    <div class="floating-ai-chat" onclick="alert('Gemini AI Trading Assistant Active!')">
-        <i class="fas fa-robot"></i> Chat with Gemini AI
-    </div>
+                <!-- Swap Widget Card -->
+                <div class="bg-gray-900 p-6 md:p-8 rounded-3xl shadow-2xl text-white max-w-md mx-auto w-full border border-gray-800">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="font-bold text-lg flex items-center gap-2">
+                            <i class="fa-solid fa-right-left text-orange-500"></i> TrendAI Swap
+                        </h3>
+                        <button onclick="triggerToast('Paramètres de slippage: 0.5%')" class="text-gray-400 hover:text-white transition">
+                            <i class="fa-solid fa-gear"></i>
+                        </button>
+                    </div>
 
-    <!-- Sign In Modal -->
-    <div id="authModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal-btn" onclick="closeAuthModal()">&times;</span>
-            <h2 style="margin-bottom: 18px; text-align: center;">Sign In / Register</h2>
-            <input type="email" id="emailInput" class="input-styled" placeholder="Email Address">
-            <input type="password" id="passwordInput" class="input-styled" placeholder="Password">
-            <button onclick="handleAuthSubmit()" class="btn-action purple-btn" style="width: 100%; justify-content: center; margin-top: 10px;">Continue</button>
+                    <!-- Pay Box -->
+                    <div class="bg-gray-800/70 p-4 rounded-2xl border border-gray-700 mb-2">
+                        <div class="flex justify-between text-xs text-gray-400 mb-1">
+                            <span>Vous payez</span>
+                            <span>Solde: 1.5 ETH</span>
+                        </div>
+                        <div class="flex justify-between items-center gap-2">
+                            <input type="number" id="swapFromAmount" value="1.0" oninput="updateSwapEstimate()" class="bg-transparent text-2xl font-bold text-white outline-none w-1/2">
+                            <div class="bg-gray-700 px-3 py-1.5 rounded-xl flex items-center gap-2 text-sm font-bold">
+                                <span class="text-blue-400">Ξ</span> ETH
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Swap Switch Icon -->
+                    <div class="flex justify-center -my-3 relative z-10">
+                        <button onclick="triggerToast('Inversion des devises')" class="w-8 h-8 rounded-full bg-orange-500 hover:bg-orange-600 text-black flex items-center justify-center transition shadow-lg">
+                            <i class="fa-solid fa-arrow-down-up-lock text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- Receive Box -->
+                    <div class="bg-gray-800/70 p-4 rounded-2xl border border-gray-700 mt-2 mb-6">
+                        <div class="flex justify-between text-xs text-gray-400 mb-1">
+                            <span>Vous recevez (estimé)</span>
+                            <span>Slippage: <span class="text-green-400">0.5%</span></span>
+                        </div>
+                        <div class="flex justify-between items-center gap-2">
+                            <span id="swapToAmount" class="text-2xl font-bold text-white">3,350.00</span>
+                            <div class="bg-gray-700 px-3 py-1.5 rounded-xl flex items-center gap-2 text-sm font-bold">
+                                <span class="text-green-400">$</span> USDT
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="executeSwapSim()" class="w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-black font-extrabold py-3.5 rounded-2xl transition text-center shadow-lg active:scale-98">
+                        Exécuter l'échange avec TrendAI
+                    </button>
+                </div>
+            </div>
         </div>
-    </div>
-
-    <!-- Admin Panel Modal -->
-    <div id="adminModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal-btn" onclick="closeAdminModal()">&times;</span>
-            <h2 style="margin-bottom: 15px; text-align: center;"><i class="fas fa-user-shield"></i> Admin Dashboard</h2>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px; text-align: center;">Authorized Management Access Only</p>
-            <button class="btn-action purple-btn" style="width: 100%; justify-content: center; margin-bottom: 10px;" onclick="alert('Presale Contract Status: Active')">Check Presale Status</button>
-            <button class="btn-action green-btn" style="width: 100%; justify-content: center;" onclick="alert('Nodes synchronized with DexScreener')">Sync DexScreener API</button>
-        </div>
-    </div>
-
-    <!-- Buy Crypto Modal -->
-    <div id="buyModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal-btn" onclick="closeBuyModal()">&times;</span>
-            <h2 style="margin-bottom: 15px; text-align: center;"><i class="fas fa-credit-card"></i> Buy Crypto Instantly</h2>
-            <label style="font-size: 0.8rem; color: var(--text-muted);">Amount in USD ($):</label>
-            <input type="number" class="input-styled" value="100">
-            <button class="btn-action green-btn" style="width: 100%; justify-content: center;" onclick="alert('Redirecting to Payment Gateway...')">Proceed to Checkout</button>
-        </div>
-    </div>
+    </section>
 
     <!-- Footer -->
-    <footer>
-        <p>&copy; 2026 TrendAI Crypto Pro Max. All rights reserved. Web3 Decentralized Finance Platform.</p>
+    <footer class="bg-black text-gray-400 py-16 border-t border-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
+                <div class="col-span-2">
+                    <a href="#" class="flex items-center gap-2 mb-4">
+                        <div class="w-8 h-8 rounded-lg bg-orange-500 flex items-center justify-center text-black font-bold">
+                            <i class="fa-solid fa-brain-circuit"></i>
+                        </div>
+                        <span class="font-black text-white text-lg tracking-tight">TrendAI Crypto Pro Max</span>
+                    </a>
+                    <p class="text-xs text-gray-500 max-w-sm leading-relaxed">
+                        Le portefeuille intelligent Web3 nouvelle génération. Stockez, échangez et maximisez vos actifs cryptos en toute confiance.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-white text-xs font-bold uppercase tracking-wider mb-4">Produits</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#" class="hover:text-white transition">Portefeuille IA</a></li>
+                        <li><a href="#" class="hover:text-white transition">TrendAI Swap</a></li>
+                        <li><a href="#" class="hover:text-white transition">Extension Navigateur</a></li>
+                        <li><a href="#" class="hover:text-white transition">Application Mobile</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white text-xs font-bold uppercase tracking-wider mb-4">Ressources</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#" class="hover:text-white transition">Documentation</a></li>
+                        <li><a href="#" class="hover:text-white transition">Académie TrendAI</a></li>
+                        <li><a href="#" class="hover:text-white transition">Sécurité & Audits</a></li>
+                        <li><a href="#" class="hover:text-white transition">Support 24/7</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white text-xs font-bold uppercase tracking-wider mb-4">Légal</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#" class="hover:text-white transition">Conditions d'utilisation</a></li>
+                        <li><a href="#" class="hover:text-white transition">Politique de confidentialité</a></li>
+                        <li><a href="#" class="hover:text-white transition">Avertissement sur les risques</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pt-8 border-t border-gray-900 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
+                <p>&copy; 2026 TrendAI Crypto Pro Max Inc. Tous droits réservés.</p>
+                <div class="flex items-center gap-6">
+                    <a href="#" class="text-gray-500 hover:text-white transition"><i class="fa-brands fa-x-twitter text-base"></i></a>
+                    <a href="#" class="text-gray-500 hover:text-white transition"><i class="fa-brands fa-discord text-base"></i></a>
+                    <a href="#" class="text-gray-500 hover:text-white transition"><i class="fa-brands fa-telegram text-base"></i></a>
+                    <a href="#" class="text-gray-500 hover:text-white transition"><i class="fa-brands fa-github text-base"></i></a>
+                </div>
+            </div>
+        </div>
     </footer>
 
-    <!-- Scripts & Functions -->
+    <!-- INTERACTIVE MODAL FOR APP ACTIONS -->
+    <div id="actionModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-brand-black text-white rounded-3xl p-6 sm:p-8 max-w-md w-full border border-gray-800 relative">
+            <button onclick="closeActionModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">
+                <i class="fas fa-xmark"></i>
+            </button>
+            <h3 id="modalTitle" class="text-2xl font-extrabold mb-4">Action</h3>
+            <p id="modalDesc" class="text-sm text-gray-400 mb-6">
+                Veuillez connecter votre portefeuille Web3 pour effectuer cette opération.
+            </p>
+            <div class="space-y-3">
+                <button onclick="connectWallet()" class="w-full bg-brand-orange hover:bg-brand-darkOrange font-bold py-3.5 rounded-2xl transition-colors">
+                    Connecter MetaMask
+                </button>
+                <button onclick="closeActionModal()" class="w-full bg-gray-800 hover:bg-gray-700 font-bold py-3.5 rounded-2xl text-xs text-gray-300">
+                    Fermer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT INTERACTIONS -->
     <script>
-        // Interactive Mini Chart Setup
-        document.addEventListener('DOMContentLoaded', () => {
-            const ctx = document.getElementById('liveMiniChart').getContext('2d');
+        // Web3 Wallet Connection Logic
+        async function connectWallet() {
+            const btnText = document.getElementById('btnText');
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    btnText.innerText = "Connexion...";
+                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    const account = accounts[0];
+                    const shortAddr = account.substring(0, 6) + '...' + account.substring(account.length - 4);
+                    
+                    btnText.innerText = shortAddr;
+                    document.getElementById('connectWalletBtn').classList.add('bg-emerald-600');
+                    closeActionModal();
+                } catch (err) {
+                    console.error(err);
+                    btnText.innerText = "Erreur de connexion";
+                }
+            } else {
+                alert("Extension MetaMask introuvable ! Veuillez l'installer sur votre navigateur.");
+                btnText.innerText = "Installer MetaMask";
+            }
+        }
+
+        // Action Modal Control
+        function openActionModal(actionName) {
+            document.getElementById('modalTitle').innerText = actionName;
+            document.getElementById('modalDesc').innerText = `Procéder à l'opération [${actionName}] directement depuis l'application Web3 MetaMask.`;
+            document.getElementById('actionModal').classList.remove('hidden');
+        }
+
+        function closeActionModal() {
+            document.getElementById('actionModal').classList.add('hidden');
+        }
+
+        // Swap Logic Simulation
+        function calculateSwap() {
+            const payVal = parseFloat(document.getElementById('payAmount').value) || 0;
+            const ethPriceUSDT = 2600;
+            document.getElementById('receiveAmount').value = (payVal * ethPriceUSDT).toFixed(2);
+        }
+
+        function reverseSwap() {
+            const payInput = document.getElementById('payAmount');
+            payInput.value = payInput.value == "0.5" ? "1.0" : "0.5";
+            calculateSwap();
+        }
+
+        function executeSwap() {
+            alert("Ordre de Swap exécuté avec succès sur le réseau principal !");
+        }
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
+        }
+
+        // Chart.js Chart Initialization
+        window.onload = function() {
+            const ctx = document.getElementById('marketChart').getContext('2d');
+            
+            const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+            gradient.addColorStop(0, 'rgba(246, 133, 27, 0.4)');
+            gradient.addColorStop(1, 'rgba(246, 133, 27, 0.0)');
+
             new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['1', '2', '3', '4', '5', '6'],
+                    labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', '24:00'],
                     datasets: [{
-                        data: [81200, 81800, 81500, 82100, 81900, 82349],
-                        borderColor: '#10b981',
-                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                        borderWidth: 2,
+                        label: 'BTC / USDT',
+                        data: [85000, 85400, 84800, 86200, 87100, 86800, 88500],
+                        borderColor: '#F6851B',
+                        borderWidth: 3,
                         fill: true,
+                        backgroundColor: gradient,
                         tension: 0.4,
-                        pointRadius: 0
+                        pointBackgroundColor: '#F6851B',
+                        pointRadius: 4
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: { x: { display: false }, y: { display: false } }
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: {
+                            grid: { display: false }
+                        },
+                        y: {
+                            grid: { color: '#E5E7EB' }
+                        }
+                    }
                 }
             });
-        });
-
-        // Wallet Connect Integration
-        async function connectWallet() {
-            if (typeof window.ethereum !== 'undefined') {
-                try {
-                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                    const shortAcc = accounts[0].substring(0, 6) + '...' + accounts[0].substring(38);
-                    document.getElementById('connectMetaMaskBtn').innerHTML = `<i class="fas fa-check-circle" style="color:var(--success)"></i> ${shortAcc}`;
-                    document.getElementById('connectedWalletDisplay').innerHTML = `<i class="fas fa-check-circle"></i> Connected Wallet: ${accounts[0]}`;
-                } catch (err) { console.error(err); }
-            } else { alert('Please install MetaMask wallet!'); }
-        }
-
-        // Calculations & Features
-        function calculateTokens() {
-            const amount = document.getElementById('usdtInvestInput').value || 0;
-            document.getElementById('tokenCalculatedDisplay').innerText = `Tokens: ${(amount / 0.05).toLocaleString()} $TAI`;
-        }
-
-        function buyPresaleTokens() {
-            alert(`Presale Order Placed for $${document.getElementById('usdtInvestInput').value} USDT!`);
-        }
-
-        function postComment() {
-            const input = document.getElementById('newCommentInput');
-            if (input.value.trim()) {
-                const box = document.getElementById('commentsList');
-                box.innerHTML += `<div class="comment-item"><strong>You:</strong> ${input.value}</div>`;
-                input.value = '';
-                box.scrollTop = box.scrollHeight;
-            }
-        }
-
-        function calculatePortfolio() {
-            const price = parseFloat(document.getElementById('portfolioAssetSelect').value);
-            const amount = parseFloat(document.getElementById('portfolioAmountInput').value) || 0;
-            document.getElementById('portfolioResult').innerText = `Total Value: $${(price * amount).toLocaleString()}`;
-        }
-
-        function calculateStaking() {
-            const tokens = parseFloat(document.getElementById('stakingInput').value) || 0;
-            document.getElementById('stakingProfitDisplay').innerText = `Est. Profit (90 Days): +${Math.round(tokens * 0.0592)} TAI`;
-        }
-
-        // Risk Scanner
-        function runContractAudit() {
-            const input = document.getElementById('contractAuditInput').value.trim();
-            const display = document.getElementById('auditResultDisplay');
-            if (input) {
-                display.innerHTML = `
-                    <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid var(--success); padding: 8px; border-radius: 8px; margin-top: 5px;">
-                        <p style="color:var(--success); font-weight:700;"><i class="fas fa-shield-check"></i> Security Score: 98/100 (VERIFIED SAFE)</p>
-                        <p style="color: var(--text-muted); font-size: 0.75rem;">Honeypot: No | Buy Tax: 0% | Sell Tax: 0% | Ownership: Renounced</p>
-                    </div>
-                `;
-            } else {
-                display.innerHTML = `<p style="color:var(--danger); margin-top: 5px;"><i class="fas fa-exclamation-triangle"></i> Please enter a contract address.</p>`;
-            }
-        }
-
-        function generateAiSignal() {
-            document.getElementById('aiSignalDisplay').innerHTML = `
-                <p style="font-size: 0.8rem; color: var(--success); font-weight: 700;"><i class="fas fa-circle"></i> STRONG BUY SIGNAL: SOL</p>
-                <p style="font-size: 0.75rem; color: var(--text-muted);">Target: $210 | Stop: $175</p>
-            `;
-        }
-
-        function updateFearGreed() {
-            document.getElementById('fearGreedValue').innerText = Math.floor(Math.random() * 30) + 55;
-        }
-
-        // Modal Handlers
-        function openAuthModal() { document.getElementById('authModal').style.display = 'flex'; }
-        function closeAuthModal() { document.getElementById('authModal').style.display = 'none'; }
-        function openAdminModal() { document.getElementById('adminModal').style.display = 'flex'; }
-        function closeAdminModal() { document.getElementById('adminModal').style.display = 'none'; }
-        function openBuyModal() { document.getElementById('buyModal').style.display = 'flex'; }
-        function closeBuyModal() { document.getElementById('buyModal').style.display = 'none'; }
-        function handleAuthSubmit() { alert('Authentication Successful!'); closeAuthModal(); }
+        };
     </script>
 </body>
 </html>
