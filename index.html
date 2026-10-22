@@ -1422,5 +1422,81 @@
             return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
         }
     </script>
+
+<!-- TrendAI AI Assistant -->
+<section id="trendai-ai" style="max-width:700px;margin:20px auto;padding:16px;">
+  <h2>TrendAI AI Assistant</h2>
+
+  <label for="questionInput">كتب السؤال ديالك:</label>
+  <textarea
+    id="questionInput"
+    maxlength="1000"
+    placeholder="مثلاً: شرح ليا شنو هي Bitcoin..."
+    style="display:block;width:100%;min-height:100px;box-sizing:border-box;margin:10px 0;padding:12px;"
+  ></textarea>
+
+  <button id="askAI" type="button" style="padding:12px 20px;cursor:pointer;">
+    حلّل السؤال
+  </button>
+
+  <p id="aiStatus" role="status" aria-live="polite"></p>
+
+  <div id="aiAnswer" style="white-space:pre-wrap;overflow-wrap:anywhere;"></div>
+</section>
+
+<script>
+(() => {
+  const API = "https://trendai-helper.elalaouifarouk794.workers.dev";
+  const button = document.getElementById("askAI");
+  const input = document.getElementById("questionInput");
+  const status = document.getElementById("aiStatus");
+  const answer = document.getElementById("aiAnswer");
+
+  if (!button || !input || !status || !answer) {
+    console.error("TrendAI: one or more HTML elements are missing.");
+    return;
+  }
+
+  button.addEventListener("click", async () => {
+    const question = input.value.trim();
+
+    if (!question) {
+      status.textContent = "كتب السؤال ديالك أولاً.";
+      answer.textContent = "";
+      return;
+    }
+
+    button.disabled = true;
+    status.textContent = "TrendAI كايحلل السؤال...";
+    answer.textContent = "";
+
+    try {
+      const response = await fetch(`${API}/api/ask`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ question })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || `خطأ HTTP ${response.status}`);
+      }
+
+      answer.textContent = data.answer || "ما وصل حتى جواب.";
+      status.textContent = "تم التحليل.";
+    } catch (error) {
+      console.error("TrendAI request failed:", error);
+      status.textContent =
+        "ما قدرناش نتاصلو بالـ AI. تأكد من الاتصال وإعدادات Gemini، وعاود المحاولة.";
+    } finally {
+      button.disabled = false;
+    }
+  });
+})();
+</script>
+</body>
 </body>
 </html>
