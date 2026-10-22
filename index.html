@@ -4,30 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TrendAI Crypto Pro Max | Autonomous Web3 Trading Infrastructure</title>
-    <meta name="description" content="Plateforme de trading autonome propulsée par l'intelligence artificielle et l'infrastructure Web3 No-KYC.">
+    <meta name="description" content="Infrastructure de trading autonome et décentralisée propulsée par Gemini AI. Zero-KYC, haute performance.">
     
-    <!-- Google Fonts -->
+    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    
-    <!-- FontAwesome Pro Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Ethers.js Web3 Library -->
     <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-    
+
     <style>
         :root {
-            --bg-main: #ffffff;
-            --bg-dark: #0a0c10;
-            --card-dark: #121620;
-            --border-color: #222938;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-dark: #07090e;
+            --card-dark: #0f131d;
+            --border-light: #e2e8f0;
+            --border-dark: #1e2536;
             --primary-blue: #037dd6;
             --primary-orange: #f6851b;
             --accent-green: #10b981;
             --accent-red: #ef4444;
-            --text-main: #0f141c;
+            --text-main: #0b0f19;
             --text-muted: #64748b;
             --font-main: 'Plus Jakarta Sans', sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
@@ -41,14 +39,14 @@
         }
 
         body {
-            background-color: var(--bg-main);
+            background-color: var(--bg-primary);
             color: var(--text-main);
             overflow-x: hidden;
             scroll-behavior: smooth;
         }
 
-        /* Top Announcement Ticker Banner */
-        .announcement-bar {
+        /* Top Bar */
+        .top-notification {
             background: #000;
             color: #fff;
             padding: 10px 20px;
@@ -58,75 +56,76 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            border-bottom: 1px solid #1a2233;
         }
 
-        .announcement-bar span {
+        .top-notification span {
             background: var(--primary-blue);
             color: #fff;
             padding: 2px 8px;
             border-radius: 4px;
-            font-size: 0.75rem;
-            text-transform: uppercase;
+            font-size: 0.72rem;
+            letter-spacing: 0.5px;
         }
 
-        /* Navbar Styling */
-        nav.main-nav {
+        /* Navigation */
+        nav.navbar-main {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 5%;
+            padding: 18px 5%;
             background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid #e2e8f0;
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-light);
             position: sticky;
             top: 0;
             z-index: 1000;
         }
 
-        .nav-brand {
+        .brand-logo-container {
             display: flex;
             align-items: center;
             gap: 12px;
             text-decoration: none;
-            font-size: 1.35rem;
+            font-size: 1.4rem;
             font-weight: 900;
             color: var(--text-main);
         }
 
-        .brand-logo-icon {
-            width: 42px;
-            height: 42px;
+        .brand-icon-box {
+            width: 44px;
+            height: 44px;
             background: var(--primary-blue);
             color: #fff;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
-            box-shadow: 0 4px 14px rgba(3, 125, 214, 0.35);
+            font-size: 1.25rem;
+            box-shadow: 0 4px 15px rgba(3, 125, 214, 0.4);
         }
 
-        .nav-menu {
+        .nav-links-list {
             display: flex;
             gap: 30px;
             list-style: none;
             align-items: center;
         }
 
-        .nav-menu a {
+        .nav-links-list a {
             text-decoration: none;
             color: #334155;
             font-weight: 600;
             font-size: 0.95rem;
-            transition: color 0.2s;
+            transition: color 0.2s ease;
         }
 
-        .nav-menu a:hover {
+        .nav-links-list a:hover {
             color: var(--primary-blue);
         }
 
-        .wallet-connect-btn {
+        .btn-action-primary {
             background: #000;
             color: #fff;
             border: none;
@@ -141,29 +140,29 @@
             gap: 8px;
         }
 
-        .wallet-connect-btn:hover {
-            background: #222;
+        .btn-action-primary:hover {
+            background: #1e293b;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
 
         /* Hero Section */
-        .hero-section {
+        .hero-section-wrapper {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 80px 5%;
+            padding: 90px 5%;
             max-width: 1400px;
             margin: 0 auto;
-            gap: 50px;
+            gap: 60px;
         }
 
-        .hero-text-content {
+        .hero-content-col {
             flex: 1.1;
         }
 
-        .hero-main-title {
-            font-size: 4.2rem;
+        .hero-title-main {
+            font-size: 4.4rem;
             font-weight: 900;
             line-height: 1.05;
             letter-spacing: -2px;
@@ -171,73 +170,75 @@
             color: #000;
         }
 
-        .hero-main-title span {
+        .hero-title-main span {
             color: var(--primary-blue);
         }
 
-        .hero-description {
-            font-size: 1.15rem;
+        .hero-description-text {
+            font-size: 1.2rem;
             color: var(--text-muted);
             line-height: 1.6;
-            margin-bottom: 35px;
-            max-width: 540px;
+            margin-bottom: 40px;
+            max-width: 560px;
             font-weight: 500;
         }
 
-        .hero-cta-group {
+        .hero-buttons-wrapper {
             display: flex;
-            gap: 15px;
+            gap: 16px;
+            align-items: center;
         }
 
-        /* Web3 Terminal Mockup Card */
-        .hero-mockup-container {
+        /* Terminal Component */
+        .hero-terminal-col {
             flex: 0.9;
             display: flex;
             justify-content: center;
         }
 
-        .terminal-card {
+        .web3-terminal-box {
             background: var(--bg-dark);
             color: #fff;
-            border-radius: 32px;
-            padding: 30px;
+            border-radius: 34px;
+            padding: 32px;
             width: 100%;
-            max-width: 440px;
-            box-shadow: 0 35px 60px rgba(0,0,0,0.35);
-            border: 1px solid var(--border-color);
+            max-width: 450px;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+            border: 1px solid var(--border-dark);
         }
 
-        .terminal-header {
+        .terminal-top-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 24px;
+            margin-bottom: 25px;
         }
 
-        .terminal-network-badge {
-            background: #192030;
-            border: 1px solid #2d3b55;
+        .network-status-tag {
+            background: #131b2e;
+            border: 1px solid #1e2d4a;
             padding: 6px 14px;
             border-radius: 20px;
             font-size: 0.8rem;
             font-weight: 600;
-            color: #cbd5e1;
+            color: #93c5fd;
         }
 
-        .terminal-balance-label {
-            font-size: 0.82rem;
-            color: #94a3b8;
+        .terminal-balance-title {
+            font-size: 0.8rem;
+            color: #64748b;
             font-family: var(--font-mono);
+            letter-spacing: 0.5px;
         }
 
-        .terminal-balance-amount {
-            font-size: 2.8rem;
+        .terminal-balance-val {
+            font-size: 2.9rem;
             font-weight: 900;
             margin: 6px 0;
             letter-spacing: -1px;
         }
 
-        .terminal-balance-profit {
+        .terminal-profit-badge {
             color: var(--accent-green);
             font-size: 0.9rem;
             font-weight: 700;
@@ -250,93 +251,94 @@
         .terminal-actions-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
+            gap: 12px;
             margin-bottom: 25px;
         }
 
-        .terminal-action-btn {
-            background: #192030;
-            border: 1px solid #28334a;
+        .terminal-act-btn {
+            background: #111827;
+            border: 1px solid #1f293d;
             padding: 14px 8px;
             border-radius: 16px;
             text-align: center;
             cursor: pointer;
             color: #fff;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
         }
 
-        .terminal-action-btn:hover {
-            background: #232f4a;
+        .terminal-act-btn:hover {
+            background: #1e293b;
             border-color: var(--primary-blue);
         }
 
-        .terminal-action-btn i {
+        .terminal-act-btn i {
             color: var(--primary-blue);
-            font-size: 1.15rem;
+            font-size: 1.2rem;
             margin-bottom: 6px;
             display: block;
         }
 
-        .terminal-action-btn span {
+        .terminal-act-btn span {
             font-size: 0.75rem;
             font-weight: 600;
         }
 
-        .terminal-assets-list {
-            background: #141a26;
-            border: 1px solid #1f2a40;
-            border-radius: 18px;
-            padding: 16px;
+        .terminal-asset-rows {
+            background: #0b1019;
+            border: 1px solid #151d2e;
+            border-radius: 20px;
+            padding: 18px;
         }
 
-        .asset-row {
+        .asset-single-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 12px;
+            font-size: 0.9rem;
         }
 
-        .asset-row:last-child {
+        .asset-single-row:last-child {
             margin-bottom: 0;
         }
 
-        /* Ticker Bar */
-        .market-ticker-section {
-            background: #f8fafc;
-            border-top: 1px solid #e2e8f0;
-            border-bottom: 1px solid #e2e8f0;
-            padding: 18px 0;
+        /* Live Market Ticker */
+        .market-ticker-container {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+            padding: 20px 0;
             display: flex;
             gap: 25px;
             overflow-x: auto;
             white-space: nowrap;
         }
 
-        .ticker-pill-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            padding: 12px 22px;
+        .ticker-card-item {
+            background: #fff;
+            border: 1px solid var(--border-light);
+            padding: 14px 24px;
             border-radius: 18px;
             font-weight: 700;
-            font-size: 0.88rem;
+            font-size: 0.9rem;
             display: inline-flex;
-            gap: 12px;
+            gap: 14px;
             align-items: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
         }
 
         /* Features Section */
-        .features-container {
-            max-width: 1350px;
-            margin: 100px auto;
+        .features-section-wrapper {
+            max-width: 1400px;
+            margin: 110px auto;
             padding: 0 5%;
         }
 
         .section-header-title {
-            font-size: 3rem;
+            font-size: 3.2rem;
             font-weight: 900;
             margin-bottom: 50px;
-            letter-spacing: -1px;
+            letter-spacing: -1.5px;
             text-align: center;
         }
 
@@ -346,10 +348,10 @@
             gap: 25px;
         }
 
-        .feature-card-box {
-            border-radius: 24px;
-            padding: 35px;
-            min-height: 320px;
+        .feature-box-card {
+            border-radius: 26px;
+            padding: 40px;
+            min-height: 340px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -358,46 +360,46 @@
             overflow: hidden;
         }
 
-        .feature-card-box:hover {
+        .feature-box-card:hover {
             transform: translateY(-8px);
         }
 
-        .box-bg-1 { background: #e0f2fe; color: #0369a1; }
-        .box-bg-2 { background: #fef3c7; color: #92400e; }
-        .box-bg-3 { background: #fce7f3; color: #9d174d; }
-        .box-bg-4 { background: #dcfce7; color: #166534; }
+        .bg-color-1 { background: #e0f2fe; color: #0369a1; }
+        .bg-color-2 { background: #fef3c7; color: #92400e; }
+        .bg-color-3 { background: #fce7f3; color: #9d174d; }
+        .bg-color-4 { background: #dcfce7; color: #166534; }
 
-        .feature-card-title {
-            font-size: 1.8rem;
+        .feature-box-title {
+            font-size: 1.9rem;
             font-weight: 800;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
-        .feature-card-desc {
-            font-size: 0.98rem;
-            line-height: 1.5;
+        .feature-box-desc {
+            font-size: 1rem;
+            line-height: 1.6;
             opacity: 0.9;
         }
 
-        /* Interactive AI Bot Control Center */
-        .ai-control-panel {
-            max-width: 1350px;
-            margin: 0 auto 100px auto;
+        /* Autonomous AI Engine Section */
+        .ai-engine-wrapper {
+            max-width: 1400px;
+            margin: 0 auto 110px auto;
             padding: 0 5%;
         }
 
-        .control-panel-wrapper {
+        .ai-console-card {
             background: var(--bg-dark);
             color: #fff;
-            border-radius: 30px;
-            padding: 50px;
-            border: 1px solid var(--border-color);
+            border-radius: 34px;
+            padding: 55px;
+            border: 1px solid var(--border-dark);
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            gap: 35px;
         }
 
-        .control-top {
+        .ai-console-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -405,99 +407,100 @@
             gap: 20px;
         }
 
-        .bot-status-indicator {
+        .ai-live-indicator {
             display: flex;
             align-items: center;
             gap: 12px;
-            background: #141a26;
-            padding: 10px 20px;
+            background: #111827;
+            padding: 10px 22px;
             border-radius: 30px;
-            border: 1px solid #222d45;
+            border: 1px solid #1f293d;
         }
 
-        .status-dot {
+        .pulsing-dot {
             width: 12px;
             height: 12px;
             background: var(--accent-green);
             border-radius: 50%;
-            box-shadow: 0 0 10px var(--accent-green);
+            box-shadow: 0 0 12px var(--accent-green);
         }
 
-        .logs-box {
-            background: #07090d;
-            border: 1px solid #1a2233;
-            border-radius: 16px;
-            padding: 20px;
+        .terminal-logs-screen {
+            background: #04060a;
+            border: 1px solid #151d2e;
+            border-radius: 18px;
+            padding: 24px;
             font-family: var(--font-mono);
-            font-size: 0.85rem;
+            font-size: 0.88rem;
             color: #38bdf8;
-            height: 150px;
+            height: 180px;
             overflow-y: auto;
+            line-height: 1.6;
         }
 
-        /* Footer Section */
+        /* Footer */
         footer {
             background: #000;
             color: #94a3b8;
-            padding: 60px 5% 30px 5%;
-            border-top: 1px solid #1a2233;
+            padding: 70px 5% 35px 5%;
+            border-top: 1px solid #151d2e;
         }
 
-        .footer-grid {
+        .footer-grid-layout {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 40px;
-            max-width: 1350px;
-            margin: 0 auto 50px auto;
+            max-width: 1400px;
+            margin: 0 auto 60px auto;
         }
 
-        .footer-col h4 {
+        .footer-column h4 {
             color: #fff;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             font-weight: 700;
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
 
-        .footer-col ul {
+        .footer-column ul {
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
         }
 
-        .footer-col ul a {
+        .footer-column ul a {
             text-decoration: none;
             color: #94a3b8;
-            font-size: 0.9rem;
-            transition: color 0.2s;
+            font-size: 0.92rem;
+            transition: color 0.2s ease;
         }
 
-        .footer-col ul a:hover {
+        .footer-column ul a:hover {
             color: #fff;
         }
 
-        .footer-bottom {
+        .footer-bottom-bar {
             text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid #141a26;
-            font-size: 0.85rem;
+            padding-top: 35px;
+            border-top: 1px solid #111827;
+            font-size: 0.88rem;
             color: #64748b;
-            max-width: 1350px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
         @media(max-width: 900px) {
-            .hero-section {
+            .hero-section-wrapper {
                 flex-direction: column;
                 text-align: center;
             }
-            .hero-main-title {
-                font-size: 3rem;
+            .hero-title-main {
+                font-size: 3.2rem;
             }
-            .hero-cta-group {
+            .hero-buttons-wrapper {
                 justify-content: center;
             }
-            .nav-menu {
+            .nav-links-list {
                 display: none;
             }
         }
@@ -506,86 +509,86 @@
 <body>
 
     <!-- Top Announcement Bar -->
-    <div class="announcement-bar">
-        <span>Moteur V3.4</span> Le système d'arbitrage Gemini AI est officiellement actif 24/7 sur Binance Testnet.
+    <div class="top-notification">
+        <span>Système V4.0</span> Infrastructure de trading autonome Gemini AI connectée en direct sur Binance Testnet.
     </div>
 
-    <!-- Main Navigation Bar -->
-    <nav class="main-nav">
-        <a href="#" class="nav-brand">
-            <div class="brand-logo-icon"><i class="fas fa-brain"></i></div>
-            TrendAI Pro Max
+    <!-- Navigation Bar -->
+    <nav class="navbar-main">
+        <a href="#" class="brand-logo-container">
+            <div class="brand-icon-box"><i class="fas fa-brain"></i></div>
+            TrendAI Crypto Pro Max
         </a>
-        <ul class="nav-menu">
+        <ul class="nav-links-list">
             <li><a href="#features">Fonctionnalités</a></li>
             <li><a href="#terminal">Terminal Web3</a></li>
-            <li><a href="#bot-engine">Autonomous AI</a></li>
-            <li><a href="#docs">Documentation</a></li>
+            <li><a href="#ai-engine">Agent Autonome</a></li>
+            <li><a href="#docs">Sécurité No-KYC</a></li>
         </ul>
-        <button class="wallet-connect-btn" onclick="connectWeb3Wallet()">
+        <button class="btn-action-primary" onclick="connectWeb3Wallet()">
             <i class="fas fa-wallet"></i> <span id="connectBtnText">Connexion Web3</span>
         </button>
     </nav>
 
     <!-- Hero Section -->
-    <header class="hero-section">
-        <div class="hero-text-content">
-            <h1 class="hero-main-title">Tradez n’importe quoi. <span>Gagnez plus.</span></h1>
-            <p class="hero-description">L'infrastructure de trading autonome et décentralisée où votre capital travaille en permanence à travers des algorithmes prédictifs de pointe, sans vérification KYC requise.</p>
-            <div class="hero-cta-group">
-                <button class="wallet-connect-btn" style="padding: 16px 36px; font-size: 1rem;" onclick="connectWeb3Wallet()">Lancer l'Agent AI</button>
-                <a href="#features" style="background:#f1f5f9; color:#0f172a; text-decoration:none; padding: 16px 30px; border-radius: 30px; font-weight:700; display:flex; align-items:center;">Explorer</a>
+    <header class="hero-section-wrapper">
+        <div class="hero-content-col">
+            <h1 class="hero-title-main">Tradez n’importe quoi. <span>Gagnez plus.</span></h1>
+            <p class="hero-description-text">L'infrastructure crypto décentralisée à détention en propre où votre capital travaille en permanence à travers des algorithmes prédictifs intelligents.</p>
+            <div class="hero-buttons-wrapper">
+                <button class="btn-action-primary" style="padding: 16px 38px; font-size: 1.05rem;" onclick="connectWeb3Wallet()">Lancer l'Agent AI</button>
+                <a href="#features" style="background:#f1f5f9; color:#0f172a; text-decoration:none; padding: 16px 32px; border-radius: 30px; font-weight:700; display:flex; align-items:center;">Explorer</a>
             </div>
         </div>
 
-        <!-- Terminal Card Mockup -->
-        <div class="hero-mockup-container" id="terminal">
-            <div class="terminal-card">
-                <div class="terminal-header">
-                    <div class="terminal-network-badge"><i class="fas fa-circle" style="color:var(--accent-green); font-size: 8px; margin-right:6px;"></i> Testnet Node Active</div>
-                    <div style="display:flex; gap: 12px; color: #64748b;">
+        <!-- Terminal Card -->
+        <div class="hero-terminal-col" id="terminal">
+            <div class="web3-terminal-box">
+                <div class="terminal-top-header">
+                    <div class="network-status-tag"><i class="fas fa-circle" style="color:var(--accent-green); font-size: 8px; margin-right:6px;"></i> Testnet Sandbox</div>
+                    <div style="display:flex; gap: 14px; color: #64748b;">
                         <i class="fas fa-shield-alt"></i>
                         <i class="fas fa-sync-alt" onclick="refreshTerminalData()" style="cursor:pointer;"></i>
                     </div>
                 </div>
 
-                <div class="terminal-balance-label">SOLDE TOTAL DU PORTEFEUILLE</div>
-                <div class="terminal-balance-amount" id="displayTotalBalance">$14,850.00</div>
-                <div class="terminal-balance-profit">
-                    <i class="fas fa-arrow-trend-up"></i> +$742.50 (+5.2%) 24h Profit
+                <div class="terminal-balance-title">SOLDE GLOBAL DU PORTEFEUILLE</div>
+                <div class="terminal-balance-val" id="displayTotalBalance">$18,450.00</div>
+                <div class="terminal-profit-badge">
+                    <i class="fas fa-arrow-trend-up"></i> +$922.50 (+5.3%) 24h Profit AI
                 </div>
 
                 <div class="terminal-actions-grid">
-                    <div class="terminal-action-btn" onclick="triggerAction('buy')">
+                    <div class="terminal-act-btn" onclick="triggerAction('buy')">
                         <i class="fas fa-plus-circle"></i>
                         <span>Achat</span>
                     </div>
-                    <div class="terminal-action-btn" onclick="triggerAction('swap')">
+                    <div class="terminal-act-btn" onclick="triggerAction('swap')">
                         <i class="fas fa-exchange-alt"></i>
                         <span>Échanger</span>
                     </div>
-                    <div class="terminal-action-btn" onclick="triggerAction('send')">
+                    <div class="terminal-act-btn" onclick="triggerAction('send')">
                         <i class="fas fa-paper-plane"></i>
                         <span>Envoyer</span>
                     </div>
-                    <div class="terminal-action-btn" onclick="triggerAction('receive')">
+                    <div class="terminal-act-btn" onclick="triggerAction('receive')">
                         <i class="fas fa-qrcode"></i>
                         <span>Recevoir</span>
                     </div>
                 </div>
 
-                <div class="terminal-assets-list">
-                    <div class="asset-row">
-                        <span style="font-weight:700; font-size:0.9rem;">Bitcoin (BTC Bot)</span>
-                        <span style="font-family:var(--font-mono); font-weight:700;">$9,870.00</span>
+                <div class="terminal-asset-rows">
+                    <div class="asset-single-row">
+                        <span style="font-weight:700;">Bitcoin (BTC Bot)</span>
+                        <span style="font-family:var(--font-mono); font-weight:700;">$11,500.00</span>
                     </div>
-                    <div class="asset-row">
-                        <span style="font-weight:700; font-size:0.9rem;">Ethereum (ETH Pool)</span>
-                        <span style="font-family:var(--font-mono); font-weight:700;">$3,980.00</span>
+                    <div class="asset-single-row">
+                        <span style="font-weight:700;">Ethereum (ETH Pool)</span>
+                        <span style="font-family:var(--font-mono); font-weight:700;">$4,950.00</span>
                     </div>
-                    <div class="asset-row">
-                        <span style="font-weight:700; font-size:0.9rem;">TrendAI Token ($TAI)</span>
-                        <span style="font-family:var(--font-mono); font-weight:700; color:var(--accent-green);">+1,000.00 TAI</span>
+                    <div class="asset-single-row">
+                        <span style="font-weight:700;">TrendAI Token ($TAI)</span>
+                        <span style="font-family:var(--font-mono); font-weight:700; color:var(--accent-green);">+2,000.00 TAI</span>
                     </div>
                 </div>
             </div>
@@ -593,93 +596,93 @@
     </header>
 
     <!-- Live Market Ticker -->
-    <div class="market-ticker-section">
-        <div class="ticker-pill-card"><span>Bitcoin BTC/USDT</span> <span style="color:var(--accent-green);">+2.45%</span> <span style="font-family:var(--font-mono);">$68,450.00</span></div>
-        <div class="ticker-pill-card"><span>Ethereum ETH/USDT</span> <span style="color:var(--accent-green);">+4.12%</span> <span style="font-family:var(--font-mono);">$2,410.50</span></div>
-        <div class="ticker-pill-card"><span>Solana SOL/USDT</span> <span style="color:var(--accent-red);">-1.85%</span> <span style="font-family:var(--font-mono);">$105.20</span></div>
-        <div class="ticker-pill-card"><span>TrendAI TAI/USDT</span> <span style="color:var(--accent-green);">+14.80%</span> <span style="font-family:var(--font-mono);">$1.45</span></div>
-        <div class="ticker-pill-card"><span>NVIDIA Stock Token</span> <span style="color:var(--accent-red);">-2.90%</span> <span style="font-family:var(--font-mono);">$214.80</span></div>
+    <div class="market-ticker-container">
+        <div class="ticker-card-item"><span>Bitcoin BTC/USDT</span> <span style="color:var(--accent-green);">+2.85%</span> <span style="font-family:var(--font-mono);">$68,520.00</span></div>
+        <div class="ticker-card-item"><span>Ethereum ETH/USDT</span> <span style="color:var(--accent-green);">+4.40%</span> <span style="font-family:var(--font-mono);">$2,425.00</span></div>
+        <div class="ticker-card-item"><span>Solana SOL/USDT</span> <span style="color:var(--accent-red);">-1.20%</span> <span style="font-family:var(--font-mono);">$106.80</span></div>
+        <div class="ticker-card-item"><span>TrendAI TAI/USDT</span> <span style="color:var(--accent-green);">+16.20%</span> <span style="font-family:var(--font-mono);">$1.55</span></div>
+        <div class="ticker-card-item"><span>NVIDIA Stock Token</span> <span style="color:var(--accent-red);">-2.10%</span> <span style="font-family:var(--font-mono);">$216.50</span></div>
     </div>
 
-    <!-- Features Section Grid -->
-    <section class="features-container" id="features">
+    <!-- Features Grid Section -->
+    <section class="features-section-wrapper" id="features">
         <h2 class="section-header-title">Des millions de façons de trader</h2>
         
         <div class="features-grid-layout">
-            <div class="feature-card-box box-bg-1">
+            <div class="feature-box-card bg-color-1">
                 <div>
-                    <h3 class="feature-card-title">Perps & Futures</h3>
-                    <p class="feature-card-desc">Exécutez des ordres longs et courts sur plus de 270 cryptos avec un effet de levier dynamique jusqu'à 50x.</p>
+                    <h3 class="feature-box-title">Perps & Futures</h3>
+                    <p class="feature-box-desc">Ouvrez des positions longues et courtes sur plus de 270 actifs avec un effet de levier dynamique jusqu'à 50x.</p>
                 </div>
-                <i class="fas fa-chart-line" style="font-size: 2.8rem; opacity: 0.8;"></i>
+                <i class="fas fa-chart-line" style="font-size: 3rem; opacity: 0.85;"></i>
             </div>
 
-            <div class="feature-card-box box-bg-2">
+            <div class="feature-box-card bg-color-2">
                 <div>
-                    <h3 class="feature-card-title">Prédictions AI</h3>
-                    <p class="feature-card-desc">L'agent intelligent analyse les carnets d'ordres en temps réel pour anticiper les retournements de tendance.</p>
+                    <h3 class="feature-box-title">Prédictions AI</h3>
+                    <p class="feature-box-desc">L'agent intelligent analyse les carnets d'ordres en direct pour anticiper les retournements de tendance.</p>
                 </div>
-                <i class="fas fa-brain" style="font-size: 2.8rem; opacity: 0.8;"></i>
+                <i class="fas fa-brain" style="font-size: 3rem; opacity: 0.85;"></i>
             </div>
 
-            <div class="feature-card-box box-bg-3">
+            <div class="feature-box-card bg-color-3">
                 <div>
-                    <h3 class="feature-card-title">Actions Tokenisées</h3>
-                    <p class="feature-card-desc">Investissez 24/7 dans les plus grandes actions mondiales et matières premières sans barrière géographique.</p>
+                    <h3 class="feature-box-title">Actions Tokenisées</h3>
+                    <p class="feature-box-desc">Investissez 24/7 dans les plus grandes actions mondiales et matières premières sans aucune barrière.</p>
                 </div>
-                <i class="fas fa-globe-americas" style="font-size: 2.8rem; opacity: 0.8;"></i>
+                <i class="fas fa-globe-americas" style="font-size: 3rem; opacity: 0.85;"></i>
             </div>
 
-            <div class="feature-card-box box-bg-4">
+            <div class="feature-box-card bg-color-4">
                 <div>
-                    <h3 class="feature-card-title">Swaps L2 Optimisés</h3>
-                    <p class="feature-card-desc">Routage intelligent des ordres à travers les pools de liquidité Layer-2 pour des frais quasi-nuls.</p>
+                    <h3 class="feature-box-title">Swaps L2 Optimisés</h3>
+                    <p class="feature-box-desc">Routage intelligent des ordres à travers les pools de liquidité Layer-2 pour des frais minimaux.</p>
                 </div>
-                <i class="fas fa-bolt" style="font-size: 2.8rem; opacity: 0.8;"></i>
+                <i class="fas fa-bolt" style="font-size: 3rem; opacity: 0.85;"></i>
             </div>
         </div>
     </section>
 
-    <!-- AI Control & Live Execution Console -->
-    <section class="ai-control-panel" id="bot-engine">
-        <div class="control-panel-wrapper">
-            <div class="control-top">
+    <!-- AI Engine Console -->
+    <section class="ai-engine-wrapper" id="ai-engine">
+        <div class="ai-console-card">
+            <div class="ai-console-header">
                 <div>
-                    <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 6px;">Console de l'Agent Autonome</h2>
-                    <p style="color: #94a3b8; font-size: 0.95rem;">État de synchronisation du bot Python avec le moteur Gemini AI.</p>
+                    <h2 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 6px;">Console de l'Agent Autonome</h2>
+                    <p style="color: #94a3b8; font-size: 1rem;">Suivi en temps réel du bot Python et des signaux Gemini AI.</p>
                 </div>
-                <div class="bot-status-indicator">
-                    <div class="status-dot"></div>
+                <div class="ai-live-indicator">
+                    <div class="pulsing-dot"></div>
                     <span style="font-weight: 700; font-size: 0.9rem;">Statut : Actif 24/7</span>
                 </div>
             </div>
 
-            <div class="logs-box" id="terminalLogs">
-                [16:15:02] [SYSTEM] Connexion établie avec Binance Testnet Sandbox...<br>
-                [16:15:05] [AI ENGINE] Analyse des bougies OHLCV (BTC/USDT - 1h)...<br>
-                [16:15:10] [SIGNAL] Décision reçue de Gemini AI : HOLD / Stabilité du marché confirmée.<br>
-                [16:16:00] [CHECK] Portefeuille sécurisé et prêt pour l'exécution des ordres.
+            <div class="terminal-logs-screen" id="terminalLogs">
+                [16:45:00] [SYSTEM] Connexion établie avec Binance Testnet Sandbox...<br>
+                [16:45:03] [AI ENGINE] Analyse des indicateurs OHLCV (BTC/USDT - 1h)...<br>
+                [16:45:08] [SIGNAL] Décision reçue de Gemini AI : HOLD / Stabilité confirmée.<br>
+                [16:46:00] [CHECK] Portefeuille sécurisé et prêt pour l'exécution automatique.
             </div>
 
-            <div style="display: flex; gap: 15px;">
-                <button class="wallet-connect-btn" style="background: var(--primary-blue);" onclick="executeManualScan()">Lancer un Scan Forcé</button>
-                <button class="wallet-connect-btn" style="background: #1e293b;" onclick="clearLogs()">Effacer les Logs</button>
+            <div style="display: flex; gap: 16px;">
+                <button class="btn-action-primary" style="background: var(--primary-blue);" onclick="executeManualScan()">Lancer un Scan Forcé</button>
+                <button class="btn-action-primary" style="background: #1e293b;" onclick="clearLogs()">Effacer les Logs</button>
             </div>
         </div>
     </section>
 
     <!-- Footer Information -->
     <footer>
-        <div class="footer-grid">
-            <div class="footer-col">
+        <div class="footer-grid-layout">
+            <div class="footer-column">
                 <h4>TrendAI Pro Max</h4>
                 <ul>
                     <li><a href="#">À propos de l'infrastructure</a></li>
-                    <li><a href="#">Sécurité No-KYC</a></li>
+                    <li><a href="#">Sécurité Zero-KYC</a></li>
                     <li><a href="#">Partenaires Testnet</a></li>
                 </ul>
             </div>
-            <div class="footer-col">
+            <div class="footer-column">
                 <h4>Produits</h4>
                 <ul>
                     <li><a href="#">Terminal Web3</a></li>
@@ -687,7 +690,7 @@
                     <li><a href="#">Actions Tokenisées</a></li>
                 </ul>
             </div>
-            <div class="footer-col">
+            <div class="footer-column">
                 <h4>Développeurs</h4>
                 <ul>
                     <li><a href="#">Documentation API</a></li>
@@ -695,7 +698,7 @@
                     <li><a href="#">Smart Contracts</a></li>
                 </ul>
             </div>
-            <div class="footer-col">
+            <div class="footer-column">
                 <h4>Légal & Sécurité</h4>
                 <ul>
                     <li><a href="#">Conditions d'utilisation</a></li>
@@ -704,7 +707,7 @@
                 </ul>
             </div>
         </div>
-        <div class="footer-bottom">
+        <div class="footer-bottom-bar">
             <p>&copy; 2026 TrendAI Crypto Pro Max. Infrastructure de Trading Autonome Web3. Tous droits réservés.</p>
         </div>
     </footer>
@@ -744,15 +747,15 @@
         }
 
         function refreshTerminalData() {
-            const randomProfit = (Math.random() * 50 + 720).toFixed(2);
-            document.querySelector('.terminal-balance-profit').innerHTML = `<i class="fas fa-arrow-trend-up"></i> +$${randomProfit} (+5.4%) 24h Profit`;
+            const randomProfit = (Math.random() * 50 + 920).toFixed(2);
+            document.querySelector('.terminal-profit-badge').innerHTML = `<i class="fas fa-arrow-trend-up"></i> +$${randomProfit} (+5.5%) 24h Profit AI`;
             addLog(`[REFRESH] Données du terminal mises à jour en temps réel.`);
         }
 
         function executeManualScan() {
             addLog(`[AI ENGINE] Scan manuel déclenché par l'utilisateur... Analyse des marchés en cours.`);
             setTimeout(() => {
-                addLog(`[SIGNAL] Gemini AI : Tendance haussière détectée sur les paires majeures.`);
+                addLog(`[SIGNAL] Gemini AI : Tendance haussière confirmée sur les paires majeures.`);
             }, 1000);
         }
 
