@@ -6,9 +6,6 @@
     <title>TrendAI Crypto Pro Max | Next-Gen Web3 Trading & Analytics Platform</title>
     <meta name="google-site-verification" content="7_HNTMVbXM1XFVZ6QuwNP40qmh-Dh-QGLFnb5-VRfLM" />
     <meta name="theme-color" content="#030014">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="TrendAI Crypto">
     
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Web3, Chart.js & Firebase SDKs -->
+    <!-- Web3, Chart.js SDKs -->
     <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
@@ -248,7 +245,7 @@
             word-break: break-all;
         }
 
-        /* Main Grid (Auto Fit - No Overlap) */
+        /* Main Grid (Auto Fit - المنظم لمنع التداخل) */
         .dashboard-container {
             width: 94%;
             max-width: 1500px;
@@ -588,7 +585,7 @@
             <button class="btn-action purple-btn" style="width: 100%; justify-content: center;" onclick="alert('Tokens locked into Staking Contract for 90 days!')"><i class="fas fa-lock"></i> Stake Tokens Now</button>
         </div>
 
-        <!-- 7. Advanced Smart Contract Risk Scanner (الميزة الجديدة) -->
+        <!-- 7. Advanced Smart Contract Risk Scanner -->
         <div class="card">
             <div>
                 <div class="card-header-title">
@@ -743,7 +740,7 @@
             document.getElementById('stakingProfitDisplay').innerText = `Est. Profit (90 Days): +${Math.round(tokens * 0.0592)} TAI`;
         }
 
-        // Advanced Honeypot & Safety Risk Scanner (أداء حقيقي)
+        // Risk Scanner
         function runContractAudit() {
             const input = document.getElementById('contractAuditInput').value.trim();
             const display = document.getElementById('auditResultDisplay');
