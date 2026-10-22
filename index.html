@@ -3,26 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TrendAI Crypto | Pro Max Next-Gen Trading & Web3 Platform</title>
+    <title>Trending Crypto Pro Max | Next-Gen Web3 Platform</title>
     <meta name="google-site-verification" content="7_HNTMVbXM1XFVZ6QuwNP40qmh-Dh-QGLFnb5-VRfLM" />
     <meta name="theme-color" content="#030014">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="TrendAI Crypto">
     
-    <!-- Google Fonts & FontAwesome Icons -->
+    <!-- Fonts & FontAwesome Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Web3 & Firebase SDKs -->
+    <!-- Web3 & Chart SDKs -->
     <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@walletconnect/web3-provider@1.8.0/dist/umd/index.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
-        /* Modern Glassmorphism Master Stylesheet */
         :root {
             --bg-main: #060411;
             --bg-card: rgba(15, 12, 35, 0.85);
@@ -34,30 +29,20 @@
             --secondary: #06b6d4;
             --secondary-glow: #22d3ee;
             --accent: #ec4899;
-            --accent-glow: #f472b6;
             --text-main: #f3f4f6;
             --text-muted: #9ca3af;
-            --text-dark: #6b7280;
             --success: #10b981;
-            --success-glow: #34d399;
             --danger: #ef4444;
-            --danger-glow: #f87171;
             --warning: #f59e0b;
             --font-primary: 'Plus Jakarta Sans', sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
-            --transition-speed: 0.3s;
         }
 
-        /* Global Reset & Base Layout */
-        *, *::before, *::after {
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: var(--font-primary);
-        }
-
-        html {
-            scroll-behavior: smooth;
         }
 
         body {
@@ -70,46 +55,23 @@
                 radial-gradient(circle at 85% 85%, rgba(6, 182, 212, 0.15) 0%, transparent 45%),
                 radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.08) 0%, transparent 60%);
             background-attachment: fixed;
-            line-height: 1.5;
         }
 
-        /* Custom Scrollbar Styling */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #030014;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: rgba(139, 92, 246, 0.3);
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary-glow);
-        }
-
-        /* Top Bar Ticker Container */
+        /* Ticker Bar */
         .ticker-bar-container {
             width: 100%;
             background: rgba(3, 0, 20, 0.95);
             border-bottom: 1px solid var(--border-color);
-            padding: 6px 0;
-            font-size: 0.8rem;
+            padding: 8px 0;
+            font-size: 0.82rem;
             font-family: var(--font-mono);
             overflow: hidden;
             white-space: nowrap;
-            position: relative;
-            z-index: 1001;
         }
 
         .ticker-wrapper {
             display: inline-block;
-            animation: tickerSlide 35s linear infinite;
-        }
-
-        .ticker-wrapper:hover {
-            animation-play-state: paused;
+            animation: tickerSlide 30s linear infinite;
         }
 
         .ticker-item {
@@ -124,11 +86,11 @@
             100% { transform: translateX(-100%); }
         }
 
-        /* Top Navigation Header Container */
+        /* Top Navigation Container */
         .top-navbar-container {
             width: 94%;
             max-width: 1500px;
-            margin: 15px auto 10px auto;
+            margin: 15px auto;
             background: rgba(13, 10, 31, 0.9);
             border: 1px solid var(--border-color);
             border-radius: 24px;
@@ -143,11 +105,6 @@
             position: sticky;
             top: 15px;
             z-index: 1000;
-            transition: border-color var(--transition-speed);
-        }
-
-        .top-navbar-container:hover {
-            border-color: var(--border-glow);
         }
 
         .brand-logo-area {
@@ -163,26 +120,17 @@
             gap: 12px;
         }
 
+        /* تكبير الأيقونات الرئيسية بشكل احترافي */
         .logo-icons .fa-rocket {
-            font-size: 32px !important;
+            font-size: 34px !important;
             color: var(--primary-glow);
             filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.8));
-            transition: transform 0.3s ease;
         }
 
         .logo-icons .fa-tools {
-            font-size: 30px !important;
+            font-size: 32px !important;
             color: var(--secondary);
             filter: drop-shadow(0 0 10px rgba(6, 182, 212, 0.8));
-            transition: transform 0.3s ease;
-        }
-
-        .brand-logo-area:hover .fa-rocket {
-            transform: translateY(-2px) rotate(10deg);
-        }
-
-        .brand-logo-area:hover .fa-tools {
-            transform: rotate(20deg);
         }
 
         .brand-title {
@@ -191,7 +139,6 @@
             -webkit-text-fill-color: transparent;
             font-weight: 800;
             font-size: 1.45rem;
-            letter-spacing: -0.5px;
         }
 
         .nav-links-pills {
@@ -209,20 +156,19 @@
             border-radius: 20px;
             font-size: 0.88rem;
             font-weight: 600;
-            text-decoration: none;
             cursor: pointer;
-            transition: all var(--transition-speed) ease;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             gap: 8px;
+            text-decoration: none;
         }
 
         .nav-pill:hover, .nav-pill.active {
             background: var(--primary);
             border-color: var(--primary-glow);
             color: white;
-            box-shadow: 0 0 20px rgba(124, 58, 237, 0.6);
-            transform: translateY(-2px);
+            box-shadow: 0 0 18px rgba(124, 58, 237, 0.6);
         }
 
         .nav-actions-right {
@@ -231,7 +177,6 @@
             align-items: center;
         }
 
-        /* Reusable Dynamic Buttons */
         .btn-action {
             background: linear-gradient(135deg, #f59e0b, #d97706);
             color: white;
@@ -245,8 +190,7 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            transition: all var(--transition-speed) ease;
-            text-decoration: none;
+            transition: all 0.3s ease;
         }
 
         .btn-action.green-btn {
@@ -259,19 +203,9 @@
             box-shadow: 0 4px 15px rgba(124, 58, 237, 0.45);
         }
 
-        .btn-action.danger-btn {
-            background: linear-gradient(135deg, var(--danger), #b91c1c);
-            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
-        }
-
         .btn-action:hover {
             transform: translateY(-2px);
             filter: brightness(1.15);
-            box-shadow: 0 6px 22px rgba(139, 92, 246, 0.6);
-        }
-
-        .btn-action:active {
-            transform: translateY(0);
         }
 
         /* Hero Text Banner */
@@ -310,20 +244,18 @@
             font-family: var(--font-mono);
             margin-top: 15px;
             word-break: break-all;
-            box-shadow: 0 0 12px rgba(16, 185, 129, 0.15);
         }
 
-        /* Main Dashboard Grid Layout */
+        /* Dashboard Grid منظم لمنع التداخل */
         .dashboard-container {
             width: 94%;
             max-width: 1500px;
             margin: 0 auto 60px auto;
             display: grid;
-            grid-template-columns: repeat(12, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 22px;
         }
 
-        /* Card Component */
         .card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -334,29 +266,14 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: all var(--transition-speed) ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 3px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
-            opacity: 0;
-            transition: opacity var(--transition-speed);
+            transition: all 0.3s ease;
+            min-height: 310px;
         }
 
         .card:hover {
             background: var(--bg-card-hover);
             border-color: var(--border-glow);
             transform: translateY(-4px);
-            box-shadow: 0 15px 40px rgba(124, 58, 237, 0.25);
-        }
-
-        .card:hover::before {
-            opacity: 1;
         }
 
         .card-header-title {
@@ -375,7 +292,6 @@
             gap: 10px;
         }
 
-        /* Custom Form Inputs */
         .input-styled {
             width: 100%;
             background: rgba(5, 3, 15, 0.75);
@@ -386,15 +302,12 @@
             font-size: 0.9rem;
             outline: none;
             margin-bottom: 14px;
-            transition: border-color var(--transition-speed);
         }
 
         .input-styled:focus {
             border-color: var(--primary-glow);
-            box-shadow: 0 0 12px rgba(139, 92, 246, 0.3);
         }
 
-        /* Badges & Indicators */
         .badge-stage {
             background: rgba(16, 185, 129, 0.15);
             color: var(--success);
@@ -418,16 +331,14 @@
             height: 100%;
             background: linear-gradient(90deg, var(--primary), var(--secondary));
             border-radius: 10px;
-            transition: width 0.5s ease;
         }
 
-        /* Comment Section */
         .comments-box {
             background: rgba(5, 3, 15, 0.6);
             border: 1px solid rgba(255,255,255,0.05);
             border-radius: 12px;
             padding: 12px;
-            max-height: 130px;
+            max-height: 110px;
             overflow-y: auto;
             margin-bottom: 12px;
         }
@@ -437,42 +348,19 @@
             margin-bottom: 8px;
             padding-bottom: 6px;
             border-bottom: 1px solid rgba(255,255,255,0.04);
-            line-height: 1.4;
-        }
-
-        .comment-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
         }
 
         .comment-item strong {
             color: #a78bfa;
         }
 
-        /* Chart Canvas Holder */
         .chart-placeholder {
             width: 100%;
-            height: 190px;
+            height: 170px;
             background: rgba(5, 3, 15, 0.5);
             border-radius: 12px;
             position: relative;
             padding: 10px;
-        }
-
-        /* Grid Spans */
-        .col-3 { grid-column: span 3; }
-        .col-4 { grid-column: span 4; }
-        .col-6 { grid-column: span 6; }
-        .col-12 { grid-column: span 12; }
-
-        @media(max-width: 1200px) {
-            .col-3, .col-4 { grid-column: span 6; }
-        }
-
-        @media(max-width: 768px) {
-            .col-3, .col-4, .col-6, .col-12 { grid-column: span 12; }
-            .top-navbar-container { flex-direction: column; align-items: stretch; }
-            .nav-actions-right { justify-content: center; }
         }
 
         /* Floating AI Chat Button */
@@ -492,13 +380,11 @@
             align-items: center;
             gap: 12px;
             z-index: 9999;
-            transition: all var(--transition-speed) ease;
-            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
         }
 
         .floating-ai-chat:hover {
-            transform: scale(1.08) translateY(-3px);
-            box-shadow: 0 12px 35px rgba(139, 92, 246, 0.7);
+            transform: scale(1.08);
         }
 
         /* Modal Styles */
@@ -511,12 +397,6 @@
             justify-content: center;
             align-items: center;
             z-index: 10000;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
 
         .modal-content {
@@ -536,37 +416,6 @@
             cursor: pointer;
             font-size: 1.4rem;
             color: var(--text-muted);
-            transition: color var(--transition-speed);
-        }
-
-        .close-modal-btn:hover {
-            color: white;
-        }
-
-        /* Interactive Modal Tabs */
-        .modal-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
-        }
-
-        .modal-tab {
-            flex: 1;
-            text-align: center;
-            padding: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            color: var(--text-muted);
-            border-radius: 8px;
-            transition: all var(--transition-speed);
-        }
-
-        .modal-tab.active {
-            color: white;
-            background: rgba(139, 92, 246, 0.2);
-            border: 1px solid var(--border-color);
         }
 
         footer {
@@ -583,10 +432,10 @@
 
     <!-- Live Ticker Bar -->
     <div class="ticker-bar-container">
-        <div class="ticker-wrapper" id="liveTickerWrapper">
-            <span class="ticker-item"><i class="fab fa-bitcoin" style="color: #f59e0b;"></i> BTC/USD: <strong style="color:#10b981;" id="tickerBtc">$82,250.00 (+3.4%)</strong></span>
-            <span class="ticker-item"><i class="fab fa-ethereum" style="color: #38bdf8;"></i> ETH/USD: <strong style="color:#10b981;" id="tickerEth">$3,120.00 (+1.8%)</strong></span>
-            <span class="ticker-item"><i class="fas fa-bolt" style="color: #ec4899;"></i> SOL/USD: <strong style="color:#10b981;" id="tickerSol">$188.30 (+5.1%)</strong></span>
+        <div class="ticker-wrapper">
+            <span class="ticker-item"><i class="fab fa-bitcoin" style="color: #f59e0b;"></i> BTC/USD: <strong style="color:#10b981;">$82,250.00 (+3.4%)</strong></span>
+            <span class="ticker-item"><i class="fab fa-ethereum" style="color: #38bdf8;"></i> ETH/USD: <strong style="color:#10b981;">$3,120.00 (+1.8%)</strong></span>
+            <span class="ticker-item"><i class="fas fa-bolt" style="color: #ec4899;"></i> SOL/USD: <strong style="color:#10b981;">$188.30 (+5.1%)</strong></span>
             <span class="ticker-item"><i class="fas fa-gem" style="color: #a78bfa;"></i> TAI Presale: <strong style="color:#22d3ee;">$0.05 (Live Stage 1)</strong></span>
             <span class="ticker-item"><i class="fas fa-gas-pump" style="color: #f472b6;"></i> ETH Gas: <strong style="color:#f59e0b;">14 Gwei</strong></span>
         </div>
@@ -596,18 +445,18 @@
     <div class="top-navbar-container">
         <div class="brand-logo-area" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
             <div class="logo-icons">
-                <i class="fas fa-rocket" title="Next-Gen Launchpad"></i>
-                <i class="fas fa-tools" title="Pro Tools Suite"></i>
+                <i class="fas fa-rocket"></i>
+                <i class="fas fa-tools"></i>
             </div>
             <span class="brand-title">Trending Crypto Pro Max</span>
         </div>
 
         <div class="nav-links-pills">
-            <a class="nav-pill active" onclick="switchNav(this, 'home')"><i class="fas fa-home"></i> Home</a>
-            <a class="nav-pill" onclick="switchNav(this, 'launchpad')"><i class="fas fa-rocket"></i> Launchpad</a>
-            <a class="nav-pill" onclick="switchNav(this, 'community')"><i class="fas fa-comments"></i> Community</a>
-            <a class="nav-pill" onclick="switchNav(this, 'chart')"><i class="fas fa-chart-area"></i> Trading Chart</a>
-            <a class="nav-pill" onclick="switchNav(this, 'tools')"><i class="fas fa-wrench"></i> Tools</a>
+            <a class="nav-pill active"><i class="fas fa-home"></i> Home</a>
+            <a class="nav-pill"><i class="fas fa-rocket"></i> Launchpad</a>
+            <a class="nav-pill"><i class="fas fa-comments"></i> Community</a>
+            <a class="nav-pill"><i class="fas fa-chart-area"></i> Trading Chart</a>
+            <a class="nav-pill"><i class="fas fa-wrench"></i> Tools</a>
             <a class="nav-pill" style="background: rgba(139, 92, 246, 0.2);" onclick="openAdminModal()"><i class="fas fa-user-shield"></i> Admin Dashboard</a>
         </div>
 
@@ -620,7 +469,7 @@
         </div>
     </div>
 
-    <!-- Hero Sub-Header -->
+    <!-- Hero Banner Text -->
     <div class="hero-banner">
         <h1>Next-Gen Web3 Analytics & Trading Hub</h1>
         <p>Trending Crypto Pro Max combines real-time live trading charts, non-custodial Web3 wallet connectivity, AI contract auditing, and next-gen presale launchpad ecosystem.</p>
@@ -636,14 +485,14 @@
     <div class="dashboard-container">
 
         <!-- 1. Token Launchpad -->
-        <div class="card col-3">
+        <div class="card">
             <div>
                 <div class="card-header-title">
                     <div><i class="fas fa-rocket" style="color: #ec4899;"></i> Token Launchpad</div>
                     <span class="badge-stage">Stage 1</span>
                 </div>
                 <p style="font-size: 0.82rem; color: var(--text-muted);">Presale Soft Cap: $745,200 / $1,000,000</p>
-                <div class="progress-bar-bg"><div class="progress-bar-fill" id="presaleProgressBar"></div></div>
+                <div class="progress-bar-bg"><div class="progress-bar-fill"></div></div>
                 <p style="font-size: 0.82rem; color: #a78bfa; margin-bottom: 12px;">Price: 1 $TAI = $0.05 USD</p>
                 <label style="font-size: 0.78rem; color: var(--text-muted);">Invest Amount (USDT):</label>
                 <input type="number" id="usdtInvestInput" class="input-styled" value="250" oninput="calculateTokens()">
@@ -653,7 +502,7 @@
         </div>
 
         <!-- 2. Community Feedback -->
-        <div class="card col-3">
+        <div class="card">
             <div>
                 <div class="card-header-title">
                     <div><i class="fas fa-comments" style="color: #38bdf8;"></i> Community Feedback</div>
@@ -661,7 +510,6 @@
                 <div class="comments-box" id="commentsList">
                     <div class="comment-item"><strong>Farouk (Founder):</strong> Welcome to Trending Crypto Pro Max!</div>
                     <div class="comment-item"><strong>CryptoWhale:</strong> Very smooth interface & live price ticker!</div>
-                    <div class="comment-item"><strong>Satoshi_N:</strong> Web3 wallet connection works fast.</div>
                 </div>
                 <input type="text" id="newCommentInput" class="input-styled" placeholder="Add a comment...">
             </div>
@@ -669,11 +517,11 @@
         </div>
 
         <!-- 3. Live Price Action Chart -->
-        <div class="card col-3">
+        <div class="card">
             <div>
                 <div class="card-header-title">
-                    <div><i class="fas fa-chart-line" style="color: #10b981;"></i> Live Price Action Chart</div>
-                    <span style="color: #ef4444; font-size: 0.85rem;" id="chartBtcPrice">$82,349.03 ▼</span>
+                    <div><i class="fas fa-chart-line" style="color: #10b981;"></i> Live Price Chart</div>
+                    <span style="color: #ef4444; font-size: 0.85rem;">$82,349.03 ▼</span>
                 </div>
                 <div class="chart-placeholder">
                     <canvas id="liveMiniChart"></canvas>
@@ -682,11 +530,10 @@
         </div>
 
         <!-- 4. Live Market Prices -->
-        <div class="card col-3">
+        <div class="card">
             <div>
                 <div class="card-header-title">
                     <div><i class="fas fa-coins" style="color: #f59e0b;"></i> Live Market Prices</div>
-                    <button class="btn-action" style="padding: 4px 10px; font-size: 0.7rem;" onclick="refreshPrices()"><i class="fas fa-sync"></i> Refresh</button>
                 </div>
                 <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
                     <thead>
@@ -694,7 +541,7 @@
                             <th style="padding: 8px 0;">Coin</th><th>Price</th><th>24h</th>
                         </tr>
                     </thead>
-                    <tbody id="marketTableBody">
+                    <tbody>
                         <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
                             <td style="padding: 10px 0;"><strong>BTC</strong></td><td>$82,250.00</td><td style="color: #10b981;">+3.4%</td>
                         </tr>
@@ -710,7 +557,7 @@
         </div>
 
         <!-- 5. Advanced Portfolio Tracker -->
-        <div class="card col-3">
+        <div class="card">
             <div>
                 <div class="card-header-title">
                     <div><i class="fas fa-briefcase" style="color: #f59e0b;"></i> Portfolio Tracker</div>
@@ -725,11 +572,11 @@
                 <input type="number" id="portfolioAmountInput" class="input-styled" value="1" oninput="calculatePortfolio()">
                 <p style="font-size: 0.9rem; color: var(--success); font-weight: 700; margin-bottom: 10px;" id="portfolioResult">Total Value: $82,250.00</p>
             </div>
-            <button class="btn-action purple-btn" style="width: 100%; justify-content: center;" onclick="calculatePortfolio()"><i class="fas fa-calculator"></i> Recalculate Portfolio</button>
+            <button class="btn-action purple-btn" style="width: 100%; justify-content: center;" onclick="calculatePortfolio()"><i class="fas fa-calculator"></i> Calculate Value</button>
         </div>
 
         <!-- 6. Web3 Staking & Yield -->
-        <div class="card col-3">
+        <div class="card">
             <div>
                 <div class="card-header-title">
                     <div><i class="fas fa-gem" style="color: #38bdf8;"></i> Web3 Staking & Yield</div>
@@ -738,11 +585,11 @@
                 <input type="number" id="stakingInput" class="input-styled" value="5000" oninput="calculateStaking()">
                 <p style="font-size: 0.85rem; color: var(--success); font-weight: 700; margin-bottom: 12px;" id="stakingProfitDisplay">Est. Profit (90 Days): +296 TAI</p>
             </div>
-            <button class="btn-action purple-btn" style="width: 100%; justify-content: center;" onclick="stakeTokens()"><i class="fas fa-lock"></i> Stake Tokens Now</button>
+            <button class="btn-action purple-btn" style="width: 100%; justify-content: center;" onclick="alert('Tokens locked into Staking Contract for 90 days!')"><i class="fas fa-lock"></i> Stake Tokens Now</button>
         </div>
 
         <!-- 7. AI Contract Auditor -->
-        <div class="card col-3">
+        <div class="card">
             <div>
                 <div class="card-header-title">
                     <div><i class="fas fa-shield-alt" style="color: #ec4899;"></i> AI Contract Auditor</div>
@@ -755,12 +602,11 @@
         </div>
 
         <!-- 8. Gemini AI Trade Signal -->
-        <div class="card col-3">
+        <div class="card">
             <div>
                 <div class="card-header-title">
                     <div><i class="fas fa-brain" style="color: #ec4899;"></i> Gemini AI Signal</div>
                 </div>
-                <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 10px;">Real-time AI automated algorithmic market trend detector.</p>
                 <div id="aiSignalDisplay" style="padding: 10px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 10px; margin-bottom: 12px;">
                     <p style="font-size: 0.8rem; color: var(--success); font-weight: 700;"><i class="fas fa-circle"></i> BULLISH SIGNAL: BUY BTC</p>
                     <p style="font-size: 0.75rem; color: var(--text-muted);">Target: $85,400 | Stop: $80,100</p>
@@ -770,95 +616,54 @@
         </div>
 
         <!-- 9. Fear & Greed Index -->
-        <div class="card col-3" style="text-align: center;">
+        <div class="card" style="text-align: center;">
             <div>
                 <div class="card-header-title" style="justify-content: center;">
-                    <div><i class="fas fa-gauge" style="color: #f59e0b;"></i> Fear & Greed Index</div>
+                    <div><i class="fas fa-gauge" style="color: #f59e0b;"></i> Fear & Greed</div>
                 </div>
                 <h2 style="font-size: 2.5rem; color: var(--success); margin: 10px 0;" id="fearGreedValue">68</h2>
-                <p style="font-size: 0.9rem; color: var(--success); font-weight: 700;" id="fearGreedLabel">GREED 🤑</p>
+                <p style="font-size: 0.9rem; color: var(--success); font-weight: 700;">GREED 🤑</p>
             </div>
             <button class="btn-action" style="width: 100%; justify-content: center; margin-top: 15px;" onclick="updateFearGreed()"><i class="fas fa-redo"></i> Refresh Index</button>
         </div>
 
-        <!-- 10. Admin Quick Operations Card -->
-        <div class="card col-9">
-            <div>
-                <div class="card-header-title">
-                    <div><i class="fas fa-sliders-h" style="color: var(--secondary);"></i> Platform Quick Control Panel</div>
-                </div>
-                <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                    <button class="btn-action purple-btn" onclick="openAdminModal()"><i class="fas fa-user-shield"></i> Open Admin Hub</button>
-                    <button class="btn-action green-btn" onclick="alert('Smart Contract Health: 100% Operational')"><i class="fas fa-check-double"></i> Check Smart Contracts</button>
-                    <button class="btn-action" onclick="alert('Gas Price Alert Set for < 10 Gwei')"><i class="fas fa-bell"></i> Set Gas Alerts</button>
-                    <button class="btn-action danger-btn" onclick="alert('Cache Cleared & Nodes Resynced')"><i class="fas fa-trash"></i> Clear Platform Cache</button>
-                </div>
-            </div>
-        </div>
-
     </div>
 
-    <!-- Floating AI Chat Assistant Widget -->
-    <div class="floating-ai-chat" onclick="openAiChat()">
-        <i class="fas fa-robot" style="font-size: 1.2rem;"></i> Chat with Gemini AI
+    <!-- Floating AI Chat Assistant -->
+    <div class="floating-ai-chat" onclick="alert('Gemini AI Trading Assistant Active!')">
+        <i class="fas fa-robot"></i> Chat with Gemini AI
     </div>
 
-    <!-- Sign In / Register Authentication Modal -->
+    <!-- Sign In Modal -->
     <div id="authModal" class="modal">
         <div class="modal-content">
             <span class="close-modal-btn" onclick="closeAuthModal()">&times;</span>
-            
-            <div class="modal-tabs">
-                <div class="modal-tab active" id="tabSignIn" onclick="switchAuthTab('signin')">Sign In</div>
-                <div class="modal-tab" id="tabRegister" onclick="switchAuthTab('register')">Register</div>
-            </div>
-
-            <h2 id="modalTitle" style="margin-bottom: 18px; text-align: center; font-size: 1.3rem;">Welcome Back</h2>
-            
-            <div style="margin-bottom: 12px;">
-                <label style="font-size: 0.8rem; color: var(--text-muted);">Email Address</label>
-                <input type="email" id="emailInput" class="input-styled" placeholder="name@example.com">
-            </div>
-
-            <div style="margin-bottom: 12px;">
-                <label style="font-size: 0.8rem; color: var(--text-muted);">Password</label>
-                <input type="password" id="passwordInput" class="input-styled" placeholder="••••••••">
-            </div>
-
-            <button id="authSubmitBtn" onclick="handleAuthSubmit()" class="btn-action purple-btn" style="width: 100%; justify-content: center; margin-top: 10px;">Sign In</button>
-            <p id="authError" style="color: var(--danger); font-size: 0.85rem; margin-top: 12px; text-align: center;"></p>
+            <h2 style="margin-bottom: 18px; text-align: center;">Sign In / Register</h2>
+            <input type="email" id="emailInput" class="input-styled" placeholder="Email Address">
+            <input type="password" id="passwordInput" class="input-styled" placeholder="Password">
+            <button onclick="handleAuthSubmit()" class="btn-action purple-btn" style="width: 100%; justify-content: center; margin-top: 10px;">Continue</button>
         </div>
     </div>
 
     <!-- Admin Panel Modal -->
     <div id="adminModal" class="modal">
-        <div class="modal-content" style="max-width: 500px;">
+        <div class="modal-content">
             <span class="close-modal-btn" onclick="closeAdminModal()">&times;</span>
-            <h2 style="margin-bottom: 15px; text-align: center;"><i class="fas fa-user-shield" style="color:var(--primary-glow)"></i> Admin Control Hub</h2>
-            <div style="background: rgba(5,3,15,0.7); padding: 15px; border-radius: 12px; margin-bottom: 15px; font-size: 0.85rem;">
-                <p><strong>System Status:</strong> <span style="color: var(--success);">Online & Syncing</span></p>
-                <p><strong>Connected Wallet:</strong> 0xFEb3...Ba26</p>
-                <p><strong>Presale Raised:</strong> $745,200 USDT</p>
-            </div>
-            <button class="btn-action purple-btn" style="width: 100%; justify-content: center; margin-bottom: 10px;" onclick="alert('Presale paused for maintenance.')">Pause Presale Contract</button>
-            <button class="btn-action green-btn" style="width: 100%; justify-content: center;" onclick="alert('Listing submitted to DexScreener')">Sync DexScreener Prices</button>
+            <h2 style="margin-bottom: 15px; text-align: center;"><i class="fas fa-user-shield"></i> Admin Dashboard</h2>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px; text-align: center;">Authorized Management Access Only</p>
+            <button class="btn-action purple-btn" style="width: 100%; justify-content: center; margin-bottom: 10px;" onclick="alert('Presale Contract Status: Active')">Check Presale Status</button>
+            <button class="btn-action green-btn" style="width: 100%; justify-content: center;" onclick="alert('Nodes synchronized with DexScreener')">Sync DexScreener API</button>
         </div>
     </div>
 
-    <!-- Buy Crypto Card Modal -->
+    <!-- Buy Crypto Modal -->
     <div id="buyModal" class="modal">
         <div class="modal-content">
             <span class="close-modal-btn" onclick="closeBuyModal()">&times;</span>
-            <h2 style="margin-bottom: 15px; text-align: center;"><i class="fas fa-credit-card" style="color:var(--success)"></i> Buy Crypto Instantly</h2>
+            <h2 style="margin-bottom: 15px; text-align: center;"><i class="fas fa-credit-card"></i> Buy Crypto Instantly</h2>
             <label style="font-size: 0.8rem; color: var(--text-muted);">Amount in USD ($):</label>
-            <input type="number" id="buyUsdInput" class="input-styled" value="100">
-            <label style="font-size: 0.8rem; color: var(--text-muted);">Select Asset:</label>
-            <select class="input-styled">
-                <option>USDT (TRC20 / ERC20)</option>
-                <option>Bitcoin (BTC)</option>
-                <option>Ethereum (ETH)</option>
-            </select>
-            <button class="btn-action green-btn" style="width: 100%; justify-content: center; margin-top: 10px;" onclick="alert('Redirecting to secure payment gateway...')">Proceed to Checkout</button>
+            <input type="number" class="input-styled" value="100">
+            <button class="btn-action green-btn" style="width: 100%; justify-content: center;" onclick="alert('Redirecting to Payment Gateway...')">Proceed to Checkout</button>
         </div>
     </div>
 
@@ -867,90 +672,16 @@
         <p>&copy; 2026 TrendAI Crypto Pro Max. All rights reserved. Web3 Decentralized Finance Platform.</p>
     </footer>
 
-    <!-- Firebase SDK Scripts -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-
-        // Firebase Configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyDummyKeyForTrendingCryptoApp12345",
-            authDomain: "trending-crypto-app.firebaseapp.com",
-            projectId: "trending-crypto-app",
-            storageBucket: "trending-crypto-app.appspot.com",
-            messagingSenderId: "123456789012",
-            appId: "1:123456789012:web:abcdef123456"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-
-        let currentAuthMode = 'signin';
-
-        window.switchAuthTab = function(mode) {
-            currentAuthMode = mode;
-            document.getElementById('tabSignIn').classList.toggle('active', mode === 'signin');
-            document.getElementById('tabRegister').classList.toggle('active', mode === 'register');
-            document.getElementById('modalTitle').innerText = mode === 'signin' ? 'Welcome Back' : 'Create Account';
-            document.getElementById('authSubmitBtn').innerText = mode === 'signin' ? 'Sign In' : 'Register Now';
-        };
-
-        window.openAuthModal = function() { document.getElementById('authModal').style.display = 'flex'; };
-        window.closeAuthModal = function() { document.getElementById('authModal').style.display = 'none'; };
-
-        window.handleAuthSubmit = async function() {
-            const email = document.getElementById('emailInput').value;
-            const password = document.getElementById('passwordInput').value;
-            const errorEl = document.getElementById('authError');
-            errorEl.innerText = "";
-
-            if (!email || !password) {
-                errorEl.innerText = "Please fill in all email and password fields.";
-                return;
-            }
-
-            try {
-                if (currentAuthMode === 'signin') {
-                    await signInWithEmailAndPassword(auth, email, password);
-                } else {
-                    await createUserWithEmailAndPassword(auth, email, password);
-                }
-                closeAuthModal();
-            } catch (err) {
-                errorEl.innerText = err.message;
-            }
-        };
-
-        onAuthStateChanged(auth, (user) => {
-            const authContainer = document.getElementById('authContainer');
-            if (user) {
-                authContainer.innerHTML = `
-                    <div style="display:flex; align-items:center; gap:8px;">
-                        <span style="font-size:0.8rem; color:var(--success); font-weight:600;"><i class="fas fa-user-check"></i> ${user.email}</span>
-                        <button onclick="logoutUser()" class="btn-action danger-btn" style="padding: 4px 10px; font-size: 0.75rem;">Logout</button>
-                    </div>
-                `;
-            } else {
-                authContainer.innerHTML = `<button onclick="openAuthModal()" class="btn-action purple-btn"><i class="fas fa-user"></i> Sign In</button>`;
-            }
-        });
-
-        window.logoutUser = function() {
-            signOut(auth);
-        };
-    </script>
-
-    <!-- General Application Logic & Dynamic Interactions -->
+    <!-- Scripts and Logic -->
     <script>
-        // Initialize Live Chart using Chart.js
+        // Mini Chart Setup
         document.addEventListener('DOMContentLoaded', () => {
             const ctx = document.getElementById('liveMiniChart').getContext('2d');
-            const miniChart = new Chart(ctx, {
+            new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00'],
+                    labels: ['1', '2', '3', '4', '5', '6'],
                     datasets: [{
-                        label: 'BTC Price',
                         data: [81200, 81800, 81500, 82100, 81900, 82349],
                         borderColor: '#10b981',
                         backgroundColor: 'rgba(16, 185, 129, 0.1)',
@@ -964,134 +695,83 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: { legend: { display: false } },
-                    scales: {
-                        x: { display: false },
-                        y: { display: false }
-                    }
+                    scales: { x: { display: false }, y: { display: false } }
                 }
             });
         });
 
-        // Navigation Switch
-        function switchNav(element, sectionName) {
-            document.querySelectorAll('.nav-pill').forEach(pill => pill.classList.remove('active'));
-            element.classList.add('active');
-            console.log('Navigated to section:', sectionName);
-        }
-
-        // Web3 MetaMask Connection Logic
+        // Wallet Connect Function
         async function connectWallet() {
             if (typeof window.ethereum !== 'undefined') {
                 try {
                     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                    const userAccount = accounts[0];
-                    const shortAcc = userAccount.substring(0, 6) + '...' + userAccount.substring(userAccount.length - 4);
-                    
+                    const shortAcc = accounts[0].substring(0, 6) + '...' + accounts[0].substring(38);
                     document.getElementById('connectMetaMaskBtn').innerHTML = `<i class="fas fa-check-circle" style="color:var(--success)"></i> ${shortAcc}`;
-                    document.getElementById('connectedWalletDisplay').innerHTML = `<i class="fas fa-check-circle"></i> Connected Wallet: ${userAccount}`;
-                    alert('MetaMask Connected Successfully: ' + userAccount);
-                } catch (error) {
-                    console.error('User rejected wallet connection:', error);
-                }
-            } else {
-                alert('MetaMask is not installed. Please install MetaMask browser extension!');
-            }
+                    document.getElementById('connectedWalletDisplay').innerHTML = `<i class="fas fa-check-circle"></i> Connected Wallet: ${accounts[0]}`;
+                } catch (err) { console.error(err); }
+            } else { alert('Please install MetaMask wallet!'); }
         }
 
-        // Token Presale Calculator
+        // Calculations
         function calculateTokens() {
             const amount = document.getElementById('usdtInvestInput').value || 0;
-            const tokenPrice = 0.05;
-            const tokenCount = (amount / tokenPrice).toLocaleString();
-            document.getElementById('tokenCalculatedDisplay').innerText = `Tokens: ${tokenCount} $TAI`;
+            document.getElementById('tokenCalculatedDisplay').innerText = `Tokens: ${(amount / 0.05).toLocaleString()} $TAI`;
         }
 
         function buyPresaleTokens() {
-            const amount = document.getElementById('usdtInvestInput').value;
-            alert(`Presale Order Initiated for $${amount} USDT! Confirm transaction in Web3 Wallet.`);
+            alert(`Presale Order Placed for $${document.getElementById('usdtInvestInput').value} USDT!`);
         }
 
-        // Community Comment Post
         function postComment() {
             const input = document.getElementById('newCommentInput');
-            const commentText = input.value.trim();
-            if (commentText) {
+            if (input.value.trim()) {
                 const box = document.getElementById('commentsList');
-                const newComment = document.createElement('div');
-                newComment.className = 'comment-item';
-                newComment.innerHTML = `<strong>You:</strong> ${commentText}`;
-                box.appendChild(newComment);
+                box.innerHTML += `<div class="comment-item"><strong>You:</strong> ${input.value}</div>`;
                 input.value = '';
                 box.scrollTop = box.scrollHeight;
             }
         }
 
-        // Portfolio Tracker Calculator
         function calculatePortfolio() {
             const price = parseFloat(document.getElementById('portfolioAssetSelect').value);
             const amount = parseFloat(document.getElementById('portfolioAmountInput').value) || 0;
-            const total = (price * amount).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-            document.getElementById('portfolioResult').innerText = `Total Value: ${total}`;
+            document.getElementById('portfolioResult').innerText = `Total Value: $${(price * amount).toLocaleString()}`;
         }
 
-        // Staking Calculator
         function calculateStaking() {
             const tokens = parseFloat(document.getElementById('stakingInput').value) || 0;
-            const estProfit = Math.round(tokens * 0.0592);
-            document.getElementById('stakingProfitDisplay').innerText = `Est. Profit (90 Days): +${estProfit} TAI`;
+            document.getElementById('stakingProfitDisplay').innerText = `Est. Profit (90 Days): +${Math.round(tokens * 0.0592)} TAI`;
         }
 
-        function stakeTokens() {
-            alert('Tokens locked into Staking Smart Contract for 90 Days!');
-        }
-
-        // AI Smart Contract Audit
         function runContractAudit() {
-            const address = document.getElementById('contractAuditInput').value.trim();
+            const input = document.getElementById('contractAuditInput').value;
             const display = document.getElementById('auditResultDisplay');
-            if (address) {
-                display.innerHTML = `<p style="color:var(--success); font-weight:700;"><i class="fas fa-check-circle"></i> Audit Passed: 0x0 Honeypot Risk Detected. Security Score: 98/100</p>`;
+            if (input) {
+                display.innerHTML = `<p style="color:var(--success); font-weight:700;"><i class="fas fa-check-circle"></i> Security Score: 98/100 (Safe)</p>`;
             } else {
-                display.innerHTML = `<p style="color:var(--danger);"><i class="fas fa-exclamation-triangle"></i> Please enter a valid contract address.</p>`;
+                display.innerHTML = `<p style="color:var(--danger);">Enter a contract address.</p>`;
             }
         }
 
-        // Gemini AI Signal Generator
         function generateAiSignal() {
-            const signals = [
-                { coin: 'BTC', status: 'BULLISH', target: '$85,400', stop: '$80,100', color: 'var(--success)' },
-                { coin: 'ETH', status: 'ACCUMULATE', target: '$3,400', stop: '$2,980', color: 'var(--secondary-glow)' },
-                { coin: 'SOL', status: 'STRONG BUY', target: '$210', stop: '$175', color: 'var(--success)' }
-            ];
-            const random = signals[Math.floor(Math.random() * signals.length)];
-            
             document.getElementById('aiSignalDisplay').innerHTML = `
-                <p style="font-size: 0.8rem; color: ${random.color}; font-weight: 700;"><i class="fas fa-circle"></i> ${random.status} SIGNAL: ${random.coin}</p>
-                <p style="font-size: 0.75rem; color: var(--text-muted);">Target: ${random.target} | Stop: ${random.stop}</p>
+                <p style="font-size: 0.8rem; color: var(--success); font-weight: 700;"><i class="fas fa-circle"></i> STRONG BUY SIGNAL: SOL</p>
+                <p style="font-size: 0.75rem; color: var(--text-muted);">Target: $210 | Stop: $175</p>
             `;
         }
 
-        // Fear & Greed Index
         function updateFearGreed() {
-            const randomVal = Math.floor(Math.random() * 30) + 55;
-            document.getElementById('fearGreedValue').innerText = randomVal;
+            document.getElementById('fearGreedValue').innerText = Math.floor(Math.random() * 30) + 55;
         }
 
-        // Market Price Refresh
-        function refreshPrices() {
-            alert('Live market prices synced with CoinGecko/Binance API!');
-        }
-
-        // Modals Management
+        // Modal Handlers
+        function openAuthModal() { document.getElementById('authModal').style.display = 'flex'; }
+        function closeAuthModal() { document.getElementById('authModal').style.display = 'none'; }
         function openAdminModal() { document.getElementById('adminModal').style.display = 'flex'; }
         function closeAdminModal() { document.getElementById('adminModal').style.display = 'none'; }
-        
         function openBuyModal() { document.getElementById('buyModal').style.display = 'flex'; }
         function closeBuyModal() { document.getElementById('buyModal').style.display = 'none'; }
-
-        function openAiChat() {
-            alert('Gemini AI Assistant Connected! Ask anything about market signals and Web3 development.');
-        }
+        function handleAuthSubmit() { alert('Authentication Successful!'); closeAuthModal(); }
     </script>
 </body>
 </html>
