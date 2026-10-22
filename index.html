@@ -1,622 +1,1481 @@
 <!DOCTYPE html>
-<html lang="fr" dir="ltr">
+<html lang="en" class="scroll-smooth" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TrendAI Crypto Pro Max | Next-Gen AI Trading Ecosystem</title>
-    <meta name="description" content="Plateforme de trading décentralisée et autonome pilotée par des modèles d'intelligence artificielle de pointe.">
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Icons -->
+    <title>TrendAI Crypto - Next-Gen AI Trading & Market Intelligence</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Web3 Ethers.js -->
-    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-
+    <!-- Google Fonts: Inter & Cairo for Arabic -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Lightweight Charts -->
+    <script src="https://unpkg.com/lightweight-charts@4.1.1/dist/lightweight-charts.standalone.production.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#0B0F19',
+                            card: '#131C31',
+                            border: '#1E293B',
+                            primary: '#6366F1',
+                            accent: '#3B82F6',
+                            purple: '#A855F7',
+                            green: '#10B981',
+                            red: '#EF4444'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Cairo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        :root {
-            --bg-base: #06080c;
-            --bg-card: #0d111a;
-            --bg-card-hover: #141b2b;
-            --border-color: #1f293d;
-            --accent-blue: #3b82f6;
-            --accent-cyan: #06b6d4;
-            --accent-orange: #f6851b;
-            --accent-green: #10b981;
-            --accent-red: #ef4444;
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --font-main: 'Plus Jakarta Sans', sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: var(--font-main);
-        }
-
         body {
-            background-color: var(--bg-base);
-            color: var(--text-primary);
-            overflow-x: hidden;
-            scroll-behavior: smooth;
+            background-color: #0B0F19;
+            color: #F8FAFC;
+            font-family: 'Inter', 'Cairo', sans-serif;
         }
-
-        /* Ambient Glow Background Effects */
-        .glow-sphere {
-            position: absolute;
-            width: 500px;
-            height: 500px;
-            background: rgba(59, 130, 246, 0.08);
-            filter: blur(120px);
-            border-radius: 50%;
-            z-index: 0;
-            pointer-events: none;
+        .glass-panel {
+            background: rgba(19, 28, 49, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
-
-        /* Top Bar */
-        .top-ticker {
-            background: #090d16;
-            border-bottom: 1px solid var(--border-color);
-            padding: 10px 5%;
-            font-size: 0.82rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-family: var(--font-mono);
-            color: var(--text-secondary);
-            position: relative;
-            z-index: 10;
+        .glow-effect {
+            box-shadow: 0 0 25px -5px rgba(99, 102, 241, 0.3);
         }
-
-        .ticker-items {
-            display: flex;
-            gap: 30px;
-            overflow-x: auto;
-            white-space: nowrap;
+        .glow-purple {
+            box-shadow: 0 0 25px -5px rgba(168, 85, 247, 0.3);
         }
-
-        /* Navbar */
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 5%;
-            background: rgba(6, 8, 12, 0.85);
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
         }
-
-        .nav-brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: #fff;
-            font-size: 1.35rem;
-            font-weight: 800;
+        ::-webkit-scrollbar-track {
+            background: #0B0F19;
         }
-
-        .brand-logo {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+        ::-webkit-scrollbar-thumb {
+            background: #1E293B;
+            border-radius: 3px;
         }
-
-        .nav-links {
-            display: flex;
-            gap: 30px;
-            list-style: none;
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3B82F6;
         }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-secondary);
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: color 0.2s;
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
         }
-
-        .nav-links a:hover {
-            color: var(--accent-cyan);
-        }
-
-        .btn-wallet {
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
-            color: #fff;
-            border: none;
-            padding: 12px 26px;
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
-        }
-
-        .btn-wallet:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(59, 130, 246, 0.5);
-        }
-
-        /* Hero Section */
-        .hero {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 80px 5%;
-            max-width: 1400px;
-            margin: 0 auto;
-            gap: 50px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-content {
-            flex: 1.1;
-        }
-
-        .badge-ai {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(6, 182, 212, 0.1);
-            border: 1px solid rgba(6, 182, 212, 0.3);
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            color: var(--accent-cyan);
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 900;
-            line-height: 1.1;
-            letter-spacing: -1.5px;
-            margin-bottom: 24px;
-        }
-
-        .hero h1 span {
-            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            font-size: 1.15rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 35px;
-            max-width: 550px;
-        }
-
-        /* Interactive Dashboard Box */
-        .hero-dashboard {
-            flex: 0.9;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 32px;
-            padding: 30px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-            position: relative;
-        }
-
-        .dash-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .dash-pill {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--accent-green);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 0.78rem;
-            font-weight: 600;
-        }
-
-        .dash-balance {
-            font-size: 3rem;
-            font-weight: 800;
-            font-family: var(--font-mono);
-            margin-bottom: 5px;
-        }
-
-        .dash-growth {
-            color: var(--accent-green);
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 25px;
-        }
-
-        .dash-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin-bottom: 25px;
-        }
-
-        .dash-btn {
-            background: var(--bg-card-hover);
-            border: 1px solid var(--border-color);
-            padding: 15px 10px;
-            border-radius: 16px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            color: #fff;
-        }
-
-        .dash-btn:hover {
-            border-color: var(--accent-blue);
-            background: rgba(59, 130, 246, 0.1);
-        }
-
-        .dash-btn i {
-            color: var(--accent-cyan);
-            font-size: 1.2rem;
-            margin-bottom: 8px;
-            display: block;
-        }
-
-        .dash-btn span {
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .assets-box {
-            background: #04060a;
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 18px;
-        }
-
-        .asset-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-            font-size: 0.9rem;
-        }
-
-        .asset-row:last-child {
-            margin-bottom: 0;
-        }
-
-        /* Features Section */
-        .features {
-            max-width: 1400px;
-            margin: 100px auto;
-            padding: 0 5%;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 50px;
-            letter-spacing: -1px;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-        }
-
-        .feature-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            padding: 35px;
-            transition: all 0.3s ease;
-        }
-
-        .feature-card:hover {
-            border-color: var(--accent-blue);
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        }
-
-        .feature-icon {
-            width: 60px;
-            height: 60px;
-            background: rgba(59, 130, 246, 0.1);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: var(--accent-cyan);
-            margin-bottom: 24px;
-        }
-
-        .feature-card h3 {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        .feature-card p {
-            color: var(--text-secondary);
-            font-size: 0.98rem;
-            line-height: 1.6;
-        }
-
-        /* AI Terminal Console */
-        .console-section {
-            max-width: 1400px;
-            margin: 0 auto 100px auto;
-            padding: 0 5%;
-        }
-
-        .console-box {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 32px;
-            padding: 40px;
-        }
-
-        .console-screen {
-            background: #030406;
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 25px;
-            font-family: var(--font-mono);
-            font-size: 0.88rem;
-            color: var(--accent-cyan);
-            height: 200px;
-            overflow-y: auto;
-            margin-top: 20px;
-            line-height: 1.7;
-        }
-
-        /* Footer */
-        footer {
-            background: #030406;
-            border-top: 1px solid var(--border-color);
-            padding: 60px 5% 30px 5%;
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        @media(max-width: 900px) {
-            .hero {
-                flex-direction: column;
-                text-align: center;
-            }
-            .hero h1 {
-                font-size: 3rem;
-            }
-            .nav-links {
-                display: none;
-            }
+        .animate-pulse-glow {
+            animation: pulseGlow 3s infinite;
         }
     </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col selection:bg-brand-primary selection:text-white">
 
-    <div class="glow-sphere" style="top: 10%; left: 10%;"></div>
-    <div class="glow-sphere" style="top: 50%; right: 10%;"></div>
-
-    <!-- Ticker Bar -->
-    <div class="top-ticker">
-        <div class="ticker-items">
-            <span>🟢 BTC/USDT: $68,520 (+2.4%)</span>
-            <span>🟢 ETH/USDT: $2,425 (+4.1%)</span>
-            <span>🔴 SOL/USDT: $106.8 (-1.5%)</span>
-            <span>🟢 TrendAI ($TAI): $1.55 (+15.2%)</span>
+    <!-- Top Notification / Announcement Banner -->
+    <div id="topBanner" class="bg-gradient-to-r from-indigo-900 via-purple-900 to-blue-900 text-xs py-2 px-4 flex justify-between items-center border-b border-indigo-800/50">
+        <div class="flex-1 text-center flex items-center justify-center gap-2 flex-wrap">
+            <span class="bg-brand-primary text-white font-extrabold text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider" data-i18n="badge_new">NEW</span>
+            <span class="text-gray-200" data-i18n="banner_text">TrendAI v2.4 Live: Advanced Multi-Chain AI Analytics & 1,000 USDT Paper Trading Simulator!</span>
         </div>
-        <div>Binance Testnet Node: Online</div>
+        <button onclick="dismissBanner()" class="text-gray-400 hover:text-white transition p-1" aria-label="Close">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
     </div>
 
-    <!-- Navbar -->
-    <nav>
-        <a href="#" class="nav-brand">
-            <div class="brand-logo"><i class="fas fa-brain"></i></div>
-            TrendAI Pro Max
-        </a>
-        <ul class="nav-links">
-            <li><a href="#features">Fonctionnalités</a></li>
-            <li><a href="#terminal">Terminal Web3</a></li>
-            <li><a href="#ai-engine">Agent IA</a></li>
-            <li><a href="#docs">Sécurité</a></li>
-        </ul>
-        <button class="btn-wallet" onclick="connectWallet()">
-            <i class="fas fa-wallet"></i> <span id="walletBtnText">Connexion Web3</span>
-        </button>
-    </nav>
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-50 bg-brand-dark/90 backdrop-blur-md border-b border-brand-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-brand-primary via-brand-accent to-brand-purple flex items-center justify-center shadow-lg shadow-brand-primary/30 group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-brain-circuit text-white text-xl"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-black text-xl md:text-2xl tracking-tight bg-gradient-to-r from-white via-gray-100 to-brand-accent bg-clip-text text-transparent">TrendAI</span>
+                    <span class="text-[10px] font-bold text-brand-primary tracking-widest uppercase">Crypto Intelligence</span>
+                </div>
+            </a>
 
-    <!-- Hero Section -->
-    <header class="hero">
-        <div class="hero-content">
-            <div class="badge-ai"><i class="fas fa-microchip"></i> Propulsé par Gemini AI Core</div>
-            <h1>Le Futur du Trading <span>Autonome & Web3.</span></h1>
-            <p>Une infrastructure financière de nouvelle génération où votre capital travaille 24h/24 et 7j/7 grâce à des stratégies d'arbitrage algorithmique sans vérification KYC.</p>
-            <div style="display: flex; gap: 15px;">
-                <button class="btn-wallet" style="padding: 16px 36px; font-size: 1rem;" onclick="connectWallet()">Activer l'Agent</button>
-                <a href="#features" style="background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); color: #fff; text-decoration: none; padding: 16px 32px; border-radius: 30px; font-weight: 700; display: flex; align-items: center;">Découvrir</a>
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center gap-8 font-semibold text-gray-300 text-sm">
+                <a href="#dashboard" onclick="switchNav('dashboard')" class="nav-link text-brand-accent transition hover:text-white" data-i18n="nav_dashboard">Dashboard</a>
+                <a href="#ai-helper" onclick="switchNav('ai-helper')" class="nav-link transition hover:text-white flex items-center gap-1.5" data-i18n="nav_ai">
+                    <span>TrendAI Assistant</span>
+                    <span class="bg-brand-purple/20 text-brand-purple text-[10px] px-1.5 py-0.5 rounded font-bold uppercase border border-brand-purple/30">AI</span>
+                </a>
+                <a href="#simulator" onclick="switchNav('simulator')" class="nav-link transition hover:text-white" data-i18n="nav_simulator">Trading Simulator</a>
+                <a href="#analytics" onclick="switchNav('analytics')" class="nav-link transition hover:text-white" data-i18n="nav_charts">Charts & Analytics</a>
+                <a href="#portfolio" onclick="switchNav('portfolio')" class="nav-link transition hover:text-white" data-i18n="nav_portfolio">Portfolio & Watchlist</a>
+            </nav>
+
+            <!-- Right Actions: Language Switcher, Wallet, Mobile Menu -->
+            <div class="flex items-center gap-3">
+                <!-- Language Selector -->
+                <select id="langSelect" onchange="changeLanguage(this.value)" class="bg-brand-card text-gray-200 text-xs font-bold px-2.5 py-2 rounded-xl border border-brand-border outline-none focus:border-brand-primary transition cursor-pointer">
+                    <option value="en">English (EN)</option>
+                    <option value="fr">Français (FR)</option>
+                    <option value="ar">العربية (AR)</option>
+                </select>
+
+                <!-- Wallet Connect Button -->
+                <button onclick="openWalletModal()" class="bg-gradient-to-r from-brand-primary to-brand-accent hover:opacity-90 text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm flex items-center gap-2 transition shadow-md shadow-brand-primary/20 active:scale-95">
+                    <i class="fa-solid fa-wallet"></i>
+                    <span id="walletBtnText" data-i18n="connect_wallet">Connect Wallet</span>
+                </button>
+
+                <!-- Mobile Menu Toggle -->
+                <button onclick="toggleMobileMenu()" class="md:hidden text-gray-300 text-xl p-2 hover:text-white">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
             </div>
         </div>
 
-        <!-- Dashboard Card Mockup -->
-        <div class="hero-dashboard" id="terminal">
-            <div class="dash-header">
-                <div class="dash-pill"><i class="fas fa-circle" style="font-size: 8px; margin-right: 5px;"></i> Mode Autonome Actif</div>
-                <div style="color: var(--text-secondary); display: flex; gap: 15px;">
-                    <i class="fas fa-shield-alt"></i>
-                    <i class="fas fa-sync-alt" style="cursor: pointer;" onclick="refreshDashboard()"></i>
-                </div>
-            </div>
-
-            <div style="font-size: 0.8rem; color: var(--text-secondary); font-family: var(--font-mono);">SOLDE DU PORTEFEUILLE ACTIF</div>
-            <div class="dash-balance" id="totalBalance">$24,680.00</div>
-            <div class="dash-growth">
-                <i class="fas fa-arrow-trend-up"></i> +$1,234.00 (+5.6%) Profit Journalier IA
-            </div>
-
-            <div class="dash-grid">
-                <div class="dash-btn" onclick="alert('Module d\'achat instantané actif')">
-                    <i class="fas fa-plus-circle"></i>
-                    <span>Achat</span>
-                </div>
-                <div class="dash-btn" onclick="alert('Swap intelligent Layer-2')">
-                    <i class="fas fa-exchange-alt"></i>
-                    <span>Échanger</span>
-                </div>
-                <div class="dash-btn" onclick="sendCryptoTransaction()">
-                    <i class="fas fa-paper-plane"></i>
-                    <span>Envoyer</span>
-                </div>
-                <div class="dash-btn" onclick="alert('Adresse de dépôt générée')">
-                    <i class="fas fa-qrcode"></i>
-                    <span>Recevoir</span>
-                </div>
-            </div>
-
-            <div class="assets-box">
-                <div class="asset-row">
-                    <span style="font-weight: 600;">Bitcoin Bot Strategy</span>
-                    <span style="font-family: var(--font-mono); font-weight: 700;">$15,400.00</span>
-                </div>
-                <div class="asset-row">
-                    <span style="font-weight: 600;">Ethereum Liquidity Pool</span>
-                    <span style="font-family: var(--font-mono); font-weight: 700;">$6,280.00</span>
-                </div>
-                <div class="asset-row">
-                    <span style="font-weight: 600;">TrendAI Staking Token</span>
-                    <span style="font-family: var(--font-mono); font-weight: 700; color: var(--accent-green);">+3,500.00 TAI</span>
-                </div>
-            </div>
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobileMenu" class="hidden md:hidden bg-brand-card border-b border-brand-border px-6 py-4 flex flex-col gap-3 font-semibold text-sm">
+            <a href="#dashboard" onclick="switchNav('dashboard'); toggleMobileMenu();" class="py-2 border-b border-brand-border" data-i18n="nav_dashboard">Dashboard</a>
+            <a href="#ai-helper" onclick="switchNav('ai-helper'); toggleMobileMenu();" class="py-2 border-b border-brand-border" data-i18n="nav_ai">TrendAI Assistant</a>
+            <a href="#simulator" onclick="switchNav('simulator'); toggleMobileMenu();" class="py-2 border-b border-brand-border" data-i18n="nav_simulator">Trading Simulator</a>
+            <a href="#analytics" onclick="switchNav('analytics'); toggleMobileMenu();" class="py-2 border-b border-brand-border" data-i18n="nav_charts">Charts & Analytics</a>
+            <a href="#portfolio" onclick="switchNav('portfolio'); toggleMobileMenu();" class="py-2" data-i18n="nav_portfolio">Portfolio & Watchlist</a>
         </div>
     </header>
 
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <h2 class="section-title">Technologie Avancée & Performance</h2>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-robot"></i></div>
-                <h3>Arbitrage par IA</h3>
-                <p>Analyse prédictive en temps réel des carnets d'ordres pour exécuter des transactions ultra-rapides sans intervention humaine.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-lock"></i></div>
-                <h3>Détention en Propre</h3>
-                <p>Vos clés restent entre vos mains. Une architecture décentralisée sécurisée qui garantit un contrôle total sur vos fonds.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-bolt"></i></div>
-                <h3>Frais Ultra-Faibles</h3>
-                <p>Optimisation intelligente des routes de liquidité Layer-2 pour maximiser vos gains sur chaque opération de trading.</p>
-            </div>
-        </div>
-    </section>
+    <!-- Main Content Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
 
-    <!-- AI Engine Console -->
-    <section class="console-section" id="ai-engine">
-        <div class="console-box">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
-                <div>
-                    <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 5px;">Console de l'Agent Autonome</h2>
-                    <p style="color: var(--text-secondary); font-size: 0.95rem;">Journal d'exécution en direct de l'infrastructure Python & Gemini AI.</p>
-                </div>
-                <div style="display: flex; align-items: center; gap: 8px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 8px 16px; border-radius: 20px; color: var(--accent-green); font-weight: 600; font-size: 0.85rem;">
-                    <i class="fas fa-circle" style="font-size: 8px;"></i> Bot Actif 24/7
+        <!-- ================= SECTION 1: DASHBOARD ================= -->
+        <section id="view-dashboard" class="space-y-8">
+            <!-- Hero Header Banner -->
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-card via-[#1A2542] to-brand-dark p-8 md:p-12 border border-brand-border glow-effect">
+                <div class="absolute -right-16 -top-16 w-96 h-96 bg-brand-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -left-16 -bottom-16 w-96 h-96 bg-brand-purple/10 rounded-full blur-3xl pointer-events-none"></div>
+                
+                <div class="relative z-10 max-w-2xl space-y-4">
+                    <div class="inline-flex items-center gap-2 bg-brand-primary/20 text-brand-accent px-3 py-1 rounded-full text-xs font-bold border border-brand-primary/30">
+                        <i class="fa-solid fa-bolt text-brand-primary animate-pulse"></i>
+                        <span data-i18n="hero_tag">Real-Time CoinGecko Market Data</span>
+                    </div>
+                    <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight" data-i18n="hero_title">
+                        Advanced AI Market Intelligence & Trading Platform
+                    </h1>
+                    <p class="text-gray-300 text-sm sm:text-base leading-relaxed" data-i18n="hero_desc">
+                        Analyze live cryptocurrency prices, execute simulated paper trades with 1,000 USDT capital, and leverage TrendAI Assistant for data-backed market scenarios.
+                    </p>
+                    <div class="flex flex-wrap items-center gap-4 pt-2">
+                        <button onclick="switchNav('ai-helper')" class="bg-brand-primary hover:bg-brand-primary/90 text-white font-bold px-6 py-3 rounded-xl text-sm transition shadow-lg shadow-brand-primary/30 flex items-center gap-2">
+                            <i class="fa-solid fa-brain"></i> <span data-i18n="btn_ask_ai">Ask TrendAI Assistant</span>
+                        </button>
+                        <button onclick="switchNav('simulator')" class="bg-brand-card hover:bg-brand-border text-white font-bold px-6 py-3 rounded-xl text-sm transition border border-brand-border flex items-center gap-2">
+                            <i class="fa-solid fa-chart-line"></i> <span data-i18n="btn_sim">Open Simulator</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <div class="console-screen" id="liveConsoleLogs">
-                [16:50:00] [SYSTEM] Initialisation du noyau TrendAI Pro Max...<br>
-                [16:50:04] [CONNECT] Connexion au serveur distant Binance Testnet réussie.<br>
-                [16:50:10] [AI ANALYSIS] Évaluation des tendances du marché crypto et actions tokenisées.<br>
-                [16:50:15] [READY] Agent autonome en attente de signaux d'exécution haute fréquence.
+            <!-- Market Overview Stats Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="statsCardsContainer">
+                <!-- Dynamically populated or skeleton -->
+                <div class="glass-panel p-5 rounded-2xl animate-pulse">
+                    <div class="h-4 bg-brand-border rounded w-1/2 mb-3"></div>
+                    <div class="h-8 bg-brand-border rounded w-3/4"></div>
+                </div>
+                <div class="glass-panel p-5 rounded-2xl animate-pulse">
+                    <div class="h-4 bg-brand-border rounded w-1/2 mb-3"></div>
+                    <div class="h-8 bg-brand-border rounded w-3/4"></div>
+                </div>
+                <div class="glass-panel p-5 rounded-2xl animate-pulse">
+                    <div class="h-4 bg-brand-border rounded w-1/2 mb-3"></div>
+                    <div class="h-8 bg-brand-border rounded w-3/4"></div>
+                </div>
+                <div class="glass-panel p-5 rounded-2xl animate-pulse">
+                    <div class="h-4 bg-brand-border rounded w-1/2 mb-3"></div>
+                    <div class="h-8 bg-brand-border rounded w-3/4"></div>
+                </div>
             </div>
 
-            <div style="display: flex; gap: 12px; margin-top: 20px;">
-                <button class="btn-wallet" onclick="runManualScan()">Lancer un Scan Forcé</button>
-                <button class="btn-wallet" style="background: #1e293b;" onclick="clearLogs()">Effacer les Logs</button>
+            <!-- Coin Market Table & Controls -->
+            <div class="glass-panel rounded-3xl p-6 space-y-6">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-white" data-i18n="market_table_title">Live Cryptocurrency Markets</h2>
+                        <p class="text-xs text-gray-400 mt-0.5" data-i18n="market_table_subtitle">Real-time data sourced via CoinGecko API with automatic fallback simulation.</p>
+                    </div>
+                    
+                    <!-- Search & Filter Controls -->
+                    <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
+                        <div class="relative flex-1 md:w-64">
+                            <i class="fa-solid fa-search absolute left-3.5 top-3 text-gray-400 text-xs"></i>
+                            <input type="text" id="coinSearchInput" oninput="filterCoins()" placeholder="Search coin (e.g. BTC, Ethereum)..." class="w-full bg-brand-dark text-xs text-white pl-10 pr-4 py-2.5 rounded-xl border border-brand-border outline-none focus:border-brand-primary transition">
+                        </div>
+                        <button onclick="fetchMarketData()" class="bg-brand-card hover:bg-brand-border text-gray-300 hover:text-white px-4 py-2.5 rounded-xl text-xs font-bold border border-brand-border transition flex items-center gap-2">
+                            <i class="fa-solid fa-sync-alt" id="refreshIcon"></i> <span data-i18n="refresh">Refresh</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- API Status Banner -->
+                <div id="apiStatusAlert" class="hidden p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <span id="apiStatusText">CoinGecko API rate limit reached or offline. Showing cached demo market prices.</span>
+                    </div>
+                    <button onclick="fetchMarketData()" class="underline font-bold hover:text-white">Retry</button>
+                </div>
+
+                <!-- Table -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-brand-border text-xs text-gray-400 uppercase tracking-wider">
+                                <th class="py-3 px-4" data-i18n="th_asset">Asset</th>
+                                <th class="py-3 px-4" data-i18n="th_price">Price (USDT)</th>
+                                <th class="py-3 px-4" data-i18n="th_24h">24h Change</th>
+                                <th class="py-3 px-4 hidden sm:table-cell" data-i18n="th_volume">24h Volume</th>
+                                <th class="py-3 px-4 hidden md:table-cell" data-i18n="th_mcap">Market Cap</th>
+                                <th class="py-3 px-4 text-right" data-i18n="th_actions">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="coinTableBody" class="divide-y divide-brand-border/50 text-sm">
+                            <!-- Populated by JS -->
+                            <tr>
+                                <td colspan="6" class="py-8 text-center text-gray-400">Loading live market data...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+
+        <!-- ================= SECTION 2: TREND AI HELPER ================= -->
+        <section id="view-ai-helper" class="space-y-8 hidden">
+            <div class="glass-panel rounded-3xl p-6 md:p-10 space-y-8 glow-purple relative overflow-hidden">
+                <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-brand-purple/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="max-w-3xl space-y-3">
+                    <div class="inline-flex items-center gap-2 bg-brand-purple/20 text-brand-purple px-3 py-1 rounded-full text-xs font-bold border border-brand-purple/30">
+                        <i class="fa-solid fa-brain animate-pulse"></i>
+                        <span data-i18n="ai_badge">Intelligent Market Analysis Engine</span>
+                    </div>
+                    <h2 class="text-3xl font-black text-white" data-i18n="ai_title">TrendAI Assistant & Market Predictor</h2>
+                    <p class="text-gray-300 text-sm leading-relaxed" data-i18n="ai_desc">
+                        Ask questions about any cryptocurrency, analyze volatility, support/resistance levels, and evaluate bullish/bearish scenarios backed by live market indicators.
+                    </p>
+                </div>
+
+                <!-- AI Query Box -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <div class="lg:col-span-5 space-y-4">
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold text-gray-300 uppercase tracking-wider" data-i18n="ai_select_coin">Select Cryptocurrency</label>
+                            <select id="aiCoinSelect" class="w-full bg-brand-dark text-sm text-white px-4 py-3 rounded-xl border border-brand-border outline-none focus:border-brand-purple transition">
+                                <option value="bitcoin">Bitcoin (BTC)</option>
+                                <option value="ethereum">Ethereum (ETH)</option>
+                                <option value="solana">Solana (SOL)</option>
+                                <option value="binancecoin">BNB (BNB)</option>
+                                <option value="ripple">XRP (XRP)</option>
+                                <option value="cardano">Cardano (ADA)</option>
+                            </select>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold text-gray-300 uppercase tracking-wider" data-i18n="ai_custom_prompt">Custom Question / Analysis Focus</label>
+                            <textarea id="aiPromptInput" rows="4" class="w-full bg-brand-dark text-sm text-white p-4 rounded-xl border border-brand-border outline-none focus:border-brand-purple transition resize-none" placeholder="e.g. What is the short-term outlook and key support level for this coin?"></textarea>
+                        </div>
+
+                        <button onclick="askTrendAI()" id="aiSubmitBtn" class="w-full bg-gradient-to-r from-brand-primary via-brand-purple to-brand-accent hover:opacity-90 text-white font-extrabold py-3.5 rounded-xl text-sm transition shadow-lg shadow-brand-purple/20 flex items-center justify-center gap-2 active:scale-98">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> <span data-i18n="ai_btn_run">Run AI Analysis</span>
+                        </button>
+
+                        <div class="p-4 rounded-2xl bg-brand-dark/60 border border-brand-border text-xs text-gray-400 space-y-2">
+                            <p class="font-bold text-gray-300 flex items-center gap-1.5"><i class="fa-solid fa-shield-halved text-brand-primary"></i> <span data-i18n="risk_notice_title">Risk & Disclaimer Notice</span></p>
+                            <p data-i18n="risk_notice_text">AI predictions are generated for educational & research purposes only. Never promise guaranteed profits. Always conduct your own financial due diligence.</p>
+                        </div>
+                    </div>
+
+                    <!-- AI Output Result Window -->
+                    <div class="lg:col-span-7 flex flex-col bg-brand-dark/80 rounded-2xl border border-brand-border p-6 space-y-4">
+                        <div class="flex items-center justify-between pb-3 border-b border-brand-border">
+                            <div class="flex items-center gap-2 text-xs font-bold text-brand-purple">
+                                <i class="fa-solid fa-robot"></i> <span data-i18n="ai_output_title">TrendAI Intelligence Report</span>
+                            </div>
+                            <span id="aiStatusBadge" class="text-[10px] bg-gray-800 text-gray-400 px-2 py-0.5 rounded font-bold uppercase">Ready</span>
+                        </div>
+
+                        <div id="aiResponseContainer" class="flex-1 min-h-[300px] text-sm text-gray-200 overflow-y-auto space-y-4 font-normal leading-relaxed">
+                            <div class="flex flex-col items-center justify-center h-full text-gray-500 py-16 space-y-3">
+                                <i class="fa-solid fa-brain text-4xl text-brand-purple/40 animate-pulse"></i>
+                                <p data-i18n="ai_placeholder_prompt">Select a cryptocurrency and click "Run AI Analysis" to generate professional scenarios and indicators.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= SECTION 3: TRADING SIMULATOR ================= -->
+        <section id="view-simulator" class="space-y-8 hidden">
+            <div class="glass-panel rounded-3xl p-6 md:p-8 space-y-6">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div>
+                        <div class="inline-flex items-center gap-2 bg-emerald-500/20 text-emerald-400 px-3 py-1 rounded-full text-xs font-bold border border-emerald-500/30 mb-2">
+                            <i class="fa-solid fa-shield-check"></i> <span data-i18n="sim_badge">Paper Trading Sandbox (1,000 USDT)</span>
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-black text-white" data-i18n="sim_title">Risk-Free Trading Simulator</h2>
+                    </div>
+
+                    <!-- Account Balances Header Box -->
+                    <div class="flex items-center gap-4 bg-brand-dark p-4 rounded-2xl border border-brand-border">
+                        <div>
+                            <p class="text-[10px] text-gray-400 uppercase tracking-wider" data-i18n="sim_cash_label">USDT Balance</p>
+                            <p id="simUsdtBalance" class="text-lg font-black text-emerald-400">1,000.00 $</p>
+                        </div>
+                        <div class="h-8 w-px bg-brand-border"></div>
+                        <div>
+                            <p class="text-[10px] text-gray-400 uppercase tracking-wider" data-i18n="sim_portfolio_label">Portfolio Value</p>
+                            <p id="simPortfolioValue" class="text-lg font-black text-white">1,000.00 $</p>
+                        </div>
+                        <button onclick="resetSimulator()" title="Reset simulator balance" class="ml-2 text-gray-400 hover:text-white p-2 bg-brand-card rounded-xl border border-brand-border text-xs">
+                            <i class="fa-solid fa-rotate-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Order Placement & Active Positions Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <!-- Order Form -->
+                    <div class="lg:col-span-5 bg-brand-dark/70 p-6 rounded-2xl border border-brand-border space-y-4">
+                        <h3 class="font-bold text-base text-white flex items-center gap-2">
+                            <i class="fa-solid fa-arrow-right-arrow-left text-brand-primary"></i> <span data-i18n="sim_order_title">Place Simulated Order</span>
+                        </h3>
+
+                        <div class="space-y-3">
+                            <div>
+                                <label class="text-xs font-semibold text-gray-400" data-i18n="sim_lbl_coin">Select Asset</label>
+                                <select id="simCoinSelect" onchange="updateSimPriceDisplay()" class="w-full bg-brand-card text-sm text-white px-3 py-2.5 rounded-xl border border-brand-border outline-none focus:border-brand-primary mt-1">
+                                    <!-- Populated dynamically -->
+                                </select>
+                            </div>
+
+                            <div class="flex justify-between text-xs text-gray-400 px-1">
+                                <span data-i18n="sim_current_price">Current Market Price:</span>
+                                <span id="simCurrentPriceDisplay" class="font-bold text-white">0.00 $</span>
+                            </div>
+
+                            <div>
+                                <label class="text-xs font-semibold text-gray-400" data-i18n="sim_lbl_amount">Amount to Invest (USDT)</label>
+                                <input type="number" id="simInvestmentInput" value="100" min="1" class="w-full bg-brand-card text-sm text-white px-3 py-2.5 rounded-xl border border-brand-border outline-none focus:border-brand-primary mt-1">
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-3 pt-2">
+                                <button onclick="executeSimTrade('buy')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold py-3 rounded-xl text-sm transition shadow-lg shadow-emerald-600/20 active:scale-95 flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-arrow-trend-up"></i> <span data-i18n="sim_btn_buy">Buy / Long</span>
+                                </button>
+                                <button onclick="executeSimTrade('sell')" class="bg-rose-600 hover:bg-rose-500 text-white font-extrabold py-3 rounded-xl text-sm transition shadow-lg shadow-rose-600/20 active:scale-95 flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-arrow-trend-down"></i> <span data-i18n="sim_btn_sell">Sell / Close</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Positions Table -->
+                    <div class="lg:col-span-7 bg-brand-dark/70 p-6 rounded-2xl border border-brand-border space-y-4">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-bold text-base text-white flex items-center gap-2">
+                                <i class="fa-solid fa-wallet text-brand-accent"></i> <span data-i18n="sim_positions_title">Open Positions & History</span>
+                            </h3>
+                            <span id="openPositionsCount" class="text-xs bg-brand-card px-2.5 py-1 rounded-full text-gray-300 font-bold border border-brand-border">0 Active</span>
+                        </div>
+
+                        <div class="overflow-x-auto min-h-[220px]">
+                            <table class="w-full text-left border-collapse text-xs">
+                                <thead>
+                                    <tr class="border-b border-brand-border text-gray-400 uppercase tracking-wider">
+                                        <th class="py-2.5 px-3" data-i18n="pos_asset">Asset</th>
+                                        <th class="py-2.5 px-3" data-i18n="pos_type">Type</th>
+                                        <th class="py-2.5 px-3" data-i18n="pos_qty">Quantity</th>
+                                        <th class="py-2.5 px-3" data-i18n="pos_entry">Entry Price</th>
+                                        <th class="py-2.5 px-3" data-i18n="pos_pnl">Unrealized P&L</th>
+                                        <th class="py-2.5 px-3 text-right" data-i18n="pos_action">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="simPositionsTableBody" class="divide-y divide-brand-border/40">
+                                    <tr>
+                                        <td colspan="6" class="py-12 text-center text-gray-500" data-i18n="sim_no_positions">No active simulated positions. Place your first trade above!</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= SECTION 4: CHARTS AND ANALYTICS ================= -->
+        <section id="view-analytics" class="space-y-8 hidden">
+            <div class="glass-panel rounded-3xl p-6 md:p-8 space-y-6">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div>
+                        <div class="inline-flex items-center gap-2 bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-xs font-bold border border-blue-500/30 mb-2">
+                            <i class="fa-solid fa-chart-candlestick"></i> <span data-i18n="charts_badge">Interactive TradingView Lightweight Charts</span>
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-black text-white" data-i18n="charts_title">Advanced Price Charting</h2>
+                    </div>
+
+                    <!-- Chart Controls: Coin & Timeframe -->
+                    <div class="flex flex-wrap items-center gap-3">
+                        <select id="chartCoinSelect" onchange="loadChartData()" class="bg-brand-dark text-xs text-white px-3 py-2.5 rounded-xl border border-brand-border outline-none focus:border-brand-primary font-bold">
+                            <option value="bitcoin">Bitcoin (BTC)</option>
+                            <option value="ethereum">Ethereum (ETH)</option>
+                            <option value="solana">Solana (SOL)</option>
+                            <option value="binancecoin">BNB (BNB)</option>
+                        </select>
+
+                        <div class="flex items-center bg-brand-dark rounded-xl p-1 border border-brand-border text-xs font-bold">
+                            <button onclick="setTimeframe('1')" class="px-3 py-1.5 rounded-lg text-gray-300 hover:text-white transition tf-btn" data-days="1">24H</button>
+                            <button onclick="setTimeframe('7')" class="px-3 py-1.5 rounded-lg bg-brand-primary text-white transition tf-btn" data-days="7">7D</button>
+                            <button onclick="setTimeframe('30')" class="px-3 py-1.5 rounded-lg text-gray-300 hover:text-white transition tf-btn" data-days="30">30D</button>
+                            <button onclick="setTimeframe('365')" class="px-3 py-1.5 rounded-lg text-gray-300 hover:text-white transition tf-btn" data-days="365">1Y</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Canvas Chart Container -->
+                <div class="relative w-full h-[450px] bg-brand-dark/80 rounded-2xl border border-brand-border p-2">
+                    <div id="chartContainer" class="w-full h-full"></div>
+                    <div id="chartLoadingOverlay" class="absolute inset-0 bg-brand-dark/80 backdrop-blur-sm flex items-center justify-center text-gray-300 text-sm gap-2 hidden">
+                        <i class="fa-solid fa-spinner animate-spin text-brand-primary"></i> <span data-i18n="loading_chart">Loading chart history...</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= SECTION 5: PORTFOLIO & WATCHLIST ================= -->
+        <section id="view-portfolio" class="space-y-8 hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Watchlist Card -->
+                <div class="lg:col-span-6 glass-panel rounded-3xl p-6 space-y-6">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-star text-amber-400"></i> <span data-i18n="watchlist_title">My Watchlist</span>
+                        </h3>
+                        <span id="watchlistCount" class="text-xs bg-brand-dark px-2.5 py-1 rounded-full text-gray-400 font-bold border border-brand-border">0 Coins</span>
+                    </div>
+
+                    <div class="overflow-x-auto min-h-[300px]">
+                        <table class="w-full text-left border-collapse text-sm">
+                            <thead>
+                                <tr class="border-b border-brand-border text-xs text-gray-400 uppercase tracking-wider">
+                                    <th class="py-3 px-3" data-i18n="th_asset">Asset</th>
+                                    <th class="py-3 px-3" data-i18n="th_price">Price</th>
+                                    <th class="py-3 px-3" data-i18n="th_24h">24h Change</th>
+                                    <th class="py-3 px-3 text-right" data-i18n="th_actions">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="watchlistTableBody" class="divide-y divide-brand-border/50">
+                                <tr>
+                                    <td colspan="4" class="py-12 text-center text-gray-500" data-i18n="empty_watchlist">Your watchlist is empty. Click the star icon on any coin in the dashboard to add it here.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Portfolio & Storage Info -->
+                <div class="lg:col-span-6 space-y-6">
+                    <div class="glass-panel rounded-3xl p-6 space-y-6">
+                        <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-pie-chart text-brand-primary"></i> <span data-i18n="portfolio_title">Portfolio Asset Allocation</span>
+                        </h3>
+
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center p-4 rounded-2xl bg-brand-dark border border-brand-border">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
+                                        <i class="fa-solid fa-dollar-sign"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-bold text-white">USDT Cash Reserve</p>
+                                        <p class="text-xs text-gray-400" data-i18n="sim_cash_label">Available for trading</p>
+                                    </div>
+                                </div>
+                                <span id="portfolioUsdtVal" class="font-bold text-emerald-400 text-base">1,000.00 $</span>
+                            </div>
+
+                            <div class="flex justify-between items-center p-4 rounded-2xl bg-brand-dark border border-brand-border">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold">
+                                        <i class="fa-solid fa-coins"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-bold text-white" data-i18n="active_holdings">Active Coin Holdings</p>
+                                        <p class="text-xs text-gray-400" id="activeHoldingsCount">0 open positions</p>
+                                    </div>
+                                </div>
+                                <span id="portfolioHoldingsVal" class="font-bold text-white text-base">0.00 $</span>
+                            </div>
+                        </div>
+
+                        <div class="p-4 rounded-2xl bg-brand-dark/70 border border-brand-border text-xs text-gray-400 space-y-2">
+                            <p class="font-bold text-gray-300 flex items-center gap-1.5"><i class="fa-solid fa-database text-brand-primary"></i> <span data-i18n="storage_info_title">Local Storage Notice</span></p>
+                            <p data-i18n="storage_info_text">Watchlist preferences and simulated balances are stored securely in browser localStorage for convenience. This is a frontend demo sandbox and does not replace secure custodian account storage.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
 
     <!-- Footer -->
-    <footer>
-        <p>&copy; 2026 TrendAI Crypto Pro Max. Infrastructure de Trading Autonome Web3. Tous droits réservés.</p>
+    <footer class="bg-brand-dark border-t border-brand-border mt-16 py-12 text-gray-400 text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div class="space-y-3 md:col-span-1">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-lg bg-brand-primary flex items-center justify-center text-white font-bold">
+                        <i class="fa-solid fa-brain-circuit"></i>
+                    </div>
+                    <span class="font-black text-white text-base">TrendAI Crypto</span>
+                </div>
+                <p class="text-gray-500 leading-relaxed" data-i18n="footer_desc">
+                    Next-generation cryptocurrency analysis, automated AI market intelligence, and paper trading simulation.
+                </p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-3 uppercase tracking-wider text-[11px]" data-i18n="footer_col1">Platform</h4>
+                <ul class="space-y-2">
+                    <li><a href="#dashboard" onclick="switchNav('dashboard')" class="hover:text-white transition" data-i18n="nav_dashboard">Dashboard</a></li>
+                    <li><a href="#ai-helper" onclick="switchNav('ai-helper')" class="hover:text-white transition" data-i18n="nav_ai">TrendAI Assistant</a></li>
+                    <li><a href="#simulator" onclick="switchNav('simulator')" class="hover:text-white transition" data-i18n="nav_simulator">Trading Simulator</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-3 uppercase tracking-wider text-[11px]" data-i18n="footer_col2">Analytics</h4>
+                <ul class="space-y-2">
+                    <li><a href="#analytics" onclick="switchNav('analytics')" class="hover:text-white transition" data-i18n="nav_charts">Charts & Analytics</a></li>
+                    <li><a href="#portfolio" onclick="switchNav('portfolio')" class="hover:text-white transition" data-i18n="nav_portfolio">Portfolio & Watchlist</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-3 uppercase tracking-wider text-[11px]" data-i18n="footer_col3">Security & Compliance</h4>
+                <p class="text-gray-500 leading-relaxed" data-i18n="footer_security_desc">
+                    Non-custodial simulation environment. Never share private keys or seed phrases. Powered by CoinGecko API.
+                </p>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 border-t border-brand-border/50 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p>&copy; 2026 TrendAI Crypto Platform. All rights reserved.</p>
+            <div class="flex items-center gap-4 text-sm">
+                <a href="#" class="hover:text-white transition"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="#" class="hover:text-white transition"><i class="fa-brands fa-discord"></i></a>
+                <a href="#" class="hover:text-white transition"><i class="fa-brands fa-telegram"></i></a>
+                <a href="#" class="hover:text-white transition"><i class="fa-brands fa-github"></i></a>
+            </div>
+        </div>
     </footer>
 
-    <!-- Script Logic -->
+    <!-- Wallet Connection Modal -->
+    <div id="walletModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-panel rounded-3xl p-6 sm:p-8 max-w-md w-full space-y-6 relative border border-brand-border">
+            <button onclick="closeWalletModal()" class="absolute top-5 right-5 text-gray-400 hover:text-white text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="space-y-2">
+                <h3 class="text-2xl font-black text-white" data-i18n="modal_wallet_title">Connect Web3 Wallet</h3>
+                <p class="text-xs text-gray-400" data-i18n="modal_wallet_desc">Select a supported Web3 provider to interact with simulated DeFi features.</p>
+            </div>
+            <div class="space-y-3">
+                <button onclick="simulateWalletConnect('MetaMask')" class="w-full bg-brand-dark hover:bg-brand-border p-4 rounded-2xl border border-brand-border flex items-center justify-between transition group">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center font-bold text-lg"><i class="fa-solid fa-cube"></i></div>
+                        <div class="text-left">
+                            <p class="font-bold text-white text-sm">MetaMask</p>
+                            <p class="text-[11px] text-gray-400">Connect via browser extension</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-gray-500 group-hover:text-white transition"></i>
+                </button>
+                <button onclick="simulateWalletConnect('WalletConnect')" class="w-full bg-brand-dark hover:bg-brand-border p-4 rounded-2xl border border-brand-border flex items-center justify-between transition group">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-lg"><i class="fa-solid fa-qrcode"></i></div>
+                        <div class="text-left">
+                            <p class="font-bold text-white text-sm">WalletConnect</p>
+                            <p class="text-[11px] text-gray-400">Scan QR code with mobile wallet</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-gray-500 group-hover:text-white transition"></i>
+                </button>
+            </div>
+            <div class="p-3 rounded-xl bg-brand-dark border border-brand-border text-[11px] text-gray-400 flex items-center gap-2">
+                <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+                <span data-i18n="modal_wallet_security">Never request seed phrases. Secure non-custodial handshake.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- JAVASCRIPT LOGIC -->
     <script>
-        async function connectWallet() {
-            if (typeof window.ethereum !== 'undefined') {
-                try {
-                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                    const shortAcc = accounts[0].substring(0, 6) + '...' + accounts[0].substring(38);
-                    document.getElementById('walletBtnText').innerText = shortAcc;
-                    appendLog(`[WEB3] Portefeuille connecté : ${accounts[0]}`);
-                    alert('Connexion Web3 établie avec succès !');
-                } catch (e) {
-                    console.error(e);
-                    appendLog(`[ERROR] Échec de connexion au portefeuille.`);
-                }
+        // ================= MULTI-LANGUAGE DICTIONARY =================
+        const translations = {
+            en: {
+                badge_new: "NEW",
+                banner_text: "TrendAI v2.4 Live: Advanced Multi-Chain AI Analytics & 1,000 USDT Paper Trading Simulator!",
+                nav_dashboard: "Dashboard",
+                nav_ai: "TrendAI Assistant",
+                nav_simulator: "Trading Simulator",
+                nav_charts: "Charts & Analytics",
+                nav_portfolio: "Portfolio & Watchlist",
+                connect_wallet: "Connect Wallet",
+                hero_tag: "Real-Time CoinGecko Market Data",
+                hero_title: "Advanced AI Market Intelligence & Trading Platform",
+                hero_desc: "Analyze live cryptocurrency prices, execute simulated paper trades with 1,000 USDT capital, and leverage TrendAI Assistant for data-backed market scenarios.",
+                btn_ask_ai: "Ask TrendAI Assistant",
+                btn_sim: "Open Simulator",
+                market_table_title: "Live Cryptocurrency Markets",
+                market_table_subtitle: "Real-time data sourced via CoinGecko API with automatic fallback simulation.",
+                refresh: "Refresh",
+                th_asset: "Asset",
+                th_price: "Price (USDT)",
+                th_24h: "24h Change",
+                th_volume: "24h Volume",
+                th_mcap: "Market Cap",
+                th_actions: "Actions",
+                ai_badge: "Intelligent Market Analysis Engine",
+                ai_title: "TrendAI Assistant & Market Predictor",
+                ai_desc: "Ask questions about any cryptocurrency, analyze volatility, support/resistance levels, and evaluate bullish/bearish scenarios backed by live market indicators.",
+                ai_select_coin: "Select Cryptocurrency",
+                ai_custom_prompt: "Custom Question / Analysis Focus",
+                ai_btn_run: "Run AI Analysis",
+                risk_notice_title: "Risk & Disclaimer Notice",
+                risk_notice_text: "AI predictions are generated for educational & research purposes only. Never promise guaranteed profits. Always conduct your own financial due diligence.",
+                ai_output_title: "TrendAI Intelligence Report",
+                ai_placeholder_prompt: "Select a cryptocurrency and click \"Run AI Analysis\" to generate professional scenarios and indicators.",
+                sim_badge: "Paper Trading Sandbox (1,000 USDT)",
+                sim_title: "Risk-Free Trading Simulator",
+                sim_cash_label: "USDT Balance",
+                sim_portfolio_label: "Portfolio Value",
+                sim_order_title: "Place Simulated Order",
+                sim_lbl_coin: "Select Asset",
+                sim_current_price: "Current Market Price:",
+                sim_lbl_amount: "Amount to Invest (USDT)",
+                sim_btn_buy: "Buy / Long",
+                sim_btn_sell: "Sell / Close",
+                sim_positions_title: "Open Positions & History",
+                pos_asset: "Asset",
+                pos_type: "Type",
+                pos_qty: "Quantity",
+                pos_entry: "Entry Price",
+                pos_pnl: "Unrealized P&L",
+                pos_action: "Action",
+                sim_no_positions: "No active simulated positions. Place your first trade above!",
+                charts_badge: "Interactive TradingView Lightweight Charts",
+                charts_title: "Advanced Price Charting",
+                loading_chart: "Loading chart history...",
+                watchlist_title: "My Watchlist",
+                empty_watchlist: "Your watchlist is empty. Click the star icon on any coin in the dashboard to add it here.",
+                portfolio_title: "Portfolio Asset Allocation",
+                active_holdings: "Active Coin Holdings",
+                storage_info_title: "Local Storage Notice",
+                storage_info_text: "Watchlist preferences and simulated balances are stored securely in browser localStorage for convenience. This is a frontend demo sandbox and does not replace secure custodian account storage.",
+                footer_desc: "Next-generation cryptocurrency analysis, automated AI market intelligence, and paper trading simulation.",
+                footer_col1: "Platform",
+                footer_col2: "Analytics",
+                footer_col3: "Security & Compliance",
+                footer_security_desc: "Non-custodial simulation environment. Never request seed phrases or private keys. Powered by CoinGecko API.",
+                modal_wallet_title: "Connect Web3 Wallet",
+                modal_wallet_desc: "Select a supported Web3 provider to interact with simulated DeFi features.",
+                modal_wallet_security: "Never request seed phrases. Secure non-custodial handshake."
+            },
+            fr: {
+                badge_new: "NOUVEAU",
+                banner_text: "TrendAI v2.4 En direct : Analyses IA multi-chaînes avancées & Simulateur de paper trading 1 000 USDT !",
+                nav_dashboard: "Tableau de bord",
+                nav_ai: "Assistant TrendAI",
+                nav_simulator: "Simulateur de Trading",
+                nav_charts: "Graphiques & Analyses",
+                nav_portfolio: "Portefeuille & Favoris",
+                connect_wallet: "Connecter le portefeuille",
+                hero_tag: "Données de marché CoinGecko en temps réel",
+                hero_title: "Plateforme d'intelligence de marché et de trading IA avancée",
+                hero_desc: "Analysez les prix en direct, effectuez des simulations de paper trading avec un capital de 1 000 USDT et exploitez l'assistant TrendAI pour des scénarios de marché appuyés par des données.",
+                btn_ask_ai: "Consulter l'assistant TrendAI",
+                btn_sim: "Ouvrir le simulateur",
+                market_table_title: "Marchés des cryptomonnaies en direct",
+                market_table_subtitle: "Données en temps réel via l'API CoinGecko avec simulation de secours automatique.",
+                refresh: "Actualiser",
+                th_asset: "Actif",
+                th_price: "Prix (USDT)",
+                th_24h: "Variation 24h",
+                th_volume: "Volume 24h",
+                th_mcap: "Cap. boursière",
+                th_actions: "Actions",
+                ai_badge: "Moteur d'analyse de marché intelligent",
+                ai_title: "Assistant TrendAI & Prédicteur de marché",
+                ai_desc: "Posez des questions sur n'importe quelle cryptomonnaie, analysez la volatilité, les supports/résistances et évaluez les scénarios haussiers/baissiers.",
+                ai_select_coin: "Sélectionner la cryptomonnaie",
+                ai_custom_prompt: "Question personnalisée / Focus d'analyse",
+                ai_btn_run: "Lancer l'analyse IA",
+                risk_notice_title: "Avis de risque & Avertissement",
+                risk_notice_text: "Les prédictions IA sont générées à des fins éducatives et de recherche uniquement. Ne promettez jamais de profits garantis.",
+                ai_output_title: "Rapport d'intelligence TrendAI",
+                ai_placeholder_prompt: "Sélectionnez une cryptomonnaie et cliquez sur \"Lancer l'analyse IA\" pour générer des scénarios professionnels.",
+                sim_badge: "Sandbox Paper Trading (1 000 USDT)",
+                sim_title: "Simulateur de trading sans risque",
+                sim_cash_label: "Solde USDT",
+                sim_portfolio_label: "Valeur du portefeuille",
+                sim_order_title: "Passer un ordre simulé",
+                sim_lbl_coin: "Sélectionner l'actif",
+                sim_current_price: "Prix du marché actuel :",
+                sim_lbl_amount: "Montant à investir (USDT)",
+                sim_btn_buy: "Achat / Long",
+                sim_btn_sell: "Vente / Clôture",
+                sim_positions_title: "Positions ouvertes & Historique",
+                pos_asset: "Actif",
+                pos_type: "Type",
+                pos_qty: "Quantité",
+                pos_entry: "Prix d'entrée",
+                pos_pnl: "P&L non réalisé",
+                pos_action: "Action",
+                sim_no_positions: "Aucune position simulée active. Placez votre premier trade ci-dessus !",
+                charts_badge: "Graphiques interactifs TradingView Lightweight",
+                charts_title: "Graphiques de prix avancés",
+                loading_chart: "Chargement de l'historique des graphiques...",
+                watchlist_title: "Ma Liste de Favoris",
+                empty_watchlist: "Votre liste de favoris est vide. Cliquez sur l'icône étoile sur n'importe quelle pièce du tableau de bord.",
+                portfolio_title: "Allocation d'actifs du portefeuille",
+                active_holdings: "Actifs en cryptos actifs",
+                storage_info_title: "Avis sur le stockage local",
+                storage_info_text: "Les préférences de favoris et les soldes simulés sont stockés dans le stockage local du navigateur pour plus de commodité.",
+                footer_desc: "Analyse de cryptomonnaies de nouvelle génération, intelligence de marché IA automatisée et simulation de paper trading.",
+                footer_col1: "Plateforme",
+                footer_col2: "Analytique",
+                footer_col3: "Sécurité & Conformité",
+                footer_security_desc: "Environnement de simulation non dépositaire. Ne demandez jamais de clés privées.",
+                modal_wallet_title: "Connecter le portefeuille Web3",
+                modal_wallet_desc: "Sélectionnez un fournisseur Web3 pris en charge pour interagir avec les fonctionnalités DeFi simulées.",
+                modal_wallet_security: "Ne demande jamais de phrases secrètes. Connexion sécurisée non dépositaire."
+            },
+            ar: {
+                badge_new: "جديد",
+                banner_text: "تريند إي الإصدار 2.4 المباشر: تحليلات الذكاء الاصطناعي المتقدمة ومحاكاة تداول الأوراق المالية بقيمة 1,000 USDT!",
+                nav_dashboard: "لوحة القيادة",
+                nav_ai: "مساعد الذكاء الاصطناعي",
+                nav_simulator: "محاكي التداول",
+                nav_charts: "الرسوم البيانية والتحليلات",
+                nav_portfolio: "المحفظة وقائمة المتابعة",
+                connect_wallet: "اتصال المحفظة",
+                hero_tag: "بيانات سوق CoinGecko في الوقت الفعلي",
+                hero_title: "منصة ذكاء السوق المتقدمة بالذكاء الاصطناعي والتداول",
+                hero_desc: "قم بتحليل أسعار العملات الرقمية المباشرة، ونفذ صفقات تجريبية برأس مال 1,000 USDT، واستفد من مساعد TrendAI سيناريوهات السوق.",
+                btn_ask_ai: "اسأل مساعد TrendAI",
+                btn_sim: "فتح المحاكي",
+                market_table_title: "أسواق العملات الرقمية المباشرة",
+                market_table_subtitle: "بيانات في الوقت الفعلي عبر واجهة برمجة تطبيقات CoinGecko مع محاكاة احتياطية تلقائية.",
+                refresh: "تحديث",
+                th_asset: "الأصل",
+                th_price: "السعر (USDT)",
+                th_24h: "تغير 24 ساعة",
+                th_volume: "حجم 24 ساعة",
+                th_mcap: "القيمة السوقية",
+                th_actions: "الإجراءات",
+                ai_badge: "محرك تحليل السوق الذكي",
+                ai_title: "مساعد TrendAI وتنبؤ السوق",
+                ai_desc: "اطرح أسئلة حول أي عملة مشفرة، وتحليل التقلبات، ومستويات الدعم/المقاومة، وتقييم السيناريوهات الصعودية والهبوطية.",
+                ai_select_coin: "اختر العملة المشفرة",
+                ai_custom_prompt: "سؤال مخصص / تركيز التحليل",
+                ai_btn_run: "تشغيل تحليل الذكاء الاصطناعي",
+                risk_notice_title: "إشعار المخاطر وإخلاء المسؤولية",
+                risk_notice_text: "يتم إنشاء تنبؤات الذكاء الاصطناعي لأغراض تعليمية وبحثية فقط. لا تعد أبدًا بأرباح مضمونة.",
+                ai_output_title: "تقرير ذكاء TrendAI",
+                ai_placeholder_prompt: "حدد العملة المشفرة وانقر فوق \"تشغيل تحليل الذكاء الاصطناعي\" لإنشاء سيناريوهات ومؤشرات احترافية.",
+                sim_badge: "وضع الحماية للتداول الورقي (1,000 USDT)",
+                sim_title: "محاكي التداول الخالي من المخاطر",
+                sim_cash_label: "رصيد USDT",
+                sim_portfolio_label: "قيمة المحفظة",
+                sim_order_title: "إرسال أمر محاكى",
+                sim_lbl_coin: "حدد الأصل",
+                sim_current_price: "سعر السوق الحالي:",
+                sim_lbl_amount: "المبلغ المراد استثماره (USDT)",
+                sim_btn_buy: "شراء / طويل",
+                sim_btn_sell: "بيع / إغلاق",
+                sim_positions_title: "المراكز المفتوحة والسجل",
+                pos_asset: "الأصل",
+                pos_type: "النوع",
+                pos_qty: "الكمية",
+                pos_entry: "سعر الدخول",
+                pos_pnl: "الربح/الخسارة غير المحققة",
+                pos_action: "الإجراء",
+                sim_no_positions: "لا توجد مراكز محاكاة نشطة. ضع تجارتك الأولى أعلاه!",
+                charts_badge: "رسوم بيانية تفاعلية لـ TradingView Lightweight",
+                charts_title: "الرسوم البيانية المتقدمة للأسعار",
+                loading_chart: "جاري تحميل سجل الرسم البياني...",
+                watchlist_title: "قائمة المتابعة الخاصة بي",
+                empty_watchlist: "قائمة المتابعة الخاصة بك فارغة. انقر فوق رمز النجمة على أي عملة في لوحة القيادة لإضافتها هنا.",
+                portfolio_title: "توزيع أصول المحفظة",
+                active_holdings: "حيازات العملات النشطة",
+                storage_info_title: "إشعار التخزين المحلي",
+                storage_info_text: "يتم تخزين تفضيلات قائمة المتابعة والأرصدة المحاكية بشكل آمن في التخزين المحلي للمتصفح.",
+                footer_desc: "تحليل العملات الرقمية من الجيل التالي، وذكاء السوق الآلي بالذكاء الاصطناعي، ومحاكاة التداول الورقي.",
+                footer_col1: "المنصة",
+                footer_col2: "التحليلات",
+                footer_col3: "الأمان والامتثال",
+                footer_security_desc: "بيئة محاكاة غير خاضعة للوصاية. لا تطلب أبدًا المفاتيح الخاصة.",
+                modal_wallet_title: "اتصال محفظة Web3",
+                modal_wallet_desc: "حدد موفر Web3 مدعوم للتفاعل مع ميزات DeFi المحاكية.",
+                modal_wallet_security: "لا تطلب أبدًا عبارات الاسترداد. مصافحة آمنة غير خاضعة للوصاية."
+            }
+        };
+
+        let currentLang = 'en';
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            const dict = translations[lang] || translations.en;
+            
+            // Set RTL / LTR direction
+            if (lang === 'ar') {
+                document.documentElement.setAttribute('dir', 'rtl');
+                document.documentElement.setAttribute('lang', 'ar');
             } else {
-                alert('Veuillez installer un portefeuille Web3 compatible !');
-                appendLog(`[WARN] Aucune extension Web3 détectée.`);
+                document.documentElement.setAttribute('dir', 'ltr');
+                document.documentElement.setAttribute('lang', lang);
+            }
+
+            // Update text content for all elements with data-i18n
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (dict[key]) {
+                    el.innerText = dict[key];
+                }
+            });
+
+            // Update placeholders
+            const searchInput = document.getElementById('coinSearchInput');
+            if (searchInput) {
+                searchInput.placeholder = lang === 'fr' ? 'Rechercher une pièce...' : lang === 'ar' ? 'بحث عن عملة...' : 'Search coin (e.g. BTC, Ethereum)...';
+            }
+            const aiPrompt = document.getElementById('aiPromptInput');
+            if (aiPrompt) {
+                aiPrompt.placeholder = lang === 'fr' ? 'Ex: Quelle est la tendance à court terme ?' : lang === 'ar' ? 'مثال: ما هي التوقعات قصيرة الأجل ومنطقة الدعم؟' : 'e.g. What is the short-term outlook and key support level for this coin?';
             }
         }
 
-        function sendCryptoTransaction() {
-            const recipient = prompt("Entrez l'adresse de destination (0x...) :");
-            const amount = prompt("Entrez le montant :");
-            if(recipient && amount) {
-                alert(`Transaction de ${amount} envoyée vers ${recipient}`);
-                appendLog(`[TX] Transfert validé : ${amount} vers ${recipient}`);
+        // ================= STATE & DATA MANAGEMENT =================
+        let liveCoinsData = [];
+        let watchlist = JSON.parse(localStorage.getItem('trendai_watchlist') || '["bitcoin", "ethereum", "solana"]');
+        let simBalance = parseFloat(localStorage.getItem('trendai_sim_balance') || '1000.00');
+        let simPositions = JSON.parse(localStorage.getItem('trendai_sim_positions') || '[]');
+        let chartInstance = null;
+        let chartSeries = null;
+
+        // Fallback demo data if CoinGecko API fails or rate-limited
+        const fallbackCoins = [
+            { id: 'bitcoin', symbol: 'btc', name: 'Bitcoin', current_price: 68450.20, price_change_percentage_24h: 3.42, total_volume: 34250000000, market_cap: 1340000000000, image: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png' },
+            { id: 'ethereum', symbol: 'eth', name: 'Ethereum', current_price: 3520.80, price_change_percentage_24h: 2.15, total_volume: 18500000000, market_cap: 422000000000, image: 'https://assets.coingecko.com/coins/images/279/large/ethereum.png' },
+            { id: 'solana', symbol: 'sol', name: 'Solana', current_price: 184.60, price_change_percentage_24h: -1.84, total_volume: 4200000000, market_cap: 85000000000, image: 'https://assets.coingecko.com/coins/images/4128/large/solana.png' },
+            { id: 'binancecoin', symbol: 'bnb', name: 'BNB', current_price: 610.40, price_change_percentage_24h: 1.05, total_volume: 1400000000, market_cap: 92000000000, image: 'https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png' },
+            { id: 'ripple', symbol: 'xrp', name: 'XRP', current_price: 0.58, price_change_percentage_24h: 0.42, total_volume: 980000000, market_cap: 32000000000, image: 'https://assets.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png' },
+            { id: 'cardano', symbol: 'ada', name: 'Cardano', current_price: 0.45, price_change_percentage_24h: -0.92, total_volume: 410000000, market_cap: 16000000000, image: 'https://assets.coingecko.com/coins/images/975/large/cardano.png' }
+        ];
+
+        // Navigation Switching
+        function switchNav(viewId) {
+            const views = ['dashboard', 'ai-helper', 'simulator', 'analytics', 'portfolio'];
+            views.forEach(v => {
+                const el = document.getElementById(`view-${v}`);
+                if (el) {
+                    if (v === viewId) {
+                        el.classList.remove('hidden');
+                    } else {
+                        el.classList.add('hidden');
+                    }
+                }
+            });
+
+            // Update active state in navbar
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('text-brand-accent');
+                if (link.getAttribute('href') === `#${viewId}`) {
+                    link.classList.add('text-brand-accent');
+                }
+            });
+
+            if (viewId === 'analytics') {
+                setTimeout(initTradingViewChart, 200);
             }
         }
 
-        function refreshDashboard() {
-            const randomBal = (Math.random() * 200 + 24650).toFixed(2);
-            document.getElementById('totalBalance').innerText = `$${randomBal}`;
-            appendLog(`[REFRESH] Données du portefeuille synchronisées.`);
+        function dismissBanner() {
+            const banner = document.getElementById('topBanner');
+            if (banner) banner.style.display = 'none';
         }
 
-        function runManualScan() {
-            appendLog(`[AI ENGINE] Analyse manuelle des marchés en cours...`);
+        // ================= FETCH COINGECKO API DATA =================
+        async function fetchMarketData() {
+            const refreshIcon = document.getElementById('refreshIcon');
+            if (refreshIcon) refreshIcon.classList.add('fa-spin');
+
+            try {
+                const response = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=12&page=1&sparkline=false');
+                if (!response.ok) throw new Error('API rate limit or network error');
+                const data = await response.json();
+                liveCoinsData = data;
+                
+                document.getElementById('apiStatusAlert').classList.add('hidden');
+                renderDashboardStats(data);
+                renderCoinTable(data);
+                populateSimCoinSelect(data);
+                renderWatchlist();
+                updatePortfolioValues();
+            } catch (err) {
+                console.warn('CoinGecko API failed, using fallback demo market data:', err);
+                liveCoinsData = fallbackCoins;
+                document.getElementById('apiStatusAlert').classList.remove('hidden');
+                renderDashboardStats(fallbackCoins);
+                renderCoinTable(fallbackCoins);
+                populateSimCoinSelect(fallbackCoins);
+                renderWatchlist();
+                updatePortfolioValues();
+            } finally {
+                if (refreshIcon) refreshIcon.classList.remove('fa-spin');
+            }
+        }
+
+        function renderDashboardStats(coins) {
+            const btc = coins.find(c => c.id === 'bitcoin') || coins[0];
+            const totalMcap = coins.reduce((acc, c) => acc + (c.market_cap || 0), 0);
+            const totalVol = coins.reduce((acc, c) => acc + (c.total_volume || 0), 0);
+            const avgChange = coins.reduce((acc, c) => acc + (c.price_change_percentage_24h || 0), 0) / coins.length;
+
+            const container = document.getElementById('statsCardsContainer');
+            container.innerHTML = `
+                <div class="glass-panel p-5 rounded-2xl flex items-center justify-between">
+                    <div>
+                        <p class="text-xs text-gray-400 font-semibold uppercase">Bitcoin Price</p>
+                        <h4 class="text-xl font-black text-white mt-1">$${btc.current_price.toLocaleString()}</h4>
+                        <span class="text-xs font-bold ${btc.price_change_percentage_24h >= 0 ? 'text-emerald-400' : 'text-rose-400'} mt-1 inline-block">
+                            <i class="fa-solid fa-arrow-trend-${btc.price_change_percentage_24h >= 0 ? 'up' : 'down'}"></i> ${btc.price_change_percentage_24h.toFixed(2)}%
+                        </span>
+                    </div>
+                    <div class="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-500 flex items-center justify-center text-xl font-bold">₿</div>
+                </div>
+
+                <div class="glass-panel p-5 rounded-2xl flex items-center justify-between">
+                    <div>
+                        <p class="text-xs text-gray-400 font-semibold uppercase">Market Capitalization</p>
+                        <h4 class="text-xl font-black text-white mt-1">$${(totalMcap / 1e9).toFixed(2)}B</h4>
+                        <span class="text-xs text-emerald-400 font-bold mt-1 inline-block"><i class="fa-solid fa-shield-check"></i> Top Assets Verified</span>
+                    </div>
+                    <div class="w-12 h-12 rounded-2xl bg-blue-500/20 text-blue-400 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-globe"></i></div>
+                </div>
+
+                <div class="glass-panel p-5 rounded-2xl flex items-center justify-between">
+                    <div>
+                        <p class="text-xs text-gray-400 font-semibold uppercase">24h Trading Volume</p>
+                        <h4 class="text-xl font-black text-white mt-1">$${(totalVol / 1e9).toFixed(2)}B</h4>
+                        <span class="text-xs text-brand-primary font-bold mt-1 inline-block"><i class="fa-solid fa-bolt"></i> High Liquidity</span>
+                    </div>
+                    <div class="w-12 h-12 rounded-2xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-chart-line"></i></div>
+                </div>
+
+                <div class="glass-panel p-5 rounded-2xl flex items-center justify-between">
+                    <div>
+                        <p class="text-xs text-gray-400 font-semibold uppercase">Market Sentiment</p>
+                        <h4 class="text-xl font-black text-emerald-400 mt-1">${avgChange >= 0 ? 'Bullish (+)' : 'Bearish (-)'}</h4>
+                        <span class="text-xs text-gray-400 mt-1 inline-block">Avg 24h: ${avgChange.toFixed(2)}%</span>
+                    </div>
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-gauge-high"></i></div>
+                </div>
+            `;
+        }
+
+        function renderCoinTable(coins) {
+            const tbody = document.getElementById('coinTableBody');
+            tbody.innerHTML = '';
+
+            coins.forEach(coin => {
+                const isFav = watchlist.includes(coin.id);
+                const changeColor = (coin.price_change_percentage_24h || 0) >= 0 ? 'text-emerald-400' : 'text-rose-400';
+                const changeIcon = (coin.price_change_percentage_24h || 0) >= 0 ? 'fa-arrow-trend-up' : 'fa-arrow-trend-down';
+
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-brand-dark/40 transition-colors group';
+                tr.innerHTML = `
+                    <td class="py-3.5 px-4 flex items-center gap-3">
+                        <button onclick="toggleWatchlist('${coin.id}')" class="text-gray-500 hover:text-amber-400 transition text-base">
+                            <i class="${isFav ? 'fa-solid text-amber-400' : 'fa-regular'} fa-star"></i>
+                        </button>
+                        <img src="${coin.image}" alt="${coin.name}" class="w-8 h-8 rounded-full" onerror="this.src='https://placehold.co/32x32/1E293B/FFF?text=🪙'">
+                        <div>
+                            <div class="font-bold text-white">${coin.name}</div>
+                            <div class="text-xs text-gray-400 uppercase">${coin.symbol}</div>
+                        </div>
+                    </td>
+                    <td class="py-3.5 px-4 font-bold text-white">$${coin.current_price.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 6})}</td>
+                    <td class="py-3.5 px-4 font-semibold ${changeColor}">
+                        <i class="fa-solid ${changeIcon}"></i> ${(coin.price_change_percentage_24h || 0).toFixed(2)}%
+                    </td>
+                    <td class="py-3.5 px-4 text-gray-300 hidden sm:table-cell">$${(coin.total_volume || 0).toLocaleString()}</td>
+                    <td class="py-3.5 px-4 text-gray-300 hidden md:table-cell">$${(coin.market_cap || 0).toLocaleString()}</td>
+                    <td class="py-3.5 px-4 text-right">
+                        <button onclick="quickTradeCoin('${coin.id}')" class="bg-brand-primary/20 hover:bg-brand-primary text-brand-primary hover:text-white px-3 py-1.5 rounded-xl text-xs font-bold transition border border-brand-primary/30">
+                            Trade
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function filterCoins() {
+            const query = document.getElementById('coinSearchInput').value.toLowerCase();
+            const filtered = liveCoinsData.filter(c => c.name.toLowerCase().includes(query) || c.symbol.toLowerCase().includes(query));
+            renderCoinTable(filtered);
+        }
+
+        // ================= WATCHLIST MANAGEMENT =================
+        function toggleWatchlist(coinId) {
+            if (watchlist.includes(coinId)) {
+                watchlist = watchlist.filter(id => id !== coinId);
+                showToast("Removed from Watchlist", "info");
+            } else {
+                watchlist.push(coinId);
+                showToast("Added to Watchlist", "success");
+            }
+            localStorage.setItem('trendai_watchlist', JSON.stringify(watchlist));
+            renderCoinTable(liveCoinsData);
+            renderWatchlist();
+        }
+
+        function renderWatchlist() {
+            const tbody = document.getElementById('watchlistTableBody');
+            const countEl = document.getElementById('watchlistCount');
+            if (countEl) countEl.innerText = `${watchlist.length} Coins`;
+
+            const favCoins = liveCoinsData.filter(c => watchlist.includes(c.id));
+            if (favCoins.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="py-12 text-center text-gray-500">Your watchlist is empty. Click the star icon on any coin in the dashboard to add it here.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = '';
+            favCoins.forEach(coin => {
+                const changeColor = (coin.price_change_percentage_24h || 0) >= 0 ? 'text-emerald-400' : 'text-rose-400';
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-brand-dark/40 transition-colors';
+                tr.innerHTML = `
+                    <td class="py-3.5 px-3 flex items-center gap-3">
+                        <img src="${coin.image}" class="w-7 h-7 rounded-full" onerror="this.src='https://placehold.co/28x28/1E293B/FFF?text=🪙'">
+                        <div>
+                            <span class="font-bold text-white">${coin.name}</span>
+                            <span class="text-xs text-gray-400 uppercase ml-1">(${coin.symbol})</span>
+                        </div>
+                    </td>
+                    <td class="py-3.5 px-3 font-bold text-white">$${coin.current_price.toLocaleString()}</td>
+                    <td class="py-3.5 px-3 font-semibold ${changeColor}">${(coin.price_change_percentage_24h || 0).toFixed(2)}%</td>
+                    <td class="py-3.5 px-3 text-right">
+                        <button onclick="toggleWatchlist('${coin.id}')" class="text-rose-400 hover:text-rose-300 text-xs font-bold">Remove</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+
+        // ================= TREND AI ASSISTANT ENDPOINT SIMULATION =================
+        async function askTrendAI() {
+            const coinId = document.getElementById('aiCoinSelect').value;
+            const prompt = document.getElementById('aiPromptInput').value.trim();
+            const container = document.getElementById('aiResponseContainer');
+            const badge = document.getElementById('aiStatusBadge');
+
+            badge.innerText = "Analyzing...";
+            badge.className = "text-[10px] bg-brand-purple/20 text-brand-purple px-2 py-0.5 rounded font-bold uppercase animate-pulse";
+
+            container.innerHTML = `
+                <div class="flex flex-col items-center justify-center h-48 space-y-3 text-gray-400">
+                    <i class="fa-solid fa-brain text-3xl text-brand-purple animate-bounce"></i>
+                    <p>TrendAI engine is scanning live order books, volatility indexes, and support/resistance levels for ${coinId.toUpperCase()}...</p>
+                </div>
+            `;
+
+            // Simulate backend /api/ask delay and robust response generation
             setTimeout(() => {
-                appendLog(`[SIGNAL] Gemini AI : Opportunité détectée sur la paire ETH/USDT.`);
+                const coin = liveCoinsData.find(c => c.id === coinId) || { name: coinId, current_price: 1000, price_change_percentage_24h: 2.5 };
+                const isBullish = (coin.price_change_percentage_24h || 0) >= 0;
+                
+                const support1 = (coin.current_price * 0.95).toFixed(2);
+                const support2 = (coin.current_price * 0.90).toFixed(2);
+                const resistance1 = (coin.current_price * 1.05).toFixed(2);
+                const resistance2 = (coin.current_price * 1.10).toFixed(2);
+
+                badge.innerText = "Complete";
+                badge.className = "text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold uppercase";
+
+                container.innerHTML = `
+                    <div class="space-y-4 animate-fade-in">
+                        <div class="p-4 rounded-xl bg-brand-card border border-brand-border space-y-2">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-white text-base">📊 Market Analysis: ${coin.name} (${coin.symbol ? coin.symbol.toUpperCase() : ''})</span>
+                                <span class="text-xs px-2.5 py-1 rounded-full font-bold ${isBullish ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400'}">
+                                    ${isBullish ? 'Bullish Momentum' : 'Bearish Correction'}
+                                </span>
+                            </div>
+                            <p class="text-xs text-gray-300 leading-relaxed">
+                                <strong>User Prompt:</strong> "${prompt || 'General Market Assessment & Outlook'}"
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="p-3 rounded-xl bg-brand-card/60 border border-brand-border">
+                                <span class="text-[10px] text-gray-400 uppercase font-bold">Key Support Levels</span>
+                                <div class="text-sm font-bold text-emerald-400 mt-1">1. $${support1}</div>
+                                <div class="text-xs text-gray-400">2. $${support2}</div>
+                            </div>
+                            <div class="p-3 rounded-xl bg-brand-card/60 border border-brand-border">
+                                <span class="text-[10px] text-gray-400 uppercase font-bold">Key Resistance Levels</span>
+                                <div class="text-sm font-bold text-rose-400 mt-1">1. $${resistance1}</div>
+                                <div class="text-xs text-gray-400">2. $${resistance2}</div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-brand-card border border-brand-border space-y-2">
+                            <h4 class="font-bold text-white text-xs uppercase tracking-wider text-brand-purple">🤖 TrendAI Scenario Evaluation</h4>
+                            <p class="text-xs text-gray-300 leading-relaxed">
+                                Based on live volume flow and volatility indicators, ${coin.name} is currently exhibiting ${isBullish ? 'accumulative buying pressure' : 'profit-taking distribution'}. If price holds above support $${support1}, expect a retest of resistance $${resistance1}. Uncertainty remains moderate due to macroeconomic rate expectations.
+                            </p>
+                        </div>
+
+                        <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-300 flex items-center gap-2">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            <span>Remember: AI insights are non-binding research estimates. Practice risk management.</span>
+                        </div>
+                    </div>
+                `;
             }, 1000);
         }
 
-        function clearLogs() {
-            document.getElementById('liveConsoleLogs').innerHTML = `[SYSTEM] Logs réinitialisés.<br>`;
+
+        // ================= TRADING SIMULATOR LOGIC =================
+        function populateSimCoinSelect(coins) {
+            const select = document.getElementById('simCoinSelect');
+            if (!select) return;
+            const currentVal = select.value;
+            select.innerHTML = '';
+            coins.forEach(coin => {
+                const opt = document.createElement('option');
+                opt.value = coin.id;
+                opt.innerText = `${coin.name} ($${coin.current_price.toLocaleString()})`;
+                select.appendChild(opt);
+            });
+            if (currentVal) select.value = currentVal;
+            updateSimPriceDisplay();
         }
 
-        function appendLog(text) {
-            const consoleBox = document.getElementById('liveConsoleLogs');
-            const timeStr = new Date().toTimeString().split(' ')[0];
-            consoleBox.innerHTML += `[${timeStr}] ${text}<br>`;
-            consoleBox.scrollTop = consoleBox.scrollHeight;
+        function updateSimPriceDisplay() {
+            const select = document.getElementById('simCoinSelect');
+            if (!select) return;
+            const coinId = select.value;
+            const coin = liveCoinsData.find(c => c.id === coinId);
+            const display = document.getElementById('simCurrentPriceDisplay');
+            if (coin && display) {
+                display.innerText = `$${coin.current_price.toLocaleString()}`;
+            }
         }
+
+        function executeSimTrade(type) {
+            const coinId = document.getElementById('simCoinSelect').value;
+            const amount = parseFloat(document.getElementById('simInvestmentInput').value);
+            const coin = liveCoinsData.find(c => c.id === coinId);
+
+            if (!coin || isNaN(amount) || amount <= 0) {
+                showToast("Please enter a valid investment amount.", "error");
+                return;
+            }
+
+            if (type === 'buy') {
+                if (simBalance < amount) {
+                    showToast("Insufficient USDT balance for this trade!", "error");
+                    return;
+                }
+                simBalance -= amount;
+                const qty = amount / coin.current_price;
+                simPositions.push({
+                    id: Date.now(),
+                    coinId: coin.id,
+                    coinName: coin.name,
+                    symbol: coin.symbol.toUpperCase(),
+                    type: 'LONG',
+                    invested: amount,
+                    qty: qty,
+                    entryPrice: coin.current_price,
+                    image: coin.image
+                });
+                showToast(`Successfully opened LONG on ${coin.name} for $${amount}`, "success");
+            } else {
+                // Sell / close matching positions or execute short
+                if (simBalance < amount && simPositions.length === 0) {
+                    showToast("Insufficient balance or positions to close.", "error");
+                    return;
+                }
+                simBalance += amount * 0.99; // slight simulated return or close
+                showToast(`Successfully closed position for $${amount}`, "success");
+            }
+
+            saveSimulatorState();
+            renderSimPositions();
+            updatePortfolioValues();
+        }
+
+        function closeSimPosition(posId) {
+            const posIndex = simPositions.findIndex(p => p.id === posId);
+            if (posIndex > -1) {
+                const pos = simPositions[posIndex];
+                const coin = liveCoinsData.find(c => c.id === pos.coinId) || { current_price: pos.entryPrice };
+                const currentValue = pos.qty * coin.current_price;
+                simBalance += currentValue;
+                simPositions.splice(posIndex, 1);
+                saveSimulatorState();
+                renderSimPositions();
+                updatePortfolioValues();
+                showToast(`Position closed. Returned $${currentValue.toFixed(2)} to USDT balance.`, "success");
+            }
+        }
+
+        function resetSimulator() {
+            simBalance = 1000.00;
+            simPositions = [];
+            saveSimulatorState();
+            renderSimPositions();
+            updatePortfolioValues();
+            showToast("Trading simulator reset to 1,000 USDT.", "info");
+        }
+
+        function saveSimulatorState() {
+            localStorage.setItem('trendai_sim_balance', simBalance.toFixed(2));
+            localStorage.setItem('trendai_sim_positions', JSON.stringify(simPositions));
+        }
+
+        function renderSimPositions() {
+            const tbody = document.getElementById('simPositionsTableBody');
+            const countEl = document.getElementById('openPositionsCount');
+            const usdtEl = document.getElementById('simUsdtBalance');
+
+            if (usdtEl) usdtEl.innerText = `${simBalance.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} $`;
+            if (countEl) countEl.innerText = `${simPositions.length} Active`;
+
+            if (simPositions.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="py-12 text-center text-gray-500">No active simulated positions. Place your first trade above!</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = '';
+            simPositions.forEach(pos => {
+                const coin = liveCoinsData.find(c => c.id === pos.coinId) || { current_price: pos.entryPrice };
+                const currentVal = pos.qty * coin.current_price;
+                const pnl = currentVal - pos.invested;
+                const pnlPct = (pnl / pos.invested) * 100;
+                const pnlColor = pnl >= 0 ? 'text-emerald-400' : 'text-rose-400';
+
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-brand-dark/40 transition-colors';
+                tr.innerHTML = `
+                    <td class="py-3 px-3 flex items-center gap-2">
+                        <img src="${pos.image}" class="w-6 h-6 rounded-full" onerror="this.src='https://placehold.co/24x24/1E293B/FFF?text=🪙'">
+                        <span class="font-bold text-white">${pos.coinName}</span>
+                    </td>
+                    <td class="py-3 px-3 font-bold text-emerald-400">${pos.type}</td>
+                    <td class="py-3 px-3 text-gray-300">${pos.qty.toFixed(4)}</td>
+                    <td class="py-3 px-3 text-gray-300">$${pos.entryPrice.toLocaleString()}</td>
+                    <td class="py-3 px-3 font-bold ${pnlColor}">$${pnl.toFixed(2)} (${pnlPct.toFixed(2)}%)</td>
+                    <td class="py-3 px-3 text-right">
+                        <button onclick="closeSimPosition(${pos.id})" class="bg-rose-500/20 hover:bg-rose-500 text-rose-300 hover:text-white px-2.5 py-1 rounded-lg text-xs font-bold transition">Close</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function updatePortfolioValues() {
+            const usdtEl = document.getElementById('simUsdtBalance');
+            const portEl = document.getElementById('simPortfolioValue');
+            const portUsdtVal = document.getElementById('portfolioUsdtVal');
+            const portHoldingsVal = document.getElementById('portfolioHoldingsVal');
+            const activeHoldingsCount = document.getElementById('activeHoldingsCount');
+
+            let holdingsVal = 0;
+            simPositions.forEach(pos => {
+                const coin = liveCoinsData.find(c => c.id === pos.coinId) || { current_price: pos.entryPrice };
+                holdingsVal += pos.qty * coin.current_price;
+            });
+
+            const totalPortfolio = simBalance + holdingsVal;
+
+            if (usdtEl) usdtEl.innerText = `${simBalance.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} $`;
+            if (portEl) portEl.innerText = `${totalPortfolio.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} $`;
+            if (portUsdtVal) portUsdtVal.innerText = `${simBalance.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} $`;
+            if (portHoldingsVal) portHoldingsVal.innerText = `${holdingsVal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} $`;
+            if (activeHoldingsCount) activeHoldingsCount.innerText = `${simPositions.length} open positions`;
+        }
+
+        function quickTradeCoin(coinId) {
+            switchNav('simulator');
+            const select = document.getElementById('simCoinSelect');
+            if (select) {
+                select.value = coinId;
+                updateSimPriceDisplay();
+            }
+        }
+
+
+        // ================= TRADINGVIEW LIGHTWEIGHT CHARTS =================
+        let currentTimeframeDays = '7';
+
+        function setTimeframe(days) {
+            currentTimeframeDays = days;
+            document.querySelectorAll('.tf-btn').forEach(btn => {
+                btn.classList.remove('bg-brand-primary', 'text-white');
+                btn.classList.add('text-gray-300');
+                if (btn.getAttribute('data-days') === days) {
+                    btn.classList.add('bg-brand-primary', 'text-white');
+                    btn.classList.remove('text-gray-300');
+                }
+            });
+            loadChartData();
+        }
+
+        async function initTradingViewChart() {
+            const container = document.getElementById('chartContainer');
+            if (!container) return;
+
+            if (chartInstance) {
+                chartInstance.remove();
+                chartInstance = null;
+            }
+
+            chartInstance = LightweightCharts.createChart(container, {
+                width: container.clientWidth,
+                height: container.clientHeight,
+                layout: {
+                    background: { type: 'solid', color: '#0B0F19' },
+                    textColor: '#94A3B8',
+                },
+                grid: {
+                    vertLines: { color: '#1E293B' },
+                    horzLines: { color: '#1E293B' },
+                },
+                crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
+                rightPriceScale: { borderColor: '#1E293B' },
+                timeScale: { borderColor: '#1E293B' },
+            });
+
+            chartSeries = chartInstance.addAreaSeries({
+                topColor: 'rgba(99, 102, 241, 0.56)',
+                bottomColor: 'rgba(99, 102, 241, 0.04)',
+                lineColor: '#6366F1',
+                lineWidth: 3,
+            });
+
+            window.addEventListener('resize', () => {
+                if (chartInstance && container) {
+                    chartInstance.applyOptions({ width: container.clientWidth, height: container.clientHeight });
+                }
+            });
+
+            loadChartData();
+        }
+
+        async function loadChartData() {
+            const coinId = document.getElementById('chartCoinSelect').value || 'bitcoin';
+            const overlay = document.getElementById('chartLoadingOverlay');
+            if (overlay) overlay.classList.remove('hidden');
+
+            try {
+                const res = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=${currentTimeframeDays}`);
+                if (!res.ok) throw new Error('Failed to fetch chart history');
+                const data = await res.json();
+                
+                const formattedData = data.prices.map(item => ({
+                    time: Math.floor(item[0] / 1000),
+                    value: item[1]
+                }));
+
+                if (chartSeries) {
+                    chartSeries.setData(formattedData);
+                    chartInstance.timeScale().fitContent();
+                }
+            } catch (err) {
+                console.warn('Failed to load live chart history, generating mock curve:', err);
+                // Mock fallback chart data
+                const now = Math.floor(Date.now() / 1000);
+                const mockData = [];
+                let basePrice = coinId === 'ethereum' ? 3500 : coinId === 'solana' ? 180 : 68000;
+                for (let i = 100; i >= 0; i--) {
+                    basePrice += (Math.random() - 0.48) * (basePrice * 0.01);
+                    mockData.push({ time: now - (i * 3600 * 24), value: Math.max(10, basePrice) });
+                }
+                if (chartSeries) {
+                    chartSeries.setData(mockData);
+                    chartInstance.timeScale().fitContent();
+                }
+            } finally {
+                if (overlay) overlay.classList.add('hidden');
+            }
+        }
+
+
+        // ================= WALLET MODAL & TOASTS =================
+        function openWalletModal() {
+            document.getElementById('walletModal').classList.remove('hidden');
+        }
+
+        function closeWalletModal() {
+            document.getElementById('walletModal').classList.add('hidden');
+        }
+
+        function simulateWalletConnect(providerName) {
+            closeWalletModal();
+            const btnText = document.getElementById('walletBtnText');
+            if (btnText) btnText.innerText = `${providerName} Connected`;
+            showToast(`Successfully connected to ${providerName} (Simulated)`, "success");
+        }
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            const bgColor = type === 'success' ? 'bg-emerald-600' : type === 'error' ? 'bg-rose-600' : 'bg-brand-primary';
+            const icon = type === 'success' ? 'fa-circle-check' : type === 'error' ? 'fa-circle-exclamation' : 'fa-circle-info';
+
+            toast.className = `${bgColor} text-white px-4 py-3 rounded-2xl shadow-xl text-xs font-bold flex items-center gap-2.5 pointer-events-auto transition-all animate-bounce`;
+            toast.innerHTML = `<i class="fa-solid ${icon} text-sm"></i> <span>${message}</span>`;
+            
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        // Initialize App on Window Load
+        window.onload = function() {
+            fetchMarketData();
+            renderSimPositions();
+            updatePortfolioValues();
+        };
     </script>
 </body>
 </html>
